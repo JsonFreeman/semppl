@@ -1,0 +1,12 @@
+Options:
+1. Use SEMPRE - how much modification we need
+2. Write in JS
+
+
+
+interface for semantic parsing
+
+grammar in json + semantic function in JS (use eval)
+(sentence, parameters, isTesting) -> distribution over parses + the gradient of the scores relative to parameters (matrix scores x parameters)
+return tree of semantic functions
+Beam CKY
