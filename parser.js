@@ -1,6 +1,6 @@
 var _ = require("underscore");
 
-function parse(sentence) {
+function parse(grammar, sentence) {
 	// Split on whitespace
 	var words = sentence.split(/\s/);
 
@@ -82,4 +82,36 @@ var grammar = [
 	}
 ];
 
-console.log(parse("John jumped")[0][1])
+var grammar2 = [
+	{
+		LHS: "$DET",
+		RHS: "the"
+	},
+	{
+		LHS: "$N",
+		RHS: "dog"
+	},
+	{
+		LHS: "$N",
+		RHS: "cat"
+	},
+	{
+		LHS: "$V",
+		RHS: "chased"
+	},
+	{
+		LHS: "$VP",
+		RHS: "$V $NP"
+	},
+	{
+		LHS: "$NP",
+		RHS: "$DET $N"
+	},
+	{
+		LHS: "$S",
+		RHS: "$NP $VP"
+	}
+];
+
+// console.log(parse(grammar, "John jumped"))
+console.log(parse(grammar2, "the dog chased the cat"))
