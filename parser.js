@@ -36,29 +36,30 @@ function parse(grammar, sentence) {
 			chart[offset][offset + width - 1] = _.groupBy(newCellDerivations, derivation => derivation.rule.LHS);
 		}
 	}
+	
 	return chart;
+
+	function collectDerivations(leftCell, rightCell) {
+		// Make a list of new derivations for all grammar rules that apply for the give children.
+		var newDerivations = [];
+		for (var rule of grammar) {
+			var rhsNonTerminals = rule.RHS.split(/\s/);
+			if (rhsNonTerminals.length === 2) {
+				// If both nonterminals on the RHS match the child cells, make a derivation with them as the children
+				if (_.has(leftCell, rhsNonTerminals[0]) && _.has(rightCell, rhsNonTerminals[1])) {
+					newDerivations.push(new Derivation(rule, leftCell[rhsNonTerminals[0]], rightCell[rhsNonTerminals[1]]));
+				}
+			}
+		}
+
+		return newDerivations;
+	}
 }
 
 function Derivation(rule, leftChild, rightChild) {
 	this.rule = rule;
 	this.leftChild = leftChild;
 	this.rightChild = rightChild;
-}
-
-function collectDerivations(leftCell, rightCell) {
-	// Make a list of new derivations for all grammar rules that apply for the give children.
-	var newDerivations = [];
-	for (var rule of grammar) {
-		var rhsNonTerminals = rule.RHS.split(/\s/);
-		if (rhsNonTerminals.length === 2) {
-			// If both nonterminals on the RHS match the child cells, make a derivation with them as the children
-			if (_.has(leftCell, rhsNonTerminals[0]) && _.has(rightCell, rhsNonTerminals[1])) {
-				newDerivations.push(new Derivation(rule, leftCell[rhsNonTerminals[0]], rightCell[rhsNonTerminals[1]]));
-			}
-		}
-	}
-
-	return newDerivations;
 }
 
 function assert(condition, message) {
