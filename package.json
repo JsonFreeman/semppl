@@ -1,0 +1,19 @@
+{
+  "name": "semppl",
+  "version": "1.0.0",
+  "description": "Semantic parsing for webppl",
+  "main": "parser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JsonFreeman/semppl.git"
+  },
+  "author": "JsonFreeman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JsonFreeman/semppl/issues"
+  },
+  "homepage": "https://github.com/JsonFreeman/semppl#readme"
+}
