@@ -10,3 +10,12 @@ grammar in json + semantic function in JS (use eval)
 (sentence, parameters, isTesting) -> distribution over parses + the gradient of the scores relative to parameters (matrix scores x parameters)
 return tree of semantic functions
 Beam CKY
+
+
+Need to do:
+  - better visualization of parses (testing)
+  - how to skip words
+  - cell should contain distribution over parses (score for each derivation)
+  - semantics and semantic composition for each rule
+  - beam in each cell
+  - parameters
