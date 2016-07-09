@@ -36,7 +36,7 @@ function parse(grammar, sentence) {
 			chart[offset][offset + width - 1] = _.groupBy(newCellDerivations, derivation => derivation.rule.LHS);
 		}
 	}
-	
+
 	return chart;
 
 	function collectDerivations(leftCell, rightCell) {
@@ -54,6 +54,10 @@ function parse(grammar, sentence) {
 
 		return newDerivations;
 	}
+}
+
+function getRootCellDerivations(chart, startSymbol) {
+	return chart[0][chart[0].length - 1][startSymbol];
 }
 
 function Derivation(rule, leftChild, rightChild) {
@@ -115,4 +119,4 @@ var grammar2 = [
 ];
 
 // console.log(parse(grammar, "John jumped"))
-console.log(parse(grammar2, "the dog chased the cat"))
+console.log(getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S"))
