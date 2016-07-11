@@ -162,8 +162,21 @@ var grammar3 = grammar2.concat([
 	}
 ]);
 
-console.log(parse(grammar, "John jumped"))
-console.log(getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S"))
-printCellSizes(parse(grammar2, "the dog chased the cat"), "$S")
-console.log(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope"), "$S"))
-printCellSizes(parse(grammar3, "the dog saw the cat with the telescope"))
+var doublingGrammar = [
+	{
+		LHS: "$S",
+		RHS: "$S $S"
+	},
+	{
+		LHS: "$S",
+		RHS: "word"
+	}
+];
+
+// console.log(parse(grammar, "John jumped"))
+// console.log(getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S"))
+// printCellSizes(parse(grammar2, "the dog chased the cat"), "$S")
+// console.log(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope"), "$S"))
+// printCellSizes(parse(grammar3, "the dog saw the cat with the telescope"))
+console.log(getRootCellDerivations(annotateIndices(parse(doublingGrammar, "word word word word")), "$S"));
+printCellSizes(parse(doublingGrammar, "word word word word"));
