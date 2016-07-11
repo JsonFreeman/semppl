@@ -191,5 +191,5 @@ var doublingGrammar = [
 // printCellSizes(parse(grammar2, "the dog chased the cat"), "$S")
 // console.log(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope"), "$S"))
 // printCellSizes(parse(grammar3, "the dog saw the cat with the telescope"))
-console.log(getRootCellDerivations(annotateIndices(parse(doublingGrammar, "word word word word")), "$S"));
-printCellSizes(parse(doublingGrammar, "word word word word"));
+// console.log(getRootCellDerivations(annotateIndices(parse(doublingGrammar, "word word word word")), "$S"));
+printCellSizes(parse(doublingGrammar, "word word word word word word word word"));
