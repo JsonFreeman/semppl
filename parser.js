@@ -47,7 +47,11 @@ function parse(grammar, sentence) {
 			if (rhsNonTerminals.length === 2) {
 				// If both nonterminals on the RHS match the child cells, make a derivation with them as the children
 				if (_.has(leftCell, rhsNonTerminals[0]) && _.has(rightCell, rhsNonTerminals[1])) {
-					newDerivations.push(new Derivation(rule, leftCell[rhsNonTerminals[0]], rightCell[rhsNonTerminals[1]]));
+					for (var leftDeriv of leftCell[rhsNonTerminals[0]]) {
+						for (var rightDeriv of rightCell[rhsNonTerminals[1]]) {
+							newDerivations.push(new Derivation(rule, leftCell[rhsNonTerminals[0]], rightCell[rhsNonTerminals[1]]));
+						}
+					}
 				}
 			}
 		}
