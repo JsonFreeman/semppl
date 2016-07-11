@@ -131,6 +131,34 @@ var grammar2 = [
 	}
 ];
 
+var grammar3 = grammar2.concat([
+	{
+		LHS: "$V",
+		RHS: "saw"
+	},
+	{
+		LHS: "$VP",
+		RHS: "$VP $PP"
+	},
+	{
+		LHS: "$NP",
+		RHS: "$NP $PP"
+	},
+	{
+		LHS: "$PP",
+		RHS: "$P $NP"
+	},
+	{
+		LHS: "$P",
+		RHS: "with"
+	},
+	{
+		LHS: "$N",
+		RHS: "telescope"
+	}
+]);
+
 // console.log(parse(grammar, "John jumped"))
-console.log(getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S"))
-console.log(printCellSizes(parse(grammar2, "the dog chased the cat"), "$S"))
+// console.log(getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S"))
+// console.log(printCellSizes(parse(grammar2, "the dog chased the cat"), "$S"))
+console.log(printCellSizes(parse(grammar3, "the dog saw the cat with the telescope")))
