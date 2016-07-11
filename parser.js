@@ -60,6 +60,19 @@ function getRootCellDerivations(chart, startSymbol) {
 	return chart[0][chart[0].length - 1][startSymbol];
 }
 
+function printCellSizes(chart) {
+	var starting = "";
+	for (var i = 0; i < chart.length; i++) {
+		var s = starting;
+		for (var j = i; j < chart[i].length; j++) {
+			// Aggregate counts over all groups
+			s += _.reduce(_.values(chart[i][j]), (memo, list) => memo + list.length, /*memo*/ 0) + " ";
+		}
+		starting += "  ";
+		console.log(s);
+	}
+}
+
 function Derivation(rule, leftChild, rightChild) {
 	this.rule = rule;
 	this.leftChild = leftChild;
@@ -120,3 +133,4 @@ var grammar2 = [
 
 // console.log(parse(grammar, "John jumped"))
 console.log(getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S"))
+console.log(printCellSizes(parse(grammar2, "the dog chased the cat"), "$S"))
