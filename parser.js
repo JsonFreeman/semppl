@@ -77,6 +77,19 @@ function printCellSizes(chart) {
 	}
 }
 
+function annotateIndices(chart) {
+	for (var i in chart) {
+		for (var j in chart) {
+			_.each(_.values(chart[i][j]), deriv => { 
+				deriv.i = i;
+				deriv.j = j;
+			});
+		}
+	}
+
+	return chart; // Just for convenience
+}
+
 function Derivation(rule, leftChild, rightChild) {
 	this.rule = rule;
 	this.leftChild = leftChild;
