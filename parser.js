@@ -1,7 +1,8 @@
 var _ = require("underscore");
 
-function parse(grammar, sentence, scoreFn) {
+function parse(grammar, sentence, scoreFn, beamSize) {
 	scoreFn = scoreFn || constScoreFn;
+	beamSize = beamSize || 200;
 
 	// Split on whitespace
 	var words = sentence.split(/\s/);
@@ -37,6 +38,9 @@ function parse(grammar, sentence, scoreFn) {
 
 			// Sort scores in descending order, and chop off to fit in the beam
 			newCellDerivations.sort((d1, d2) => d2.score - d1.score);
+			if (newCellDerivations.length > beamSize) {
+				newCellDerivations.length = beamSize;
+			}
 
 			chart[offset][offset + width - 1] = _.groupBy(newCellDerivations, derivation => derivation.rule.LHS);
 		}
@@ -221,4 +225,5 @@ var doublingGrammar = [
 // console.log(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope"), "$S"))
 // printCellSizes(parse(grammar3, "the dog saw the cat with the telescope"))
 // console.log(getRootCellDerivations(annotateIndices(parse(doublingGrammar, "word word word word")), "$S"));
-printScoresInCell(getRootCell(parse(doublingGrammar, "word word word word word word word word word word word", randomScoreFn)));
+// printScoresInCell(getRootCell(parse(doublingGrammar, "word word word word word word word word word word word", randomScoreFn)));
+printCellSizes(parse(doublingGrammar, "word word word word word word word word word word word", randomScoreFn));
