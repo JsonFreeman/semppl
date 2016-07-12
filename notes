@@ -19,3 +19,12 @@ Need to do:
   - semantics and semantic composition for each rule
   - beam in each cell
   - parameters
+
+  implement non-collapsed parser in JS
+
+scoring function (example, partial parse) -> number
+Top n parses in cell ranked by that function (sorted) - will be popping off worst score parse
+
+
+iterate over all parses and make a new parse for each thing in the product
+give all the derivations a score
