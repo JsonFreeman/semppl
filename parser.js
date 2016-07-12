@@ -67,7 +67,11 @@ function parse(grammar, sentence, scoreFn) {
 }
 
 function getRootCellDerivations(chart, startSymbol) {
-	return chart[0][chart[0].length - 1][startSymbol];
+	return getRootCell(chart)[startSymbol];
+}
+
+function getRootCell(chart) {
+	return chart[0][chart[0].length - 1];
 }
 
 function printCellSizes(chart) {
@@ -81,6 +85,15 @@ function printCellSizes(chart) {
 		starting += "  ";
 		console.log(s);
 	}
+}
+
+function printScoresInCell(cell) {
+	var derivations = _.flatten(_.values(cell));
+	for (var deriv of derivations) {
+		console.log(deriv.score);
+	}
+
+	console.log(derivations.length)
 }
 
 function annotateIndices(chart) {
@@ -200,5 +213,5 @@ var doublingGrammar = [
 // printCellSizes(parse(grammar2, "the dog chased the cat"), "$S")
 // console.log(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope"), "$S"))
 // printCellSizes(parse(grammar3, "the dog saw the cat with the telescope"))
-console.log(getRootCellDerivations(annotateIndices(parse(doublingGrammar, "word word word word")), "$S"));
-printCellSizes(parse(doublingGrammar, "word word word word word word word word"));
+// console.log(getRootCellDerivations(annotateIndices(parse(doublingGrammar, "word word word word")), "$S"));
+printScoresInCell(getRootCell(parse(doublingGrammar, "word word word word word word word word word word word")));
