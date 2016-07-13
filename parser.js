@@ -58,7 +58,7 @@ function parse(grammar, sentence, scoreFn, beamSize) {
 				if (_.has(leftCell, rhsNonTerminals[0]) && _.has(rightCell, rhsNonTerminals[1])) {
 					for (var leftDeriv of leftCell[rhsNonTerminals[0]]) {
 						for (var rightDeriv of rightCell[rhsNonTerminals[1]]) {
-							newDerivations.push(new Derivation(rule, scoreFn, leftCell[rhsNonTerminals[0]], rightCell[rhsNonTerminals[1]]));
+							newDerivations.push(new Derivation(rule, scoreFn, leftDeriv, rightDeriv));
 						}
 					}
 				}
