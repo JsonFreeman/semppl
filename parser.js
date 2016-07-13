@@ -107,6 +107,25 @@ function printScoresInCell(cell) {
 	console.log(derivations.length)
 }
 
+function printDerivations(derivations) {
+	console.log("[");
+	for (var i = 0; i < derivations.length; i++) {
+		console.log("  --- Derivation " + (i + 1));
+		printDerivationRecursive(derivations[i], /*indentString*/ "    ");
+	}
+	console.log("]")
+}
+
+function printDerivationRecursive(derivation, indentString) {
+	console.log(indentString + derivation.rule.LHS + " -> " + derivation.rule.RHS);
+	if (!derivation.isLeaf()) {
+		console.log(indentString + "left:");
+		printDerivationRecursive(derivation.leftChild, indentString + "    ");
+		console.log(indentString + "right:");
+		printDerivationRecursive(derivation.rightChild, indentString + "    ");
+	}
+}
+
 function annotateIndices(chart) {
 	for (var i in chart) {
 		for (var j in chart) {
@@ -127,6 +146,10 @@ function Derivation(rule, scoreFn, leftChild, rightChild) {
 
 	// Must come after other properties are set
 	this.score = scoreFn(this);
+}
+
+Derivation.prototype.isLeaf = function() {
+	return !(this.leftChild && this.rightChild);
 }
 
 function assert(condition, message) {
@@ -222,8 +245,8 @@ var doublingGrammar = [
 // console.log(parse(grammar, "John jumped"))
 // console.log(getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S"))
 // printCellSizes(parse(grammar2, "the dog chased the cat"), "$S")
-// console.log(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope"), "$S"))
-// printCellSizes(parse(grammar3, "the dog saw the cat with the telescope"))
+printDerivations(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope"), "$S"))
+printCellSizes(parse(grammar3, "the dog saw the cat with the telescope"))
 // console.log(getRootCellDerivations(annotateIndices(parse(doublingGrammar, "word word word word")), "$S"));
 // printScoresInCell(getRootCell(parse(doublingGrammar, "word word word word word word word word word word word", randomScoreFn)));
-printCellSizes(parse(doublingGrammar, "word word word word word word word word word word word", randomScoreFn));
+// printCellSizes(parse(doublingGrammar, "word word word word word word word word word word word", randomScoreFn));
