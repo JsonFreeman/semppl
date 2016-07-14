@@ -85,6 +85,29 @@ function randomScoreFn(features) {
 	return _.random(100);
 }
 
+function ruleFeatureFn(derivation) {
+	var features = {};
+	if (!derivation.isLeaf()) {
+		addFeatureValueFromOtherFeatures(features, ruleFeatureFn(derivation.leftChild));
+		addFeatureValueFromOtherFeatures(features, ruleFeatureFn(derivation.rightChild));
+	}
+	
+	// Add this derivation's own rule
+	var ruleKey = derivation.rule.LHS + " -> " + derivation.rule.RHS;
+	features[ruleKey] = 1 + (features[ruleKey] || 0);
+	return features;
+}
+
+/*
+	Updates features1 by adding values from features2. Existing values
+	are combined by addition.
+ */
+function addFeatureValueFromOtherFeatures(features1, features2) {
+	for (var f in features2) {
+		features1[f] = features2[f] + (features1[f] || 0);
+	}
+}
+
 function getRootCellDerivations(chart, startSymbol) {
 	return getRootCell(chart)[startSymbol];
 }
