@@ -157,6 +157,12 @@ function printDerivationRecursive(derivation, indentString) {
 	}
 }
 
+function printFeatures(derivations, featureFn) {
+	for (var d of derivations) {
+		console.log(featureFn(d));
+	}
+}
+
 function annotateIndices(chart) {
 	for (var i in chart) {
 		for (var j in chart) {
@@ -270,12 +276,13 @@ var doublingGrammar = [
 	}
 ];
 
-console.log(parse(grammar, "John jumped"))
-console.log(getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S"))
-printCellSizes(parse(grammar2, "the dog chased the cat"), "$S")
-printDerivations(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope"), "$S"))
-printCellSizes(parse(grammar3, "the dog saw the cat with the telescope"))
-console.log(getRootCellDerivations(annotateIndices(parse(doublingGrammar, "word word word word")), "$S"));
-printScoresInCell(getRootCell(parse(doublingGrammar, "word word word word word word word word word word word", undefined, randomScoreFn)));
-printCellSizes(parse(doublingGrammar, "word word word word word word word word word word word", undefined, randomScoreFn));
-printDerivations(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope", ruleFeatureFn), "$S"))
+// console.log(parse(grammar, "John jumped"))
+// console.log(getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S"))
+// printCellSizes(parse(grammar2, "the dog chased the cat"), "$S")
+// printDerivations(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope"), "$S"))
+// printCellSizes(parse(grammar3, "the dog saw the cat with the telescope"))
+// console.log(getRootCellDerivations(annotateIndices(parse(doublingGrammar, "word word word word")), "$S"));
+// printScoresInCell(getRootCell(parse(doublingGrammar, "word word word word word word word word word word word", undefined, randomScoreFn)));
+// printCellSizes(parse(doublingGrammar, "word word word word word word word word word word word", undefined, randomScoreFn));
+// printDerivations(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope", ruleFeatureFn), "$S"))
+printFeatures(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope", ruleFeatureFn), "$S"), ruleFeatureFn)
