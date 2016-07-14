@@ -16,7 +16,7 @@ function parse(grammar, sentence, featureFn, scoreFn, beamSize) {
 		chart[i] = [];
 		chart[i][i] = _.groupBy(_.map(_.filter(grammar,
 			rule => rule.RHS === words[i]), // filter
-			rule => createScoredDerivation(rule, /*leftChild*/ undefined, /*rightChild*/ undefined)), // map
+			rule => new Derivation(rule, /*leftChild*/ undefined, /*rightChild*/ undefined)), // map
 			derivation => derivation.rule.LHS); // groupBy
 	}
 
@@ -38,7 +38,8 @@ function parse(grammar, sentence, featureFn, scoreFn, beamSize) {
 			}
 
 			// Sort scores in descending order, and chop off to fit in the beam
-			newCellDerivations.sort((d1, d2) => d2.score - d1.score);
+			newCellDerivations.sort((d1, d2) => d2.getScore(scoreFn, featureFn)
+											  - d1.getScore(scoreFn, featureFn));
 			if (newCellDerivations.length > beamSize) {
 				newCellDerivations.length = beamSize;
 			}
@@ -59,7 +60,7 @@ function parse(grammar, sentence, featureFn, scoreFn, beamSize) {
 				if (_.has(leftCell, rhsNonTerminals[0]) && _.has(rightCell, rhsNonTerminals[1])) {
 					for (var leftDeriv of leftCell[rhsNonTerminals[0]]) {
 						for (var rightDeriv of rightCell[rhsNonTerminals[1]]) {
-							newDerivations.push(createScoredDerivation(rule, leftDeriv, rightDeriv));
+							newDerivations.push(new Derivation(rule, leftDeriv, rightDeriv));
 						}
 					}
 				}
@@ -67,13 +68,6 @@ function parse(grammar, sentence, featureFn, scoreFn, beamSize) {
 		}
 
 		return newDerivations;
-	}
-
-	function createScoredDerivation(rule, leftChild, rightChild) {
-		var d = new Derivation(rule, leftChild, rightChild);
-		var phi = featureFn(d);
-		d.score = scoreFn(phi);
-		return d;
 	}
 }
 
@@ -88,8 +82,8 @@ function randomScoreFn(features) {
 function ruleFeatureFn(derivation) {
 	var features = {};
 	if (!derivation.isLeaf()) {
-		addFeatureValueFromOtherFeatures(features, ruleFeatureFn(derivation.leftChild));
-		addFeatureValueFromOtherFeatures(features, ruleFeatureFn(derivation.rightChild));
+		addFeatureValueFromOtherFeatures(features, derivation.leftChild.getFeatures(ruleFeatureFn));
+		addFeatureValueFromOtherFeatures(features, derivation.rightChild.getFeatures(ruleFeatureFn));
 	}
 	
 	// Add this derivation's own rule
@@ -129,10 +123,10 @@ function printCellSizes(chart) {
 	}
 }
 
-function printScoresInCell(cell) {
+function printScoresInCell(cell, scoreFn, featureFn) {
 	var derivations = _.flatten(_.values(cell));
 	for (var deriv of derivations) {
-		console.log(deriv.score);
+		console.log(deriv.getScore(scoreFn, featureFn));
 	}
 
 	console.log(derivations.length)
@@ -159,7 +153,7 @@ function printDerivationRecursive(derivation, indentString) {
 
 function printFeatures(derivations, featureFn) {
 	for (var d of derivations) {
-		console.log(featureFn(d));
+		console.log(d.getFeatures(featureFn));
 	}
 }
 
@@ -184,6 +178,17 @@ function Derivation(rule, leftChild, rightChild) {
 
 Derivation.prototype.isLeaf = function() {
 	return !(this.leftChild && this.rightChild);
+}
+
+Derivation.prototype.getFeatures = function(featureFn) {
+	if (!this._features) {
+		this._features = featureFn(this);
+	}
+	return this._features;
+}
+
+Derivation.prototype.getScore = function(scoreFn, featureFn) {
+	return scoreFn(this.getFeatures(featureFn));
 }
 
 function assert(condition, message) {
@@ -282,7 +287,7 @@ var doublingGrammar = [
 // printDerivations(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope"), "$S"))
 // printCellSizes(parse(grammar3, "the dog saw the cat with the telescope"))
 // console.log(getRootCellDerivations(annotateIndices(parse(doublingGrammar, "word word word word")), "$S"));
-// printScoresInCell(getRootCell(parse(doublingGrammar, "word word word word word word word word word word word", undefined, randomScoreFn)));
+// printScoresInCell(getRootCell(parse(doublingGrammar, "word word word word word word word word word word word", undefined, randomScoreFn)), randomScoreFn, ruleFeatureFn);
 // printCellSizes(parse(doublingGrammar, "word word word word word word word word word word word", undefined, randomScoreFn));
 // printDerivations(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope", ruleFeatureFn), "$S"))
 printFeatures(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope", ruleFeatureFn), "$S"), ruleFeatureFn)
