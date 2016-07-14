@@ -1,6 +1,7 @@
 var _ = require("underscore");
 
-function parse(grammar, sentence, scoreFn, beamSize) {
+function parse(grammar, sentence, featureFn, scoreFn, beamSize) {
+	featureFn = featureFn || () => ({}); // Empty feature function
 	scoreFn = scoreFn || constScoreFn;
 	beamSize = beamSize || 200;
 
@@ -15,7 +16,7 @@ function parse(grammar, sentence, scoreFn, beamSize) {
 		chart[i] = [];
 		chart[i][i] = _.groupBy(_.map(_.filter(grammar,
 			rule => rule.RHS === words[i]), // filter
-			rule => new Derivation(rule, scoreFn, /*leftChild*/ undefined, /*rightChild*/ undefined)), // map
+			rule => createScoredDerivation(rule, /*leftChild*/ undefined, /*rightChild*/ undefined)), // map
 			derivation => derivation.rule.LHS); // groupBy
 	}
 
@@ -58,7 +59,7 @@ function parse(grammar, sentence, scoreFn, beamSize) {
 				if (_.has(leftCell, rhsNonTerminals[0]) && _.has(rightCell, rhsNonTerminals[1])) {
 					for (var leftDeriv of leftCell[rhsNonTerminals[0]]) {
 						for (var rightDeriv of rightCell[rhsNonTerminals[1]]) {
-							newDerivations.push(new Derivation(rule, scoreFn, leftDeriv, rightDeriv));
+							newDerivations.push(createScoredDerivation(rule, leftDeriv, rightDeriv));
 						}
 					}
 				}
@@ -67,13 +68,20 @@ function parse(grammar, sentence, scoreFn, beamSize) {
 
 		return newDerivations;
 	}
+
+	function createScoredDerivation(rule, leftChild, rightChild) {
+		var d = new Derivation(rule, leftChild, rightChild);
+		var phi = featureFn(d);
+		d.score = scoreFn(phi);
+		return d;
+	}
 }
 
-function constScoreFn(derivation) {
+function constScoreFn(features) {
 	return 1;
 }
 
-function randomScoreFn(derivation) {
+function randomScoreFn(features) {
 	return _.random(100);
 }
 
@@ -139,13 +147,10 @@ function annotateIndices(chart) {
 	return chart; // Just for convenience
 }
 
-function Derivation(rule, scoreFn, leftChild, rightChild) {
+function Derivation(rule, leftChild, rightChild) {
 	this.rule = rule;
 	this.leftChild = leftChild;
 	this.rightChild = rightChild;
-
-	// Must come after other properties are set
-	this.score = scoreFn(this);
 }
 
 Derivation.prototype.isLeaf = function() {
@@ -242,11 +247,11 @@ var doublingGrammar = [
 	}
 ];
 
-// console.log(parse(grammar, "John jumped"))
-// console.log(getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S"))
-// printCellSizes(parse(grammar2, "the dog chased the cat"), "$S")
+console.log(parse(grammar, "John jumped"))
+console.log(getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S"))
+printCellSizes(parse(grammar2, "the dog chased the cat"), "$S")
 printDerivations(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope"), "$S"))
 printCellSizes(parse(grammar3, "the dog saw the cat with the telescope"))
-// console.log(getRootCellDerivations(annotateIndices(parse(doublingGrammar, "word word word word")), "$S"));
-// printScoresInCell(getRootCell(parse(doublingGrammar, "word word word word word word word word word word word", randomScoreFn)));
-// printCellSizes(parse(doublingGrammar, "word word word word word word word word word word word", randomScoreFn));
+console.log(getRootCellDerivations(annotateIndices(parse(doublingGrammar, "word word word word")), "$S"));
+printScoresInCell(getRootCell(parse(doublingGrammar, "word word word word word word word word word word word", undefined, randomScoreFn)));
+printCellSizes(parse(doublingGrammar, "word word word word word word word word word word word", undefined, randomScoreFn));
