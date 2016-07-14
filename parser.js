@@ -278,3 +278,4 @@ printCellSizes(parse(grammar3, "the dog saw the cat with the telescope"))
 console.log(getRootCellDerivations(annotateIndices(parse(doublingGrammar, "word word word word")), "$S"));
 printScoresInCell(getRootCell(parse(doublingGrammar, "word word word word word word word word word word word", undefined, randomScoreFn)));
 printCellSizes(parse(doublingGrammar, "word word word word word word word word word word word", undefined, randomScoreFn));
+printDerivations(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope", ruleFeatureFn), "$S"))
