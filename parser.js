@@ -296,4 +296,18 @@ var doublingGrammar = [
 // printScoresInCell(getRootCell(parse(doublingGrammar, "word word word word word word word word word word word", undefined, randomScoreFn)), randomScoreFn, ruleFeatureFn);
 // printCellSizes(parse(doublingGrammar, "word word word word word word word word word word word", undefined, randomScoreFn));
 // printDerivations(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope", ruleFeatureFn), "$S"))
-printFeatures(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope", ruleFeatureFn), "$S"), ruleFeatureFn)
+// printFeatures(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope", ruleFeatureFn), "$S"), ruleFeatureFn)
+
+// Semantics tests
+function grammar1Test() {
+	var world1 = { "jumped": ["jack", "mary"]};
+	var world2 = { "jumped": ["mary"]};
+	var world3 = {};
+
+	var s = getRootCellDerivations(parse(grammar, "John jumped"), "$S")[0].semantics;
+	console.log(s(world1));
+	console.log(s(world2));
+	console.log(s(world3));
+}
+
+grammar1Test();
