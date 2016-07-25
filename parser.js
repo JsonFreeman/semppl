@@ -16,7 +16,7 @@ function parse(grammar, sentence, featureFn, scoreFn, beamSize) {
 		chart[i] = [];
 		chart[i][i] = _.groupBy(_.map(_.filter(grammar,
 			rule => rule.RHS === words[i]), // filter
-			rule => new Derivation(rule, /*leftChild*/ undefined, /*rightChild*/ undefined)), // map
+			rule => new Derivation(rule, /*leftChild*/ undefined, /*rightChild*/ undefined, rule.semantics)), // map
 			derivation => derivation.rule.LHS); // groupBy
 	}
 
@@ -60,7 +60,7 @@ function parse(grammar, sentence, featureFn, scoreFn, beamSize) {
 				if (_.has(leftCell, rhsNonTerminals[0]) && _.has(rightCell, rhsNonTerminals[1])) {
 					for (var leftDeriv of leftCell[rhsNonTerminals[0]]) {
 						for (var rightDeriv of rightCell[rhsNonTerminals[1]]) {
-							newDerivations.push(new Derivation(rule, leftDeriv, rightDeriv));
+							newDerivations.push(new Derivation(rule, leftDeriv, rightDeriv, rule.semantics));
 						}
 					}
 				}
@@ -170,10 +170,13 @@ function annotateIndices(chart) {
 	return chart; // Just for convenience
 }
 
-function Derivation(rule, leftChild, rightChild) {
+function Derivation(rule, leftChild, rightChild, semantics) {
 	this.rule = rule;
 	this.leftChild = leftChild;
 	this.rightChild = rightChild;
+
+	// Construct semantics bottom up with recurrence. Don't pass in the world yet.
+	this.semantics = this.isLeaf() ? semantics : semantics(leftChild.semantics, rightChild.semantics);
 }
 
 Derivation.prototype.isLeaf = function() {
@@ -200,15 +203,18 @@ function assert(condition, message) {
 var grammar = [
 	{
 		LHS: "$S",
-		RHS: "$NP $VP"
+		RHS: "$NP $VP",
+		sem: backApply
 	},
 	{
 		LHS: "$NP",
-		RHS: "John"
+		RHS: "John",
+		sem: entity("john")
 	},
 	{
 		LHS: "$VP",
-		RHS: "jumped"
+		RHS: "jumped",
+		sem: predicate("jumped")
 	}
 ];
 
