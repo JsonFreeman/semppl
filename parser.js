@@ -1,4 +1,5 @@
 var _ = require("underscore");
+var semFuncs = require("./semantics");
 
 function parse(grammar, sentence, featureFn, scoreFn, beamSize) {
 	featureFn = featureFn || () => ({}); // Empty feature function
@@ -204,17 +205,17 @@ var grammar = [
 	{
 		LHS: "$S",
 		RHS: "$NP $VP",
-		sem: backApply
+		sem: semFuncs.backApply
 	},
 	{
 		LHS: "$NP",
 		RHS: "John",
-		sem: entity("john")
+		sem: semFuncs.entity("john")
 	},
 	{
 		LHS: "$VP",
 		RHS: "jumped",
-		sem: predicate("jumped")
+		sem: semFuncs.predicate("jumped")
 	}
 ];
 
