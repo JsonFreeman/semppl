@@ -17,7 +17,7 @@ function parse(grammar, sentence, featureFn, scoreFn, beamSize) {
 		chart[i] = [];
 		chart[i][i] = _.groupBy(_.map(_.filter(grammar,
 			rule => rule.RHS === words[i]), // filter
-			rule => new Derivation(rule, /*leftChild*/ undefined, /*rightChild*/ undefined, rule.semantics)), // map
+			rule => new Derivation(rule, /*leftChild*/ undefined, /*rightChild*/ undefined, rule.sem)), // map
 			derivation => derivation.rule.LHS); // groupBy
 	}
 
@@ -61,7 +61,7 @@ function parse(grammar, sentence, featureFn, scoreFn, beamSize) {
 				if (_.has(leftCell, rhsNonTerminals[0]) && _.has(rightCell, rhsNonTerminals[1])) {
 					for (var leftDeriv of leftCell[rhsNonTerminals[0]]) {
 						for (var rightDeriv of rightCell[rhsNonTerminals[1]]) {
-							newDerivations.push(new Derivation(rule, leftDeriv, rightDeriv, rule.semantics));
+							newDerivations.push(new Derivation(rule, leftDeriv, rightDeriv, rule.sem));
 						}
 					}
 				}
@@ -301,7 +301,7 @@ var doublingGrammar = [
 
 // Semantics tests
 function grammar1Test() {
-	var world1 = { "jumped": ["jack", "mary"]};
+	var world1 = { "jumped": ["john", "mary"]};
 	var world2 = { "jumped": ["mary"]};
 	var world3 = {};
 
