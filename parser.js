@@ -318,4 +318,21 @@ function grammar1Test() {
 	console.log(s(world3));
 }
 
-grammar1Test();
+function grammar2Test() {
+	var world1 = {
+		dog: ["puppy"],
+		cat: ["purr"],
+		chased: { purr: ["puppy"] }
+	};
+	var world2 = {
+		dog: ["puppy"],
+		cat: ["purr"],
+		chased: { purr: [] }
+	};
+	
+	var s = getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S")[0].semantics;
+	console.log(s(world1));
+	console.log(s(world2));
+}
+
+grammar2Test();
