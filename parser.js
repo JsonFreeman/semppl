@@ -222,31 +222,38 @@ var grammar = [
 var grammar2 = [
 	{
 		LHS: "$DET",
-		RHS: "the"
+		RHS: "the",
+		sem: semFuncs.iota
 	},
 	{
 		LHS: "$N",
-		RHS: "dog"
+		RHS: "dog",
+		sem: semFuncs.predicate('dog')
 	},
 	{
 		LHS: "$N",
-		RHS: "cat"
+		RHS: "cat",
+		sem: semFuncs.predicate('cat')
 	},
 	{
 		LHS: "$V",
-		RHS: "chased"
+		RHS: "chased",
+		sem: semFuncs.transitive("chased")
 	},
 	{
 		LHS: "$VP",
-		RHS: "$V $NP"
+		RHS: "$V $NP",
+		sem: semFuncs.fwdApply
 	},
 	{
 		LHS: "$NP",
-		RHS: "$DET $N"
+		RHS: "$DET $N",
+		sem: semFuncs.fwdApply
 	},
 	{
 		LHS: "$S",
-		RHS: "$NP $VP"
+		RHS: "$NP $VP",
+		sem: semFuncs.backApply
 	}
 ];
 
