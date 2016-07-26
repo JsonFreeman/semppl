@@ -20,5 +20,11 @@ module.exports = {
         return function(w) {
             return right(w)(left(w));
         }
+    },
+
+    fwdApply: function(left, right) {
+        return function(w) {
+            return left(w)(right(w));
+        }
     }
 }
