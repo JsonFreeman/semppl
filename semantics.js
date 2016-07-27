@@ -32,6 +32,12 @@ module.exports = {
         }
     },
 
+    id: function(w) {
+        return function(x) {
+            return x;
+        }
+    },
+
     backApply: function(left, right) {
         return function(w) {
             return right(w)(left(w));
