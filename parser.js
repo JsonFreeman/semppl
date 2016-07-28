@@ -308,9 +308,10 @@ var doublingGrammar = [
 
 // Semantics tests
 function grammar1Test() {
-	var world1 = { "jumped": ["john", "mary"]};
-	var world2 = { "jumped": ["mary"]};
-	var world3 = {};
+	var domain = ["john", "mary"];
+	var world1 = { model: { "jumped": ["john", "mary"]}, domain: domain };
+	var world2 = { model: { "jumped": ["mary"]}, domain: domain };
+	var world3 = { model: { }, domain: domain };
 
 	var s = getRootCellDerivations(parse(grammar, "John jumped"), "$S")[0].semantics;
 	console.log(s(world1));
@@ -319,15 +320,23 @@ function grammar1Test() {
 }
 
 function grammar2Test() {
-	var world1 = {
-		dog: ["puppy"],
-		cat: ["purr"],
-		chased: { purr: ["puppy"] }
-	};
+	var domain = ["puppy", "purr"];
+	var world1 = 
+	{
+		domain: domain,
+		model: {
+			dog: ["puppy"],
+			cat: ["purr"],
+			chased: { purr: ["puppy"] }
+		}
+	}
 	var world2 = {
-		dog: ["puppy"],
-		cat: ["purr"],
-		chased: { purr: [] }
+		domain: domain,
+		model: {
+			dog: ["puppy"],
+			cat: ["purr"],
+			chased: { purr: [] }
+		}
 	};
 	
 	var s = getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S")[0].semantics;

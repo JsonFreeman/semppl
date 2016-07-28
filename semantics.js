@@ -11,7 +11,7 @@ module.exports = {
     predicate: function(name) {
         return function(w) {
             return function(ent) {
-                return _.contains(w[name], ent);
+                return _.contains(w.model[name], ent);
             }
         }
     },
@@ -20,7 +20,7 @@ module.exports = {
         return function(w) {
             return function(e1) {
                 return function(e2) {
-                    return _.contains(w[name][e1], e2);
+                    return _.contains(w.model[name][e1], e2);
                 }
             }
         }
@@ -28,7 +28,8 @@ module.exports = {
 
     iota: function(w) {
         return function(pred) {
-            return w[pred][0];
+            // Does not enforce uniqueness
+            return _.find(w.domain, pred);
         }
     },
 
