@@ -3,6 +3,9 @@ var _ = require("underscore");
 var scalarDegrees = {
     tall(ent) {
         return 0;
+    },
+    short(ent) {
+        return 0;
     }
 }
 
