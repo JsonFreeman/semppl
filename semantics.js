@@ -1,5 +1,11 @@
 var _ = require("underscore");
 
+var scalarDegrees = {
+    tall(ent) {
+        return 0;
+    }
+}
+
 module.exports = {
     entity: function(x) {
         // Just a constant function for a rigid designator
@@ -12,6 +18,14 @@ module.exports = {
         return function(w) {
             return function(ent) {
                 return _.contains(w.model[name], ent);
+            }
+        }
+    },
+
+    scalarPredicate: function(scaleName) {
+        return function(w) {
+            return function(ent) {
+                return scalarDegrees[scaleName](ent) >= w.theta[scaleName];
             }
         }
     },
