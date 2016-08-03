@@ -295,6 +295,34 @@ var doublingGrammar = [
 	}
 ];
 
+var intersectAdjGrammar = [
+	{
+		LHS: "$NP",
+		RHS: "$DET $N",
+		sem: semFuncs.fwdApply
+	},
+	{
+		LHS: "$DET",
+		RHS: "the",
+		sem: semFuncs.iota
+	},
+	{
+		LHS: "$N",
+		RHS: "$ADJ $N",
+		sem: semFuncs.intersectPredicates
+	},
+	{
+		LHS: "$N",
+		RHS: "building",
+		sem: semFuncs.predicate('building')
+	},
+	{
+		LHS: "$ADJ",
+		RHS: "brown",
+		sem: semFuncs.predicate('brown')
+	}
+];
+
 // console.log(parse(grammar, "John jumped"))
 // console.log(getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S"))
 // printCellSizes(parse(grammar2, "the dog chased the cat"), "$S")
@@ -344,4 +372,15 @@ function grammar2Test() {
 	console.log(s(world2));
 }
 
-grammar2Test();
+function intersectAdjGrammarTest() {
+	var domain = ["b1", "b2"];
+	var world = { domain: domain, model: {
+		building: ["b1", "b2"],
+		brown: ["b2"]
+	}};
+	
+	var s = getRootCellDerivations(parse(intersectAdjGrammar, "the brown building"), "$NP")[0].semantics;
+	console.log(s(world));
+}
+
+intersectAdjGrammarTest();
