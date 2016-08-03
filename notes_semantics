@@ -1,0 +1,50 @@
+tall - context invariant
+short
+green
+red
+blue
+
+// big - context based (goal)
+
+cube
+pyramid
+sphere
+
+building
+tree
+pole
+
+
+x is tall
+the green building is tall
+the red building is short
+the short red tree
+the red tree is taller than the green tree
+the shortest red tree
+
+
+is tall
+width
+3 colors
+3 textures
+
+
+Name + predicate
+ - is tall
+ - is short
+ - is tall er than 
+ - is short er than
+ - is the tallest (noun)
+ - is the shortest (noun)
+ - is a tall red building
+ - is taller than a red building (for later)
+
+ Indefinite subjects
+ - A red building is tall
+ (one for each of these)
+ rename world to context
+
+ 
+ Notes from implementing:
+ - tall and short are separate scales now (maybe I should combine them)
+ - predicate and scalarPredicate work in completely different ways (unify?)
