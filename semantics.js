@@ -12,59 +12,59 @@ var scalarDegrees = {
 module.exports = {
     entity: function(x) {
         // Just a constant function for a rigid designator
-        return function (w) {
+        return function (context) {
             return x;
         }
     },
 
     predicate: function(name) {
-        return function(w) {
+        return function(context) {
             return function(ent) {
-                return _.contains(w.model[name], ent);
+                return _.contains(context.model[name], ent);
             }
         }
     },
 
     scalarPredicate: function(scaleName) {
-        return function(w) {
+        return function(context) {
             return function(ent) {
-                return scalarDegrees[scaleName](ent) >= w.theta[scaleName];
+                return scalarDegrees[scaleName](ent) >= context.theta[scaleName];
             }
         }
     },
 
     transitive: function(name) {
-        return function(w) {
+        return function(context) {
             return function(e1) {
                 return function(e2) {
-                    return _.contains(w.model[name][e1], e2);
+                    return _.contains(context.model[name][e1], e2);
                 }
             }
         }
     },
 
-    iota: function(w) {
+    iota: function(context) {
         return function(pred) {
             // Does not enforce uniqueness
-            return _.find(w.domain, pred);
+            return _.find(context.domain, pred);
         }
     },
 
-    id: function(w) {
+    id: function(context) {
         return function(x) {
             return x;
         }
     },
 
     backApply: function(left, right) {
-        return function(w) {
-            return right(w)(left(w));
+        return function(context) {
+            return right(context)(left(context));
         }
     },
 
     fwdApply: function(left, right) {
-        return function(w) {
-            return left(w)(right(w));
+        return function(context) {
+            return left(context)(right(context));
         }
     }
 }
