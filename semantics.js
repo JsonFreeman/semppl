@@ -56,6 +56,14 @@ module.exports = {
         }
     },
 
+    intersectPredicates: function(modPredicate, headPredicate) {
+        return function(context) {
+            return function(ent) {
+                return modPredicate(context)(ent) && headPredicate(context)(ent);
+            }
+        }
+    },
+
     backApply: function(left, right) {
         return function(context) {
             return right(context)(left(context));
