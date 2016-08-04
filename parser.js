@@ -1,74 +1,76 @@
 var _ = require("underscore");
 var semFuncs = require("./semantics");
 
-function parse(grammar, sentence, featureFn, scoreFn, beamSize) {
-	featureFn = featureFn || () => ({}); // Empty feature function
-	scoreFn = scoreFn || constScoreFn;
-	beamSize = beamSize || 200;
+function createParser(grammar, featureFn, scoreFn, beamSize) {
+	return function(sentence, params) {
+		featureFn = featureFn || () => ({}); // Empty feature function
+		scoreFn = scoreFn || constScoreFn;
+		beamSize = beamSize || 200;
 
-	// Split on whitespace
-	var words = sentence.split(/\s/);
+		// Split on whitespace
+		var words = sentence.split(/\s/);
 
-	// CKY algorithm
-	var chart = new Array(words.length);
+		// CKY algorithm
+		var chart = new Array(words.length);
 
-	// Base case: bottom level
-	for (var i = 0; i < words.length; i++) {
-		chart[i] = [];
-		chart[i][i] = _.groupBy(_.map(_.filter(grammar,
-			rule => rule.RHS === words[i]), // filter
-			rule => new Derivation(rule, /*leftChild*/ undefined, /*rightChild*/ undefined, rule.sem)), // map
-			derivation => derivation.rule.LHS); // groupBy
-	}
-
-	// Recursive case
-	for (var width = 2; width <= words.length; width++) {
-		var offsetLimit = words.length - width;
-		for (var offset = 0; offset <= offsetLimit; offset++) {
-			// Cell we are interested in
-			assert(!chart[offset][offset + width - 1], "cell not null");
-			var newCellDerivations = [];
-			// splitIndex includes the leftmost singleton cell, but not the rightmost singleton cell
-			for (var splitIndex = offset; splitIndex < offset + width - 1; splitIndex++) {
-				assert(chart[offset][splitIndex], "left cell null");
-				assert(chart[splitIndex + 1][offset + width - 1], "right cell null");
-
-				newCellDerivations = newCellDerivations.concat(
-					collectDerivations(
-						chart[offset][splitIndex], chart[splitIndex + 1][offset + width - 1]));
-			}
-
-			// Sort scores in descending order, and chop off to fit in the beam
-			newCellDerivations.sort((d1, d2) => d2.getScore(scoreFn, featureFn)
-											  - d1.getScore(scoreFn, featureFn));
-			if (newCellDerivations.length > beamSize) {
-				newCellDerivations.length = beamSize;
-			}
-
-			chart[offset][offset + width - 1] = _.groupBy(newCellDerivations, derivation => derivation.rule.LHS);
+		// Base case: bottom level
+		for (var i = 0; i < words.length; i++) {
+			chart[i] = [];
+			chart[i][i] = _.groupBy(_.map(_.filter(grammar,
+				rule => rule.RHS === words[i]), // filter
+				rule => new Derivation(rule, /*leftChild*/ undefined, /*rightChild*/ undefined, rule.sem)), // map
+				derivation => derivation.rule.LHS); // groupBy
 		}
-	}
 
-	return chart;
+		// Recursive case
+		for (var width = 2; width <= words.length; width++) {
+			var offsetLimit = words.length - width;
+			for (var offset = 0; offset <= offsetLimit; offset++) {
+				// Cell we are interested in
+				assert(!chart[offset][offset + width - 1], "cell not null");
+				var newCellDerivations = [];
+				// splitIndex includes the leftmost singleton cell, but not the rightmost singleton cell
+				for (var splitIndex = offset; splitIndex < offset + width - 1; splitIndex++) {
+					assert(chart[offset][splitIndex], "left cell null");
+					assert(chart[splitIndex + 1][offset + width - 1], "right cell null");
 
-	function collectDerivations(leftCell, rightCell) {
-		// Make a list of new derivations for all grammar rules that apply for the give children.
-		var newDerivations = [];
-		for (var rule of grammar) {
-			var rhsNonTerminals = rule.RHS.split(/\s/);
-			if (rhsNonTerminals.length === 2) {
-				// If both nonterminals on the RHS match the child cells, make a derivation with them as the children
-				if (_.has(leftCell, rhsNonTerminals[0]) && _.has(rightCell, rhsNonTerminals[1])) {
-					for (var leftDeriv of leftCell[rhsNonTerminals[0]]) {
-						for (var rightDeriv of rightCell[rhsNonTerminals[1]]) {
-							newDerivations.push(new Derivation(rule, leftDeriv, rightDeriv, rule.sem));
+					newCellDerivations = newCellDerivations.concat(
+						collectDerivations(
+							chart[offset][splitIndex], chart[splitIndex + 1][offset + width - 1]));
+				}
+
+				// Sort scores in descending order, and chop off to fit in the beam
+				newCellDerivations.sort((d1, d2) => d2.getScore(scoreFn, featureFn)
+												- d1.getScore(scoreFn, featureFn));
+				if (newCellDerivations.length > beamSize) {
+					newCellDerivations.length = beamSize;
+				}
+
+				chart[offset][offset + width - 1] = _.groupBy(newCellDerivations, derivation => derivation.rule.LHS);
+			}
+		}
+
+		return chart;
+
+		function collectDerivations(leftCell, rightCell) {
+			// Make a list of new derivations for all grammar rules that apply for the give children.
+			var newDerivations = [];
+			for (var rule of grammar) {
+				var rhsNonTerminals = rule.RHS.split(/\s/);
+				if (rhsNonTerminals.length === 2) {
+					// If both nonterminals on the RHS match the child cells, make a derivation with them as the children
+					if (_.has(leftCell, rhsNonTerminals[0]) && _.has(rightCell, rhsNonTerminals[1])) {
+						for (var leftDeriv of leftCell[rhsNonTerminals[0]]) {
+							for (var rightDeriv of rightCell[rhsNonTerminals[1]]) {
+								newDerivations.push(new Derivation(rule, leftDeriv, rightDeriv, rule.sem));
+							}
 						}
 					}
 				}
 			}
-		}
 
-		return newDerivations;
+			return newDerivations;
+		}
 	}
 }
 
@@ -323,16 +325,16 @@ var intersectAdjGrammar = [
 	}
 ];
 
-// console.log(parse(grammar, "John jumped"))
-// console.log(getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S"))
-// printCellSizes(parse(grammar2, "the dog chased the cat"), "$S")
-// printDerivations(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope"), "$S"))
-// printCellSizes(parse(grammar3, "the dog saw the cat with the telescope"))
-// console.log(getRootCellDerivations(annotateIndices(parse(doublingGrammar, "word word word word")), "$S"));
-// printScoresInCell(getRootCell(parse(doublingGrammar, "word word word word word word word word word word word", undefined, randomScoreFn)), randomScoreFn, ruleFeatureFn);
-// printCellSizes(parse(doublingGrammar, "word word word word word word word word word word word", undefined, randomScoreFn));
-// printDerivations(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope", ruleFeatureFn), "$S"))
-// printFeatures(getRootCellDerivations(parse(grammar3, "the dog saw the cat with the telescope", ruleFeatureFn), "$S"), ruleFeatureFn)
+// console.log(createParser(grammar)("John jumped"))
+// console.log(getRootCellDerivations(createParser(grammar2)("the dog chased the cat"), "$S"))
+// printCellSizes(createParser(grammar2)("the dog chased the cat"), "$S")
+// printDerivations(getRootCellDerivations(createParser(grammar3)("the dog saw the cat with the telescope"), "$S"))
+// printCellSizes(createParser(grammar3)("the dog saw the cat with the telescope"))
+// console.log(getRootCellDerivations(annotateIndices(createParser(doublingGrammar)("word word word word")), "$S"));
+// printScoresInCell(getRootCell(createParser(doublingGrammar, undefined, randomScoreFn)("word word word word word word word word word word word")), randomScoreFn, ruleFeatureFn);
+// printCellSizes(createParser(doublingGrammar, undefined, randomScoreFn)("word word word word word word word word word word word"));
+// printDerivations(getRootCellDerivations(createParser(grammar3, ruleFeatureFn)("the dog saw the cat with the telescope"), "$S"))
+// printFeatures(getRootCellDerivations(createParser(grammar3, ruleFeatureFn)("the dog saw the cat with the telescope"), "$S"), ruleFeatureFn)
 
 // Semantics tests
 function grammar1Test() {
@@ -341,7 +343,7 @@ function grammar1Test() {
 	var world2 = { model: { "jumped": ["mary"]}, domain: domain };
 	var world3 = { model: { }, domain: domain };
 
-	var s = getRootCellDerivations(parse(grammar, "John jumped"), "$S")[0].semantics;
+	var s = getRootCellDerivations(createParser(grammar)("John jumped"), "$S")[0].semantics;
 	console.log(s(world1));
 	console.log(s(world2));
 	console.log(s(world3));
@@ -367,7 +369,7 @@ function grammar2Test() {
 		}
 	};
 	
-	var s = getRootCellDerivations(parse(grammar2, "the dog chased the cat"), "$S")[0].semantics;
+	var s = getRootCellDerivations(createParser(grammar2)("the dog chased the cat"), "$S")[0].semantics;
 	console.log(s(world1));
 	console.log(s(world2));
 }
@@ -379,7 +381,7 @@ function intersectAdjGrammarTest() {
 		brown: ["b2"]
 	}};
 	
-	var s = getRootCellDerivations(parse(intersectAdjGrammar, "the brown building"), "$NP")[0].semantics;
+	var s = getRootCellDerivations(createParser(intersectAdjGrammar)("the brown building"), "$NP")[0].semantics;
 	console.log(s(world));
 }
 
