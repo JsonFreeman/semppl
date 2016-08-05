@@ -1,6 +1,7 @@
 var _ = require("underscore");
 var semFuncs = require("./semantics");
 
+exports.createParser = createParser;
 function createParser(grammar, featureFn, scoreFn, beamSize) {
 	return function(sentence, params) {
 		featureFn = featureFn || () => ({}); // Empty feature function
