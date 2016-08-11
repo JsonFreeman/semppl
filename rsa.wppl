@@ -2,11 +2,11 @@
 
 var meaning = function(utterance, world, params) {
     var parses = parseAsDistribution(utterance, params, "$S");
-    return sample(parses)(world);
+    return Enumerate(function() { sample(parses)(world); });
 };
 
 var parseAsDistribution = function(utterance, params, startSymbol) {
-    var chart = parser(utterance, params);
+    var chart = parser.call(utterance, params);
 
     // Rescore
     var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
@@ -21,4 +21,6 @@ var parseAsDistribution = function(utterance, params, startSymbol) {
 var grammar = [];
 var featureFn = function() {};
 var scoreFn = function() {};
-var parser = semppl.createParser(grammar, featureFn, scoreFn);
+var parser = { call: semppl.createParser(grammar, featureFn, scoreFn) };
+
+meaning("Hello", {}, {});
