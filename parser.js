@@ -106,6 +106,7 @@ function addFeatureValueFromOtherFeatures(features1, features2) {
 	}
 }
 
+exports.getRootCellDerivations = getRootCellDerivations;
 function getRootCellDerivations(chart, startSymbol) {
 	return getRootCell(chart)[startSymbol];
 }
