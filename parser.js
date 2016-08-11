@@ -222,6 +222,7 @@ var grammar = [
 		sem: semFuncs.predicate("jumped")
 	}
 ];
+exports.grammar = grammar;
 
 var grammar2 = [
 	{

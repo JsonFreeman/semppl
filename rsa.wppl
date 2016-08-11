@@ -2,7 +2,7 @@
 
 var meaning = function(utterance, world, params) {
     var parses = parseAsDistribution(utterance, params, "$S");
-    return Enumerate(function() { sample(parses)(world); });
+    return Enumerate(function() { sample(parses).semantics(world); });
 };
 
 var parseAsDistribution = function(utterance, params, startSymbol) {
@@ -18,9 +18,12 @@ var parseAsDistribution = function(utterance, params, startSymbol) {
     });
 };
 
-var grammar = [];
+var grammar = semppl.grammar;
 var featureFn = function() {};
 var scoreFn = function() {};
 var parser = { call: semppl.createParser(grammar, featureFn, scoreFn) };
 
-meaning("Hello", {}, {});
+meaning("John jumped", {
+    domain: ["john"],
+    model: { jumped: ["john"] }
+}, {});
