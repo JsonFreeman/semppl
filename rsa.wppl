@@ -25,8 +25,7 @@ var utteranceProbability = function(utterance, world, params, startSymbol) {
 
 var denotationProbability = function(world) {
     return function(derivation) {
-        return 0; // Return probability that the sentence is true given this derivation
-        // Pass the threshold into the semantics, marginalize over threshold
+        return derivation.semantics(world);
     };
 };
 
