@@ -6,27 +6,28 @@ var meaning = function(utterance, world, params) {
     return Enumerate(function() { sample(parses).semantics(world); });
 };
 
-var parseAsDistribution = function(utterance, params, startSymbol) {
+var utteranceProbability = function(utterance, world, params, startSymbol) {
     var chart = parser.call(utterance, params);
-
-    // Rescore
     var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
+
+    // Gather the two relevant probabilities
+    var truthProbabilities = map(denotationProbability(world), rootCellDerivations);
+    var derivationProbabilities = map(function(d) { return d.getScore(scoreFn, featureFn); }, rootCellDerivations);
     
-    // Map here, then make it a distribution
     // We now have probabilities that the sentences are true given derivations P(t | d)
     // Also probabilities that derivations are correct P(d)
-    // Marginalize out derivation by summing over derivations, multiply the two probabilities
 
-    // Do I actually need to rescore if the scoreFn was passed in from webppl in the first place?
-    return Categorical({
-        vs: rootCellDerivations,
-        ps: map(function(d) { return d.getScore(scoreFn, featureFn); }, rootCellDerivations) // Same problem anyway
-    });
+    // Marginalize out derivation by summing over derivations, multiply the two probabilities
+    return sum(map2(function(derivation, truth) {
+        return derivation * truth;
+    }, derivationProbabilities, truthProbabilities));
 };
 
-var denotationAsProbability = function(derivation, world) {
-    return 0; // Return probability that the sentence is true given this derivation
-    // Pass the threshold into the semantics, marginalize over threshold
+var denotationProbability = function(world) {
+    return function(derivation) {
+        return 0; // Return probability that the sentence is true given this derivation
+        // Pass the threshold into the semantics, marginalize over threshold
+    };
 };
 
 var grammar = semppl.grammar;
