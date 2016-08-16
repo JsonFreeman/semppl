@@ -11,8 +11,8 @@ var utteranceProbability = function(utterance, world, params, startSymbol) {
     var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
 
     // Gather the two relevant probabilities
-    var truthProbabilities = map(denotationProbability(world), rootCellDerivations);
     var derivationProbabilities = map(function(d) { return d.getScore(scoreFn, featureFn); }, rootCellDerivations);
+    var truthProbabilities = map(denotationProbability(world), rootCellDerivations);
     
     // We now have probabilities that the sentences are true given derivations P(t | d)
     // Also probabilities that derivations are correct P(d)
