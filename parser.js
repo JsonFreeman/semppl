@@ -5,7 +5,7 @@ exports.createParser = createParser;
 function createParser(grammar, featureFn, scoreFn, beamSize) {
 	return function(sentence, params) {
 		featureFn = featureFn || () => ({}); // Empty feature function
-		scoreFn = scoreFn || constScoreFn;
+		scoreFn = scoreFn || dotProductScoreFunction;
 		beamSize = beamSize || 200;
 
 		// Split on whitespace
@@ -41,8 +41,8 @@ function createParser(grammar, featureFn, scoreFn, beamSize) {
 				}
 
 				// Sort scores in descending order, and chop off to fit in the beam
-				newCellDerivations.sort((d1, d2) => d2.getScore(scoreFn, featureFn)
-												- d1.getScore(scoreFn, featureFn));
+				newCellDerivations.sort((d1, d2) => d2.getScore(scoreFn, featureFn, params)
+												- d1.getScore(scoreFn, featureFn, params));
 				if (newCellDerivations.length > beamSize) {
 					newCellDerivations.length = beamSize;
 				}
@@ -81,6 +81,17 @@ function constScoreFn(features) {
 
 function randomScoreFn(features) {
 	return _.random(100);
+}
+
+function dotProductScoreFn(features, params) {
+	var sum = 0;
+	for (var k in features) {
+		if (_.has(params, k)) {
+			sum += features[k] * params[k];
+		}
+	}
+
+	return sum;
 }
 
 function ruleFeatureFn(derivation) {
@@ -195,8 +206,8 @@ Derivation.prototype.getFeatures = function(featureFn) {
 	return this._features;
 }
 
-Derivation.prototype.getScore = function(scoreFn, featureFn) {
-	return scoreFn(this.getFeatures(featureFn));
+Derivation.prototype.getScore = function(scoreFn, featureFn, params) {
+	return scoreFn(this.getFeatures(featureFn), params);
 }
 
 function assert(condition, message) {
