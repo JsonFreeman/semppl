@@ -1,11 +1,5 @@
 // webppl rsa.wppl --require .
 
-var meaning = function(utterance, world, params) {
-    var parses = parseAsDistribution(utterance, params, "$S");
-    // Don't do enumerate
-    return Enumerate(function() { sample(parses).semantics(world); });
-};
-
 var utteranceProbability = function(utterance, world, params, startSymbol) {
     var chart = parser.call(utterance, params);
     var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
@@ -30,9 +24,7 @@ var denotationProbability = function(world) {
 };
 
 var grammar = semppl.grammar;
-var featureFn = function() {};
-var scoreFn = function() { return 1; };
-var parser = { call: semppl.createParser(grammar, featureFn, scoreFn) };
+var parser = { call: semppl.createParser(grammar) };
 
 meaning("John jumped", {
     domain: ["john"],
