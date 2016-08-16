@@ -31,7 +31,7 @@ var denotationProbability = function(world) {
 
 var grammar = semppl.grammar;
 var featureFn = function() {};
-var scoreFn = function() {};
+var scoreFn = function() { return 1; };
 var parser = { call: semppl.createParser(grammar, featureFn, scoreFn) };
 
 meaning("John jumped", {
