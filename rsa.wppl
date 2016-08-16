@@ -5,7 +5,11 @@ var utteranceProbability = function(utterance, world, params, startSymbol) {
     var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
 
     // Gather the two relevant probabilities
-    var derivationProbabilities = map(function(d) { return d.getScore(scoreFn, featureFn); }, rootCellDerivations);
+    var derivationProbabilities = map(function(d) {
+        return scoreFn(featureFn(d), params);
+    }, rootCellDerivations);
+
+    // World dependent part starts here.
     var truthProbabilities = map(denotationProbability(world), rootCellDerivations);
     
     // We now have probabilities that the sentences are true given derivations P(t | d)
@@ -25,8 +29,11 @@ var denotationProbability = function(world) {
 
 var grammar = semppl.grammar;
 var parser = { call: semppl.createParser(grammar) };
+var featureFn = function() { return {}; };
+var scoreFn = function(features, params) {
+    return sum(_.mapObject(features, function(v, k) {
+        return _.has(params, k) ? v * params[k] : 0;
+    }));
+};
 
-meaning("John jumped", {
-    domain: ["john"],
-    model: { jumped: ["john"] }
-}, {});
+utteranceProbability;
