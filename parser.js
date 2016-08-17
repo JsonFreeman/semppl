@@ -5,7 +5,7 @@ exports.createParser = createParser;
 function createParser(grammar, featureFn, scoreFn, beamSize) {
 	return function(sentence, params) {
 		featureFn = featureFn || () => ({}); // Empty feature function
-		scoreFn = scoreFn || dotProductScoreFunction;
+		scoreFn = scoreFn || dotProductScoreFn;
 		beamSize = beamSize || 200;
 
 		// Split on whitespace
