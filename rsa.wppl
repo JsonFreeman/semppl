@@ -29,7 +29,7 @@ var denotationProbability = function(world) {
 
 var featureFn = function(d) { return semppl.ruleFeatureFn(d); };
 var scoreFn = function(features, params) {
-    return sum(_.values(mapObject(function(v, k) {
+    return sum(_.values(mapObject(function(k, v) {
         return _.has(params, k) ? v * params[k] : 0;
     }, features)));
 };
@@ -41,6 +41,13 @@ var test1 = function() {
         theta: { tall: 0.6 },
         domain: ["john"]
     };
-    utteranceProbability("John is tall", world1, {}, "$S");
+    var params = { 
+        '$NP -> John': 1,
+        '$COP -> is': 1,
+        '$ADJ -> tall': 1,
+        '$VP -> $COP $ADJ': 1,
+        '$S -> $NP $VP': 1
+    };
+    utteranceProbability("John is tall", world1, params, "$S");
 };
 test1();
