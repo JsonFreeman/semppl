@@ -427,5 +427,3 @@ function intersectAdjGrammarTest() {
 	var s = getRootCellDerivations(createParser(intersectAdjGrammar)("the brown building"), "$NP")[0].semantics;
 	console.log(s(world));
 }
-
-intersectAdjGrammarTest();
