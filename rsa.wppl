@@ -29,9 +29,9 @@ var denotationProbability = function(world) {
 
 var featureFn = function() { return {}; };
 var scoreFn = function(features, params) {
-    return sum(_.mapObject(features, function(v, k) {
+    return sum(_.values(_.mapObject(features, function(v, k) {
         return _.has(params, k) ? v * params[k] : 0;
-    }));
+    })));
 };
 
 var parser = { call: semppl.createParser(semppl.grammarIsTall) };
