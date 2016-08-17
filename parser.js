@@ -339,6 +339,35 @@ var intersectAdjGrammar = [
 	}
 ];
 
+var grammarIsTall = [
+	{
+		LHS: "$S",
+		RHS: "$NP $VP",
+		sem: semFuncs.backApply
+	},
+	{
+		LHS: "$VP",
+		RHS: "$COP $ADJ",
+		sem: semFuncs.fwdApply
+	},
+	{
+		LHS: "$NP",
+		RHS: "John",
+		sem: semFuncs.entity("john")
+	},
+	{
+		LHS: "$COP",
+		RHS: "is",
+		sem: semFuncs.id
+	},
+	{
+		LHS: "$ADJ",
+		RHS: "tall",
+		sem: semFuncs.scalarPredicate("tall")
+	}
+];
+exports.grammarIsTall = grammarIsTall;
+
 // console.log(createParser(grammar)("John jumped"))
 // console.log(getRootCellDerivations(createParser(grammar2)("the dog chased the cat"), "$S"))
 // printCellSizes(createParser(grammar2)("the dog chased the cat"), "$S")
