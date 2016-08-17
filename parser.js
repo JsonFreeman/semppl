@@ -94,6 +94,7 @@ function dotProductScoreFn(features, params) {
 	return sum;
 }
 
+exports.ruleFeatureFn = ruleFeatureFn;
 function ruleFeatureFn(derivation) {
 	var features = {};
 	if (!derivation.isLeaf()) {
