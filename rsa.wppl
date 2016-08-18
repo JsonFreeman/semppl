@@ -39,6 +39,7 @@ var test1 = function() {
     var world1 = {
         model: { height: { john: 6.5 } },
         theta: { tall: 0.6 },
+        params: { tall: { } },
         domain: ["john"]
     };
     var params = { 

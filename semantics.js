@@ -1,7 +1,7 @@
 var _ = require("underscore");
 
 var scalarDegrees = {
-    tall(ent) {
+    tall(ent, params) {
         return 0;
     }
 }
@@ -26,7 +26,7 @@ module.exports = {
         return function(context) {
             return function(ent) {
                 // TODO: Replace hard comparison with sigmoid
-                return scalarDegrees[scaleName](ent) >= context.theta[scaleName] ? 1 : 0;
+                return scalarDegrees[scaleName](ent, context.params[scaleName]) >= context.theta[scaleName] ? 1 : 0;
             }
         }
     },
