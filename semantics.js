@@ -3,9 +3,6 @@ var _ = require("underscore");
 var scalarDegrees = {
     tall(ent) {
         return 0;
-    },
-    short(ent) {
-        return 0;
     }
 }
 
@@ -20,7 +17,7 @@ module.exports = {
     predicate: function(name) {
         return function(context) {
             return function(ent) {
-                return _.contains(context.model[name], ent);
+                return _.contains(context.model[name], ent) ? 1 : 0;
             }
         }
     },
@@ -28,7 +25,8 @@ module.exports = {
     scalarPredicate: function(scaleName) {
         return function(context) {
             return function(ent) {
-                return scalarDegrees[scaleName](ent) >= context.theta[scaleName];
+                // TODO: Replace hard comparison with sigmoid
+                return scalarDegrees[scaleName](ent) >= context.theta[scaleName] ? 1 : 0;
             }
         }
     },
@@ -37,7 +35,7 @@ module.exports = {
         return function(context) {
             return function(e1) {
                 return function(e2) {
-                    return _.contains(context.model[name][e1], e2);
+                    return _.contains(context.model[name][e1], e2) ? 1 : 0;
                 }
             }
         }
@@ -45,8 +43,7 @@ module.exports = {
 
     iota: function(context) {
         return function(pred) {
-            // Does not enforce uniqueness
-            return _.find(context.domain, pred);
+            return _.max(context.domain, pred);
         }
     },
 
@@ -59,6 +56,7 @@ module.exports = {
     intersectPredicates: function(modPredicate, headPredicate) {
         return function(context) {
             return function(ent) {
+                // TODO: Make this number valued instead of boolean
                 return modPredicate(context)(ent) && headPredicate(context)(ent);
             }
         }
