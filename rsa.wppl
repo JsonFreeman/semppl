@@ -1,4 +1,7 @@
 // webppl rsa.wppl --require .
+var worldPrior = function() {
+    // Return a distribution over worlds
+};
 var literalListener = function(utterance) {
   Infer(
     { method: 'enumerate' },
