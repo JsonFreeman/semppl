@@ -19,7 +19,7 @@ var utteranceProbability = function(utterance, world, params, startSymbol) {
 
     // Gather the two relevant probabilities
     var derivationProbabilities = map(function(d) {
-        return scoreFn(featureFn(d), params);
+        return Math.exp(scoreFn(featureFn(d), params));
     }, rootCellDerivations);
 
     // World dependent part starts here.
