@@ -1,0 +1,114 @@
+/*
+  (local-set-key (kbd "s-r") (lambda () (interactive) (save-buffer) (process-send-string "*shell daipp*" "echo '\n'; webppl examples/vae.wppl --require . --require webppl-fs --require webppl-csv \n")))
+*/
+
+var zDim = 10;
+var hDecodeDim = 500;
+var hEncodeDim = 500;
+var xDim = 784;
+//var fs = webpplFs;
+
+var M = 60000;
+var _images = readDataSetJSON('examples/data/mnist_images.json').slice(0,M);
+var labels = JSON.parse(fs.read('examples/data/mnist_labels.json')).slice(0,M);
+
+var images = mapIndexed(function(i, image) { return _.extend(image, {__index__: i}) },
+                        _images);
+
+// Recognition network.
+// Maps from an input image to the parameters of the guide
+// distribution.
+var encode = function(x, W, b) {
+  var h = T.tanh(T.add(T.dot(W[0], x), b[0]));
+  var mu = T.add(T.dot(W[1], h), b[1]);
+  var sigma = T.exp(T.mul(T.add(T.dot(W[2], h), b[2]),
+                          1/2));
+  return {mu: mu, sigma: sigma};
+};
+
+// Generative network.
+// Maps from the latent space to pixels.
+var decode = function(z, W, b) {
+  var h = T.tanh(T.add(T.dot(W[0], z), b[0]));
+  return T.sigmoid(T.add(T.dot(W[1], h), b[1]));
+};
+
+var nnparam = function(a, b) {
+  return param([a, b], 0, 0.1);
+};
+
+var model = function() {
+
+  // Define parameters.
+
+  // Variational.
+  var W0 = nnparam(hEncodeDim, xDim);
+  var W1 = nnparam(zDim, hEncodeDim);
+  var W2 = nnparam(zDim, hEncodeDim);
+  var b0 = nnparam(hEncodeDim, 1);
+  var b1 = nnparam(zDim, 1);
+  var b2 = nnparam(zDim, 1);
+
+  // Generative.
+  var W3 = nnparam(hDecodeDim, zDim);
+  var W4 = nnparam(xDim, hDecodeDim);
+  var b3 = nnparam(hDecodeDim, 1);
+  var b4 = nnparam(xDim, 1);
+
+  // Gaussian priors and a Delta distributions for the variational
+  // family yields maximum likelihood estimation (with L2
+  // regularization) of the parameters.
+
+  // var W3 = sample(TensorGaussian({mu: 0, sigma: 1, dims: [hDecodeDim, zDim]}), {
+  //   guide: Delta({v: nnparam(hDecodeDim, zDim)})
+  // });
+  // var W4 = sample(TensorGaussian({mu: 0, sigma: 1, dims: [xDim, hDecodeDim]}), {
+  //   guide: Delta({v: nnparam(xDim, hDecodeDim)})
+  // });
+  // var b3 = sample(TensorGaussian({mu: 0, sigma: 1, dims: [hDecodeDim, 1]}), {
+  //   guide: Delta({v: nnparam(hDecodeDim, 1)})
+  // });
+  // var b4 = sample(TensorGaussian({mu: 0, sigma: 1, dims: [xDim, 1]}), {
+  //   guide: Delta({v: nnparam(xDim, 1)})
+  // });
+
+  mapData({data: images, batchSize: 100}, function(image) {
+
+    var zGuideArgs = encode(image, [W0, W1, W2], [b0, b1, b2]);
+    var z = sample(
+      TensorGaussian({mu: 0, sigma: 1, dims: [zDim, 1]}), // could we hoist this out of mapData?
+      {guide: DiagCovGaussian(zGuideArgs)});
+
+    var probs = decode(z, [W3, W4], [b3, b4]);
+
+    factor(MultivariateBernoulli({ps: probs}).score(image));
+    return {i: image.__index__,
+            label: labels[image.__index__],
+            mu: zGuideArgs.mu.x} // NB: have to do .x part because of a bug
+  });
+};
+
+var seed = process.env.RANDOM_SEED || 20;
+util.seedRNG(seed);
+
+var steps = 1500;
+var marg = Infer({method: 'optimize', steps: steps, optMethod: {adam: {stepSize: 0.001}}},
+                 model);
+var latents = marg.support()[0];
+
+// name the output file informatively, with info about all the run parameters
+var runParams = {
+  model: 'vae',
+  query: _.without(_.keys(latents[0]), 'i', 'label'),
+  zDim: zDim,
+  M: M,
+  steps: steps,
+  seed: seed
+}
+
+var outputFileName = map(function(pair) { pair.join('_') },
+                         _.pairs(runParams)).join(',') + '.csv';
+
+webpplCsv.writeCSV(latents, outputFileName);
+
+'Wrote to ' + outputFileName
