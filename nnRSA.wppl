@@ -42,7 +42,7 @@ Enumerate(function(){
   var utterance = utterancePrior()
   var L = literalListener(utterance,W,b)
 
-  factor(L.score([],world))
+  factor(L.score(world))
 
   return utterance
 })})
@@ -51,7 +51,7 @@ var listener = cache(function(utterance,W,b) {
   Enumerate(function(){
     var world = worldPrior()
     var S = speaker(world,W,b)
-    factor(S.score([],utterance))
+    factor(S.score(utterance))
     return world
   })
 })
@@ -84,7 +84,7 @@ var model = function() {
   console.log(lit.hist)
 
 
-  factor(l1.score([], Vector([0,0,1]))*1+l1.score([], Vector([0,1,0]))*1+l2.score([], Vector([1,0,0]))*1)
+  factor(l1.score(Vector([0,0,1]))*1+l1.score(Vector([0,1,0]))*1+l2.score(Vector([1,0,0]))*1)
 
   return W0;
 };
