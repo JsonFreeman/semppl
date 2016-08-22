@@ -48,18 +48,18 @@ Enumerate(function(){
 })})
 
 var listener = cache(function(utterance,W,b) {
-Enumerate(function(){
-  var world = worldPrior()
-  var S = speaker(world,W,b)
-  factor(S.score([],utterance))
-  return world
-})
+  Enumerate(function(){
+    var world = worldPrior()
+    var S = speaker(world,W,b)
+    factor(S.score([],utterance))
+    return world
+  })
 })
 
 var sampleMatrixGaussian = function(dims,mean,variance,guide_mean){
   var length = dims[0]*dims[1]
-  var g = sample(diagCovGaussianERP,[Vector(repeat(length, constF(mean))),Vector(repeat(length, constF(variance)))],
-    {guide: [diagCovGaussianERP, [T.reshape(guide_mean,[length,1]),Vector(repeat(length, constF(0.001)))]]})
+  var g = sample(DiagCovGaussian({ mu: Vector(repeat(length, constF(mean))), sigma: Vector(repeat(length, constF(variance)))}),
+    {guide: DiagCovGaussian({ mu: T.reshape(guide_mean,[length,1]), sigma: Vector(repeat(length, constF(0.001)))})})
   return T.reshape(g,dims)
 }
 
