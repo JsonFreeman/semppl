@@ -1,8 +1,16 @@
 var _ = require("underscore");
 
+var network = function(x, W, b) {
+    console.log("Entering network function")
+    var input = T.reshape(T.concat(x[0],x[1]),[x[0].length+x[1].length,1]);
+    var h = T.tanh(T.add(T.dot(W[0], input), b[0]));
+    var output = T.add(T.dot(W[1], h), b[1]);
+    return T.sumreduce(input);
+};
+
 var scalarDegrees = {
     tall(ent, params) {
-        return 0;
+        return network(ent, params.W, params.b);
     }
 }
 

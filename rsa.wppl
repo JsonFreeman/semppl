@@ -2,11 +2,10 @@
 var worldPrior = function() {
     // Return a distribution over worlds
 };
-var literalListener = cache(function(utterance,W,b) {
+var literalListener = cache(function(utterance, params) {
     Enumerate(function(){
         var world = worldPrior()
-        factor(truth([world,utterance],W,b))
-
+        factor(truth(utterance, world, params, "$S"))
         return world
     })
 })
@@ -52,6 +51,12 @@ var truth = function(utterance, world, params, startSymbol) {
     }, derivationProbabilities, truthProbabilities));
 };
 
+var sampleMatrixGaussian = function(dims,mean,variance,guide_mean){
+  var length = dims[0]*dims[1]
+  var g = sample(DiagCovGaussian({ mu: Vector(repeat(length, constF(mean))), sigma: Vector(repeat(length, constF(variance)))}))
+  return T.reshape(g,dims)
+}
+
 var denotationProbability = function(world) {
     return function(derivation) {
         return derivation.semantics(world);
@@ -67,10 +72,18 @@ var scoreFn = function(features, params) {
 
 var parser = { call: semppl.createParser(semppl.grammarIsTall) };
 var test1 = function() {
+    var h_size = 10
+    var num_worlds = 1
+    var num_utterances = 1
+    var W0 = sampleMatrixGaussian([h_size,num_worlds+num_utterances],0,10)
+    var W1 = sampleMatrixGaussian([1,h_size],0,10)
+    var b0 = sampleMatrixGaussian([h_size,1],0,10)
+    var b1 = sampleMatrixGaussian([1,1],0,10)
+
     var world1 = {
         model: { height: { john: 6.5 } },
         theta: { tall: 0.6 },
-        params: { tall: { } },
+        params: { tall: { W: [W0, W1], b: [b0, b1] } },
         domain: ["john"]
     };
     var params = { 
