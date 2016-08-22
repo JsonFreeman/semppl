@@ -5,7 +5,7 @@ var worldPrior = function() {
 var literalListener = cache(function(utterance,W,b) {
     Enumerate(function(){
         var world = worldPrior()
-        factor(network([world,utterance],W,b))
+        factor(truth([world,utterance],W,b))
 
         return world
     })
@@ -31,7 +31,7 @@ var listener = cache(function(utterance,W,b) {
     })
 })
 
-var utteranceProbability = function(utterance, world, params, startSymbol) {
+var truth = function(utterance, world, params, startSymbol) {
     var chart = parser.call(utterance, params);
     var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
 
@@ -80,6 +80,6 @@ var test1 = function() {
         '$VP -> $COP $ADJ': 1,
         '$S -> $NP $VP': 1
     };
-    utteranceProbability("John is tall", world1, params, "$S");
+    truth("John is tall", world1, params, "$S");
 };
 test1();
