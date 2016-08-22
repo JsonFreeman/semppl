@@ -1,7 +1,6 @@
 var _ = require("underscore");
 
 function network(input, W, b) {
-    console.log("Entering network function")
     var h = T.tanh(T.add(T.dot(W[0], input), b[0]));
     var output = T.add(T.dot(W[1], h), b[1]);
     return T.sumreduce(output)
@@ -44,8 +43,8 @@ module.exports = {
     scalarPredicate: function(scaleName) {
         return function(context) {
             return function(ent) {
-                // TODO: Replace hard comparison with sigmoid
-                return scalarDegrees[scaleName](ent, context.params[scaleName]) >= context.theta[scaleName] ? 1 : 0;
+                var measurement = scalarDegrees[scaleName](ent, context.params[scaleName]);
+                return ad.scalar.sigmoid(ad.scalar.sub(measurement, context.theta[scaleName]));
             }
         }
     },
