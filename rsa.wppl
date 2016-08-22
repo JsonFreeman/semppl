@@ -2,16 +2,34 @@
 var worldPrior = function() {
     // Return a distribution over worlds
 };
-var literalListener = function(utterance) {
-  Infer(
-    { method: 'enumerate' },
-    function() {
-      var world = worldPrior();
-      var m = utteranceProbability(utterance, world, {}, "$S");
-      factor(Math.log(m));
-      return world;
-    });
-};
+var literalListener = cache(function(utterance,W,b) {
+    Enumerate(function(){
+        var world = worldPrior()
+        factor(network([world,utterance],W,b))
+
+        return world
+    })
+})
+
+var speaker = cache(function(world,W,b) {
+    Enumerate(function(){
+        var utterance = utterancePrior()
+        var L = literalListener(utterance,W,b)
+
+        factor(L.score(world))
+
+        return utterance
+    })
+})
+
+var listener = cache(function(utterance,W,b) {
+    Enumerate(function(){
+        var world = worldPrior()
+        var S = speaker(world,W,b)
+        factor(S.score(utterance))
+        return world
+    })
+})
 
 var utteranceProbability = function(utterance, world, params, startSymbol) {
     var chart = parser.call(utterance, params);
