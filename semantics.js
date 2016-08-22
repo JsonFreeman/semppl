@@ -20,6 +20,7 @@ function oneHot(ent) {
 
 var scalarDegrees = {
     tall(ent, params) {
+        // Pass in input vector from webppl instead of constructing it here
         return network(oneHot(ent), params.W, params.b);
     }
 }

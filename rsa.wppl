@@ -79,6 +79,7 @@ var test1 = function() {
     var b0 = sampleMatrixGaussian([h_size,1],0,10)
     var b1 = sampleMatrixGaussian([1,1],0,10)
 
+    // Question: How to make an input vector that reflects john's height
     var world1 = {
         model: { height: { john: 6.5 } },
         theta: { tall: 0.6 },
