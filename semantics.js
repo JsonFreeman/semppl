@@ -1,16 +1,26 @@
 var _ = require("underscore");
 
-var network = function(x, W, b) {
+function network(input, W, b) {
     console.log("Entering network function")
-    var input = T.reshape(T.concat(x[0],x[1]),[x[0].length+x[1].length,1]);
     var h = T.tanh(T.add(T.dot(W[0], input), b[0]));
     var output = T.add(T.dot(W[1], h), b[1]);
-    return T.sumreduce(input);
+    return T.sumreduce(output)
 };
+
+// Wrapper around webppl Vector
+// alternatively use new Tensor()
+function makeVector(arr) {
+    return Vector(/*s*/ null, (_, x) => x, /*a*/ null, arr);
+}
+
+// TODO: Use ent in the computation somehow
+function oneHot(ent) {
+    return makeVector([1, 0, 0])
+}
 
 var scalarDegrees = {
     tall(ent, params) {
-        return network(ent, params.W, params.b);
+        return network(oneHot(ent), params.W, params.b);
     }
 }
 
