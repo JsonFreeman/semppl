@@ -1,17 +1,23 @@
 // webppl rsa.wppl --require .
+var nnparam = function(a, b) {
+  return tensorParam([a, b], 0, 0.1);
+};
+
+
 var worldPrior = function() {
     // Return a distribution over worlds
+
 };
-var literalListener = cache(function(utterance, params) {
-    Enumerate(function(){
+var literalListener = cache(function(utterance,params) {
+  Infer({method: 'enumerate'},function(){
         var world = worldPrior()
         factor(truth(utterance, world, params, "$S"))
         return world
     })
 })
 
-var speaker = cache(function(world,W,b) {
-    Enumerate(function(){
+var speaker = cache(function(utterance,params) {
+  Infer({method: 'enumerate'},function(){
         var utterance = utterancePrior()
         var L = literalListener(utterance,W,b)
 
@@ -21,8 +27,8 @@ var speaker = cache(function(world,W,b) {
     })
 })
 
-var listener = cache(function(utterance,W,b) {
-    Enumerate(function(){
+var listener = cache(function(utterance,params) {
+  Infer({method: 'enumerate'},function(){
         var world = worldPrior()
         var S = speaker(world,W,b)
         factor(S.score(utterance))
@@ -53,7 +59,8 @@ var truth = function(utterance, world, params, startSymbol) {
 
 var sampleMatrixGaussian = function(dims,mean,variance,guide_mean){
   var length = dims[0]*dims[1]
-  var g = sample(DiagCovGaussian({ mu: Vector(repeat(length, constF(mean))), sigma: Vector(repeat(length, constF(variance)))}))
+  var g = sample(DiagCovGaussian({ mu: Vector(repeat(length, constF(mean))), sigma: Vector(repeat(length, constF(variance)))}),
+    {guide: DiagCovGaussian({ mu: T.reshape(guide_mean,[length,1]), sigma: Vector(repeat(length, constF(0.001)))})})
   return T.reshape(g,dims)
 }
 
@@ -71,13 +78,19 @@ var scoreFn = function(features, params) {
 };
 
 var parser = { call: semppl.createParser(semppl.grammarIsTall) };
-var test1 = function() {
+var model = function() {
     var h_size = 10
     var ent_size = 3
-    var W0 = sampleMatrixGaussian([h_size,ent_size],0,10)
-    var W1 = sampleMatrixGaussian([1,h_size],0,10)
-    var b0 = sampleMatrixGaussian([h_size,1],0,10)
-    var b1 = sampleMatrixGaussian([1,1],0,10)
+
+    var W0_var = nnparam(h_size,ent_size)
+    var W1_var = nnparam(1,h_size)
+    var b0_var = nnparam(h_size,1)
+    var b1_var = nnparam(1,1)
+
+    var W0 = sampleMatrixGaussian([h_size,ent_size],0,10,W0_var)
+    var W1 = sampleMatrixGaussian([1,h_size],0,10,W1_var)
+    var b0 = sampleMatrixGaussian([h_size,1],0,10,b0_var)
+    var b1 = sampleMatrixGaussian([1,1],0,10,b1_var)
 
     // Question: How to make an input vector that reflects john's height
     var world1 = {
@@ -93,6 +106,7 @@ var test1 = function() {
         '$VP -> $COP $ADJ': 1,
         '$S -> $NP $VP': 1
     };
-    truth("John is tall", world1, params, "$S");
+    factor(truth("John is tall", world1, params, "$S"))
+    return W0
 };
-test1();
+var p = Optimize(model, {steps: 2000, estimator: {ELBO: {samples: 1}}});

@@ -4,7 +4,7 @@ var num_worlds = 3
 var h_size = 10
 
 var nnparam = function(a, b) {
-  return param([a, b], 0, 0.1);
+  return tensorParam([a, b], 0, 0.1);
 };
 
 var network = function(x, W, b) {
@@ -29,7 +29,7 @@ var utterancePrior = function() {
 
 
 var literalListener = cache(function(utterance,W,b) {
-  Enumerate(function(){
+  Infer({method: 'enumerate'},function(){
     var world = worldPrior()
     factor(network([world,utterance],W,b))
 
@@ -38,7 +38,7 @@ var literalListener = cache(function(utterance,W,b) {
 })
 
 var speaker = cache(function(world,W,b) {
-Enumerate(function(){
+  Infer({method: 'enumerate'},function(){
   var utterance = utterancePrior()
   var L = literalListener(utterance,W,b)
 
@@ -48,7 +48,7 @@ Enumerate(function(){
 })})
 
 var listener = cache(function(utterance,W,b) {
-  Enumerate(function(){
+  Infer({method: 'enumerate'},function(){
     var world = worldPrior()
     var S = speaker(world,W,b)
     factor(S.score(utterance))
@@ -81,16 +81,16 @@ var model = function() {
   var l2 = listener(Vector([1,0,0]),[W0,W1],[b0,b1])
 
   var lit = literalListener(Vector([0,0,1]),[W0,W1],[b0,b1])
-  console.log(lit.hist)
+  console.log(map(function(x){return l1.score(x)},l1.support([])))
 
 
-  factor(l1.score(Vector([0,0,1]))*1+l1.score(Vector([0,1,0]))*1+l2.score(Vector([1,0,0]))*1)
+  factor(l1.score(Vector([0,0,1]))*10+l1.score(Vector([0,1,0]))*10+l2.score(Vector([1,0,0]))*1)
 
   return W0;
 };
 
 // VI.
-var params = Optimize(model, {steps: 2000, method: {gd: {stepSize: 0.01}}, estimator: {ELBO: {samples: 1}}});
+var params = Optimize(model, {steps: 2000, estimator: {ELBO: {samples: 1}}});
 
 // Optimized params.
 console.log(JSON.stringify(params))
