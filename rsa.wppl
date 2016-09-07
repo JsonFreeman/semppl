@@ -100,12 +100,12 @@ var model = function() {
         domain: ["john"]
     };
     var params = { 
-        '$NP -> John': 1,
-        '$COP -> is': 1,
-        '$ADJ -> tall': 1,
-        '$VP -> $COP $ADJ': 1,
-        '$S -> $NP $VP': 1
+        '$NP -> John': scalarParam(0, 1),
+        '$COP -> is': scalarParam(0, 1),
+        '$ADJ -> tall': scalarParam(0, 1),
+        '$VP -> $COP $ADJ': scalarParam(0, 1),
+        '$S -> $NP $VP': scalarParam(0, 1)
     };
     factor(Math.log(truth("John is tall", world1, params, "$S")))
 };
-var p = Optimize(model, {steps: 2000, estimator: {ELBO: {samples: 1}}});
+Optimize(model, {steps: 2000, estimator: {ELBO: {samples: 1}}});
