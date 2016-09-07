@@ -106,6 +106,9 @@ var model = function() {
         '$VP -> $COP $ADJ': scalarParam(0, 1),
         '$S -> $NP $VP': scalarParam(0, 1)
     };
-    factor(Math.log(truth("John is tall", world1, params, "$S")))
+    var truthValue = truth("John is tall", world1, params, "$S");
+    console.log(typeof truthValue); // Why is it an object?
+    factor(Math.log(truthValue));
+    return truthValue;
 };
-Optimize(model, {steps: 2000, estimator: {ELBO: {samples: 1}}});
+OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}});
