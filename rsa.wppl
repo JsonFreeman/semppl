@@ -16,7 +16,7 @@ var literalListener = cache(function(utterance,params) {
     })
 })
 
-var speaker = cache(function(utterance,params) {
+var speaker = cache(function(world,params) {
   Infer({method: 'enumerate'},function(){
         var utterance = utterancePrior()
         var L = literalListener(utterance,W,b)
