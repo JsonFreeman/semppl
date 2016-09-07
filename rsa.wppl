@@ -106,6 +106,6 @@ var model = function() {
         '$VP -> $COP $ADJ': 1,
         '$S -> $NP $VP': 1
     };
-    factor(truth("John is tall", world1, params, "$S"))
+    factor(Math.log(truth("John is tall", world1, params, "$S")))
 };
 var p = Optimize(model, {steps: 2000, estimator: {ELBO: {samples: 1}}});
