@@ -107,6 +107,5 @@ var model = function() {
         '$S -> $NP $VP': 1
     };
     factor(truth("John is tall", world1, params, "$S"))
-    return W0
 };
 var p = Optimize(model, {steps: 2000, estimator: {ELBO: {samples: 1}}});
