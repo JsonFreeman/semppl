@@ -36,11 +36,13 @@ var listener = cache(function(utterance,params) {
     })
 })
 
+// TODO: Separate into parse and truth
 var truth = function(utterance, world, params, startSymbol) {
     var chart = parser.call(utterance, params);
     var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
 
     // Gather the two relevant probabilities
+    // TODO: normalize this
     var derivationProbabilities = map(function(d) {
         return Math.exp(scoreFn(featureFn(d), params));
     }, rootCellDerivations);
@@ -93,12 +95,15 @@ var model = function() {
     var b1 = sampleMatrixGaussian([1,1],0,10,b1_var)
 
     // Question: How to make an input vector that reflects john's height
+    // TODO: Separate params accordingly
     var world1 = {
         model: { height: { john: 6.5 } },
         theta: { tall: 0.6 },
         params: { tall: { W: [W0, W1], b: [b0, b1] } },
         domain: ["john"]
     };
+
+    // TODO: Update to use guide dist
     var params = { 
         '$NP -> John': scalarParam(0, 1),
         '$COP -> is': scalarParam(0, 1),
@@ -107,8 +112,8 @@ var model = function() {
         '$S -> $NP $VP': scalarParam(0, 1)
     };
     var truthValue = truth("John is tall", world1, params, "$S");
-    console.log(typeof truthValue); // Why is it an object?
+    console.log( truthValue);
     factor(Math.log(truthValue));
     return truthValue;
 };
-OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}});
+sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}})).x;
