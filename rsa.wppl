@@ -42,7 +42,6 @@ var truth = function(utterance, world, params, startSymbol) {
     var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
 
     // Gather the two relevant probabilities
-    // TODO: normalize this
     var derivationProbabilities = normalize(map(function(d) {
         return Math.exp(scoreFn(featureFn(d), params));
     }, rootCellDerivations));
