@@ -68,7 +68,7 @@ var sampleMatrixGaussian = function(dims,mean,variance,guide_mean){
 
 var sampleScalarGaussian = function(mean, variance) {
     return sample(Gaussian({ mu: mean, sigma: variance }),
-        { guide: Gaussian({ mu: scalarParam(mean, 1), sigma: Math.exp(scalarParam(Math.log(variance), 1)) }) });
+        { guide: Gaussian({ mu: scalarParam(mean), sigma: 0.001 }) });
 }
 
 var denotationProbability = function(world) {
