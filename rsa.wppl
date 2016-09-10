@@ -126,4 +126,4 @@ var model = function() {
     factor(Math.log(truthValue));
     return truthValue;
 };
-sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}})).x;
+OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}});
