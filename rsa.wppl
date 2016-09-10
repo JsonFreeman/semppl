@@ -43,9 +43,9 @@ var truth = function(utterance, world, params, startSymbol) {
 
     // Gather the two relevant probabilities
     // TODO: normalize this
-    var derivationProbabilities = map(function(d) {
+    var derivationProbabilities = normalize(map(function(d) {
         return Math.exp(scoreFn(featureFn(d), params));
-    }, rootCellDerivations);
+    }, rootCellDerivations));
 
     // World dependent part starts here.
     var truthProbabilities = map(denotationProbability(world), rootCellDerivations);
@@ -82,6 +82,13 @@ var scoreFn = function(features, params) {
     return sum(_.values(mapObject(function(k, v) {
         return _.has(params, k) ? v * params[k] : 0;
     }, features)));
+};
+
+var normalize = function(array) {
+    var s = sum(array);
+    return map(function(x) {
+        return x / s;
+    }, array);
 };
 
 var parser = { call: semppl.createParser(semppl.grammarIsTall) };
