@@ -66,6 +66,11 @@ var sampleMatrixGaussian = function(dims,mean,variance,guide_mean){
   return T.reshape(g,dims)
 }
 
+var sampleScalarGaussian = function(mean, variance) {
+    return sample(Gaussian({ mu: mean, sigma: variance }),
+        { guide: Gaussian({ mu: scalarParam(mean, 1), sigma: scalarParam(variance, 1) }) });
+}
+
 var denotationProbability = function(world) {
     return function(derivation) {
         return derivation.semantics(world);
@@ -105,11 +110,11 @@ var model = function() {
 
     // TODO: Update to use guide dist
     var params = { 
-        '$NP -> John': scalarParam(0, 1),
-        '$COP -> is': scalarParam(0, 1),
-        '$ADJ -> tall': scalarParam(0, 1),
-        '$VP -> $COP $ADJ': scalarParam(0, 1),
-        '$S -> $NP $VP': scalarParam(0, 1)
+        '$NP -> John': sampleScalarGaussian(0, 1),
+        '$COP -> is': sampleScalarGaussian(0, 1),
+        '$ADJ -> tall': sampleScalarGaussian(0, 1),
+        '$VP -> $COP $ADJ': sampleScalarGaussian(0, 1),
+        '$S -> $NP $VP': sampleScalarGaussian(0, 1)
     };
     var truthValue = truth("John is tall", world1, params, "$S");
     console.log( truthValue);
