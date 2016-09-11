@@ -37,7 +37,6 @@ var listener = cache(function(utterance,params) {
     })
 })
 
-// TODO: Separate into parse and truth
 var parse = function(utterance, params, startSymbol) {
     var chart = parser.call(utterance, params);
     var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
