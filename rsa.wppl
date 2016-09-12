@@ -3,8 +3,30 @@ var nnparam = function(a, b) {
   return tensorParam([a, b], 0, 0.1);
 };
 
+var featureFn = function(d) { return semppl.ruleFeatureFn(d); };
+var scoreFn = function(features, params) {
+    return sum(_.values(mapObject(function(k, v) {
+        return _.has(params, k) ? v * params[k] : 0;
+    }, features)));
+};
+
+var normalize = function(array) {
+    var s = sum(array);
+    return map(function(x) {
+        return x / s;
+    }, array);
+};
+
+var denotationProbability = function(world) {
+    return function(derivation) {
+        return derivation.semantics(world);
+    };
+};
+
+var parser = semppl.createParser(semppl.grammarIsTall);
+
 var parse = function(utterance, params, startSymbol) {
-    var chart = parser.call(utterance, params);
+    var chart = parser.call(null, utterance, params);
     var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
 
     // Gather the two relevant probabilities
@@ -71,27 +93,6 @@ var sampleScalarGaussian = function(mean, variance) {
         { guide: Gaussian({ mu: scalarParam(mean), sigma: 0.001 }) });
 }
 
-var denotationProbability = function(world) {
-    return function(derivation) {
-        return derivation.semantics(world);
-    };
-};
-
-var featureFn = function(d) { return semppl.ruleFeatureFn(d); };
-var scoreFn = function(features, params) {
-    return sum(_.values(mapObject(function(k, v) {
-        return _.has(params, k) ? v * params[k] : 0;
-    }, features)));
-};
-
-var normalize = function(array) {
-    var s = sum(array);
-    return map(function(x) {
-        return x / s;
-    }, array);
-};
-
-var parser = { call: semppl.createParser(semppl.grammarIsTall) };
 var model = function() {
     var h_size = 10
     var ent_size = 3
