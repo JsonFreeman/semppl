@@ -4,15 +4,15 @@ var nnparam = function(a, b) {
 };
 
 
-var worldPrior = function() {
-    // Return a distribution over worlds
-
+var worldPrior = function(worlds) {
+    return worlds[randomInteger(worlds.length)];
 };
-var literalListener = cache(function(utterance,params) {
+
+var literalListener = cache(function(utterance, params, worlds) {
     Infer({method: 'enumerate'}, function() {
-        var meaning = parse(utterance, params, "$S");
+        var truthFn = parse(utterance, params, "$S");
         var world = worldPrior();
-        factor(Math.log(meaning(world)));
+        factor(Math.log(truthFn(world)));
         return world;
     })
 })
@@ -108,11 +108,12 @@ var model = function() {
     var b1 = sampleMatrixGaussian([1,1],0,10,b1_var)
 
     // Question: How to make an input vector that reflects john's height
-    // TODO: Separate params accordingly
-    var context = {
-        facts: { height: { john: 6.5 } },
-        domain: ["john"]
-    };
+    var worlds = map(function(h) {
+        return {
+            facts: { height: { john: h } },
+            domain: ["john"]
+        };
+    }, [6.5, 6.0, 5.5]);
 
     var params = { 
         parserWeights: {
@@ -125,9 +126,9 @@ var model = function() {
         theta: { tall: 0.6 },
         networkParams: { tall: { W: [W0, W1], b: [b0, b1] } },
     };
-    var truthValue = parse("John is tall", params, "$S")(context);
-    console.log(truthValue);
-    factor(Math.log(truthValue));
-    return truthValue;
+
+    var distOnWorlds = literalListener("John is tall", params, worlds);
+    factor(distOnWorlds.score(worlds[0]));
+    return sample(distOnWorlds);
 };
 OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}});
