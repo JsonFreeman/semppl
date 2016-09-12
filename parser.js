@@ -41,8 +41,8 @@ function createParser(grammar, featureFn, scoreFn, beamSize) {
 				}
 
 				// Sort scores in descending order, and chop off to fit in the beam
-				newCellDerivations.sort((d1, d2) => d2.getScore(scoreFn, featureFn, params)
-												- d1.getScore(scoreFn, featureFn, params));
+				newCellDerivations.sort((d1, d2) => d2.getScore(scoreFn, featureFn, params.parserWeights)
+												- d1.getScore(scoreFn, featureFn, params.parserWeights));
 				if (newCellDerivations.length > beamSize) {
 					newCellDerivations.length = beamSize;
 				}

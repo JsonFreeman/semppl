@@ -35,7 +35,7 @@ module.exports = {
     predicate: function(name) {
         return function(context) {
             return function(ent) {
-                return _.contains(context.model[name], ent) ? 1 : 0;
+                return _.contains(context.facts[name], ent) ? 1 : 0;
             }
         }
     },
@@ -53,7 +53,7 @@ module.exports = {
         return function(context) {
             return function(e1) {
                 return function(e2) {
-                    return _.contains(context.model[name][e1], e2) ? 1 : 0;
+                    return _.contains(context.facts[name][e1], e2) ? 1 : 0;
                 }
             }
         }

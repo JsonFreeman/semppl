@@ -109,22 +109,24 @@ var model = function() {
 
     // Question: How to make an input vector that reflects john's height
     // TODO: Separate params accordingly
-    var world1 = {
-        model: { height: { john: 6.5 } },
-        theta: { tall: 0.6 },
-        params: { tall: { W: [W0, W1], b: [b0, b1] } },
+    var context = {
+        facts: { height: { john: 6.5 } },
         domain: ["john"]
     };
 
     var params = { 
-        '$NP -> John': sampleScalarGaussian(0, 1),
-        '$COP -> is': sampleScalarGaussian(0, 1),
-        '$ADJ -> tall': sampleScalarGaussian(0, 1),
-        '$VP -> $COP $ADJ': sampleScalarGaussian(0, 1),
-        '$S -> $NP $VP': sampleScalarGaussian(0, 1)
+        parserWeights: {
+            '$NP -> John': sampleScalarGaussian(0, 1),
+            '$COP -> is': sampleScalarGaussian(0, 1),
+            '$ADJ -> tall': sampleScalarGaussian(0, 1),
+            '$VP -> $COP $ADJ': sampleScalarGaussian(0, 1),
+            '$S -> $NP $VP': sampleScalarGaussian(0, 1)
+        },
+        theta: { tall: 0.6 },
+        networkParams: { tall: { W: [W0, W1], b: [b0, b1] } },
     };
-    var truthValue = parse("John is tall", params, "$S")(world1);
-    console.log( truthValue);
+    var truthValue = parse("John is tall", params, "$S")(context);
+    console.log(truthValue);
     factor(Math.log(truthValue));
     return truthValue;
 };
