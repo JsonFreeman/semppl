@@ -1,4 +1,5 @@
 var _ = require("underscore");
+var Tensor = require("adnn/tensor");
 
 function network(input, W, b) {
     var h = T.tanh(T.add(T.dot(W[0], input), b[0]));
@@ -6,21 +7,19 @@ function network(input, W, b) {
     return T.sumreduce(output)
 };
 
-// Wrapper around webppl Vector
-// alternatively use new Tensor()
 function makeVector(arr) {
-    return Vector(/*s*/ null, (_, x) => x, /*a*/ null, arr);
+    // Do I need to do ad.lift?
+    return new Tensor([arr.length, 1]).fromFlatArray(arr);
 }
 
-// TODO: Use ent in the computation somehow
-function oneHot(ent) {
-    return makeVector([1, 0, 0])
+function entityVector(ent, context) {
+    var array = [context.facts.height[ent], 0, 0];
+    return makeVector(array);
 }
 
 var scalarDegrees = {
-    tall(ent, params) {
-        // Pass in input vector from webppl instead of constructing it here
-        return network(oneHot(ent), params.W, params.b);
+    tall(ent, context, params) {
+        return network(entityVector(ent, context), params.W, params.b);
     }
 }
 
@@ -42,7 +41,7 @@ module.exports = {
         return function(params) {
             return function(context) {
                 return function(ent) {
-                    var measurement = scalarDegrees[scaleName](ent, params.networkParams[scaleName]);
+                    var measurement = scalarDegrees[scaleName](ent, context, params.networkParams[scaleName]);
                     return ad.scalar.sigmoid(ad.scalar.sub(measurement, params.theta[scaleName]));
                 }
             }
