@@ -55,7 +55,7 @@ var worldPrior = function(worlds) {
 var literalListener = cache(function(utterance, params, worlds) {
     Infer({method: 'enumerate'}, function() {
         var truthFn = parse(utterance, params, "$S");
-        var world = worldPrior();
+        var world = worldPrior(worlds);
         factor(Math.log(truthFn(world)));
         return world;
     })
