@@ -26,6 +26,7 @@ var denotationProbability = function(world) {
 var parser = semppl.createParser(semppl.grammarIsTall);
 
 var parse = function(utterance, params, startSymbol) {
+    // Need to use .call to call parser as a js function
     var chart = parser.call(null, utterance, params);
     var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
 
