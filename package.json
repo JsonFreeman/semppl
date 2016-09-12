@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/JsonFreeman/semppl/issues"
   },
-  "homepage": "https://github.com/JsonFreeman/semppl#readme"
+  "homepage": "https://github.com/JsonFreeman/semppl#readme",
+  "dependencies": {
+    "adnn": "^1.1.6"
+  }
 }
