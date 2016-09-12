@@ -12,7 +12,7 @@ var literalListener = cache(function(utterance,params) {
     Infer({method: 'enumerate'}, function() {
         var meaning = parse(utterance, params, "$S");
         var world = worldPrior();
-        factor(meaning(world));
+        factor(Math.log(meaning(world)));
         return world;
     })
 })
