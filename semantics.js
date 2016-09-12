@@ -26,18 +26,16 @@ var scalarDegrees = {
 
 module.exports = {
     entity: function(x) {
-        // Just a constant function for a rigid designator
-        return function (context) {
-            return x;
-        }
+        // Just a constant function for a rigid designator. Ignores theta and context.
+        return _.constant(_.constant(x));
     },
 
     predicate: function(name) {
-        return function(context) {
+        return _.constant(function(context) {
             return function(ent) {
                 return _.contains(context.facts[name], ent) ? 1 : 0;
             }
-        }
+        })
     },
 
     scalarPredicate: function(scaleName) {
@@ -50,26 +48,22 @@ module.exports = {
     },
 
     transitive: function(name) {
-        return function(context) {
+        return _.constant(function(context) {
             return function(e1) {
                 return function(e2) {
                     return _.contains(context.facts[name][e1], e2) ? 1 : 0;
                 }
             }
-        }
+        })
     },
 
-    iota: function(context) {
+    iota: _.constant(function(context) {
         return function(pred) {
             return _.max(context.domain, pred);
         }
-    },
+    }),
 
-    id: function(context) {
-        return function(x) {
-            return x;
-        }
-    },
+    id: _.constant(_.constant(_.identity)),
 
     intersectPredicates: function(modPredicate, headPredicate) {
         return function(context) {
