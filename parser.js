@@ -19,7 +19,8 @@ function createParser(grammar, featureFn, scoreFn, beamSize) {
 			chart[i] = [];
 			chart[i][i] = _.groupBy(_.map(_.filter(grammar,
 				rule => rule.RHS === words[i]), // filter
-				rule => new Derivation(rule, /*leftChild*/ undefined, /*rightChild*/ undefined, rule.sem)), // map
+				rule => new Derivation(rule, /*leftChild*/ undefined, /*rightChild*/ undefined,
+					rule.sem(params))), // map
 				derivation => derivation.rule.LHS); // groupBy
 		}
 
