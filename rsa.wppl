@@ -129,6 +129,6 @@ var model = function() {
 
     var distOnWorlds = literalListener("John is tall", params, worlds);
     factor(distOnWorlds.score(worlds[0]));
-    return sample(distOnWorlds);
+    return distOnWorlds;
 };
-OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}});
+sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}}));
