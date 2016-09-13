@@ -367,6 +367,22 @@ var grammarIsTall = [
 		LHS: "$ADJ",
 		RHS: "tall",
 		sem: semFuncs.scalarPredicate("tall")
+	},
+	{
+		// Uninformative meaning for tall
+		LHS: "$ADJ2",
+		RHS: "tall",
+		sem: _.constant(_.constant(_.constant(0.5)))
+	},
+	{
+		LHS: "$VP2",
+		RHS: "$COP $ADJ2",
+		sem: semFuncs.fwdApply
+	},
+	{
+		LHS: "$S",
+		RHS: "$NP $VP2",
+		sem: semFuncs.backApply
 	}
 ];
 exports.grammarIsTall = grammarIsTall;
