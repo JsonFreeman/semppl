@@ -95,6 +95,16 @@ var sampleScalarGaussian = function(mean, variance) {
         { guide: Gaussian({ mu: scalarParam(mean), sigma: 0.001 }) });
 }
 
+var createParserWeights = function(grammar) {
+    var arrow = ' -> ';
+    return _.object(map(function(entry) {
+        return [
+            entry.LHS + arrow + entry.RHS, // key
+            sampleScalarGaussian(0, 1) // value
+        ];
+    }, grammar));
+};
+
 var model = function() {
     var h_size = 10
     var ent_size = 3
@@ -118,13 +128,7 @@ var model = function() {
     }, [6.5, 6.0, 5.5]);
 
     var params = { 
-        parserWeights: {
-            '$NP -> John': sampleScalarGaussian(0, 1),
-            '$COP -> is': sampleScalarGaussian(0, 1),
-            '$ADJ -> tall': sampleScalarGaussian(0, 1),
-            '$VP -> $COP $ADJ': sampleScalarGaussian(0, 1),
-            '$S -> $NP $VP': sampleScalarGaussian(0, 1)
-        },
+        parserWeights: createParserWeights(semppl.grammarIsTall),
         theta: { tall: 6.0 },
         networkParams: { tall: { W: [W0, W1], b: [b0, b1] } },
     };
