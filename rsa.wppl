@@ -130,6 +130,7 @@ var model = function() {
     };
 
     // Measure network output for John
+    // Try out with several dimensions in each world. 
     var distOnWorlds = literalListener("John is tall", params, worlds);
     factor(distOnWorlds.score(worlds[0]));
     return distOnWorlds;
