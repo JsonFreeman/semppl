@@ -133,6 +133,7 @@ var model = function() {
         networkParams: { tall: { W: [W0, W1], b: [b0, b1] } },
     };
 
+    display(params.parserWeights);
     // Measure network output for John
     // Try out with several dimensions in each world. 
     var distOnWorlds = literalListener("John is tall", params, worlds);
