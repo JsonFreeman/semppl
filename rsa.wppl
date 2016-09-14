@@ -139,4 +139,4 @@ var model = function() {
     factor(distOnWorlds.score(worlds[0]));
     return distOnWorlds;
 };
-sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}}));
+sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}, verbose: false}));
