@@ -91,7 +91,6 @@ var sampleMatrixGaussian = function(dims,mean,variance,guide_mean){
 
 var sampleScalarGaussian = function(mean, variance) {
     return sample(Gaussian({ mu: mean, sigma: variance }),
-        // Experiment with this. See if it is optimized for ambiguous grammar
         { guide: Gaussian({ mu: scalarParam(mean), sigma: 0.001 }) });
 }
 
@@ -133,7 +132,7 @@ var model = function() {
         networkParams: { tall: { W: [W0, W1], b: [b0, b1] } },
     };
 
-    display(params.parserWeights);
+    //display(params.parserWeights);
     // Measure network output for John
     // Try out with several dimensions in each world. 
     var distOnWorlds = literalListener("John is tall", params, worlds);
