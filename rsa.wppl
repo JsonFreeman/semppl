@@ -23,7 +23,7 @@ var denotationProbability = function(world) {
     };
 };
 
-var parser = semppl.createParser(semppl.grammarIsTall);
+var parser = semppl.createParser(semppl.grammarIsTall, semppl.ruleFeatureFn);
 
 var parse = function(utterance, params, startSymbol) {
     // Need to use .call to call parser as a js function
@@ -32,7 +32,7 @@ var parse = function(utterance, params, startSymbol) {
 
     // Gather the two relevant probabilities
     var derivationProbabilities = normalize(map(function(d) {
-        return Math.exp(scoreFn(featureFn(d), params));
+        return Math.exp(scoreFn(featureFn(d), params.parserWeights));
     }, rootCellDerivations));
 
     return function(world) {
