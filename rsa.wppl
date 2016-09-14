@@ -125,7 +125,7 @@ var model = function() {
             facts: { height: { john: h } },
             domain: ["john"]
         };
-    }, [6.5, 6.0, 5.5]);
+    }, [8, 6, 4]);
 
     var params = { 
         parserWeights: createParserWeights(semppl.grammarIsTall),
