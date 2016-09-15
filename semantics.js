@@ -4,6 +4,7 @@ var Tensor = require("adnn/tensor");
 function network(input, W, b) {
     var h = T.tanh(T.add(T.dot(W[0], input), b[0]));
     var output = T.add(T.dot(W[1], h), b[1]);
+    console.log("height: " + input.toFlatArray()[0] + ", output: " + T.sumreduce(ad.value(output)));
     return T.sumreduce(output)
 };
 
