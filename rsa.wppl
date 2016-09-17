@@ -92,6 +92,13 @@ var sampleScalarGaussian = function(mean, variance) {
         { guide: Gaussian({ mu: scalarParam(mean), sigma: 0.001 }) });
 }
 
+var factorConjunction = function(dist, support) {
+    var probabilityOfConjunction = sum(map(function(e) {
+        return dist.score(e);
+    }, support));
+    factor(probabilityOfConjunction);
+}
+
 var createParserWeights = function(grammar) {
     var arrow = ' -> ';
     return _.object(map(function(entry) {
