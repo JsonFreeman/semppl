@@ -49,36 +49,34 @@ var parse = function(utterance, params, startSymbol) {
     };
 };
 
-var worldPrior = function(worlds) {
-    return worlds[randomInteger(worlds.length)];
+var sampleUniformPrior = function(support) {
+    return support[randomInteger(support.length)];
 };
 
-var literalListener = cache(function(utterance, params, worlds) {
+var literalListener = cache(function(utterance, params, worlds, utterances) {
     Infer({method: 'enumerate'}, function() {
         var truthFn = parse(utterance, params, "$S");
-        var world = worldPrior(worlds);
+        var world = sampleUniformPrior(worlds);
         factor(Math.log(truthFn(world)));
         return world;
     })
 })
 
-var speaker = cache(function(world,params) {
-  Infer({method: 'enumerate'},function(){
-        var utterance = utterancePrior()
-        var L = literalListener(utterance,W,b)
-
-        factor(L.score(world))
-
-        return utterance
+var speaker = cache(function(world, params, worlds, utterances) {
+    Infer({method: 'enumerate'}, function() {
+        var utterance = sampleUniformPrior(utterances);
+        var L = literalListener(utterance, params, worlds, utterances);
+        factor(L.score(world));
+        return utterance;
     })
 })
 
-var listener = cache(function(utterance,params) {
-  Infer({method: 'enumerate'},function(){
-        var world = worldPrior()
-        var S = speaker(world,W,b)
-        factor(S.score(utterance))
-        return world
+var listener = cache(function(utterance, params, worlds, utterances) {
+    Infer({method: 'enumerate'}, function() {
+        var world = sampleUniformPrior(worlds);
+        var S = speaker(world, params, worlds, utterances);
+        factor(S.score(utterance));
+        return world;
     })
 })
 
