@@ -53,7 +53,7 @@ var sampleUniformPrior = function(support) {
     return support[randomInteger(support.length)];
 };
 
-var literalListener = cache(function(utterance, params, worlds, utterances) {
+var literalListener = cache(function(utterance, params, worlds) {
     Infer({method: 'enumerate'}, function() {
         var truthFn = parse(utterance, params, "$S");
         var world = sampleUniformPrior(worlds);
@@ -65,7 +65,7 @@ var literalListener = cache(function(utterance, params, worlds, utterances) {
 var speaker = cache(function(world, params, worlds, utterances) {
     Infer({method: 'enumerate'}, function() {
         var utterance = sampleUniformPrior(utterances);
-        var L = literalListener(utterance, params, worlds, utterances);
+        var L = literalListener(utterance, params, worlds);
         factor(L.score(world));
         return utterance;
     })
@@ -124,6 +124,8 @@ var model = function() {
         };
     }, [8, 6, 4]);
 
+    var utterances = ["John is tall"];
+
     var params = { 
         parserWeights: createParserWeights(semppl.grammarIsTall),
         theta: { tall: 6.0 },
@@ -133,7 +135,7 @@ var model = function() {
     //display(params.parserWeights);
     // Measure network output for John
     // Try out with several dimensions in each world. 
-    var distOnWorlds = literalListener("John is tall", params, worlds);
+    var distOnWorlds = listener("John is tall", params, worlds, utterances);
     factor(distOnWorlds.score(worlds[0]));
     return distOnWorlds;
 };
