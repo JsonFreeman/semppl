@@ -131,7 +131,7 @@ var model = function() {
         };
     }, [8, 6, 4]);
 
-    var utterances = ["John is tall"];
+    var utterances = ["John is tall", "null"];
 
     var params = { 
         parserWeights: createParserWeights(semppl.grammarIsTall),

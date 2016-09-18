@@ -345,6 +345,11 @@ var intersectAdjGrammar = [
 var grammarIsTall = [
 	{
 		LHS: "$S",
+		RHS: "null",
+		sem: _.constant(_.constant(1)) // Always return true
+	},
+	{
+		LHS: "$S",
 		RHS: "$NP $VP",
 		sem: semFuncs.backApply
 	},
