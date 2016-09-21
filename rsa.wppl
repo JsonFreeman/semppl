@@ -144,11 +144,15 @@ var model = function() {
     //display(params.parserWeights);
     // Measure network output for John
     // Try out with several dimensions in each world. 
-    var distOnWorlds = literalListener("John is tall", params, worlds, utterances);
+    var distOnWorlds = listener("John is tall", params, worlds, utterances);
     factor(distOnWorlds.score(worlds[0]));
     return distOnWorlds;
 };
-sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}, verbose: true}));
+var runTest = function(opts) {
+    display(sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}, verbose: opts.verbose})));
+}
+
+runTest({ verbose: true });
 
 /* Experiments:
  * Literal listener with theta
