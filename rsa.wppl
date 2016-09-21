@@ -53,6 +53,10 @@ var sampleUniformPrior = function(support) {
     return support[randomInteger(support.length)];
 };
 
+var addTheta = function(params, theta) {
+    return _.assign(_.clone(params), { theta: theta });
+}
+
 var literalListener = cache(function(utterance, params, worlds) {
     Infer({method: 'enumerate'}, function() {
         var truthFn = parse(utterance, params, "$S");
@@ -71,10 +75,11 @@ var speaker = cache(function(world, params, worlds, utterances) {
     })
 })
 
-var listener = cache(function(utterance, params, worlds, utterances) {
+var listener = cache(function(utterance, params, thetaCandidates, worlds, utterances) {
     Infer({method: 'enumerate'}, function() {
+        var theta = sampleUniformPrior(thetaCandidates);
         var world = sampleUniformPrior(worlds);
-        var S = speaker(world, params, worlds, utterances);
+        var S = speaker(world, addTheta(params, theta), worlds, utterances);
         factor(S.score(utterance));
         return world;
     })
@@ -141,10 +146,16 @@ var model = function() {
         networkParams: { tall: { W: [W0, W1], b: [b0, b1] } },
     };
 
+    var thetaCandidates = map(function(theta) {
+        return {
+            tall: theta
+        };
+    }, [8, 6, 4]);
+
     //display(params.parserWeights);
     // Measure network output for John
     // Try out with several dimensions in each world. 
-    var distOnWorlds = listener("John is tall", params, worlds, utterances);
+    var distOnWorlds = listener("John is tall", params, thetaCandidates, worlds, utterances);
     factor(distOnWorlds.score(worlds[0]));
     return distOnWorlds;
 };
