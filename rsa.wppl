@@ -57,25 +57,25 @@ var addTheta = function(params, theta) {
     return _.assign(_.clone(params), { theta: theta });
 }
 
-var literalListener = cache(function(utterance, params, worlds) {
+var literalListener = function(utterance, params, worlds) {
     Infer({method: 'enumerate'}, function() {
         var truthFn = parse(utterance, params, "$S");
         var world = sampleUniformPrior(worlds);
         factor(Math.log(truthFn(world)));
         return world;
     })
-})
+}
 
-var speaker = cache(function(world, params, worlds, utterances) {
+var speaker = function(world, params, worlds, utterances) {
     Infer({method: 'enumerate'}, function() {
         var utterance = sampleUniformPrior(utterances);
         var L = literalListener(utterance, params, worlds);
         factor(L.score(world));
         return utterance;
     })
-})
+}
 
-var listener = cache(function(utterance, params, thetaCandidates, worlds, utterances) {
+var listener = function(utterance, params, thetaCandidates, worlds, utterances) {
     Infer({method: 'enumerate'}, function() {
         var theta = sampleUniformPrior(thetaCandidates);
         var world = sampleUniformPrior(worlds);
@@ -83,7 +83,7 @@ var listener = cache(function(utterance, params, thetaCandidates, worlds, uttera
         factor(S.score(utterance));
         return world;
     })
-})
+}
 
 var sampleMatrixGaussian = function(dims,mean,variance,guide_mean){
   var length = dims[0]*dims[1]
