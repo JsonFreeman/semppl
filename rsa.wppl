@@ -148,9 +148,13 @@ var model = function() {
 
     var utterances = ["John is tall", "null"];
 
+    var scalarAdjectives = ['tall', 'heavy', 'big'];
+
     var params = { 
         parserWeights: createParserWeights(semppl.grammarIsTall),
-        networkParams: { tall: createNetworkParams(/*hiddenSize*/ 10, /*entitySize*/ 3) },
+        networkParams: _.object(scalarAdjectives, repeat(scalarAdjectives.length, function() {
+            createNetworkParams(10, 3)
+        }))
     };
 
     var thetaCandidates = map(function(theta) {
