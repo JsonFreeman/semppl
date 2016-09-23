@@ -167,22 +167,28 @@ var model = function() {
 
     var thetaCandidates = map(function(theta) {
         return {
-            tall: theta
+            tall: theta,
+            heavy: theta
         };
     }, [8, 6, 4, 80, 60, 40]);
 
     //display(params.parserWeights);
-    // Measure network output for John
-    // Try out with several dimensions in each world. 
     var listener = listenerFn(params);
-    var distOnPeopleWorlds = listener("John is tall", thetaCandidates, peopleWorlds, utterances);
-    factorConjunction(distOnPeopleWorlds, peopleWorlds.slice(0, 3));
+    var distOnPeopleWorlds = {
+        tall: listener("John is tall", thetaCandidates, peopleWorlds, utterances),
+        heavy: listener("John is heavy", thetaCandidates, peopleWorlds, utterances)
+    };
 
-    var distOnPeopleWorlds = listener("John is heavy", thetaCandidates, peopleWorlds, utterances);
-    factorConjunction(distOnPeopleWorlds, [peopleWorlds[0], peopleWorlds[3], peopleWorlds[6]]);
+    factorConjunction(distOnPeopleWorlds.tall, peopleWorlds.slice(0, 3));
+    factorConjunction(distOnPeopleWorlds.heavy, [peopleWorlds[0], peopleWorlds[3], peopleWorlds[6]]);
 
-    // var distOnBuildingsWorlds = listener("John is tall", thetaCandidates, buildingsWorlds, utterances);
-    // factor(distOnBuildingsWorlds.score(buildingsWorlds[0]));
+    var distOnBuildingsWorlds = {
+        tall: listener("John is tall", thetaCandidates, buildingsWorlds, utterances),
+        heavy: listener("John is heavy", thetaCandidates, buildingsWorlds, utterances)
+    };
+
+    factorConjunction(distOnBuildingsWorlds.tall, buildingsWorlds.slice(0, 3));
+    factorConjunction(distOnBuildingsWorlds.heavy, [buildingsWorlds[0], buildingsWorlds[3], buildingsWorlds[6]]);
 
     return {
         people: distOnPeopleWorlds,
