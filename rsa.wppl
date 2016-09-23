@@ -49,6 +49,35 @@ var parse = function(utterance, params, startSymbol) {
     };
 };
 
+var sampleMatrixGaussian = function(dims,mean,variance,guide_mean){
+  var length = dims[0]*dims[1]
+  var g = sample(DiagCovGaussian({ mu: Vector(repeat(length, constF(mean))), sigma: Vector(repeat(length, constF(variance)))}),
+    {guide: DiagCovGaussian({ mu: T.reshape(guide_mean,[length,1]), sigma: Vector(repeat(length, constF(0.001)))})})
+  return T.reshape(g,dims)
+}
+
+var sampleScalarGaussian = function(mean, variance) {
+    return sample(Gaussian({ mu: mean, sigma: variance }),
+        { guide: Gaussian({ mu: scalarParam(mean), sigma: 0.001 }) });
+}
+
+var factorConjunction = function(dist, support) {
+    var probabilityOfConjunction = sum(map(function(e) {
+        return dist.score(e);
+    }, support));
+    factor(probabilityOfConjunction);
+}
+
+var createParserWeights = function(grammar) {
+    var arrow = ' -> ';
+    return _.object(map(function(entry) {
+        return [
+            entry.LHS + arrow + entry.RHS, // key
+            sampleScalarGaussian(0, 1) // value
+        ];
+    }, grammar));
+};
+
 var sampleUniformPrior = function(support) {
     return support[randomInteger(support.length)];
 };
@@ -84,35 +113,6 @@ var listener = function(utterance, params, thetaCandidates, worlds, utterances) 
         return world;
     })
 }
-
-var sampleMatrixGaussian = function(dims,mean,variance,guide_mean){
-  var length = dims[0]*dims[1]
-  var g = sample(DiagCovGaussian({ mu: Vector(repeat(length, constF(mean))), sigma: Vector(repeat(length, constF(variance)))}),
-    {guide: DiagCovGaussian({ mu: T.reshape(guide_mean,[length,1]), sigma: Vector(repeat(length, constF(0.001)))})})
-  return T.reshape(g,dims)
-}
-
-var sampleScalarGaussian = function(mean, variance) {
-    return sample(Gaussian({ mu: mean, sigma: variance }),
-        { guide: Gaussian({ mu: scalarParam(mean), sigma: 0.001 }) });
-}
-
-var factorConjunction = function(dist, support) {
-    var probabilityOfConjunction = sum(map(function(e) {
-        return dist.score(e);
-    }, support));
-    factor(probabilityOfConjunction);
-}
-
-var createParserWeights = function(grammar) {
-    var arrow = ' -> ';
-    return _.object(map(function(entry) {
-        return [
-            entry.LHS + arrow + entry.RHS, // key
-            sampleScalarGaussian(0, 1) // value
-        ];
-    }, grammar));
-};
 
 var model = function() {
     var h_size = 10
