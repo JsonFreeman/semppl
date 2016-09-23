@@ -170,9 +170,23 @@ var runTest = function(opts) {
 
 runTest({ verbose: true });
 
-/* Experiments:
- * Literal listener with theta
- * Pragmatic listener with theta
- * Same experiments with two contexts
- * 1. Top priority - Pragmatic, varying theta, 2 contexts
+/**
+ * mapData
+ * cache issue - close over params
+ * Tall versus heavy (or even big)
+ * Try to do some compositional learning
+ * Sample the class explicitly
+ * "is a tall man" + "is a tall building"
+ * 
+ * Tasks: 
+ *  - Generate data using ground truth
+ *  !- Try to do caching refactor
+ *  !- Introduce tall, heavy, big with a neural net for each
+ *  - Refactor features and weights to add distinguisher
+ *  - Implement intersective adjectives
+ *  - Compositional learning:
+ *    - Intersecting predicates: (multiply, first, second)
+ *    - Different ways of applying predicate to entity: (apply to input, ignore input)
+ *    - Introduce "John is not a tall man" - not(tall * man), not(tall) * man, not(man) * tall, not(man)
+ *    - Try ambiguities with conjunction + disjunction
  */
