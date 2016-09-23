@@ -3,6 +3,14 @@ var nnparam = function(a, b) {
   return tensorParam([a, b], 0, 0.1);
 };
 
+var cartesianProductMap = function(fn, arr1, arr2) {
+    return _.flatten(map(function(e1) {
+        return map(function(e2) {
+            return fn(e1, e2);
+        }, arr2);
+    }, arr1));
+}
+
 var featureFn = function(d) { return semppl.ruleFeatureFn(d); };
 var scoreFn = function(features, params) {
     return sum(_.values(mapObject(function(k, v) {
@@ -139,7 +147,7 @@ var createNetworkParams = function(hiddenSize, inputSize) {
 var model = function() {
     var worldsFromHeightsFn = function(h) {
         return {
-            facts: { height: { john: h } },
+            facts: { height: { john: h }, weight: { john: w } },
             domain: ["john"]
         };
     };
