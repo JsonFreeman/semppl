@@ -212,7 +212,7 @@ runTest({ verbose: true });
  * Tasks: 
  *  - Generate data using ground truth
  *  +!- Try to do caching refactor
- *  !- Introduce tall, heavy, big with a neural net for each
+ *  +!- Introduce tall, heavy, big with a neural net for each
  *  - Refactor features and weights to add distinguisher
  *  - Implement intersective adjectives
  *  - Compositional learning:
