@@ -145,16 +145,16 @@ var createNetworkParams = function(hiddenSize, inputSize) {
 }
 
 var model = function() {
-    var worldsFromHeightsFn = function(h) {
+    var worldsFromHeightsFn = function(h, w) {
         return {
             facts: { height: { john: h }, weight: { john: w } },
             domain: ["john"]
         };
     };
-    var peopleWorlds = map(worldsFromHeightsFn, [8, 6, 4]);
-    var buildingsWorlds = map(worldsFromHeightsFn, [80, 60, 40]);
+    var peopleWorlds = cartesianProductMap(worldsFromHeightsFn, [8, 6, 4], [8, 6, 4]);
+    var buildingsWorlds = cartesianProductMap(worldsFromHeightsFn, [80, 60, 40], [80, 60, 40]);
 
-    var utterances = ["John is tall", "null"];
+    var utterances = ["John is tall", "John is heavy", "null"];
 
     var scalarAdjectives = ['tall', 'heavy', 'big'];
 
@@ -176,10 +176,13 @@ var model = function() {
     // Try out with several dimensions in each world. 
     var listener = listenerFn(params);
     var distOnPeopleWorlds = listener("John is tall", thetaCandidates, peopleWorlds, utterances);
-    factor(distOnPeopleWorlds.score(peopleWorlds[0]));
+    factorConjunction(distOnPeopleWorlds, peopleWorlds.slice(0, 3));
 
-    var distOnBuildingsWorlds = listener("John is tall", thetaCandidates, buildingsWorlds, utterances);
-    factor(distOnBuildingsWorlds.score(buildingsWorlds[0]));
+    var distOnPeopleWorlds = listener("John is heavy", thetaCandidates, peopleWorlds, utterances);
+    factorConjunction(distOnPeopleWorlds, [peopleWorlds[0], peopleWorlds[3], peopleWorlds[6]]);
+
+    // var distOnBuildingsWorlds = listener("John is tall", thetaCandidates, buildingsWorlds, utterances);
+    // factor(distOnBuildingsWorlds.score(buildingsWorlds[0]));
 
     return {
         people: distOnPeopleWorlds,
