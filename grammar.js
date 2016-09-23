@@ -1,6 +1,14 @@
 var _ = require("underscore");
 var semFuncs = require("./semantics");
 
+function makeScalarAdjectiveRule(name) {
+    return {
+		LHS: "$ADJ",
+		RHS: name,
+		sem: semFuncs.scalarPredicate(name)
+	};
+}
+
 exports.grammarIsTall = [
 	{
 		LHS: "$S",
@@ -27,11 +35,9 @@ exports.grammarIsTall = [
 		RHS: "is",
 		sem: semFuncs.id
 	},
-	{
-		LHS: "$ADJ",
-		RHS: "tall",
-		sem: semFuncs.scalarPredicate("tall")
-	},
+    makeScalarAdjectiveRule("tall"),
+    makeScalarAdjectiveRule("heavy"),
+    makeScalarAdjectiveRule("big")
 	// {
 	// 	// Uninformative meaning for tall
 	// 	LHS: "$ADJ2",
