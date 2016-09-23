@@ -86,31 +86,39 @@ var addTheta = function(params, theta) {
     return _.assign(_.clone(params), { theta: theta });
 }
 
-var literalListener = function(utterance, params, worlds) {
-    Infer({method: 'enumerate'}, function() {
-        var truthFn = parse(utterance, params, "$S");
-        var world = sampleUniformPrior(worlds);
-        factor(Math.log(truthFn(world)));
-        return world;
+var literalListenerFn = function(params) {
+    return cache(function(utterance, theta, worlds) {
+        Infer({method: 'enumerate'}, function() {
+            var truthFn = parse(utterance, addTheta(params, theta), "$S");
+            var world = sampleUniformPrior(worlds);
+            factor(Math.log(truthFn(world)));
+            return world;
+        })
     })
 }
 
-var speaker = function(world, params, worlds, utterances) {
-    Infer({method: 'enumerate'}, function() {
-        var utterance = sampleUniformPrior(utterances);
-        var L = literalListener(utterance, params, worlds);
-        factor(L.score(world));
-        return utterance;
+var speakerFn = function(params) {
+    var literalListener = literalListenerFn(params);
+    return cache(function(world, theta, worlds, utterances) {
+        Infer({method: 'enumerate'}, function() {
+            var utterance = sampleUniformPrior(utterances);
+            var L = literalListener(utterance, theta, worlds);
+            factor(L.score(world));
+            return utterance;
+        })
     })
 }
 
-var listener = function(utterance, params, thetaCandidates, worlds, utterances) {
-    Infer({method: 'enumerate'}, function() {
-        var theta = sampleUniformPrior(thetaCandidates);
-        var world = sampleUniformPrior(worlds);
-        var S = speaker(world, addTheta(params, theta), worlds, utterances);
-        factor(S.score(utterance));
-        return world;
+var listenerFn = function(params) {
+    var speaker = speakerFn(params);
+    return cache(function(utterance, thetaCandidates, worlds, utterances) {
+        Infer({method: 'enumerate'}, function() {
+            var theta = sampleUniformPrior(thetaCandidates);
+            var world = sampleUniformPrior(worlds);
+            var S = speaker(world, theta, worlds, utterances);
+            factor(S.score(utterance));
+            return world;
+        })
     })
 }
 
@@ -153,10 +161,11 @@ var model = function() {
     //display(params.parserWeights);
     // Measure network output for John
     // Try out with several dimensions in each world. 
-    var distOnPeopleWorlds = listener("John is tall", params, thetaCandidates, peopleWorlds, utterances);
+    var listener = listenerFn(params);
+    var distOnPeopleWorlds = listener("John is tall", thetaCandidates, peopleWorlds, utterances);
     factor(distOnPeopleWorlds.score(peopleWorlds[0]));
 
-    var distOnBuildingsWorlds = listener("John is tall", params, thetaCandidates, buildingsWorlds, utterances);
+    var distOnBuildingsWorlds = listener("John is tall", thetaCandidates, buildingsWorlds, utterances);
     factor(distOnBuildingsWorlds.score(buildingsWorlds[0]));
 
     return {
