@@ -17,10 +17,8 @@ function entityVector(ent, context) {
     return makeVector(array);
 }
 
-var scalarDegrees = {
-    tall(ent, context, params) {
-        return network(entityVector(ent, context), params.W, params.b);
-    }
+function scalarDegree(ent, context, params) {
+    return network(entityVector(ent, context), params.W, params.b);
 }
 
 module.exports = {
@@ -41,7 +39,7 @@ module.exports = {
         return function(params) {
             return function(context) {
                 return function(ent) {
-                    var measurement = scalarDegrees[scaleName](ent, context, params.networkParams[scaleName]);
+                    var measurement = scalarDegree(ent, context, params.networkParams[scaleName]);
                     return ad.scalar.sigmoid(ad.scalar.sub(measurement, params.theta[scaleName]));
                 }
             }
