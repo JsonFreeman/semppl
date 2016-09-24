@@ -5,9 +5,9 @@ function network(input, W, b) {
     var h = T.tanh(T.add(T.dot(W[0], input), b[0]));
     var output = T.add(T.dot(W[1], h), b[1]);
     var inputAsArray = input.toFlatArray();
-    console.log("height: " + inputAsArray[0] + 
-        ", weight: " + inputAsArray[1] +
-        ", output: " + T.sumreduce(ad.value(output)));
+    // console.log("height: " + inputAsArray[0] + 
+    //     ", weight: " + inputAsArray[1] +
+    //     ", output: " + T.sumreduce(ad.value(output)));
     return T.sumreduce(output)
 };
 
@@ -45,6 +45,17 @@ module.exports = {
                 return function(ent) {
                     var measurement = scalarDegree(ent, context, params.networkParams[scaleName]);
                     return ad.scalar.sigmoid(ad.scalar.sub(measurement, params.theta[scaleName]));
+                }
+            }
+        }
+    },
+
+    scalarAntonym: function(scaleName) {
+        return function(params) {
+            return function(context) {
+                return function(ent) {
+                    var positiveResult = module.exports.scalarPredicate(scaleName)(params)(context)(ent);
+                    return ad.scalar.sub(1, positiveResult);
                 }
             }
         }

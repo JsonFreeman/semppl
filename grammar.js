@@ -9,6 +9,14 @@ function makeScalarAdjectiveRule(name) {
 	};
 }
 
+function makeScalarAntonymRule(name, scaleName) {
+    return {
+        LHS: "$ADJ",
+        RHS: name,
+        sem: semFuncs.scalarAntonym(scaleName)
+    };
+}
+
 exports.grammarIsTall = [
 	{
 		LHS: "$S",
@@ -37,7 +45,9 @@ exports.grammarIsTall = [
 	},
     makeScalarAdjectiveRule("tall"),
     makeScalarAdjectiveRule("heavy"),
-    makeScalarAdjectiveRule("big")
+    makeScalarAdjectiveRule("big"),
+    makeScalarAntonymRule("short", "tall"),
+    makeScalarAntonymRule("light", "heavy")
 	// {
 	// 	// Uninformative meaning for tall
 	// 	LHS: "$ADJ2",

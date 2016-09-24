@@ -154,7 +154,7 @@ var model = function() {
     var peopleWorlds = cartesianProductMap(worldsFromHeightsFn, [8, 6, 4], [8, 6, 4]);
     var buildingsWorlds = cartesianProductMap(worldsFromHeightsFn, [80, 60, 40], [80, 60, 40]);
 
-    var utterances = ["John is tall", "John is heavy", "null"];
+    var utterances = ["John is tall", "John is heavy", "John is short", "John is light", "null"];
 
     var scalarAdjectives = ['tall', 'heavy'];
 
