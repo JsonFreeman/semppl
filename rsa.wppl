@@ -31,31 +31,32 @@ var denotationProbability = function(world) {
     };
 };
 
-var parser = semppl.createParser(semppl.grammarIsTall, semppl.ruleFeatureFn);
+var createParser = function(grammar, params) {
+    var parser = semppl.createParser(grammar, params, semppl.ruleFeatureFn);
+    return cache(function(utterance, theta, startSymbol) {
+        // Need to use .call to call parser as a js function
+        var chart = parser.call(null, utterance, theta);
+        var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
 
-var parse = function(utterance, params, startSymbol) {
-    // Need to use .call to call parser as a js function
-    var chart = parser.call(null, utterance, params);
-    var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
+        // Gather the two relevant probabilities
+        var derivationProbabilities = normalize(map(function(d) {
+            return Math.exp(scoreFn(featureFn(d), params.parserWeights));
+        }, rootCellDerivations));
 
-    // Gather the two relevant probabilities
-    var derivationProbabilities = normalize(map(function(d) {
-        return Math.exp(scoreFn(featureFn(d), params.parserWeights));
-    }, rootCellDerivations));
+        return cache(function(world) {
+            // World dependent part starts here.
+            var truthProbabilities = map(denotationProbability(world), rootCellDerivations);
+            
+            // We now have probabilities that the sentences are true given derivations P(t | d)
+            // Also probabilities that derivations are correct P(d)
 
-    return function(world) {
-        // World dependent part starts here.
-        var truthProbabilities = map(denotationProbability(world), rootCellDerivations);
-        
-        // We now have probabilities that the sentences are true given derivations P(t | d)
-        // Also probabilities that derivations are correct P(d)
-
-        // Marginalize out derivation by summing over derivations, multiply the two probabilities
-        return sum(map2(function(derivation, truth) {
-            return derivation * truth;
-        }, derivationProbabilities, truthProbabilities));
-    };
-};
+            // Marginalize out derivation by summing over derivations, multiply the two probabilities
+            return sum(map2(function(derivation, truth) {
+                return derivation * truth;
+            }, derivationProbabilities, truthProbabilities));
+        });
+    });
+}
 
 var sampleMatrixGaussian = function(dims,mean,variance,guide_mean){
   var length = dims[0]*dims[1]
@@ -90,14 +91,11 @@ var sampleUniformPrior = function(support) {
     return support[randomInteger(support.length)];
 };
 
-var addTheta = function(params, theta) {
-    return _.assign(_.clone(params), { theta: theta });
-}
-
-var literalListenerFn = function(params) {
+var literalListenerFn = function(grammar, params) {
+    var parse = createParser(grammar, params);
     return cache(function(utterance, theta, worlds) {
         Infer({method: 'enumerate'}, function() {
-            var truthFn = parse(utterance, addTheta(params, theta), "$S");
+            var truthFn = parse(utterance, theta, "$S");
             var world = sampleUniformPrior(worlds);
             factor(Math.log(truthFn(world)));
             return world;
@@ -105,8 +103,8 @@ var literalListenerFn = function(params) {
     })
 }
 
-var speakerFn = function(params) {
-    var literalListener = literalListenerFn(params);
+var speakerFn = function(grammar, params) {
+    var literalListener = literalListenerFn(grammar, params);
     return cache(function(world, theta, worlds, utterances) {
         Infer({method: 'enumerate'}, function() {
             var utterance = sampleUniformPrior(utterances);
@@ -117,8 +115,8 @@ var speakerFn = function(params) {
     })
 }
 
-var listenerFn = function(params) {
-    var speaker = speakerFn(params);
+var listenerFn = function(grammar, params) {
+    var speaker = speakerFn(grammar, params);
     return cache(function(utterance, thetaCandidates, worlds, utterances) {
         Infer({method: 'enumerate'}, function() {
             var theta = sampleUniformPrior(thetaCandidates);
@@ -173,7 +171,7 @@ var model = function() {
     }, [8, 6, 4, 80, 60, 40]);
 
     //display(params.parserWeights);
-    var listener = listenerFn(params);
+    var listener = listenerFn(semppl.grammarIsTall, params);
     var distOnPeopleWorlds = {
         tall: listener("John is tall", thetaCandidates, peopleWorlds, utterances),
         heavy: listener("John is heavy", thetaCandidates, peopleWorlds, utterances)
