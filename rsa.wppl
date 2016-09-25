@@ -25,9 +25,9 @@ var denotationProbability = function(world) {
 
 var parser = semppl.createParser(semppl.grammarIsTall, semppl.ruleFeatureFn);
 
-var parse = function(utterance, params, startSymbol) {
+var parse = function(utterance, params, theta, startSymbol) {
     // Need to use .call to call parser as a js function
-    var chart = parser.call(null, utterance, params);
+    var chart = parser.call(null, utterance, params, theta);
     var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
 
     // Gather the two relevant probabilities
@@ -82,14 +82,10 @@ var sampleUniformPrior = function(support) {
     return support[randomInteger(support.length)];
 };
 
-var addTheta = function(params, theta) {
-    return _.assign(_.clone(params), { theta: theta });
-}
-
 var literalListenerFn = function(params) {
     return cache(function(utterance, theta, worlds) {
         Infer({method: 'enumerate'}, function() {
-            var truthFn = parse(utterance, addTheta(params, theta), "$S");
+            var truthFn = parse(utterance, params, theta, "$S");
             var world = sampleUniformPrior(worlds);
             factor(Math.log(truthFn(world)));
             return world;

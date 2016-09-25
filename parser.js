@@ -6,7 +6,7 @@ exports.createParser = createParser;
 function createParser(grammar, featureFn, scoreFn, beamSize) {
 	assert(featureFn, "featureFn must be specified");
 	
-	return function(sentence, params) {
+	return function(sentence, params, theta) {
 		scoreFn = scoreFn || dotProductScoreFn;
 		beamSize = beamSize || 200;
 
@@ -22,7 +22,7 @@ function createParser(grammar, featureFn, scoreFn, beamSize) {
 			chart[i][i] = _.groupBy(_.map(_.filter(grammar,
 				rule => rule.RHS === words[i]), // filter
 				rule => new Derivation(rule, /*leftChild*/ undefined, /*rightChild*/ undefined,
-					rule.sem(params))), // map
+					rule.sem(params, theta))), // map
 				derivation => derivation.rule.LHS); // groupBy
 		}
 

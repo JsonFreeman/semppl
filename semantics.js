@@ -36,11 +36,11 @@ module.exports = {
     },
 
     scalarPredicate: function(scaleName) {
-        return function(params) {
+        return function(params, theta) {
             return function(context) {
                 return function(ent) {
                     var measurement = scalarDegree(ent, context, params.networkParams[scaleName]);
-                    return ad.scalar.sigmoid(ad.scalar.sub(measurement, params.theta[scaleName]));
+                    return ad.scalar.sigmoid(ad.scalar.sub(measurement, theta[scaleName]));
                 }
             }
         }
