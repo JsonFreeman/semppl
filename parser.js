@@ -3,10 +3,10 @@ var semFuncs = require("./semantics");
 _.assign(exports, require("./grammar"));
 
 exports.createParser = createParser;
-function createParser(grammar, featureFn, scoreFn, beamSize) {
+function createParser(grammar, params, featureFn, scoreFn, beamSize) {
 	assert(featureFn, "featureFn must be specified");
 	
-	return function(sentence, params, theta) {
+	return function(sentence, theta) {
 		scoreFn = scoreFn || dotProductScoreFn;
 		beamSize = beamSize || 200;
 

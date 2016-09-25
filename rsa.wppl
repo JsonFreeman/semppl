@@ -23,11 +23,9 @@ var denotationProbability = function(world) {
     };
 };
 
-var parser = semppl.createParser(semppl.grammarIsTall, semppl.ruleFeatureFn);
-
-var parse = function(utterance, params, theta, startSymbol) {
+var parse = function(parser, params, utterance, theta, startSymbol) {
     // Need to use .call to call parser as a js function
-    var chart = parser.call(null, utterance, params, theta);
+    var chart = parser.call(null, utterance, theta);
     var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
 
     // Gather the two relevant probabilities
@@ -82,10 +80,10 @@ var sampleUniformPrior = function(support) {
     return support[randomInteger(support.length)];
 };
 
-var literalListenerFn = function(params) {
+var literalListenerFn = function(parser, params) {
     return cache(function(utterance, theta, worlds) {
         Infer({method: 'enumerate'}, function() {
-            var truthFn = parse(utterance, params, theta, "$S");
+            var truthFn = parse(parser, params, utterance, theta, "$S");
             var world = sampleUniformPrior(worlds);
             factor(Math.log(truthFn(world)));
             return world;
@@ -93,8 +91,8 @@ var literalListenerFn = function(params) {
     })
 }
 
-var speakerFn = function(params) {
-    var literalListener = literalListenerFn(params);
+var speakerFn = function(parser, params) {
+    var literalListener = literalListenerFn(parser, params);
     return cache(function(world, theta, worlds, utterances) {
         Infer({method: 'enumerate'}, function() {
             var utterance = sampleUniformPrior(utterances);
@@ -105,8 +103,8 @@ var speakerFn = function(params) {
     })
 }
 
-var listenerFn = function(params) {
-    var speaker = speakerFn(params);
+var listenerFn = function(parser, params) {
+    var speaker = speakerFn(parser, params);
     return cache(function(utterance, thetaCandidates, worlds, utterances) {
         Infer({method: 'enumerate'}, function() {
             var theta = sampleUniformPrior(thetaCandidates);
@@ -162,7 +160,8 @@ var model = function() {
     //display(params.parserWeights);
     // Measure network output for John
     // Try out with several dimensions in each world. 
-    var listener = listenerFn(params);
+    var parser = semppl.createParser(semppl.grammarIsTall, params, semppl.ruleFeatureFn)
+    var listener = listenerFn(parser, params);
     var distOnPeopleWorlds = listener("John is tall", thetaCandidates, peopleWorlds, utterances);
     factor(distOnPeopleWorlds.score(peopleWorlds[0]));
 
