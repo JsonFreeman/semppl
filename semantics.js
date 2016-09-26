@@ -46,7 +46,7 @@ module.exports = {
         }
     },
 
-    fixedDimensionScalarPredicate: function(dimension) {
+    fixedDimensionScalarPredicate: function(scaleName, dimension) {
         return function(/*unused*/params, theta) {
             return function(context) {
                 return function(ent) {

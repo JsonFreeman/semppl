@@ -13,7 +13,7 @@ function makeFixedScalarAdjectiveRule(name, dimension) {
 	return {
 		LHS: "$ADJ",
 		RHS: name,
-		sem: semFuncs.fixedDimensionScalarPredicate(dimension)
+		sem: semFuncs.fixedDimensionScalarPredicate(name, dimension)
 	};
 }
 
