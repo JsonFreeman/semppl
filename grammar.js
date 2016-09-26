@@ -5,7 +5,7 @@ function makeScalarAdjectiveRule(name) {
     return {
 		LHS: "$ADJ",
 		RHS: name,
-		sem: semFuncs.scalarPredicate(name)
+		sem: semFuncs.neuralScalarPredicate(name)
 	};
 }
 

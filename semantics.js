@@ -35,11 +35,23 @@ module.exports = {
         })
     },
 
-    scalarPredicate: function(scaleName) {
+    neuralScalarPredicate: function(scaleName) {
         return function(params, theta) {
             return function(context) {
                 return function(ent) {
                     var measurement = scalarDegree(ent, context, params.networkParams[scaleName]);
+                    return ad.scalar.sigmoid(ad.scalar.sub(measurement, theta[scaleName]));
+                }
+            }
+        }
+    },
+
+    fixedDimensionScalarPredicate: function(dimension) {
+        return function(/*unused*/params, theta) {
+            return function(context) {
+                return function(ent) {
+                    // Just like neuralScalarPredicate but uses a fixed dimension for the measurement
+                    var measurement = context.facts[dimension][ent];
                     return ad.scalar.sigmoid(ad.scalar.sub(measurement, theta[scaleName]));
                 }
             }
