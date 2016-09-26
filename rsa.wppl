@@ -146,7 +146,7 @@ var model = function() {
 
     var utterances = ["John is tall", "null"];
 
-    var scalarAdjectives = ['tall', 'heavy', 'big'];
+    var scalarAdjectives = ['tall', 'heavy'];
 
     var params = { 
         parserWeights: createParserWeights(semppl.grammarIsTall),
