@@ -39,7 +39,7 @@ module.exports = {
         })
     },
 
-    scalarPredicate: function(scaleName) {
+    neuralScalarPredicate: function(scaleName) {
         return function(params, theta) {
             return function(context) {
                 return function(ent) {
@@ -50,12 +50,37 @@ module.exports = {
         }
     },
 
-    scalarAntonym: function(scaleName) {
+    fixedDimensionScalarPredicate: function(scaleName, dimension) {
+        return function(/*unused*/params, theta) {
+            return function(context) {
+                return function(ent) {
+                    // Just like neuralScalarPredicate but uses a fixed dimension for the measurement
+                    var measurement = context.facts[dimension][ent];
+                    return ad.scalar.sigmoid(ad.scalar.sub(measurement, theta[scaleName]));
+                }
+            }
+        }
+    },
+
+    neuralScalarAntonym: function(scaleName) {
         return function(params, theta) {
             return function(context) {
                 return function(ent) {
-                    var positiveResult = module.exports.scalarPredicate(scaleName)(params, theta)(context)(ent);
-                    return ad.scalar.sub(1, positiveResult);
+                    var positiveResult = 
+                        module.exports.neuralScalarPredicate(scaleName)(params, theta)(context)(ent);
+                    return ad.scalar.sub(1, positiveResult);                
+                }
+            }
+        }
+    },
+
+    fixedScalarAntonym: function(scaleName, dimension) {
+        return function(params, theta) {
+            return function(context) {
+                return function(ent) {
+                    var positiveResult = 
+                        module.exports.fixedDimensionScalarPredicate(scaleName, dimension)(params, theta)(context)(ent);
+                    return ad.scalar.sub(1, positiveResult);                
                 }
             }
         }
