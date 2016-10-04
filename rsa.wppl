@@ -183,13 +183,13 @@ var createModel = function(grammar, parametrize) {
     };
 };
 
-// var runTest = function(opts) {
-//     var model = createModel(semppl.grammarIsTall, true);
-//     display(sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}, verbose: opts.verbose})));
-// }
+var runTest = function(opts) {
+    var model = createModel(semppl.grammarIsTall, true);
+    display(sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}, verbose: opts.verbose})));
+}
 
-// runTest({ verbose: true });
-sample(createModel(semppl.grammarIsTallFixed, false)().people);
+runTest({ verbose: true });
+// sample(createModel(semppl.grammarIsTallFixed, false)().people);
 
 /**
  * mapData
