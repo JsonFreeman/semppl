@@ -149,12 +149,13 @@ var model = function() {
             domain: ["john"]
         };
     };
-    var peopleWorlds = cartesianProductMap(worldsFromHeightsFn, [8, 6, 4], [8, 6, 4]);
+    var peopleWorlds = cartesianProductMap(worldsFromHeightsFn, [-2,0,2], [-2,0,2]);
     // var buildingsWorlds = cartesianProductMap(worldsFromHeightsFn, [80, 60, 40], [80, 60, 40]);
 
     var utterances = ["John is tall", "John is heavy", "John is short", "John is light", "null"];
+    
 
-    var scalarAdjectives = ['tall', 'heavy'];
+    var scalarAdjectives = ['tall','heavy'];
 
     var params = { 
         parserWeights: createParserWeights(semppl.grammarIsTall),
@@ -168,7 +169,7 @@ var model = function() {
             tall: theta,
             heavy: theta
         };
-    }, [8, 6, 4]);
+    }, [-2,0,2]);
 
     //display(params.parserWeights);
     var listener = listenerFn(semppl.grammarIsTall, params);
@@ -177,7 +178,7 @@ var model = function() {
         tall: listener("John is tall", thetaCandidates, peopleWorlds, utterances)
     };
 
-    factorConjunction(distOnPeopleWorlds.tall, peopleWorlds.slice(0, 3));
+    factorConjunction(distOnPeopleWorlds.tall, peopleWorlds.slice(0,3));
     factorConjunction(distOnPeopleWorlds.short, peopleWorlds.slice(6));
 
     // var distOnBuildingsWorlds = {
@@ -194,7 +195,7 @@ var model = function() {
     };
 };
 var runTest = function(opts) {
-    display(sample(OptimizeThenSample(model, {steps: 500, estimator: {ELBO: {samples: 1}}, verbose: opts.verbose})));
+    display(sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}, verbose: opts.verbose})));
 }
 
 runTest({ verbose: true });
