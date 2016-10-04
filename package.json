@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/JsonFreeman/semppl#readme",
   "dependencies": {
-    "adnn": "^1.1.6"
+    "adnn": "^1.1.6",
+    "underscore": "^1.8.3"
   }
 }
