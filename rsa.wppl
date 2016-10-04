@@ -166,7 +166,8 @@ var createModel = function (grammar, parametrize) {
 
         var thetaCandidates = map(function (theta) {
             return {
-                tall: theta
+                tall: theta,
+                heavy: theta
             };
         }, [8, 6, 4, 80, 60, 40]);
 
