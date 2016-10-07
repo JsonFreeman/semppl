@@ -97,6 +97,11 @@ function dotProductScoreFn(features, params) {
 	return sum;
 }
 
+exports.makeRuleKey = makeRuleKey;
+function makeRuleKey(rule) {
+	return rule.id + ": " + rule.LHS + " -> " + rule.RHS;
+}
+
 exports.ruleFeatureFn = ruleFeatureFn;
 function ruleFeatureFn(derivation) {
 	var features = {};
@@ -106,7 +111,7 @@ function ruleFeatureFn(derivation) {
 	}
 	
 	// Add this derivation's own rule
-	var ruleKey = derivation.rule.LHS + " -> " + derivation.rule.RHS;
+	var ruleKey = makeRuleKey(derivation.rule);
 	features[ruleKey] = 1 + (features[ruleKey] || 0);
 	return features;
 }

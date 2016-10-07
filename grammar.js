@@ -1,6 +1,13 @@
 var _ = require("underscore");
 var semFuncs = require("./semantics");
 
+function indexify(grammar) {
+	_.each(grammar, (rule, i) => {
+		rule.id = i;
+	})
+	return grammar;
+}
+
 function makeNeuralScalarAdjectiveRule(name) {
     return {
 		LHS: "$ADJ",
@@ -17,7 +24,7 @@ function makeFixedScalarAdjectiveRule(name, dimension) {
 	};
 }
 
-exports.grammarIsTall = [
+exports.grammarIsTall = indexify([
 	{
 		LHS: "$S",
 		RHS: "null",
@@ -62,9 +69,9 @@ exports.grammarIsTall = [
 	// 	RHS: "$NP $VP2",
 	// 	sem: semFuncs.backApply
 	// }
-];
+]);
 
-exports.grammarIsTallFixed = [
+exports.grammarIsTallFixed = indexify([
 	{
 		LHS: "$S",
 		RHS: "null",
@@ -92,4 +99,4 @@ exports.grammarIsTallFixed = [
 	},
     makeFixedScalarAdjectiveRule("tall", "height"),
     makeFixedScalarAdjectiveRule("heavy", "weight")
-];
+]);
