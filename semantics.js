@@ -17,7 +17,7 @@ function makeVector(arr) {
 }
 
 function entityVector(ent, context) {
-    var array = [context.facts.height[ent], context.facts.weight[ent], 0];
+    var array = _.pluck(_.values(context.facts), ent);
     return makeVector(array);
 }
 

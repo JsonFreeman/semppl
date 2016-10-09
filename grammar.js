@@ -79,7 +79,9 @@ exports.ambiguousGrammar = indexify([
     makeNeuralScalarAdjectiveRule("tall"),
     makeNeuralScalarAdjectiveRule("heavy"),
     makeNeuralScalarAntonymRule("short", "tall"),
-    makeNeuralScalarAntonymRule("light", "heavy")
+    makeNeuralScalarAntonymRule("light", "heavy"),
+	makeNeuralScalarAdjectiveRule("man"),
+	makeNeuralScalarAdjectiveRule("building"),
 ]);
 
 exports.fixedGrammar = indexify([
@@ -121,5 +123,7 @@ exports.fixedGrammar = indexify([
     makeFixedScalarAdjectiveRule("tall", "height"),
     makeFixedScalarAdjectiveRule("heavy", "weight"),
     makeFixedDimensionScalarAntonymRule("short", "tall", "height"),
-    makeFixedDimensionScalarAntonymRule("light", "heavy", "weight")
+    makeFixedDimensionScalarAntonymRule("light", "heavy", "weight"),
+	makeFixedScalarAdjectiveRule("man", "man"),
+	makeFixedScalarAdjectiveRule("building", "building"),
 ]);

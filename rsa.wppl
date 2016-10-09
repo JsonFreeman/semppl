@@ -145,8 +145,13 @@ var createModel = function (grammar, parametrize) {
     return function () {
         var worldsFromHeightsFn = function (h, w) {
             return {
-                facts: { height: { john: h }, weight: { john: w } },
-                domain: ["john"]
+                facts: { 
+                    height: { john: h, gates: h }, 
+                    weight: { john: w, gates: w },
+                    man: { john: 1, gates: 0 },
+                    building: { john: 0, gates: 1 },
+                },
+                domain: ["john", "gates"]
             };
         };
         var peopleWorlds = cartesianProductMap(worldsFromHeightsFn, [8, 6, 4], [8, 6, 4]);
@@ -154,19 +159,24 @@ var createModel = function (grammar, parametrize) {
 
         var utterances = ["John is tall", "John is heavy", "John is short", "John is light", "null"];
 
-        var scalarAdjectives = ['tall', 'heavy'];
+        var scalarAdjectives = ['tall', 'heavy', 'man', 'building'];
 
         var params = parametrize ? {
             parserWeights: createParserWeights(grammar),
             networkParams: _.object(scalarAdjectives, repeat(scalarAdjectives.length, function () {
-                createNetworkParams(10, 3)
+                createNetworkParams(10, scalarAdjectives.length)
             }))
         } : {};
 
         var thetaCandidates = map(function (theta) {
             return {
                 tall: theta,
-                heavy: theta
+                heavy: theta,
+                
+                // TODO: it would be good if the model didn't have to specify this.
+                // Ideally should be in the grammar
+                man: 0,
+                building: 0
             };
         }, [8, 6, 4, 80, 60, 40]);
 
