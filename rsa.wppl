@@ -142,63 +142,67 @@ var createNetworkParams = function(hiddenSize, inputSize) {
     return { W: [W0, W1], b: [b0, b1] };
 }
 
-var model = function() {
-    var worldsFromHeightsFn = function(h, w) {
-        return {
-            facts: { height: { john: h }, weight: { john: w } },
-            domain: ["john"]
+var createModel = function (grammar, parametrize) {
+    return function () {
+        var worldsFromHeightsFn = function (h, w) {
+            return {
+                facts: { height: { john: h }, weight: { john: w } },
+                domain: ["john"]
+            };
         };
-    };
-    var peopleWorlds = cartesianProductMap(worldsFromHeightsFn, [-2,0,2], [-2,0,2]);
-    // var buildingsWorlds = cartesianProductMap(worldsFromHeightsFn, [80, 60, 40], [80, 60, 40]);
+        var peopleWorlds = cartesianProductMap(worldsFromHeightsFn, [8, 6, 4], [8, 6, 4]);
+        var buildingsWorlds = cartesianProductMap(worldsFromHeightsFn, [80, 60, 40], [80, 60, 40]);
 
-    var utterances = ["John is tall", "John is heavy", "John is short", "John is light", "null"];
-    
+        var utterances = ["John is tall", "John is heavy", "John is short", "John is light", "null"];
 
-    var scalarAdjectives = ['tall','heavy'];
+        var scalarAdjectives = ['tall', 'heavy'];
 
-    var params = { 
-        parserWeights: createParserWeights(semppl.grammarIsTall),
-        networkParams: _.object(scalarAdjectives, repeat(scalarAdjectives.length, function() {
-            createNetworkParams(10, 3)
-        }))
-    };
+        var params = parametrize ? {
+            parserWeights: createParserWeights(grammar),
+            networkParams: _.object(scalarAdjectives, repeat(scalarAdjectives.length, function () {
+                createNetworkParams(10, 3)
+            }))
+        } : {};
 
-    var thetaCandidates = map(function(theta) {
-        return {
-            tall: theta,
-            heavy: theta
+        var thetaCandidates = map(function (theta) {
+            return {
+                tall: theta,
+                heavy: theta
+            };
+        }, [8, 6, 4, 80, 60, 40]);
+
+        //display(params.parserWeights);
+        var listener = listenerFn(grammar, params);
+        var distOnPeopleWorlds = {
+            tall: listener("John is tall", thetaCandidates, peopleWorlds, utterances),
+            heavy: listener("John is heavy", thetaCandidates, peopleWorlds, utterances)
         };
-    }, [-2,0,2]);
 
-    //display(params.parserWeights);
-    var listener = listenerFn(semppl.grammarIsTall, params);
-    var distOnPeopleWorlds = {
-        short: listener("John is short", thetaCandidates, peopleWorlds, utterances),
-        tall: listener("John is tall", thetaCandidates, peopleWorlds, utterances)
-    };
+        factorConjunction(distOnPeopleWorlds.tall, peopleWorlds.slice(0, 3));
+        factorConjunction(distOnPeopleWorlds.heavy, [peopleWorlds[0], peopleWorlds[3], peopleWorlds[6]]);
 
-    factorConjunction(distOnPeopleWorlds.tall, peopleWorlds.slice(0,3));
-    factorConjunction(distOnPeopleWorlds.short, peopleWorlds.slice(6));
+        var distOnBuildingsWorlds = {
+            tall: listener("John is tall", thetaCandidates, buildingsWorlds, utterances),
+            heavy: listener("John is heavy", thetaCandidates, buildingsWorlds, utterances)
+        };
 
-    // var distOnBuildingsWorlds = {
-    //     tall: listener("John is tall", thetaCandidates, buildingsWorlds, utterances),
-    //     heavy: listener("John is heavy", thetaCandidates, buildingsWorlds, utterances)
-    // };
+        factorConjunction(distOnBuildingsWorlds.tall, buildingsWorlds.slice(0, 3));
+        factorConjunction(distOnBuildingsWorlds.heavy, [buildingsWorlds[0], buildingsWorlds[3], buildingsWorlds[6]]);
 
-    // factorConjunction(distOnBuildingsWorlds.tall, buildingsWorlds.slice(0, 3));
-    // factorConjunction(distOnBuildingsWorlds.heavy, [buildingsWorlds[0], buildingsWorlds[3], buildingsWorlds[6]]);
-
-    return {
-        people: distOnPeopleWorlds,
-        // buildings: distOnBuildingsWorlds
+        return {
+            people: distOnPeopleWorlds,
+            buildings: distOnBuildingsWorlds
+        };
     };
 };
+
 var runTest = function(opts) {
+    var model = createModel(semppl.grammarIsTall, true);
     display(sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}, verbose: opts.verbose})));
 }
 
 runTest({ verbose: true });
+// sample(createModel(semppl.grammarIsTallFixed, false)().people);
 
 /**
  * mapData
