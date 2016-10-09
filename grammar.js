@@ -57,6 +57,11 @@ exports.ambiguousGrammar = indexify([
 		sem: semFuncs.fwdApply
 	},
 	{
+		LHS: "$ADJ",
+		RHS: "$DET $ADJ",
+		sem: semFuncs.fwdApply
+	},
+	{
 		LHS: "$NP",
 		RHS: "John",
 		sem: semFuncs.entity("john")
@@ -64,6 +69,11 @@ exports.ambiguousGrammar = indexify([
 	{
 		LHS: "$COP",
 		RHS: "is",
+		sem: semFuncs.id
+	},
+	{
+		LHS: "$DET",
+		RHS: "a",
 		sem: semFuncs.id
 	},
     makeNeuralScalarAdjectiveRule("tall"),
@@ -89,6 +99,11 @@ exports.fixedGrammar = indexify([
 		sem: semFuncs.fwdApply
 	},
 	{
+		LHS: "$ADJ",
+		RHS: "$DET $ADJ",
+		sem: semFuncs.fwdApply
+	},
+	{
 		LHS: "$NP",
 		RHS: "John",
 		sem: semFuncs.entity("john")
@@ -96,6 +111,11 @@ exports.fixedGrammar = indexify([
 	{
 		LHS: "$COP",
 		RHS: "is",
+		sem: semFuncs.id
+	},
+	{
+		LHS: "$DET",
+		RHS: "a",
 		sem: semFuncs.id
 	},
     makeFixedScalarAdjectiveRule("tall", "height"),
