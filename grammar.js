@@ -40,7 +40,7 @@ function makeFixedDimensionScalarAntonymRule(name, scaleName, dimension) {
     };
 }
 
-exports.grammarIsTall = indexify([
+exports.ambiguousGrammar = indexify([
 	{
 		LHS: "$S",
 		RHS: "null",
@@ -72,7 +72,7 @@ exports.grammarIsTall = indexify([
     makeNeuralScalarAntonymRule("light", "heavy")
 ]);
 
-exports.grammarIsTallFixed = indexify([
+exports.fixedGrammar = indexify([
 	{
 		LHS: "$S",
 		RHS: "null",
