@@ -53,32 +53,32 @@ exports.ambiguousGrammar = indexify([
 	},
 	{
 		LHS: "$VP",
-		RHS: "$COP $ADJ",
+		RHS: "$COP $PRED",
 		sem: semFuncs.fwdApply
 	},
 	{
-		LHS: "$ADJ",
-		RHS: "$DET $ADJ",
+		LHS: "$PRED",
+		RHS: "$DET $PRED",
 		sem: semFuncs.fwdApply
 	},
 	{
-		LHS: "$ADJ",
-		RHS: "$ADJ $ADJ",
+		LHS: "$PRED",
+		RHS: "$PRED $PRED",
 		sem: semFuncs.intersectPredicates
 	},
 	{
-		LHS: "$ADJ",
-		RHS: "$ADJ $ADJ",
+		LHS: "$PRED",
+		RHS: "$PRED $PRED",
 		sem: semFuncs.first
 	},
 	{
-		LHS: "$ADJ",
-		RHS: "$ADJ $ADJ",
+		LHS: "$PRED",
+		RHS: "$PRED $PRED",
 		sem: semFuncs.second
 	},
 	{
-		LHS: "$ADJ",
-		RHS: "$ADJ $ADJ",
+		LHS: "$PRED",
+		RHS: "$PRED $PRED",
 		sem: semFuncs.const
 	},
 	{
@@ -96,12 +96,12 @@ exports.ambiguousGrammar = indexify([
 		RHS: "a",
 		sem: semFuncs.id
 	},
-    makeNeuralScalarItemRule("tall", "$ADJ"),
-    makeNeuralScalarItemRule("heavy", "$ADJ"),
-    makeNeuralScalarAntonymRule("short", "tall", "$ADJ"),
-    makeNeuralScalarAntonymRule("light", "heavy", "$ADJ"),
-	makeNeuralScalarItemRule("man", "$ADJ"),
-	makeNeuralScalarItemRule("building", "$ADJ"),
+    makeNeuralScalarItemRule("tall", "$PRED"),
+    makeNeuralScalarItemRule("heavy", "$PRED"),
+    makeNeuralScalarAntonymRule("short", "tall", "$PRED"),
+    makeNeuralScalarAntonymRule("light", "heavy", "$PRED"),
+	makeNeuralScalarItemRule("man", "$PRED"),
+	makeNeuralScalarItemRule("building", "$PRED"),
 ]);
 
 exports.fixedGrammar = indexify([
@@ -117,13 +117,23 @@ exports.fixedGrammar = indexify([
 	},
 	{
 		LHS: "$VP",
+		RHS: "$COP $NP",
+		sem: semFuncs.fwdApply
+	},
+	{
+		LHS: "$VP",
 		RHS: "$COP $ADJ",
 		sem: semFuncs.fwdApply
 	},
 	{
-		LHS: "$ADJ",
-		RHS: "$DET $ADJ",
+		LHS: "$NP",
+		RHS: "$DET $N",
 		sem: semFuncs.fwdApply
+	},
+	{
+		LHS: "$N",
+		RHS: "$ADJ $N",
+		sem: semFuncs.intersectPredicates
 	},
 	{
 		LHS: "$NP",
@@ -144,6 +154,6 @@ exports.fixedGrammar = indexify([
     makeFixedScalarItemRule("heavy", "weight", "$ADJ"),
     makeFixedDimensionScalarAntonymRule("short", "tall", "height", "$ADJ"),
     makeFixedDimensionScalarAntonymRule("light", "heavy", "weight", "$ADJ"),
-	makeFixedScalarItemRule("man", "man", "$ADJ"),
-	makeFixedScalarItemRule("building", "building", "$ADJ"),
+	makeFixedScalarItemRule("man", "man", "$N"),
+	makeFixedScalarItemRule("building", "building", "$N"),
 ]);
