@@ -79,7 +79,7 @@ exports.ambiguousGrammar = indexify([
 	{
 		LHS: "$PRED",
 		RHS: "$PRED $PRED",
-		sem: semFuncs.const
+		sem: semFuncs.constTrue
 	},
 	{
 		LHS: "$NP",

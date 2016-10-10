@@ -104,12 +104,12 @@ module.exports = {
 
     id: _.constant(_.constant(_.identity)),
 
-    const: _.compose(_.constant, _.constant),
+    constTrue: _.compose(_.constant, _.constant, _.constant)(1),
 
     intersectPredicates: function(pred1, pred2) {
         return function(context) {
             return function(ent) {
-                return pred1(context)(ent) * pred2(context)(ent);
+                return ad.scalar.mul(pred1(context)(ent), pred2(context)(ent));
             }
         }
     },
