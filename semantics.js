@@ -104,13 +104,22 @@ module.exports = {
 
     id: _.constant(_.constant(_.identity)),
 
-    intersectPredicates: function(modPredicate, headPredicate) {
+    const: _.compose(_.constant, _.constant),
+
+    intersectPredicates: function(pred1, pred2) {
         return function(context) {
             return function(ent) {
-                // TODO: Make this number valued instead of boolean
-                return modPredicate(context)(ent) && headPredicate(context)(ent);
+                return pred1(context)(ent) * pred2(context)(ent);
             }
         }
+    },
+
+    first: function(arg1, arg2) {
+        return arg1;
+    },
+
+    second: function(arg1, arg2) {
+        return arg2;
     },
 
     backApply: function(left, right) {

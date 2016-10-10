@@ -62,6 +62,26 @@ exports.ambiguousGrammar = indexify([
 		sem: semFuncs.fwdApply
 	},
 	{
+		LHS: "$ADJ",
+		RHS: "$ADJ $ADJ",
+		sem: semFuncs.intersectPredicates
+	},
+	{
+		LHS: "$ADJ",
+		RHS: "$ADJ $ADJ",
+		sem: semFuncs.first
+	},
+	{
+		LHS: "$ADJ",
+		RHS: "$ADJ $ADJ",
+		sem: semFuncs.second
+	},
+	{
+		LHS: "$ADJ",
+		RHS: "$ADJ $ADJ",
+		sem: semFuncs.const
+	},
+	{
 		LHS: "$NP",
 		RHS: "John",
 		sem: semFuncs.entity("john")
