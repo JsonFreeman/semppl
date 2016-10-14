@@ -159,12 +159,12 @@ var utterances = ["John is tall", "John is heavy", "John is short", "John is lig
 
 var createModel = function (grammar, parametrize, utterances, worlds, thetaValues, utterance) {
     return function () {
-        var scalarAdjectives = ['tall', 'heavy', 'man', 'building'];
+        var scalarPredicates = ['tall', 'heavy', 'man', 'building'];
 
         var params = parametrize ? {
             parserWeights: createParserWeights(grammar),
-            networkParams: _.object(scalarAdjectives, repeat(scalarAdjectives.length, function () {
-                createNetworkParams(10, scalarAdjectives.length)
+            networkParams: _.object(scalarPredicates, repeat(scalarPredicates.length, function () {
+                createNetworkParams(10, scalarPredicates.length)
             }))
         } : {};
 
@@ -183,7 +183,7 @@ var createModel = function (grammar, parametrize, utterances, worlds, thetaValue
 
 var generateData = function() {
     var model = createModel(semppl.fixedGrammar, false, utterances, peopleWorlds, thetaValues, "John is tall");
-    
+
 }
 
 var runTest = function(opts) {
