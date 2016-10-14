@@ -17,7 +17,7 @@ function makeVector(arr) {
 }
 
 function entityVector(ent, context) {
-    var array = _.pluck(_.values(context.facts), ent);
+    var array = _.values(context.facts).map(prop => +prop[ent]);
     return makeVector(array);
 }
 
@@ -54,9 +54,13 @@ module.exports = {
         return function(/*unused*/params, theta) {
             return function(context) {
                 return function(ent) {
-                    // Just like neuralScalarPredicate but uses a fixed dimension for the measurement
+                    // Should return a 0 or 1 depending on boolean value. Not graded
+                    // Vagueness is determined by whether theta has an entry for this scaleName
                     var measurement = context.facts[dimension][ent];
-                    return ad.scalar.sigmoid(ad.scalar.sub(measurement, theta[scaleName]));
+                    var isTrue = scaleName in theta
+                        ? measurement > theta[scaleName]
+                        : measurement;
+                    return +isTrue;
                 }
             }
         }
@@ -78,9 +82,9 @@ module.exports = {
         return function(params, theta) {
             return function(context) {
                 return function(ent) {
-                    var positiveResult = 
+                    // No need to adify
+                    return 1 -
                         module.exports.fixedDimensionScalarPredicate(scaleName, dimension)(params, theta)(context)(ent);
-                    return ad.scalar.sub(1, positiveResult);                
                 }
             }
         }

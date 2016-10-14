@@ -148,8 +148,8 @@ var createModel = function (grammar, parametrize) {
                 facts: { 
                     height: { john: h, gates: h }, 
                     weight: { john: w, gates: w },
-                    man: { john: 1, gates: 0 },
-                    building: { john: 0, gates: 1 },
+                    man: { john: true, gates: false },
+                    building: { john: false, gates: true },
                 },
                 domain: ["john", "gates"]
             };
@@ -171,12 +171,7 @@ var createModel = function (grammar, parametrize) {
         var thetaCandidates = map(function (theta) {
             return {
                 tall: theta,
-                heavy: theta,
-                
-                // TODO: it would be good if the model didn't have to specify this.
-                // Ideally should be in the grammar
-                man: 0,
-                building: 0
+                heavy: theta
             };
         }, [8, 6, 4, 80, 60, 40]);
 
