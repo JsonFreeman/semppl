@@ -60,7 +60,8 @@ module.exports = {
                     var isTrue = scaleName in theta
                         ? measurement > theta[scaleName]
                         : measurement;
-                    return +isTrue;
+                    // Hack: 0 and 1 don't seem to play well with RSA enumeration
+                    return isTrue ? 0.999999 : 0.000001;
                 }
             }
         }
