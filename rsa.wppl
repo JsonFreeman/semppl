@@ -179,11 +179,11 @@ var createModel = function(grammar, utterances, worlds, thetaValues, dataPairs) 
         var worldDistributions = interpretUtterances(listener, utterances, thetaCandidates, worlds);
 
         if (dataPairs) {
-            mapData(function(p) {
+            mapData({ data: dataPairs }, function(p) {
                 var utterance = p[0];
                 var world = p[1];
                 observe(worldDistributions[utterance], world);
-            }, dataPairs);
+            });
         }
 
         return worldDistributions;
