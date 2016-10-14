@@ -44,7 +44,7 @@ module.exports = {
             return function(context) {
                 return function(ent) {
                     var measurement = scalarDegree(ent, context, params.networkParams[scaleName]);
-                    return ad.scalar.sigmoid(ad.scalar.sub(measurement, theta[scaleName]));
+                    return ad.scalar.sigmoid(ad.scalar.sub(measurement, theta[scaleName] || 0));
                 }
             }
         }
