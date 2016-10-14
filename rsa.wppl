@@ -141,24 +141,24 @@ var createNetworkParams = function(hiddenSize, inputSize) {
     return { W: [W0, W1], b: [b0, b1] };
 }
 
-var createModel = function (grammar, parametrize) {
+var worldsFn = function (h, w) {
+    return {
+        facts: { 
+            height: { john: h, gates: h }, 
+            weight: { john: w, gates: w },
+            man: { john: true, gates: false },
+            building: { john: false, gates: true },
+        },
+        domain: ["john", "gates"]
+    };
+};
+var peopleWorlds = cartesianProductMap(worldsFn, [8, 6, 4], [8, 6, 4]);
+var buildingsWorlds = cartesianProductMap(worldsFn, [80, 60, 40], [80, 60, 40]);
+var thetaValues = [8, 6, 4, 80, 60, 40];
+var utterances = ["John is tall", "John is heavy", "John is short", "John is light", "null"];
+
+var createModel = function (grammar, parametrize, utterances, worlds, thetaValues, utterance) {
     return function () {
-        var worldsFromHeightsFn = function (h, w) {
-            return {
-                facts: { 
-                    height: { john: h, gates: h }, 
-                    weight: { john: w, gates: w },
-                    man: { john: true, gates: false },
-                    building: { john: false, gates: true },
-                },
-                domain: ["john", "gates"]
-            };
-        };
-        var peopleWorlds = cartesianProductMap(worldsFromHeightsFn, [8, 6, 4], [8, 6, 4]);
-        var buildingsWorlds = cartesianProductMap(worldsFromHeightsFn, [80, 60, 40], [80, 60, 40]);
-
-        var utterances = ["John is tall", "John is heavy", "John is short", "John is light", "null"];
-
         var scalarAdjectives = ['tall', 'heavy', 'man', 'building'];
 
         var params = parametrize ? {
@@ -173,35 +173,21 @@ var createModel = function (grammar, parametrize) {
                 tall: theta,
                 heavy: theta
             };
-        }, [8, 6, 4, 80, 60, 40]);
+        }, thetaValues);
 
         //display(params.parserWeights);
         var listener = listenerFn(grammar, params);
-        var distOnPeopleWorlds = {
-            tall: listener("John is tall", thetaCandidates, peopleWorlds, utterances),
-            heavy: listener("John is heavy", thetaCandidates, peopleWorlds, utterances)
-        };
-
-        factorConjunction(distOnPeopleWorlds.tall, peopleWorlds.slice(0, 3));
-        factorConjunction(distOnPeopleWorlds.heavy, [peopleWorlds[0], peopleWorlds[3], peopleWorlds[6]]);
-
-        var distOnBuildingsWorlds = {
-            tall: listener("John is tall", thetaCandidates, buildingsWorlds, utterances),
-            heavy: listener("John is heavy", thetaCandidates, buildingsWorlds, utterances)
-        };
-
-        factorConjunction(distOnBuildingsWorlds.tall, buildingsWorlds.slice(0, 3));
-        factorConjunction(distOnBuildingsWorlds.heavy, [buildingsWorlds[0], buildingsWorlds[3], buildingsWorlds[6]]);
-
-        return {
-            people: distOnPeopleWorlds,
-            buildings: distOnBuildingsWorlds
-        };
+        return listener(utterance, thetaCandidates, worlds, utterances);
     };
 };
 
+var generateData = function() {
+    var model = createModel(semppl.fixedGrammar, false, utterances, peopleWorlds, thetaValues, "John is tall");
+    
+}
+
 var runTest = function(opts) {
-    var model = createModel(semppl.ambiguousGrammar, true);
+    var model = createModel(semppl.ambiguousGrammar, true, utterances, peopleWorlds, thetaValues, "John is tall");
     display(sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}, verbose: opts.verbose})));
 }
 
