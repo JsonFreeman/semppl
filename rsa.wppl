@@ -157,16 +157,16 @@ var buildingsWorlds = cartesianProductMap(worldsFn, [80, 60, 40], [80, 60, 40]);
 var thetaValues = [8, 6, 4, 80, 60, 40];
 var utterances = ["John is tall", "John is heavy", "John is short", "John is light", "null"];
 
-var createModel = function(grammar, parametrize, utterances, worlds, thetaValues, utterance) {
+var createModel = function(grammar, utterances, worlds, thetaValues, utterance) {
     return function () {
         var scalarPredicates = ['tall', 'heavy', 'man', 'building'];
 
-        var params = parametrize ? {
+        var params = {
             parserWeights: createParserWeights(grammar),
             networkParams: _.object(scalarPredicates, repeat(scalarPredicates.length, function () {
                 createNetworkParams(10, scalarPredicates.length)
             }))
-        } : {};
+        };
 
         var thetaCandidates = map(function (theta) {
             return {
@@ -206,12 +206,11 @@ var sampleGroundDistributions = function(dists, numSamplesEach) {
 }
 
 var runTest = function(opts) {
-    var model = createModel(semppl.ambiguousGrammar, true, utterances, peopleWorlds, thetaValues, "John is tall");
+    var model = createModel(semppl.ambiguousGrammar, utterances, peopleWorlds, thetaValues, "John is tall");
     display(sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}, verbose: opts.verbose})));
 }
 
 // runTest({ verbose: true });
-// sample(createModel(semppl.fixedGrammar, false)().people);
 display(sampleGroundDistributions(generateGroundDistributions(), 10));
 /**
  * mapData
