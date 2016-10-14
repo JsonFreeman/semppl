@@ -155,7 +155,7 @@ var worldsFn = function (h, w) {
 var peopleWorlds = cartesianProductMap(worldsFn, [8, 6, 4], [8, 6, 4]);
 var buildingsWorlds = cartesianProductMap(worldsFn, [80, 60, 40], [80, 60, 40]);
 var thetaValues = [8, 6, 4, 80, 60, 40];
-var utterances = ["John is tall", "John is heavy", "John is short", "John is light", "null"];
+var utterances = ["John is tall", "John is heavy", "John is a man", "John is a heavy man", "null"];
 
 var createModel = function(grammar, utterances, worlds, thetaValues, dataPairs) {
     return function () {
@@ -228,7 +228,8 @@ var trainAndTest = function(dataPairs, trainingUtterances, testUtterances) {
 }
 
 
-display(sampleGroundDistributions(generateGroundDistributions(), 10));
+var data = sampleGroundDistributions(generateGroundDistributions(), 10);
+trainAndTest(data, utterances, ["John is a tall man"]);
 /**
  * mapData
  * cache issue - close over params
