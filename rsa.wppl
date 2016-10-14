@@ -181,7 +181,7 @@ var createModel = function(grammar, parametrize, utterances, worlds, thetaValues
     };
 };
 
-var generateData = function() {
+var generateGroundDistributions = function() {
     var thetaCandidates = map(function (theta) {
         return {
             tall: theta,
@@ -195,6 +195,16 @@ var generateData = function() {
     }, utterances));
 }
 
+var sampleGroundDistributions = function(dists, numSamplesEach) {
+    var samplesDict = mapObject(function(u, dist) {
+        return repeat(numSamplesEach, function() {
+            return [u, sample(dist)];
+        })   
+    }, dists);
+
+    return _.flatten(_.values(samplesDict), /*shallow*/true);
+}
+
 var runTest = function(opts) {
     var model = createModel(semppl.ambiguousGrammar, true, utterances, peopleWorlds, thetaValues, "John is tall");
     display(sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}, verbose: opts.verbose})));
@@ -202,7 +212,7 @@ var runTest = function(opts) {
 
 // runTest({ verbose: true });
 // sample(createModel(semppl.fixedGrammar, false)().people);
-
+display(sampleGroundDistributions(generateGroundDistributions(), 10));
 /**
  * mapData
  * cache issue - close over params
