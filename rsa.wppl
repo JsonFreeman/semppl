@@ -157,7 +157,7 @@ var buildingsWorlds = cartesianProductMap(worldsFn, [80, 60, 40], [80, 60, 40]);
 var thetaValues = [8, 6, 4, 80, 60, 40];
 var utterances = ["John is tall", "John is heavy", "John is short", "John is light", "null"];
 
-var createModel = function(grammar, utterances, worlds, thetaValues, utterance, dataPairs) {
+var createModel = function(grammar, utterances, worlds, thetaValues, dataPairs) {
     return function () {
         var scalarPredicates = ['tall', 'heavy', 'man', 'building'];
 
@@ -176,7 +176,17 @@ var createModel = function(grammar, utterances, worlds, thetaValues, utterance, 
         }, thetaValues);
 
         var listener = listenerFn(grammar, params);
-        return interpretUtterances(listener, utterances, thetaCandidates, worlds);
+        var worldDistributions = interpretUtterances(listener, utterances, thetaCandidates, worlds);
+
+        if (dataPairs) {
+            mapData(function(p) {
+                var utterance = p[0];
+                var world = p[1];
+                observe(worldDistributions[utterance], world);
+            }, dataPairs);
+        }
+
+        return worldDistributions;
     };
 };
 
@@ -208,12 +218,16 @@ var sampleGroundDistributions = function(dists, numSamplesEach) {
     return _.flatten(_.values(samplesDict), /*shallow*/true);
 }
 
-var runTest = function(opts) {
-    var model = createModel(semppl.ambiguousGrammar, utterances, peopleWorlds, thetaValues, "John is tall");
-    display(sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}, verbose: opts.verbose})));
+var trainAndTest = function(dataPairs, trainingUtterances, testUtterances) {
+    var trainingModel = 
+        createModel(semppl.ambiguousGrammar, trainingUtterances, peopleWorlds, thetaValues, dataPairs);
+    var params = Optimize(trainingModel, {steps: 2000, estimator: {ELBO: {samples: 1}}});
+    
+    var testModel = createModel(semppl.ambiguousGrammar, testUtterances, peopleWorlds, thetaValues, null);
+    return sample(SampleGuide(testModel, { params: params }));
 }
 
-// runTest({ verbose: true });
+
 display(sampleGroundDistributions(generateGroundDistributions(), 10));
 /**
  * mapData
