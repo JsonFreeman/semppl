@@ -1,0 +1,50 @@
+var sampleScalarGaussian = function(mean, variance) {
+    return sample(Gaussian({ mu: mean, sigma: variance }),
+        { guide: Gaussian({ mu: scalarParam(mean), sigma: 0.001 }) });
+}
+
+var createParserWeights = function(grammar) {
+    return _.object(map(function(entry) {
+        return [
+            semppl.makeRuleKey(entry), // key
+            sampleScalarGaussian(0, 1) // value
+        ];
+    }, grammar));
+};
+
+var featureFn = function(d) { return semppl.ruleFeatureFn(d); };
+var scoreFn = function(features, params) {
+    return sum(_.values(mapObject(function(k, v) {
+        return _.has(params, k) ? v * params[k] : 0;
+    }, features)));
+};
+
+var test = function() {
+	var grammar = [
+		{
+			LHS: "$S",
+			RHS: "$NP $VP",
+			sem: _.identity
+		},
+		{
+			LHS: "$NP",
+			RHS: "John",
+			sem: _.identity
+		},
+		{
+			LHS: "$VP",
+			RHS: "jumped",
+			sem: _.identity
+		}
+	];
+	var params = { parserWeights: createParserWeights(grammar) };
+	var parser = semppl.createParser(grammar, params, semppl.ruleFeatureFn);
+	var chart = parser.call(null, "John jumped");
+	var derivations = semppl.getRootCellDerivations(chart, "$S");
+    var derivationProbabilities = map(function(d) {
+        return Math.exp(scoreFn(featureFn(d), params.parserWeights));
+    }, derivations);
+    return Categorical({ps: derivationProbabilities, vs: derivations})
+}
+
+SampleGuide(test);
