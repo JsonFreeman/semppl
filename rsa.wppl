@@ -157,7 +157,7 @@ var buildingsWorlds = cartesianProductMap(worldsFn, [80, 60, 40], [80, 60, 40]);
 var thetaValues = [8, 6, 4, 80, 60, 40];
 var utterances = ["John is tall", "John is heavy", "John is short", "John is light", "null"];
 
-var createModel = function(grammar, utterances, worlds, thetaValues, utterance) {
+var createModel = function(grammar, utterances, worlds, thetaValues, utterance, dataPairs) {
     return function () {
         var scalarPredicates = ['tall', 'heavy', 'man', 'building'];
 
@@ -175,11 +175,16 @@ var createModel = function(grammar, utterances, worlds, thetaValues, utterance) 
             };
         }, thetaValues);
 
-        //display(params.parserWeights);
         var listener = listenerFn(grammar, params);
-        return listener(utterance, thetaCandidates, worlds, utterances);
+        return interpretUtterances(listener, utterances, thetaCandidates, worlds);
     };
 };
+
+var interpretUtterances = function(listener, utterances, thetaCandidates, worlds) {
+    return _.object(utterances, map(function(u) {
+        return listener(u, thetaCandidates, peopleWorlds.concat(buildingsWorlds), utterances);
+    }, utterances));
+}
 
 var generateGroundDistributions = function() {
     var thetaCandidates = map(function (theta) {
@@ -190,9 +195,7 @@ var generateGroundDistributions = function() {
     }, thetaValues);
     
     var listener = listenerFn(semppl.fixedGrammar, {});
-    return _.object(utterances, map(function(u) {
-        return listener(u, thetaCandidates, peopleWorlds.concat(buildingsWorlds), utterances);
-    }, utterances));
+    return interpretUtterances(listener, utterances, thetaCandidates, peopleWorlds.concat(buildingsWorlds));
 }
 
 var sampleGroundDistributions = function(dists, numSamplesEach) {
