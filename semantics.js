@@ -57,11 +57,9 @@ module.exports = {
                     // Should return a 0 or 1 depending on boolean value. Not graded
                     // Vagueness is determined by whether theta has an entry for this scaleName
                     var measurement = context.facts[dimension][ent];
-                    var isTrue = scaleName in theta
-                        ? measurement > theta[scaleName]
-                        : measurement;
-                    // Hack: 0 and 1 don't seem to play well with RSA enumeration
-                    return isTrue ? 0.999999 : 0.000001;
+                    return scaleName in theta
+                        ? Math.sigmoid(measurement - theta[scaleName])
+                        : +measurement;
                 }
             }
         }
