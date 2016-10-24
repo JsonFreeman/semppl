@@ -54,8 +54,8 @@ module.exports = {
         return function(/*unused*/params, theta) {
             return function(context) {
                 return function(ent) {
-                    // Should return a 0 or 1 depending on boolean value. Not graded
-                    // Vagueness is determined by whether theta has an entry for this scaleName
+                    // Vague predicates return a sigmoid value
+                    // Boolean predicates return 0 or 1
                     var measurement = context.facts[dimension][ent];
                     return scaleName in theta
                         ? Math.sigmoid(measurement - theta[scaleName])
