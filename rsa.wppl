@@ -156,8 +156,18 @@ var peopleWorlds = cartesianProductMap(worldsFn, [8, 6, 4], [8, 6, 4]);
 var buildingsWorlds = cartesianProductMap(worldsFn, [80, 60, 40], [80, 60, 40]);
 var thetaValues = [8, 6, 4];
 var utterances = ["John is tall", "John is heavy", "John is a man", "John is a heavy man", "null"];
+var context = {
+    worlds: peopleWorlds,
+    utterances: utterances,
+    thetaCandidates: map(function (theta) {
+        return {
+            tall: theta,
+            heavy: theta
+        };
+    }, thetaValues)
+}
 
-var createModel = function(grammar, utterances, worlds, thetaValues, dataPairs) {
+var createModel = function(grammar, utterances, context, dataPairs) {
     return function () {
         var scalarPredicates = ['tall', 'heavy', 'man', 'building'];
 
@@ -168,15 +178,8 @@ var createModel = function(grammar, utterances, worlds, thetaValues, dataPairs) 
             }))
         };
 
-        var thetaCandidates = map(function (theta) {
-            return {
-                tall: theta,
-                heavy: theta
-            };
-        }, thetaValues);
-
         var listener = listenerFn(grammar, params);
-        var worldDistributions = interpretUtterances(listener, utterances, thetaCandidates, worlds);
+        var worldDistributions = interpretUtterances(listener, utterances, context);
 
         if (dataPairs) {
             mapData({ data: dataPairs }, function(p) {
@@ -190,22 +193,15 @@ var createModel = function(grammar, utterances, worlds, thetaValues, dataPairs) 
     };
 };
 
-var interpretUtterances = function(listener, utterances, thetaCandidates, worlds) {
+var interpretUtterances = function(listener, utterances, context) {
     return _.object(utterances, map(function(u) {
-        return listener(u, thetaCandidates, peopleWorlds, utterances);
+        return listener(u, context.thetaCandidates, context.worlds, context.utterances);
     }, utterances));
 }
 
-var generateGroundDistributions = function() {
-    var thetaCandidates = map(function (theta) {
-        return {
-            tall: theta,
-            heavy: theta
-        };
-    }, thetaValues);
-    
+var generateGroundDistributions = function(utterances, context) {
     var listener = listenerFn(semppl.fixedGrammar, {});
-    return interpretUtterances(listener, utterances, thetaCandidates, peopleWorlds);
+    return interpretUtterances(listener, utterances, context);
 }
 
 var sampleGroundDistributions = function(dists, numSamplesEach) {
@@ -218,9 +214,9 @@ var sampleGroundDistributions = function(dists, numSamplesEach) {
     return _.flatten(_.values(samplesDict), /*shallow*/true);
 }
 
-var train = function(dataPairs, utterances, iterations, formerTrainingResults) {
+var train = function(dataPairs, utterances, context, iterations, formerTrainingResults) {
     var trainingModel = 
-        createModel(semppl.ambiguousGrammar, utterances, peopleWorlds, thetaValues, dataPairs);
+        createModel(semppl.ambiguousGrammar, utterances, context, dataPairs);
     return Optimize(trainingModel, {
         steps: iterations, 
         estimator: {ELBO: {samples: 1}},
@@ -228,15 +224,15 @@ var train = function(dataPairs, utterances, iterations, formerTrainingResults) {
     });
 };
 
-var test = function(utterances, trainingResults) {
-    var testModel = createModel(semppl.ambiguousGrammar, utterances, peopleWorlds, thetaValues, null);
+var test = function(utterances, context, trainingResults) {
+    var testModel = createModel(semppl.ambiguousGrammar, utterances, context, null);
     return sample(SampleGuide(testModel, { params: trainingResults }));
 }
 
 
-var data = sampleGroundDistributions(generateGroundDistributions(), 10);
+var data = sampleGroundDistributions(generateGroundDistributions(utterances, context), 10);
 display(data);
-test(["John is a tall man", "null"], train(data, utterances, 100, null));
+test(["John is a tall man", "null"], context, train(data, utterances, context, 100, null));
 /**
  * mapData
  * cache issue - close over params
