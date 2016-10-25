@@ -225,7 +225,11 @@ var train = function(dataPairs, utterances, context, iterations, formerTrainingR
 };
 
 var test = function(utterances, context, trainingResults) {
-    var testModel = createModel(semppl.ambiguousGrammar, utterances, context, null);
+    // Ensure the utterances are in the context
+    var newContext = _.create(context, {
+        utterances: _.uniq(context.utterances.concat(utterances))
+    })
+    var testModel = createModel(semppl.ambiguousGrammar, utterances, newContext, null);
     return sample(SampleGuide(testModel, { params: trainingResults }));
 }
 
