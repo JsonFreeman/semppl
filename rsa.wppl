@@ -218,19 +218,25 @@ var sampleGroundDistributions = function(dists, numSamplesEach) {
     return _.flatten(_.values(samplesDict), /*shallow*/true);
 }
 
-var trainAndTest = function(dataPairs, trainingUtterances, testUtterances, iterations) {
+var train = function(dataPairs, utterances, iterations, formerTrainingResults) {
     var trainingModel = 
-        createModel(semppl.ambiguousGrammar, trainingUtterances, peopleWorlds, thetaValues, dataPairs);
-    var params = Optimize(trainingModel, {steps: iterations, estimator: {ELBO: {samples: 1}}});
-    
-    var testModel = createModel(semppl.ambiguousGrammar, testUtterances, peopleWorlds, thetaValues, null);
-    return sample(SampleGuide(testModel, { params: params }));
+        createModel(semppl.ambiguousGrammar, utterances, peopleWorlds, thetaValues, dataPairs);
+    return Optimize(trainingModel, {
+        steps: iterations, 
+        estimator: {ELBO: {samples: 1}},
+        params: formerTrainingResults
+    });
+};
+
+var test = function(utterances, trainingResults) {
+    var testModel = createModel(semppl.ambiguousGrammar, utterances, peopleWorlds, thetaValues, null);
+    return sample(SampleGuide(testModel, { params: trainingResults }));
 }
 
 
 var data = sampleGroundDistributions(generateGroundDistributions(), 10);
 display(data);
-trainAndTest(data, utterances, ["John is a tall man", "null"], 100);
+test(["John is a tall man", "null"], train(data, utterances, 100, null));
 /**
  * mapData
  * cache issue - close over params
