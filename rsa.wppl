@@ -167,7 +167,7 @@ var context = {
     }, thetaValues)
 }
 
-var createModel = function(grammar, utterances, context, dataPairs) {
+var createModel = function(grammar, dataTriples) {
     return function () {
         var scalarPredicates = ['tall', 'heavy', 'man', 'building'];
 
@@ -179,44 +179,34 @@ var createModel = function(grammar, utterances, context, dataPairs) {
         };
 
         var listener = listenerFn(grammar, params);
-        var worldDistributions = interpretUtterances(listener, utterances, context);
 
-        if (dataPairs) {
-            mapData({ data: dataPairs }, function(p) {
-                var utterance = p[0];
-                var world = p[1];
-                observe(worldDistributions[utterance], world);
+        if (dataTriples) {
+            mapData({ data: dataTriples }, function(example) {
+                var world = example[0];
+                var utterance = example[1];
+                var context = example[2];
+                var distribution = listener(utterance, context.thetaCandidates, context.worlds, context.utterances);
+                observe(distribution, world);
             });
         }
 
-        return worldDistributions;
+        return listener;
     };
 };
 
-var interpretUtterances = function(listener, utterances, context) {
-    return _.object(utterances, map(function(u) {
-        return listener(u, context.thetaCandidates, context.worlds, context.utterances);
-    }, utterances));
-}
-
-var generateGroundDistributions = function(utterances, context) {
+var sampleGroundDistributions = function(utterances, contexts, numSamplesEach) {
     var listener = listenerFn(semppl.fixedGrammar, {});
-    return interpretUtterances(listener, utterances, context);
+    return _.flatten(
+        map(function (u) {
+            map(function (c) {
+                return [sample(listener(u, c.thetaCandidates, c.worlds, c.utterances)), u, c];
+            }, contexts)
+        }, utterances), /*shallow*/ true);
 }
 
-var sampleGroundDistributions = function(dists, numSamplesEach) {
-    var samplesDict = mapObject(function(u, dist) {
-        return repeat(numSamplesEach, function() {
-            return [u, sample(dist)];
-        })   
-    }, dists);
-
-    return _.flatten(_.values(samplesDict), /*shallow*/true);
-}
-
-var train = function(dataPairs, utterances, context, iterations, formerTrainingResults) {
+var train = function(dataPairs, iterations, formerTrainingResults) {
     var trainingModel = 
-        createModel(semppl.ambiguousGrammar, utterances, context, dataPairs);
+        createModel(semppl.ambiguousGrammar, dataPairs);
     return Optimize(trainingModel, {
         steps: iterations, 
         estimator: {ELBO: {samples: 1}},
@@ -224,19 +214,22 @@ var train = function(dataPairs, utterances, context, iterations, formerTrainingR
     });
 };
 
-var test = function(utterances, context, trainingResults) {
+var test = function(utterances, contexts, trainingResults) {
     // Ensure the utterances are in the context
-    var newContext = _.create(context, {
-        utterances: _.uniq(context.utterances.concat(utterances))
-    })
-    var testModel = createModel(semppl.ambiguousGrammar, utterances, newContext, null);
-    return sample(SampleGuide(testModel, { params: trainingResults }));
+    var newContexts = map(function(c) {
+        _.create(c, {
+            utterances: _.uniq(c.utterances.concat(utterances))
+        })
+    }, contexts);
+    var testModel = createModel(semppl.ambiguousGrammar, null);
+    var listener = sample(SampleGuide(testModel, { params: trainingResults }));
+    display(listener(utterances[0], newContexts[0].thetaCandidates, newContexts[0].worlds, newContexts[0].utterances))
 }
 
 
-var data = sampleGroundDistributions(generateGroundDistributions(utterances, context), 10);
+var data = sampleGroundDistributions(utterances, [context], 10);
 display(data);
-test(["John is a tall man", "null"], context, train(data, utterances, context, 100, null));
+test(["John is a tall man"], [context], train(data, 100, null));
 /**
  * mapData
  * cache issue - close over params
