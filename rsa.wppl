@@ -1,84 +1,84 @@
 // webppl rsa.wppl --require .
-var nnparam = function(a, b) {
-  return tensorParam([a, b], 0, 0.1);
+var nnparam = function (a, b) {
+    return tensorParam([a, b], 0, 0.1);
 };
 
-var cartesianProductMap = function(fn, arr1, arr2) {
-    return _.flatten(map(function(e1) {
-        return map(function(e2) {
+var cartesianProductMap = function (fn, arr1, arr2) {
+    return _.flatten(map(function (e1) {
+        return map(function (e2) {
             return fn(e1, e2);
         }, arr2);
     }, arr1));
 }
 
-var featureFn = function(d) { return semppl.ruleFeatureFn(d); };
-var scoreFn = function(features, params) {
-    return sum(_.values(mapObject(function(k, v) {
+var featureFn = function (d) { return semppl.ruleFeatureFn(d); };
+var scoreFn = function (features, params) {
+    return sum(_.values(mapObject(function (k, v) {
         return _.has(params, k) ? v * params[k] : 0;
     }, features)));
 };
 
-var normalize = function(array) {
+var normalize = function (array) {
     var s = sum(array);
-    return map(function(x) {
+    return map(function (x) {
         return x / s;
     }, array);
 };
 
-var denotationProbability = function(world) {
-    return function(derivation) {
+var denotationProbability = function (world) {
+    return function (derivation) {
         return derivation.semantics(world);
     };
 };
 
-var createParser = function(grammar, params) {
+var createParser = function (grammar, params) {
     var parser = semppl.createParser(grammar, params, semppl.ruleFeatureFn);
-    return cache(function(utterance, theta, startSymbol) {
+    return cache(function (utterance, theta, startSymbol) {
         // Need to use .call to call parser as a js function
         var chart = parser.call(null, utterance, theta);
         var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
 
         // Gather the two relevant probabilities
-        var derivationProbabilities = normalize(map(function(d) {
+        var derivationProbabilities = normalize(map(function (d) {
             return Math.exp(scoreFn(featureFn(d), params.parserWeights));
         }, rootCellDerivations));
 
-        return cache(function(world) {
+        return cache(function (world) {
             // World dependent part starts here.
             var truthProbabilities = map(denotationProbability(world), rootCellDerivations);
-            
+
             // We now have probabilities that the sentences are true given derivations P(t | d)
             // Also probabilities that derivations are correct P(d)
 
             // Marginalize out derivation by summing over derivations, multiply the two probabilities
-            return sum(map2(function(derivation, truth) {
+            return sum(map2(function (derivation, truth) {
                 return derivation * truth;
             }, derivationProbabilities, truthProbabilities));
         });
     });
 }
 
-var sampleMatrixGaussian = function(dims,mean,variance,guide_mean){
-  var length = dims[0]*dims[1]
-  var g = sample(DiagCovGaussian({ mu: Vector(repeat(length, constF(mean))), sigma: Vector(repeat(length, constF(variance)))}),
-    {guide: DiagCovGaussian({ mu: T.reshape(guide_mean,[length,1]), sigma: Vector(repeat(length, constF(0.001)))})})
-  return T.reshape(g,dims)
+var sampleMatrixGaussian = function (dims, mean, variance, guide_mean) {
+    var length = dims[0] * dims[1]
+    var g = sample(DiagCovGaussian({ mu: Vector(repeat(length, constF(mean))), sigma: Vector(repeat(length, constF(variance))) }),
+        { guide: DiagCovGaussian({ mu: T.reshape(guide_mean, [length, 1]), sigma: Vector(repeat(length, constF(0.001))) }) })
+    return T.reshape(g, dims)
 }
 
-var sampleScalarGaussian = function(mean, variance) {
+var sampleScalarGaussian = function (mean, variance) {
     return sample(Gaussian({ mu: mean, sigma: variance }),
         { guide: Gaussian({ mu: scalarParam(mean), sigma: 0.001 }) });
 }
 
-var factorConjunction = function(dist, support) {
-    var probabilityOfConjunction = sum(map(function(e) {
+var factorConjunction = function (dist, support) {
+    var probabilityOfConjunction = sum(map(function (e) {
         return dist.score(e);
     }, support));
     factor(probabilityOfConjunction);
 }
 
-var createParserWeights = function(grammar) {
-    return _.object(map(function(entry) {
+var createParserWeights = function (grammar) {
+    return _.object(map(function (entry) {
         return [
             semppl.makeRuleKey(entry), // key
             sampleScalarGaussian(0, 1) // value
@@ -86,14 +86,14 @@ var createParserWeights = function(grammar) {
     }, grammar));
 };
 
-var sampleUniformPrior = function(support) {
+var sampleUniformPrior = function (support) {
     return support[randomInteger(support.length)];
 };
 
-var literalListenerFn = function(grammar, params) {
+var literalListenerFn = function (grammar, params) {
     var parse = createParser(grammar, params);
-    return cache(function(utterance, theta, worlds) {
-        Infer({method: 'enumerate'}, function() {
+    return cache(function (utterance, theta, worlds) {
+        Infer({ method: 'enumerate' }, function () {
             var truthFn = parse(utterance, theta, "$S");
             var world = sampleUniformPrior(worlds);
             factor(Math.log(truthFn(world)));
@@ -102,10 +102,10 @@ var literalListenerFn = function(grammar, params) {
     })
 }
 
-var speakerFn = function(grammar, params) {
+var speakerFn = function (grammar, params) {
     var literalListener = literalListenerFn(grammar, params);
-    return cache(function(world, theta, worlds, utterances) {
-        Infer({method: 'enumerate'}, function() {
+    return cache(function (world, theta, worlds, utterances) {
+        Infer({ method: 'enumerate' }, function () {
             var utterance = sampleUniformPrior(utterances);
             var L = literalListener(utterance, theta, worlds);
             factor(L.score(world));
@@ -114,10 +114,10 @@ var speakerFn = function(grammar, params) {
     })
 }
 
-var listenerFn = function(grammar, params) {
+var listenerFn = function (grammar, params) {
     var speaker = speakerFn(grammar, params);
-    return cache(function(utterance, thetaCandidates, worlds, utterances) {
-        Infer({method: 'enumerate'}, function() {
+    return cache(function (utterance, thetaCandidates, worlds, utterances) {
+        Infer({ method: 'enumerate' }, function () {
             var theta = sampleUniformPrior(thetaCandidates);
             var world = sampleUniformPrior(worlds);
             var S = speaker(world, theta, worlds, utterances);
@@ -127,87 +127,110 @@ var listenerFn = function(grammar, params) {
     })
 }
 
-var createNetworkParams = function(hiddenSize, inputSize) {
-    var W0_var = nnparam(hiddenSize,inputSize)
-    var W1_var = nnparam(1,hiddenSize)
-    var b0_var = nnparam(hiddenSize,1)
-    var b1_var = nnparam(1,1)
+var createNetworkParams = function (hiddenSize, inputSize) {
+    var W0_var = nnparam(hiddenSize, inputSize)
+    var W1_var = nnparam(1, hiddenSize)
+    var b0_var = nnparam(hiddenSize, 1)
+    var b1_var = nnparam(1, 1)
 
-    var W0 = sampleMatrixGaussian([hiddenSize,inputSize],0,10,W0_var)
-    var W1 = sampleMatrixGaussian([1,hiddenSize],0,10,W1_var)
-    var b0 = sampleMatrixGaussian([hiddenSize,1],0,10,b0_var)
-    var b1 = sampleMatrixGaussian([1,1],0,10,b1_var)
+    var W0 = sampleMatrixGaussian([hiddenSize, inputSize], 0, 10, W0_var)
+    var W1 = sampleMatrixGaussian([1, hiddenSize], 0, 10, W1_var)
+    var b0 = sampleMatrixGaussian([hiddenSize, 1], 0, 10, b0_var)
+    var b1 = sampleMatrixGaussian([1, 1], 0, 10, b1_var)
 
     return { W: [W0, W1], b: [b0, b1] };
 }
 
-var createModel = function (grammar, parametrize) {
-    return function () {
-        var worldsFromHeightsFn = function (h, w) {
-            return {
-                facts: { 
-                    height: { john: h, gates: h }, 
-                    weight: { john: w, gates: w },
-                    man: { john: true, gates: false },
-                    building: { john: false, gates: true },
-                },
-                domain: ["john", "gates"]
-            };
-        };
-        var peopleWorlds = cartesianProductMap(worldsFromHeightsFn, [8, 6, 4], [8, 6, 4]);
-        var buildingsWorlds = cartesianProductMap(worldsFromHeightsFn, [80, 60, 40], [80, 60, 40]);
-
-        var utterances = ["John is tall", "John is heavy", "John is short", "John is light", "null"];
-
-        var scalarAdjectives = ['tall', 'heavy', 'man', 'building'];
-
-        var params = parametrize ? {
-            parserWeights: createParserWeights(grammar),
-            networkParams: _.object(scalarAdjectives, repeat(scalarAdjectives.length, function () {
-                createNetworkParams(10, scalarAdjectives.length)
-            }))
-        } : {};
-
-        var thetaCandidates = map(function (theta) {
-            return {
-                tall: theta,
-                heavy: theta
-            };
-        }, [8, 6, 4, 80, 60, 40]);
-
-        //display(params.parserWeights);
-        var listener = listenerFn(grammar, params);
-        var distOnPeopleWorlds = {
-            tall: listener("John is tall", thetaCandidates, peopleWorlds, utterances),
-            heavy: listener("John is heavy", thetaCandidates, peopleWorlds, utterances)
-        };
-
-        factorConjunction(distOnPeopleWorlds.tall, peopleWorlds.slice(0, 3));
-        factorConjunction(distOnPeopleWorlds.heavy, [peopleWorlds[0], peopleWorlds[3], peopleWorlds[6]]);
-
-        var distOnBuildingsWorlds = {
-            tall: listener("John is tall", thetaCandidates, buildingsWorlds, utterances),
-            heavy: listener("John is heavy", thetaCandidates, buildingsWorlds, utterances)
-        };
-
-        factorConjunction(distOnBuildingsWorlds.tall, buildingsWorlds.slice(0, 3));
-        factorConjunction(distOnBuildingsWorlds.heavy, [buildingsWorlds[0], buildingsWorlds[3], buildingsWorlds[6]]);
-
+var worldsFn = function (h, w) {
+    return {
+        facts: {
+            height: { john: h, gates: h },
+            weight: { john: w, gates: w },
+            man: { john: true, gates: false },
+            building: { john: false, gates: true },
+        },
+        domain: ["john", "gates"]
+    };
+};
+var peopleWorlds = cartesianProductMap(worldsFn, [8, 6, 4], [8, 6, 4]);
+var buildingsWorlds = cartesianProductMap(worldsFn, [80, 60, 40], [80, 60, 40]);
+var thetaValues = [8, 6, 4];
+var utterances = ["John is tall", "John is heavy", "John is a man", "John is a heavy man", "null"];
+var context = {
+    worlds: peopleWorlds,
+    utterances: utterances,
+    thetaCandidates: map(function (theta) {
         return {
-            people: distOnPeopleWorlds,
-            buildings: distOnBuildingsWorlds
+            tall: theta,
+            heavy: theta
         };
+    }, thetaValues)
+}
+
+var createModel = function (grammar, dataTriples) {
+    return function () {
+        var scalarPredicates = ['tall', 'heavy', 'man', 'building'];
+
+        var params = {
+            parserWeights: createParserWeights(grammar),
+            networkParams: _.object(scalarPredicates, repeat(scalarPredicates.length, function () {
+                createNetworkParams(10, scalarPredicates.length)
+            }))
+        };
+
+        var listener = listenerFn(grammar, params);
+
+        if (dataTriples) {
+            mapData({ data: dataTriples }, function (example) {
+                var world = example[0];
+                var utterance = example[1];
+                var context = example[2];
+                var distribution = listener(utterance, context.thetaCandidates, context.worlds, context.utterances);
+                observe(distribution, world);
+            });
+        }
+
+        return listener;
     };
 };
 
-var runTest = function(opts) {
-    var model = createModel(semppl.ambiguousGrammar, true);
-    display(sample(OptimizeThenSample(model, {steps: 2000, estimator: {ELBO: {samples: 1}}, verbose: opts.verbose})));
+var sampleGroundDistributions = function (utterances, contexts, numSamplesEach) {
+    var listener = listenerFn(semppl.fixedGrammar, {});
+    return _.flatten(map(function (u) {
+        return _.flatten(map(function (c) {
+            return repeat(numSamplesEach, function () {
+                return [sample(listener(u, c.thetaCandidates, c.worlds, c.utterances)), u, c];
+            });
+        }, contexts), /*shallow*/ true);
+    }, utterances), /*shallow*/ true);
 }
 
-runTest({ verbose: true });
-// sample(createModel(semppl.fixedGrammar, false)().people);
+var train = function (dataPairs, iterations, formerTrainingResults) {
+    var trainingModel =
+        createModel(semppl.ambiguousGrammar, dataPairs);
+    return Optimize(trainingModel, {
+        steps: iterations,
+        estimator: { ELBO: { samples: 1 } },
+        params: formerTrainingResults
+    });
+};
 
+var test = function (utterances, contexts, trainingResults) {
+    // Ensure the utterances are in the context
+    var newContexts = map(function (c) {
+        _.create(c, {
+            utterances: _.uniq(c.utterances.concat(utterances))
+        })
+    }, contexts);
+    var testModel = createModel(semppl.ambiguousGrammar, null);
+    var listener = sample(SampleGuide(testModel, { params: trainingResults }));
+    display(listener(utterances[0], newContexts[0].thetaCandidates, newContexts[0].worlds, newContexts[0].utterances))
+}
+
+
+var data = sampleGroundDistributions(utterances, [context], 10);
+display(data);
+test(["John is a tall man"], [context], train(data, 100, null));
 /**
  * mapData
  * cache issue - close over params
