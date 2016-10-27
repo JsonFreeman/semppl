@@ -227,7 +227,6 @@ var test = function (utterances, contexts, trainingResults) {
     display(listener(utterances[0], newContexts[0].thetaCandidates, newContexts[0].worlds, newContexts[0].utterances))
 }
 
-
 var data = sampleGroundDistributions(utterances, [context], 10);
 display(data);
 test(["John is a tall man"], [context], train(data, 100, null));
