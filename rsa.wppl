@@ -87,16 +87,12 @@ var createParserWeights = function (grammar) {
     }, grammar));
 };
 
-var sampleUniformPrior = function (support) {
-    return support[randomInteger(support.length)];
-};
-
 var literalListenerFn = function (grammar, params) {
     var parse = createParser(grammar, params);
     return cache(function (utterance, theta, worlds) {
         Infer({ method: 'enumerate' }, function () {
             var truthFn = parse(utterance, theta, "$S");
-            var world = sampleUniformPrior(worlds);
+            var world = uniformDraw(worlds);
             factor(Math.log(truthFn(world)));
             return world;
         })
@@ -107,7 +103,7 @@ var speakerFn = function (grammar, params) {
     var literalListener = literalListenerFn(grammar, params);
     return cache(function (world, theta, worlds, utterances) {
         Infer({ method: 'enumerate' }, function () {
-            var utterance = sampleUniformPrior(utterances);
+            var utterance = uniformDraw(utterances);
             var L = literalListener(utterance, theta, worlds);
             factor(L.score(world));
             return utterance;
@@ -119,8 +115,8 @@ var listenerFn = function (grammar, params) {
     var speaker = speakerFn(grammar, params);
     return cache(function (utterance, thetaCandidates, worlds, utterances) {
         Infer({ method: 'enumerate' }, function () {
-            var theta = sampleUniformPrior(thetaCandidates);
-            var world = sampleUniformPrior(worlds);
+            var theta = uniformDraw(thetaCandidates);
+            var world = uniformDraw(worlds);
             var S = speaker(world, theta, worlds, utterances);
             factor(S.score(utterance));
             return world;
