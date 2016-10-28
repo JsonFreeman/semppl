@@ -70,13 +70,6 @@ var sampleScalarGaussian = function (mean, variance, name) {
         { guide: Gaussian({ mu: param({ mu: mean, name: name }), sigma: 0.001 }) });
 }
 
-var factorConjunction = function (dist, support) {
-    var probabilityOfConjunction = sum(map(function (e) {
-        return dist.score(e);
-    }, support));
-    factor(probabilityOfConjunction);
-}
-
 var createParserWeights = function (grammar) {
     return _.object(map(function (entry) {
         var name = semppl.makeRuleKey(entry);
