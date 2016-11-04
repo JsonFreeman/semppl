@@ -171,7 +171,6 @@ var createModel = function (grammar, dataTriples) {
         };
 
         var listener = listenerFn(grammar, params);
-        var lit = literalListenerFn(grammar, params);
 
         if (dataTriples) {
             mapData({ data: dataTriples }, function (example) {
@@ -189,7 +188,6 @@ var createModel = function (grammar, dataTriples) {
 
 var sampleGroundDistributions = function (utterances, contexts, numSamplesEach) {
     var listener = listenerFn(semppl.fixedGrammar, {});
-    // display(listener("John is a man", contexts[0].thetaCandidates, contexts[0].worlds, contexts[0].utterances));
     return _.flatten(map(function (u) {
         return _.flatten(map(function (c) {
             return repeat(numSamplesEach, function () {
@@ -222,9 +220,7 @@ var test = function (utterances, contexts, trainingResults) {
 }
 
 var data = sampleGroundDistributions(utterances, [context], 200);
-// display(_.pluck(_.pluck(filter(function(x) {x[1] === "John is a man"}, data), 0), "facts"))
 var result = train(data, 2000, null);
-display(mapObject(function (k, v) { return v[0].data[0]}, result));
 test(["John is a tall man"], [context], result);
 /**
  * mapData
