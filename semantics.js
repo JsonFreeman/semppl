@@ -107,7 +107,7 @@ module.exports = {
 
     combinePropositions: f => _.constant(_.constant(p1 => p2 => f(p1, p2))),
 
-    negateProposition: _.constant(_.constant(p => ad.scalar.sub(1, p))),
+    negatePredicate: _.constant(_.constant(pred => ent => ad.scalar.sub(1, pred(ent)))),
 
     id: _.constant(_.constant(_.identity)),
 

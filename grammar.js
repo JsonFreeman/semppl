@@ -125,7 +125,12 @@ exports.ambiguousGrammar = indexify([
 	{
 		LHS: "$PRED",
 		RHS: "$NEG $PRED",
-		sem: semFuncs.negateProposition
+		sem: semFuncs.fwdApply
+	},
+	{
+		LHS: "$NEG",
+		RHS: "not",
+		sem: semFuncs.negatePredicate
 	},
     makeNeuralScalarItemRule("tall", "$PRED"),
     makeNeuralScalarItemRule("heavy", "$PRED"),
