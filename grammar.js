@@ -96,6 +96,33 @@ exports.ambiguousGrammar = indexify([
 		RHS: "a",
 		sem: semFuncs.id
 	},
+
+	// Logic
+	{
+		LHS: "$S",
+		RHS: "$S $ConjS",
+		sem: null
+	},
+	{
+		LHS: "$ConjS",
+		RHS: "$CONJ $S",
+		sem: null
+	},
+	{
+		LHS: "$CONJ",
+		RHS: "and",
+		sem: null
+	},
+	{
+		LHS: "$CONJ",
+		RHS: "or",
+		sem: null
+	},
+	{
+		LHS: "$PRED",
+		RHS: "$NEG $PRED",
+		sem: null
+	},
     makeNeuralScalarItemRule("tall", "$PRED"),
     makeNeuralScalarItemRule("heavy", "$PRED"),
     makeNeuralScalarAntonymRule("short", "tall", "$PRED"),
