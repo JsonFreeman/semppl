@@ -101,27 +101,27 @@ exports.ambiguousGrammar = indexify([
 	{
 		LHS: "$S",
 		RHS: "$S $ConjS",
-		sem: null
+		sem: semFuncs.backApply
 	},
 	{
 		LHS: "$ConjS",
 		RHS: "$CONJ $S",
-		sem: null
+		sem: semFuncs.fwdApply
 	},
 	{
 		LHS: "$CONJ",
 		RHS: "and",
-		sem: null
+		sem: semFuncs.combinePropositions(ad.scalar.mul)
 	},
 	{
 		LHS: "$CONJ",
 		RHS: "or",
-		sem: null
+		sem: semFuncs.combinePropositions(ad.scalar.add)
 	},
 	{
 		LHS: "$PRED",
 		RHS: "$NEG $PRED",
-		sem: null
+		sem: semFuncs.negateProposition
 	},
     makeNeuralScalarItemRule("tall", "$PRED"),
     makeNeuralScalarItemRule("heavy", "$PRED"),
