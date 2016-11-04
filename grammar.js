@@ -116,7 +116,11 @@ exports.ambiguousGrammar = indexify([
 	{
 		LHS: "$CONJ",
 		RHS: "or",
-		sem: semFuncs.combinePropositions(ad.scalar.add)
+		sem: semFuncs.combinePropositions((p1, p2) => {
+			// 1 - (1 - p1) * (1 - p2)
+			return ad.scalar.sub(1, 
+				ad.scalar.mul(ad.scalar.sub(1, p1), ad.scalar.sub(1, p2)))
+		})
 	},
 	{
 		LHS: "$PRED",
