@@ -1,10 +1,6 @@
 /// <reference path="webppl.d.ts" />
 /// <reference types="underscore" />
 // webppl rsa.wppl --require .
-var nnparam = function (a, b) {
-    return param({ dims: [a, b], mu: 0, sigma: 0.1});
-};
-
 var cartesianProductMap = function (fn, arr1, arr2) {
     return _.flatten(map(function (e1) {
         return map(function (e2) {
@@ -60,24 +56,12 @@ var createParser = function (grammar, params) {
     });
 }
 
-var sampleMatrixGaussian = function (dims, mean, variance, guide_mean) {
-    var length = dims[0] * dims[1]
-    var g = sample(DiagCovGaussian({ mu: Vector(repeat(length, constF(mean))), sigma: Vector(repeat(length, constF(variance))) }),
-        { guide: DiagCovGaussian({ mu: T.reshape(guide_mean, [length, 1]), sigma: Vector(repeat(length, constF(0.001))) }) })
-    return T.reshape(g, dims)
-}
-
-var sampleScalarGaussian = function (mean, variance, name) {
-    return sample(Gaussian({ mu: mean, sigma: variance }),
-        { guide: Gaussian({ mu: param({ mu: mean, name: name }), sigma: 0.001 }) });
-}
-
 var createParserWeights = function (grammar) {
     return _.object(map(function (entry) {
         var name = semppl.makeRuleKey(entry);
         return [
             name, // key
-            sampleScalarGaussian(0, 1, name) // value
+            modelParam({ mu: 0, name: name }) // value
         ];
     }, grammar));
 };
@@ -120,15 +104,10 @@ var listenerFn = function (grammar, params) {
 }
 
 var createNetworkParams = function (hiddenSize, inputSize) {
-    var W0_var = nnparam(hiddenSize, inputSize)
-    var W1_var = nnparam(1, hiddenSize)
-    var b0_var = nnparam(hiddenSize, 1)
-    var b1_var = nnparam(1, 1)
-
-    var W0 = sampleMatrixGaussian([hiddenSize, inputSize], 0, 10, W0_var)
-    var W1 = sampleMatrixGaussian([1, hiddenSize], 0, 10, W1_var)
-    var b0 = sampleMatrixGaussian([hiddenSize, 1], 0, 10, b0_var)
-    var b1 = sampleMatrixGaussian([1, 1], 0, 10, b1_var)
+    var W0 = modelParam({ dims: [hiddenSize, inputSize], mu: 0, sigma: 0.1 })
+    var W1 = modelParam({ dims: [1, hiddenSize], mu: 0, sigma: 0.1 })
+    var b0 = modelParam({ dims: [hiddenSize, 1], mu: 0, sigma: 0.1 })
+    var b1 = modelParam({ dims: [1, 1], mu: 0, sigma: 0.1 })
 
     return { W: [W0, W1], b: [b0, b1] };
 }
