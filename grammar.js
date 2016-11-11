@@ -235,8 +235,13 @@ exports.fixedGrammar = indexify([
 			})
 	},
 	{
-		LHS: "$PRED",
-		RHS: "$NEG $PRED",
+		LHS: "$ADJ",
+		RHS: "$NEG $ADJ",
+		sem: semFuncs.fwdApply
+	},
+	{
+		LHS: "$NP",
+		RHS: "$NEG $NP",
 		sem: semFuncs.fwdApply
 	},
 	{
