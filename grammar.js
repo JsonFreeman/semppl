@@ -207,6 +207,55 @@ exports.fixedGrammar = flattenAndIndexify([
 		RHS: "a",
 		sem: semFuncs.id
 	},
+
+	// Logic
+	{
+		LHS: "$S",
+		RHS: "$S $ConjS",
+		sem: semFuncs.backApply
+	},
+	{
+		LHS: "$ConjS",
+		RHS: "$CONJ $S",
+		sem: semFuncs.fwdApply
+	},
+	{
+		LHS: "$CONJ",
+		RHS: "and",
+		sem: [
+			semFuncs.combinePropositions(ad.scalar.mul),
+			semFuncs.combinePropositions(semFuncs.first),
+			semFuncs.combinePropositions(semFuncs.second),
+			semFuncs.combinePropositions(_.constant(1))
+			]
+	},
+	{
+		LHS: "$CONJ",
+		RHS: "or",
+		sem: [
+			semFuncs.combinePropositions((p1, p2) => {
+				// 1 - (1 - p1) * (1 - p2)
+				return ad.scalar.sub(1, 
+					ad.scalar.mul(ad.scalar.sub(1, p1), ad.scalar.sub(1, p2)))
+			}),
+			semFuncs.combinePropositions(semFuncs.first),
+			semFuncs.combinePropositions(semFuncs.second),
+			semFuncs.combinePropositions(_.constant(1))
+			]
+	},
+	{
+		LHS: "$PRED",
+		RHS: "$NEG $PRED",
+		sem: semFuncs.fwdApply
+	},
+	{
+		LHS: "$NEG",
+		RHS: "not",
+		sem: [
+			semFuncs.negatePredicate, 
+			semFuncs.id
+			]
+	},
     makeFixedScalarItemRule("tall", "height", "$ADJ"),
     makeFixedScalarItemRule("heavy", "weight", "$ADJ"),
     makeFixedDimensionScalarAntonymRule("short", "tall", "height", "$ADJ"),
