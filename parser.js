@@ -55,26 +55,26 @@ function createParser(grammar, params, featureFn, scoreFn, beamSize) {
 		}
 
 		return chart;
+	}
 
-		function collectDerivations(leftCell, rightCell) {
-			// Make a list of new derivations for all grammar rules that apply for the give children.
-			var newDerivations = [];
-			for (var rule of grammar) {
-				var rhsNonTerminals = rule.RHS.split(/\s/);
-				if (rhsNonTerminals.length === 2) {
-					// If both nonterminals on the RHS match the child cells, make a derivation with them as the children
-					if (_.has(leftCell, rhsNonTerminals[0]) && _.has(rightCell, rhsNonTerminals[1])) {
-						for (var leftDeriv of leftCell[rhsNonTerminals[0]]) {
-							for (var rightDeriv of rightCell[rhsNonTerminals[1]]) {
-								newDerivations.push(new Derivation(rule, leftDeriv, rightDeriv, rule.sem));
-							}
+	function collectDerivations(leftCell, rightCell) {
+		// Make a list of new derivations for all grammar rules that apply for the give children.
+		var newDerivations = [];
+		for (var rule of grammar) {
+			var rhsNonTerminals = rule.RHS.split(/\s/);
+			if (rhsNonTerminals.length === 2) {
+				// If both nonterminals on the RHS match the child cells, make a derivation with them as the children
+				if (_.has(leftCell, rhsNonTerminals[0]) && _.has(rightCell, rhsNonTerminals[1])) {
+					for (var leftDeriv of leftCell[rhsNonTerminals[0]]) {
+						for (var rightDeriv of rightCell[rhsNonTerminals[1]]) {
+							newDerivations.push(new Derivation(rule, leftDeriv, rightDeriv, rule.sem));
 						}
 					}
 				}
 			}
-
-			return newDerivations;
 		}
+
+		return newDerivations;
 	}
 }
 
