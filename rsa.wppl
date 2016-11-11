@@ -189,7 +189,7 @@ var train = function (dataPairs, iterations, formerTrainingResults) {
 var test = function (utterance, context, trainingResults) {
     // Ensure the utterances are in the context
     var newContext = _.create(context, {
-        utterances: _.uniq(context.utterances.concat(utterances))
+        utterances: _.uniq(context.utterances.concat([utterance]))
     })
     var testModel = createModel(semppl.ambiguousGrammar, null);
     var listener = sample(SampleGuide(testModel, { params: trainingResults }));
