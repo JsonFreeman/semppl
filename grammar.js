@@ -8,6 +8,24 @@ function indexify(grammar) {
 	return grammar;
 }
 
+function flattenRules(grammar) {
+	var deepArray = grammar.map(rule => {
+		if (typeof rule.sem === "function") {
+			// Singleton case
+			return rule;
+		}
+		// Composite case, rule.sem is an array of functions
+		return rule.sem.map(s => {
+			return _.assign(_.clone(rule), { sem: s });
+		});
+	});
+
+	return _.flatten(deepArray);
+}
+
+// Must be in this order (flattenRules first). We don't want to screw up the indices by flattening
+var flattenAndIndexify = _.compose(indexify, flattenRules);
+
 function makeNeuralScalarItemRule(name, pos) {
     return {
 		LHS: pos,
@@ -40,7 +58,7 @@ function makeFixedDimensionScalarAntonymRule(name, scaleName, dimension, pos) {
     };
 }
 
-exports.ambiguousGrammar = indexify([
+exports.ambiguousGrammar = flattenAndIndexify([
 	{
 		LHS: "$S",
 		RHS: "null",
@@ -64,22 +82,12 @@ exports.ambiguousGrammar = indexify([
 	{
 		LHS: "$PRED",
 		RHS: "$PRED $PRED",
-		sem: semFuncs.intersectPredicates
-	},
-	{
-		LHS: "$PRED",
-		RHS: "$PRED $PRED",
-		sem: semFuncs.first
-	},
-	{
-		LHS: "$PRED",
-		RHS: "$PRED $PRED",
-		sem: semFuncs.second
-	},
-	{
-		LHS: "$PRED",
-		RHS: "$PRED $PRED",
-		sem: semFuncs.constTrue
+		sem: [
+			semFuncs.intersectPredicates, 
+			semFuncs.first, 
+			semFuncs.second, 
+			semFuncs.constTrue
+			]
 	},
 	{
 		LHS: "$NP",
@@ -140,7 +148,7 @@ exports.ambiguousGrammar = indexify([
 	makeNeuralScalarItemRule("building", "$PRED"),
 ]);
 
-exports.fixedGrammar = indexify([
+exports.fixedGrammar = flattenAndIndexify([
 	{
 		LHS: "$S",
 		RHS: "null",
