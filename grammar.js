@@ -161,6 +161,7 @@ exports.ambiguousGrammar = flattenAndIndexify([
 	makeNeuralScalarItemRule("building", "$PRED"),
 ]);
 
+// Don't flatten. We don't want to have rules with multiple semantics
 exports.fixedGrammar = indexify([
 	{
 		LHS: "$S",
