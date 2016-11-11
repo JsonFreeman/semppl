@@ -186,21 +186,19 @@ var train = function (dataPairs, iterations, formerTrainingResults) {
     });
 };
 
-var test = function (utterances, contexts, trainingResults) {
+var test = function (utterance, context, trainingResults) {
     // Ensure the utterances are in the context
-    var newContexts = map(function (c) {
-        _.create(c, {
-            utterances: _.uniq(c.utterances.concat(utterances))
-        })
-    }, contexts);
+    var newContext = _.create(context, {
+        utterances: _.uniq(context.utterances.concat(utterances))
+    })
     var testModel = createModel(semppl.ambiguousGrammar, null);
     var listener = sample(SampleGuide(testModel, { params: trainingResults }));
-    display(listener(utterances[0], newContexts[0].thetaCandidates, newContexts[0].worlds, newContexts[0].utterances))
+    display(listener(utterance, newContext.thetaCandidates, newContext.worlds, newContext.utterances))
 }
 
 var data = sampleGroundDistributions(utterances, [context], 200);
 var result = train(data, 2000, null);
-test(["John is a tall man"], [context], result);
+test("John is a tall man", context, result);
 /**
  * mapData
  * cache issue - close over params
