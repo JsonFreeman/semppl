@@ -193,6 +193,7 @@ var test = function (utterance, context, trainingResults) {
     })
     var testModel = createModel(semppl.ambiguousGrammar, null);
     var listener = sample(SampleGuide(testModel, { params: trainingResults }));
+    display("utterance: " + utterance)
     display(listener(utterance, newContext.thetaCandidates, newContext.worlds, newContext.utterances))
 }
 
