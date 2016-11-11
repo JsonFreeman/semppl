@@ -119,16 +119,26 @@ exports.ambiguousGrammar = flattenAndIndexify([
 	{
 		LHS: "$CONJ",
 		RHS: "and",
-		sem: semFuncs.combinePropositions(ad.scalar.mul)
+		sem: [
+			semFuncs.combinePropositions(ad.scalar.mul),
+			semFuncs.combinePropositions(semFuncs.first),
+			semFuncs.combinePropositions(semFuncs.second),
+			semFuncs.combinePropositions(semFuncs.constTrue)
+			]
 	},
 	{
 		LHS: "$CONJ",
 		RHS: "or",
-		sem: semFuncs.combinePropositions((p1, p2) => {
-			// 1 - (1 - p1) * (1 - p2)
-			return ad.scalar.sub(1, 
-				ad.scalar.mul(ad.scalar.sub(1, p1), ad.scalar.sub(1, p2)))
-		})
+		sem: [
+			semFuncs.combinePropositions((p1, p2) => {
+				// 1 - (1 - p1) * (1 - p2)
+				return ad.scalar.sub(1, 
+					ad.scalar.mul(ad.scalar.sub(1, p1), ad.scalar.sub(1, p2)))
+			}),
+			semFuncs.combinePropositions(semFuncs.first),
+			semFuncs.combinePropositions(semFuncs.second),
+			semFuncs.combinePropositions(_.constant(1))
+			]
 	},
 	{
 		LHS: "$PRED",
@@ -138,7 +148,10 @@ exports.ambiguousGrammar = flattenAndIndexify([
 	{
 		LHS: "$NEG",
 		RHS: "not",
-		sem: semFuncs.negatePredicate
+		sem: [
+			semFuncs.negatePredicate, 
+			semFuncs.id
+			]
 	},
     makeNeuralScalarItemRule("tall", "$PRED"),
     makeNeuralScalarItemRule("heavy", "$PRED"),
