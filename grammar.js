@@ -123,7 +123,7 @@ exports.ambiguousGrammar = flattenAndIndexify([
 			semFuncs.combinePropositions(ad.scalar.mul),
 			semFuncs.combinePropositions(semFuncs.first),
 			semFuncs.combinePropositions(semFuncs.second),
-			semFuncs.combinePropositions(semFuncs.constTrue)
+			semFuncs.combinePropositions(_.constant(1))
 			]
 	},
 	{
