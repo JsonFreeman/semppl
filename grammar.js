@@ -161,7 +161,7 @@ exports.ambiguousGrammar = flattenAndIndexify([
 	makeNeuralScalarItemRule("building", "$PRED"),
 ]);
 
-exports.fixedGrammar = flattenAndIndexify([
+exports.fixedGrammar = indexify([
 	{
 		LHS: "$S",
 		RHS: "null",
