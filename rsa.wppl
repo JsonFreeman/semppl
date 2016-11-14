@@ -66,6 +66,12 @@ var createParserWeights = function (grammar) {
     }, grammar));
 };
 
+var getGrammarValues = function(params) {
+    return mapObject(function(k, v) {
+        return v[0].data[0];
+    }, params)
+}
+
 var literalListenerFn = function (grammar, params) {
     var parse = createParser(grammar, params);
     return cache(function (utterance, theta, worlds) {
