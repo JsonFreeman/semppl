@@ -206,23 +206,3 @@ var test = function (utterance, context, trainingResults) {
 var data = sampleGroundDistributions(utterances, [context], 200);
 var result = train(data, 2000, null);
 test("John is a tall man", context, result);
-/**
- * mapData
- * cache issue - close over params
- * Tall versus heavy (or even big)
- * Try to do some compositional learning
- * Sample the class explicitly
- * "is a tall man" + "is a tall building"
- * 
- * Tasks: 
- *  - Generate data using ground truth
- *  +!- Try to do caching refactor
- *  +!- Introduce tall, heavy, big with a neural net for each
- *  - Refactor features and weights to add distinguisher
- *  - Implement intersective adjectives
- *  - Compositional learning:
- *    - Intersecting predicates: (multiply, first, second)
- *    - Different ways of applying predicate to entity: (apply to input, ignore input)
- *    - Introduce "John is not a tall man" - not(tall * man), not(tall) * man, not(man) * tall, not(man)
- *    - Try ambiguities with conjunction + disjunction
- */
