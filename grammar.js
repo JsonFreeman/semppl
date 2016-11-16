@@ -95,6 +95,11 @@ exports.ambiguousGrammar = flattenAndIndexify([
 		sem: semFuncs.entity("john")
 	},
 	{
+		LHS: "$NP",
+		RHS: "Gates",
+		sem: semFuncs.entity("gates")
+	},
+	{
 		LHS: "$COP",
 		RHS: "is",
 		sem: semFuncs.id
@@ -197,6 +202,11 @@ exports.fixedGrammar = indexify([
 		LHS: "$NP",
 		RHS: "John",
 		sem: semFuncs.entity("john")
+	},
+	{
+		LHS: "$NP",
+		RHS: "Gates",
+		sem: semFuncs.entity("gates")
 	},
 	{
 		LHS: "$COP",
