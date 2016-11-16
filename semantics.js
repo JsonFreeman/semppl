@@ -139,5 +139,23 @@ module.exports = {
         return function(context) {
             return left(context)(right(context));
         }
-    }
+    },
+
+    lift: (func, liftLeft, liftRight) => {
+        if (!liftLeft && !liftRight) {
+            return func;
+        }
+        return (left, right) => {
+            return context => {
+                return arg => {
+                    return func(liftLeft ? c => left(c)(arg) : left,
+                                liftRight ? c => right(c)(arg) : right)
+                                (context);
+                }
+            }
+        }
+    },
+
+    liftLeft: _.partial(this.lift, _, true, false),
+    liftRight: _.partial(this.lift, _, false, true)
 }
