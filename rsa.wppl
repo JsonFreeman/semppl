@@ -132,17 +132,7 @@ var worldsFn = function (h, w) {
 var peopleWorlds = cartesianProductMap(worldsFn, [8, 6, 4], [8, 6, 4]);
 var buildingsWorlds = cartesianProductMap(worldsFn, [80, 60, 40], [80, 60, 40]);
 var thetaValues = [8, 6, 4];
-var utterances = ["John is tall", "John is heavy", "John is light", "John is short", "John is heavy and John is short"];
-var context = {
-    worlds: peopleWorlds,
-    utterances: utterances,
-    thetaCandidates: map(function (theta) {
-        return {
-            tall: theta,
-            heavy: theta
-        };
-    }, thetaValues)
-}
+
 
 var createModel = function (grammar, dataTriples) {
     return function () {
@@ -203,9 +193,6 @@ var test = function (utterance, context, trainingResults) {
     display(listener(utterance, newContext.thetaCandidates, newContext.worlds, newContext.utterances))
 }
 
-var data = sampleGroundDistributions(utterances, [context], 200);
-var result = train(data, 2000, null);
-test("John is tall and John is heavy", context, result);
 
 var trainOnPeopleTestOnBuildings = function() {
     // Training setup
@@ -336,13 +323,64 @@ var trainOnBothTestOnPeople = function() {
 // trainOnBothTestOnPeople();
 
 var testAnd = function() {
-
+    var utterances = ["John is tall", "John is heavy", "John is light", "John is short", "John is heavy and John is short"];
+    var peopleWorlds = cartesianProductMap(worldsFn, [8, 6, 4], [8, 6, 4]);
+    var thetaValues = [8, 6, 4];
+    var context = {
+        worlds: peopleWorlds,
+        utterances: utterances,
+        thetaCandidates: map(function (theta) {
+            return {
+                tall: theta,
+                heavy: theta
+            };
+        }, thetaValues)
+    };
+    
+    var data = sampleGroundDistributions(utterances, [context], 200);
+    var result = train(data, 2000, null);
+    test("John is tall and John is heavy", context, result);
 }
+testAnd();
 
 var testOr = function() {
-
+    var utterances = ["John is tall", "John is heavy", "John is light", "John is short", "John is heavy or John is short"];
+    var peopleWorlds = cartesianProductMap(worldsFn, [8, 6, 4], [8, 6, 4]);
+    var thetaValues = [8, 6, 4];
+    var context = {
+        worlds: peopleWorlds,
+        utterances: utterances,
+        thetaCandidates: map(function (theta) {
+            return {
+                tall: theta,
+                heavy: theta
+            };
+        }, thetaValues)
+    };
+    
+    var data = sampleGroundDistributions(utterances, [context], 200);
+    var result = train(data, 2000, null);
+    test("John is tall or John is heavy", context, result);
 }
+// testOr();
 
 var testNot = function() {
-
+    var utterances = ["John is tall", "John is heavy", "John is light", "John is short", "John is not heavy"];
+    var peopleWorlds = cartesianProductMap(worldsFn, [8, 6, 4], [8, 6, 4]);
+    var thetaValues = [8, 6, 4];
+    var context = {
+        worlds: peopleWorlds,
+        utterances: utterances,
+        thetaCandidates: map(function (theta) {
+            return {
+                tall: theta,
+                heavy: theta
+            };
+        }, thetaValues)
+    };
+    
+    var data = sampleGroundDistributions(utterances, [context], 200);
+    var result = train(data, 2000, null);
+    test("John is not tall", context, result);
 }
+// testNot();
