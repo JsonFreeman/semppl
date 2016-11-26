@@ -132,7 +132,7 @@ var worldsFn = function (h, w) {
 var peopleWorlds = cartesianProductMap(worldsFn, [8, 6, 4], [8, 6, 4]);
 var buildingsWorlds = cartesianProductMap(worldsFn, [80, 60, 40], [80, 60, 40]);
 var thetaValues = [8, 6, 4];
-var utterances = ["John is tall", "John is heavy", "John is a man", "John is light", "John is short", "John is a heavy man"];
+var utterances = ["John is tall", "John is heavy", "John is light", "John is short", "John is heavy and John is short"];
 var context = {
     worlds: peopleWorlds,
     utterances: utterances,
@@ -203,16 +203,16 @@ var test = function (utterance, context, trainingResults) {
     display(listener(utterance, newContext.thetaCandidates, newContext.worlds, newContext.utterances))
 }
 
-// var data = sampleGroundDistributions(utterances, [context], 200);
-// var result = train(data, 2000, null);
-// test("John is a tall man", context, result);
+var data = sampleGroundDistributions(utterances, [context], 200);
+var result = train(data, 2000, null);
+test("John is tall and John is heavy", context, result);
 
 var trainOnPeopleTestOnBuildings = function() {
     // Training setup
-    var peopleHeights = [5, 6, 7];
+    var peopleHeights = [4, 6, 8];
     var peopleWeights = [100, 150, 200];
     var buildingHeights = [50, 100, 150];
-    var buildingWeights = [500, 600, 700];
+    var buildingWeights = [500, 600, 700]
 
     var peopleWorlds = Infer({method: 'enumerate'}, function() {
         return {
@@ -230,7 +230,7 @@ var trainOnPeopleTestOnBuildings = function() {
             tall: h,
             heavy: w
         };
-    }, peopleHeights.concat(buildingHeights), peopleWeights.concat(buildingWeights));
+    }, peopleHeights, peopleWeights);
 
     var utterances = ["John is tall", "John is heavy", "John is light", "John is short"];
     var context = {
@@ -241,6 +241,8 @@ var trainOnPeopleTestOnBuildings = function() {
     var data = sampleGroundDistributions(utterances, [context], 200);
     var results = train(data, 2000, null);
 
+    test("John is tall", context, results);
+    test("John is heavy", context, results);
     // Make buildings worlds
     var buildingWorlds = Infer({method: 'enumerate'}, function() {
         return {
@@ -252,7 +254,12 @@ var trainOnPeopleTestOnBuildings = function() {
             }
         }
     }).support();
-
+    var buildingThetas = map2(function(h, w) {
+        return {
+            tall: h,
+            heavy: w
+        };
+    }, buildingHeights, buildingWeights);
     var testUtterances = ["Gates is tall", "Gates is heavy", "Gates is light", "Gates is short"];
     test("Gates is tall", {
         worlds: buildingWorlds,
@@ -265,7 +272,7 @@ var trainOnPeopleTestOnBuildings = function() {
         thetaCandidates: thetas
     }, results);
 }
-trainOnPeopleTestOnBuildings();
+// trainOnPeopleTestOnBuildings();
 
 var trainOnBothTestOnPeople = function() {
     // Training setup
