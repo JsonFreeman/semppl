@@ -129,10 +129,6 @@ var worldsFn = function (h, w) {
         domain: ["john", "gates"]
     };
 };
-var peopleWorlds = cartesianProductMap(worldsFn, [8, 6, 4], [8, 6, 4]);
-var buildingsWorlds = cartesianProductMap(worldsFn, [80, 60, 40], [80, 60, 40]);
-var thetaValues = [8, 6, 4];
-
 
 var createModel = function (grammar, dataTriples) {
     return function () {
