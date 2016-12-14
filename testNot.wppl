@@ -1,0 +1,17 @@
+var utterances = ["John is tall", "John is heavy", "John is light", "John is short", "John is not heavy"];
+var peopleWorlds = cartesianProductMap(worldsFn, [8, 6, 4], [8, 6, 4]);
+var thetaValues = [8, 6, 4];
+var context = {
+    worlds: peopleWorlds,
+    utterances: utterances,
+    thetaCandidates: map(function (theta) {
+        return {
+            tall: theta,
+            heavy: theta
+        };
+    }, thetaValues)
+};
+
+var data = sampleGroundDistributions(utterances, [context], 200);
+var result = train(data, 2000, null);
+test("John is not tall", context, result);

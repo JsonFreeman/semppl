@@ -1,0 +1,63 @@
+// Training setup
+var peopleHeights = [4, 6, 8];
+var peopleWeights = [100, 150, 200];
+var buildingHeights = [40, 60, 80];
+var buildingWeights = [300, 450, 600]
+
+var peopleWorlds = Infer({method: 'enumerate'}, function() {
+    return {
+        facts: {
+            height: { john: uniformDraw(peopleHeights) },
+            weight: { john: uniformDraw(peopleWeights) },
+            person: { john: true },
+            building: { john: false }
+        }
+    }
+}).support();
+
+var thetas = map2(function(h, w) {
+    return {
+        tall: h,
+        heavy: w
+    };
+}, peopleHeights, peopleWeights);
+
+var utterances = ["John is tall", "John is heavy", "John is light", "John is short", "null"];
+var context = {
+    worlds: peopleWorlds,
+    utterances: utterances,
+    thetaCandidates: thetas
+}
+var data = sampleGroundDistributions(utterances, [context], 300);
+var results = train(data, 3000, null);
+
+test("John is tall", context, results);
+test("John is heavy", context, results);
+// Make buildings worlds
+var buildingWorlds = Infer({method: 'enumerate'}, function() {
+    return {
+        facts: {
+            height: { gates: uniformDraw(buildingHeights) },
+            weight: { gates: uniformDraw(buildingWeights) },
+            person: { gates: false },
+            building: { gates: true }
+        }
+    }
+}).support();
+var buildingThetas = map2(function(h, w) {
+    return {
+        tall: h,
+        heavy: w
+    };
+}, buildingHeights, buildingWeights);
+var testUtterances = ["Gates is tall", "Gates is heavy", "Gates is light", "Gates is short", "null"];
+test("Gates is tall", {
+    worlds: buildingWorlds,
+    utterances: testUtterances,
+    thetaCandidates: thetas
+}, results);
+test("Gates is heavy", {
+    worlds: buildingWorlds,
+    utterances: testUtterances,
+    thetaCandidates: thetas
+}, results);
