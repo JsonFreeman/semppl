@@ -144,7 +144,7 @@ var createModel = function (grammar, dataTriples) {
         var listener = listenerFn(grammar, params);
 
         if (dataTriples) {
-            mapData({ data: dataTriples }, function (example) {
+            mapData({ data: dataTriples, batchSize: dataTriples.length / 5 }, function (example) {
                 var world = example[0];
                 var utterance = example[1];
                 var context = example[2];
