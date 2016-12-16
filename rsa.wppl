@@ -72,13 +72,15 @@ var getGrammarValues = function(params) {
     }, params)
 }
 
+var smoothingConstant = 1e-300;
 var literalListenerFn = function (grammar, params) {
     var parse = createParser(grammar, params);
     return cache(function (utterance, theta, worlds) {
         Infer({ method: 'enumerate' }, function () {
             var truthFn = parse(utterance, theta, "$S");
             var world = uniformDraw(worlds);
-            factor(Math.log(truthFn(world)));
+            var smoothedTruthValue = truthFn(world) + smoothingConstant;
+            factor(Math.log(smoothedTruthValue));
             return world;
         })
     })
