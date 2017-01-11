@@ -12,6 +12,6 @@ var context = {
     }, thetaValues)
 };
 
-var data = sampleGroundDistributions(utterances, [context], 200);
+var data = sampleGroundDistributions(utterances, [context], 1000);
 var result = train(data, 2000, null);
 test("John is tall and John is heavy", context, result);

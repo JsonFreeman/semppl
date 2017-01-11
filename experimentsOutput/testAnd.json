@@ -1,0 +1,18 @@
+{ '{"facts":{"height":{"john":4,"gates":4},"weight":{"john":4,"gates":4},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.02237621886073914 },
+     '{"facts":{"height":{"john":4,"gates":4},"weight":{"john":6,"gates":6},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.04054170052096822 },
+     '{"facts":{"height":{"john":4,"gates":4},"weight":{"john":8,"gates":8},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.04919595296164561 },
+     '{"facts":{"height":{"john":6,"gates":6},"weight":{"john":4,"gates":4},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.06427661458874721 },
+     '{"facts":{"height":{"john":6,"gates":6},"weight":{"john":6,"gates":6},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.12329198411798521 },
+     '{"facts":{"height":{"john":6,"gates":6},"weight":{"john":8,"gates":8},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.14780394383866566 },
+     '{"facts":{"height":{"john":8,"gates":8},"weight":{"john":4,"gates":4},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.10243019894141693 },
+     '{"facts":{"height":{"john":8,"gates":8},"weight":{"john":6,"gates":6},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.19329748962597815 },
+     '{"facts":{"height":{"john":8,"gates":8},"weight":{"john":8,"gates":8},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.25678589654385403 } }

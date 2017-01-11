@@ -1,0 +1,18 @@
+{ '{"facts":{"height":{"john":4,"gates":4},"weight":{"john":4,"gates":4},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.15630970263881694 },
+     '{"facts":{"height":{"john":4,"gates":4},"weight":{"john":6,"gates":6},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.1760616690005621 },
+     '{"facts":{"height":{"john":4,"gates":4},"weight":{"john":8,"gates":8},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.18489633587096474 },
+     '{"facts":{"height":{"john":6,"gates":6},"weight":{"john":4,"gates":4},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.09266157358269424 },
+     '{"facts":{"height":{"john":6,"gates":6},"weight":{"john":6,"gates":6},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.11025193120418236 },
+     '{"facts":{"height":{"john":6,"gates":6},"weight":{"john":8,"gates":8},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.12856871993969093 },
+     '{"facts":{"height":{"john":8,"gates":8},"weight":{"john":4,"gates":4},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.03980191585899625 },
+     '{"facts":{"height":{"john":8,"gates":8},"weight":{"john":6,"gates":6},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.049281536931068966 },
+     '{"facts":{"height":{"john":8,"gates":8},"weight":{"john":8,"gates":8},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.06216661497302314 } }

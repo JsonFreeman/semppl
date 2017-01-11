@@ -1,0 +1,18 @@
+{ '{"facts":{"height":{"john":4,"gates":4},"weight":{"john":4,"gates":4},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.0647789416747278 },
+     '{"facts":{"height":{"john":4,"gates":4},"weight":{"john":6,"gates":6},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.08193937188550969 },
+     '{"facts":{"height":{"john":4,"gates":4},"weight":{"john":8,"gates":8},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.09272340581663087 },
+     '{"facts":{"height":{"john":6,"gates":6},"weight":{"john":4,"gates":4},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.10446129417207978 },
+     '{"facts":{"height":{"john":6,"gates":6},"weight":{"john":6,"gates":6},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.11605359697036186 },
+     '{"facts":{"height":{"john":6,"gates":6},"weight":{"john":8,"gates":8},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.12091650467903832 },
+     '{"facts":{"height":{"john":8,"gates":8},"weight":{"john":4,"gates":4},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.1359726428698011 },
+     '{"facts":{"height":{"john":8,"gates":8},"weight":{"john":6,"gates":6},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.14240008635995363 },
+     '{"facts":{"height":{"john":8,"gates":8},"weight":{"john":8,"gates":8},"man":{"john":true,"gates":false},"bui
+lding":{"john":false,"gates":true}},"domain":["john","gates"]}': { val: [Object], prob: 0.14075415557189672 } }

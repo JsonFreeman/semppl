@@ -1,0 +1,80 @@
+utterance: John is tall
+Marginal({ dist:
+   { '{"facts":{"height":{"john":4},"weight":{"john":100},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.01789915152740173 },
+     '{"facts":{"height":{"john":4},"weight":{"john":150},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.025120728686396192 },
+     '{"facts":{"height":{"john":4},"weight":{"john":200},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.021655914215591494 },
+     '{"facts":{"height":{"john":6},"weight":{"john":100},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.07712848459258029 },
+     '{"facts":{"height":{"john":6},"weight":{"john":150},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.0875642446468725 },
+     '{"facts":{"height":{"john":6},"weight":{"john":200},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.06495417034436929 },
+     '{"facts":{"height":{"john":8},"weight":{"john":100},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.25759812430578416 },
+     '{"facts":{"height":{"john":8},"weight":{"john":150},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.25437543660942036 },
+     '{"facts":{"height":{"john":8},"weight":{"john":200},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.19370374507158394 } } })
+utterance: John is heavy
+Marginal({ dist:
+   { '{"facts":{"height":{"john":4},"weight":{"john":100},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.04249123455778758 },
+     '{"facts":{"height":{"john":4},"weight":{"john":150},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.06267115245625193 },
+     '{"facts":{"height":{"john":4},"weight":{"john":200},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.2756087913365898 },
+     '{"facts":{"height":{"john":6},"weight":{"john":100},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.03981288414067457 },
+     '{"facts":{"height":{"john":6},"weight":{"john":150},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.05755242172047248 },
+     '{"facts":{"height":{"john":6},"weight":{"john":200},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.25697236753943486 },
+     '{"facts":{"height":{"john":8},"weight":{"john":100},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.026537511868053986 },
+     '{"facts":{"height":{"john":8},"weight":{"john":150},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.03962001105586669 },
+     '{"facts":{"height":{"john":8},"weight":{"john":200},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.19873362532486794 } } })
+ utterance: Oak is tall
+Marginal({ dist:
+   { '{"facts":{"height":{"oak":20},"weight":{"oak":200},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.08738222854986535 },
+     '{"facts":{"height":{"oak":20},"weight":{"oak":300},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.06181235979682743 },
+     '{"facts":{"height":{"oak":20},"weight":{"oak":400},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.05968008286284265 },
+     '{"facts":{"height":{"oak":30},"weight":{"oak":200},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.1793114013490296 },
+     '{"facts":{"height":{"oak":30},"weight":{"oak":300},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.08418384027002367 },
+     '{"facts":{"height":{"oak":30},"weight":{"oak":400},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.062142277938856065 },
+     '{"facts":{"height":{"oak":40},"weight":{"oak":200},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.23423290946146869 },
+     '{"facts":{"height":{"oak":40},"weight":{"oak":300},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.14441236419295433 },
+     '{"facts":{"height":{"oak":40},"weight":{"oak":400},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.08684253557813239 } } })
+utterance: Oak is heavy
+Marginal({ dist:
+   { '{"facts":{"height":{"oak":20},"weight":{"oak":200},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.10046738156084707 },
+     '{"facts":{"height":{"oak":20},"weight":{"oak":300},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.1292395472598758 },
+     '{"facts":{"height":{"oak":20},"weight":{"oak":400},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.13077554523484758 },
+     '{"facts":{"height":{"oak":30},"weight":{"oak":200},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.07692261960710287 },
+     '{"facts":{"height":{"oak":30},"weight":{"oak":300},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.1283917801361931 },
+     '{"facts":{"height":{"oak":30},"weight":{"oak":400},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.13094946767064544 },
+     '{"facts":{"height":{"oak":40},"weight":{"oak":200},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.05416940740454282 },
+     '{"facts":{"height":{"oak":40},"weight":{"oak":300},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.11831600808926353 },
+     '{"facts":{"height":{"oak":40},"weight":{"oak":400},"person":{"oak":false},"building":{"oak":false}}}': {
+ val: [Object], prob: 0.1307682430366822 } } })

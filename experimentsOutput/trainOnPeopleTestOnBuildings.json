@@ -1,0 +1,80 @@
+utterance: John is tall
+Marginal({ dist:
+   { '{"facts":{"height":{"john":4},"weight":{"john":100},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.017952925676645286 },
+     '{"facts":{"height":{"john":4},"weight":{"john":150},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.020853234467587738 },
+     '{"facts":{"height":{"john":4},"weight":{"john":200},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.016575401070095364 },
+     '{"facts":{"height":{"john":6},"weight":{"john":100},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.08929168468781877 },
+     '{"facts":{"height":{"john":6},"weight":{"john":150},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.09555087698188332 },
+     '{"facts":{"height":{"john":6},"weight":{"john":200},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.06623756316769441 },
+     '{"facts":{"height":{"john":8},"weight":{"john":100},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.2585778976283591 },
+     '{"facts":{"height":{"john":8},"weight":{"john":150},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.25268418102096796 },
+     '{"facts":{"height":{"john":8},"weight":{"john":200},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.1822762352989481 } } })
+utterance: John is heavy
+Marginal({ dist:
+   { '{"facts":{"height":{"john":4},"weight":{"john":100},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.04191662309767403 },
+     '{"facts":{"height":{"john":4},"weight":{"john":150},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.05898001387102867 },
+     '{"facts":{"height":{"john":4},"weight":{"john":200},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.22184366529160743 },
+     '{"facts":{"height":{"john":6},"weight":{"john":100},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.03959594224734939 },
+     '{"facts":{"height":{"john":6},"weight":{"john":150},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.0715439493142457 },
+     '{"facts":{"height":{"john":6},"weight":{"john":200},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.24623479272441606 },
+     '{"facts":{"height":{"john":8},"weight":{"john":100},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.02727266214165749 },
+     '{"facts":{"height":{"john":8},"weight":{"john":150},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.07177248796241702 },
+     '{"facts":{"height":{"john":8},"weight":{"john":200},"person":{"john":true},"building":{"john":false}}}':
+ { val: [Object], prob: 0.22083986334960412 } } })
+utterance: Gates is tall
+Marginal({ dist:
+   { '{"facts":{"height":{"gates":50},"weight":{"gates":500},"person":{"gates":false},"building":{"gates":true
+}}}': { val: [Object], prob: 0.11112215953660834 },
+     '{"facts":{"height":{"gates":50},"weight":{"gates":700},"person":{"gates":false},"building":{"gates":true
+}}}': { val: [Object], prob: 0.11112124858512082 },
+     '{"facts":{"height":{"gates":50},"weight":{"gates":900},"person":{"gates":false},"building":{"gates":true
+}}}': { val: [Object], prob: 0.11101794459109396 },
+     '{"facts":{"height":{"gates":100},"weight":{"gates":500},"person":{"gates":false},"building":{"gates":tru
+e}}}': { val: [Object], prob: 0.11112310858724689 },
+     '{"facts":{"height":{"gates":100},"weight":{"gates":700},"person":{"gates":false},"building":{"gates":tru
+e}}}': { val: [Object], prob: 0.1111231077379006 },
+     '{"facts":{"height":{"gates":100},"weight":{"gates":900},"person":{"gates":false},"building":{"gates":tru
+e}}}': { val: [Object], prob: 0.11112310773231893 },
+     '{"facts":{"height":{"gates":150},"weight":{"gates":500},"person":{"gates":false},"building":{"gates":tru
+e}}}': { val: [Object], prob: 0.11112310774613951 },
+     '{"facts":{"height":{"gates":150},"weight":{"gates":700},"person":{"gates":false},"building":{"gates":tru
+e}}}': { val: [Object], prob: 0.11112310774183437 },
+     '{"facts":{"height":{"gates":150},"weight":{"gates":900},"person":{"gates":false},"building":{"gates":tru
+e}}}': { val: [Object], prob: 0.11112310774173653 } } })
+utterance: Gates is heavy
+Marginal({ dist:
+   { '{"facts":{"height":{"gates":50},"weight":{"gates":500},"person":{"gates":false},"building":{"gates":true
+}}}': { val: [Object], prob: 0.11107517180233707 },
+     '{"facts":{"height":{"gates":50},"weight":{"gates":700},"person":{"gates":false},"building":{"gates":true
+}}}': { val: [Object], prob: 0.11107997383721652 },
+     '{"facts":{"height":{"gates":50},"weight":{"gates":900},"person":{"gates":false},"building":{"gates":true
+}}}': { val: [Object], prob: 0.11139068338627346 },
+     '{"facts":{"height":{"gates":100},"weight":{"gates":500},"person":{"gates":false},"building":{"gates":tru
+e}}}': { val: [Object], prob: 0.11107569289340988 },
+     '{"facts":{"height":{"gates":100},"weight":{"gates":700},"person":{"gates":false},"building":{"gates":tru
+e}}}': { val: [Object], prob: 0.11107569556630958 },
+     '{"facts":{"height":{"gates":100},"weight":{"gates":900},"person":{"gates":false},"building":{"gates":tru
+e}}}': { val: [Object], prob: 0.11107569563089568 },
+     '{"facts":{"height":{"gates":150},"weight":{"gates":500},"person":{"gates":false},"building":{"gates":tru
+e}}}': { val: [Object], prob: 0.11107569561913828 },
+     '{"facts":{"height":{"gates":150},"weight":{"gates":700},"person":{"gates":false},"building":{"gates":tru
+e}}}': { val: [Object], prob: 0.1110756956320613 },
+     '{"facts":{"height":{"gates":150},"weight":{"gates":900},"person":{"gates":false},"building":{"gates":tru
+e}}}': { val: [Object], prob: 0.11107569563235835 } } })
