@@ -1,6 +1,7 @@
 var _ = require("underscore");
 var semFuncs = require("./semantics");
-_.assign(exports, require("./grammar"));
+var grammarModule = require("./grammar")
+_.assign(exports, grammarModule);
 
 exports.createParser = createParser;
 function createParser(grammar, params, featureFn, scoreFn, beamSize) {
@@ -406,4 +407,9 @@ function intersectAdjGrammarTest() {
 	
 	var s = getRootCellDerivations(createParser(intersectAdjGrammar)("the brown building"), "$NP")[0].semantics;
 	console.log(s(world));
+}
+
+function testCoordination() {
+	var g = grammarModule.ambiguousGrammar;
+	printCellSizes(createParser(g, {}, () => ({}))("tall and heavy"), "$PRED");
 }

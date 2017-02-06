@@ -25,6 +25,22 @@ function scalarDegree(ent, context, params) {
     return network(entityVector(ent, context), params.W, params.b);
 }
 
+function lift(func, liftLeft, liftRight) {
+    if (!liftLeft && !liftRight) {
+        return func;
+    }
+    return (left, right) => {
+        return context => {
+            return arg => {
+                return func(liftLeft ? c => left(c)(arg) : left,
+                            liftRight ? c => right(c)(arg) : right)
+                            (context);
+            }
+        }
+    }
+}
+    
+
 module.exports = {
     entity: function(x) {
         // Just a constant function for a rigid designator. Ignores theta and context.
@@ -141,21 +157,7 @@ module.exports = {
         }
     },
 
-    lift: (func, liftLeft, liftRight) => {
-        if (!liftLeft && !liftRight) {
-            return func;
-        }
-        return (left, right) => {
-            return context => {
-                return arg => {
-                    return func(liftLeft ? c => left(c)(arg) : left,
-                                liftRight ? c => right(c)(arg) : right)
-                                (context);
-                }
-            }
-        }
-    },
-
-    liftLeft: _.partial(this.lift, _, true, false),
-    liftRight: _.partial(this.lift, _, false, true)
+    liftLeft: _.partial(lift, _, true, false),
+    liftRight: _.partial(lift, _, false, true),
+    liftBoth: _.partial(lift, _, true, true)
 }

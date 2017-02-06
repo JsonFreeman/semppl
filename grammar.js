@@ -127,6 +127,16 @@ exports.ambiguousGrammar = flattenAndIndexify([
 		sem: semFuncs.fwdApply
 	},
 	{
+		LHS: "$PRED",
+		RHS: "$PRED $ConjPRED",
+		sem: semFuncs.liftBoth(semFuncs.backApply)
+	},
+	{
+		LHS: "$ConjPRED",
+		RHS: "$CONJ $PRED",
+		sem: semFuncs.liftRight(semFuncs.fwdApply)
+	},
+	{
 		LHS: "$CONJ",
 		RHS: "and",
 		sem: [
@@ -239,6 +249,16 @@ exports.fixedGrammar = indexify([
 		LHS: "$ConjS",
 		RHS: "$CONJ $S",
 		sem: semFuncs.fwdApply
+	},
+	{
+		LHS: "$ADJ",
+		RHS: "$ADJ $ConjADJ",
+		sem: semFuncs.liftBoth(semFuncs.backApply)
+	},
+	{
+		LHS: "$ConjADJ",
+		RHS: "$CONJ $ADJ",
+		sem: semFuncs.liftRight(semFuncs.fwdApply)
 	},
 	{
 		LHS: "$CONJ",
