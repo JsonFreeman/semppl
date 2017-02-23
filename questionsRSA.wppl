@@ -40,7 +40,6 @@ var informationGain = function(questionPrior, worldPrior, answerPrior, question,
         return qudFn(world);
     });
 
-    // Implement KL
     return KL(posterior, prior);
 }
 
@@ -74,8 +73,8 @@ var pragmaticAnswerer = function(questionPrior, answerPrior, worldPrior, qudPrio
         var explicitQuestioner = questioner(explicitAnswerer);
         var questionDist = explicitQuestioner(questionPrior, answerPrior, worldPrior, qud, rationality);
         factor(
-            questionDist.score(question) +
-            trueWorldScore(worldPrior, answer, qud, trueWorld) * rationality);
+            (questionDist.score(question) +
+            trueWorldScore(worldPrior, answer, qud, trueWorld)) * rationality);
         return answer;
     });
 }
