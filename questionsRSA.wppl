@@ -30,15 +30,6 @@ var trueWorldScore = function(worldPrior, answer, qud, trueWorld) {
     return consistentWorldQudValues.score(qud(trueWorld));
 }
 
-var explicitAnswerer = function(answerPrior, worldPrior, question, trueWorld, rationality) {
-    return Infer({method: 'enumerate'}, function() {
-        var qud = parse(question);
-        var answer = sample(answerPrior);
-        factor(trueWorldScore(worldPrior, answer, qud, trueWorld) * rationality);
-        return answer;
-    })
-}
-
 var informationGain = function(worldPrior, answerPrior, question, qudFn, trueWorld, rationality) {
     var prior = qudPartition(worldPrior, qudFn);
     var posterior = Infer({method: 'enumerate'}, function() {
@@ -50,6 +41,15 @@ var informationGain = function(worldPrior, answerPrior, question, qudFn, trueWor
 
     // Implement KL
     return KL(posterior, prior);
+}
+
+var explicitAnswerer = function(answerPrior, worldPrior, question, trueWorld, rationality) {
+    return Infer({method: 'enumerate'}, function() {
+        var qud = parse(question);
+        var answer = sample(answerPrior);
+        factor(trueWorldScore(worldPrior, answer, qud, trueWorld) * rationality);
+        return answer;
+    })
 }
 
 var explicitQuestioner = function(questionPrior, answerPrior, worldPrior, qudFn, rationality) {
