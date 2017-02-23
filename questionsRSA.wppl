@@ -1,0 +1,76 @@
+var KL = function(p, q){
+    var values = p.support([]);
+    return sum(map(
+        function(value) {
+            var scoreP = p.score(value);
+            var scoreQ = q.score(value);
+            var probP = Math.exp(scoreP);
+            return probP === 0 ? 0 : probP * (scoreP - scoreQ);
+        }, values));
+};
+
+var interpretAnswer = function(worldPrior, answer) {
+    return Infer({method: 'enumerate'}, function() {
+        var answerMeaning = parse(answer);
+        var world = sample(worldPrior);
+        condition(answerMeaning(world)); // Soften?
+        return world;
+    });
+}
+
+var qudPartition = function(worldDist, qudFn) {
+    return Infer({method: 'enumerate'}, function() {
+        var world = sample(worldDist);
+        return qudFn(world);
+    });
+}
+
+var trueWorldScore = function(worldPrior, answer, qud, trueWorld) {
+    var consistentWorldQudValues = qudPartition(interpretAnswer(worldPrior, answer), qud);
+    return consistentWorldQudValues.score(qud(trueWorld));
+}
+
+var explicitAnswerer = function(answerPrior, worldPrior, question, trueWorld, rationality) {
+    return Infer({method: 'enumerate'}, function() {
+        var qud = parse(question);
+        var answer = sample(answerPrior);
+        factor(trueWorldScore(worldPrior, answer, qud, trueWorld) * rationality);
+        return answer;
+    })
+}
+
+var informationGain = function(worldPrior, answerPrior, question, qudFn, trueWorld, rationality) {
+    var prior = qudPartition(worldPrior, qudFn);
+    var posterior = Infer({method: 'enumerate'}, function() {
+        // Add answerPrior as parameter
+        var answer = sample(explicitAnswerer(answerPrior, worldPrior, question, trueWorld, rationality));
+        var world = sample(interpretAnswer(worldPrior, answer));
+        return qudFn(world);
+    });
+
+    // Implement KL
+    return KL(posterior, prior);
+}
+
+var explicitQuestioner = function(questionPrior, answerPrior, worldPrior, qudFn, rationality) {
+    return Infer({method: 'enumerate'}, function() {
+        var question = sample(questionPrior);
+        var expectedInformationGain = expectation(worldPrior, function(world) {
+            return informationGain(worldPrior, answerPrior, question, qudFn, world, rationality);
+        });
+        factor(expectedInformationGain * rationality);
+        return question;
+    });
+}
+
+var pragmaticAnswerer = function(questionPrior, answerPrior, worldPrior, qudPrior, question, trueWorld, rationality) {
+    return Infer({method: 'enumerate'}, function() {
+        var answer = sample(answerPrior);
+        var qud = sample(qudPrior);
+        var questionDist = explicitQuestioner(questionPrior, answerPrior, worldPrior, qud, rationality);
+        factor(
+            questionDist.score(question) +
+            trueWorldScore(worldPrior, answer, qud, trueWorld) * rationality);
+        return answer;
+    });
+}
