@@ -60,6 +60,8 @@ var explicitAnswerer = function(questionPrior, answerPrior, worldPrior, qudPrior
     return Infer({method: 'enumerate'}, function() {
         var qud = parse(question);
         var answer = sample(answerPrior);
+        var answerMeaning = parse(answer);
+        condition(answerMeaning(trueWorld));
         factor(trueWorldScore(worldPrior, answer, qud, trueWorld) * rationality);
         return answer;
     })
@@ -82,6 +84,8 @@ var questioner = function(answerer) {
 var pragmaticAnswerer = function(questionPrior, answerPrior, worldPrior, qudPrior, question, trueWorld, rationality) {
     return Infer({method: 'enumerate'}, function() {
         var answer = sample(answerPrior);
+        var answerMeaning = parse(answer);
+        condition(answerMeaning(trueWorld));
         var qud = sample(qudPrior);
         var explicitQuestioner = questioner(explicitAnswerer);
         var questionDist = explicitQuestioner(questionPrior, answerPrior, worldPrior, qud, rationality);
