@@ -1,3 +1,16 @@
+var parse = function(utterance) {
+    if (utterance === ">0")
+        return function(w) { return w.x > 0 };
+    if (utterance === "=0")
+        return function(w) { return w.x === 0 };
+    if (utterance === "=1")
+        return function(w) { return w.x === 1 };
+    if (utterance === ">0?")
+        return function(w) { return w.x > 0 };
+    if (utterance === "=1?")
+        return function(w) { return w.x === 1 };
+};
+
 var KL = function(p, q){
     var values = p.support([]);
     return sum(map(
@@ -80,3 +93,19 @@ var pragmaticAnswerer = function(questionPrior, answerPrior, worldPrior, qudPrio
 }
 
 var pragmaticQuestioner = questioner(pragmaticAnswerer);
+
+// Testing
+
+var testExplicitAnswerer = function() {
+    var questions = [">0?", "=1?"];
+    var answers = [">0", "=0", "=1"]
+    var worlds = [{ x: 0 }, { x: 1 }, { x: 2 }];
+    var trueWorld = worlds[2];
+    var question = questions[0];
+    display(explicitAnswerer(null, 
+        Categorical({vs: answers, ps: repeat(answers.length, constF(1))}),
+        Categorical({vs: worlds, ps: repeat(worlds.length, constF(1))}),
+        null, question, trueWorld, 1))
+}
+
+testExplicitAnswerer();
