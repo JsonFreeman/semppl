@@ -33,21 +33,14 @@ var interpretAnswer = function(worldPrior, answer) {
     });
 }
 
-var qudPartition = function(worldDist, qudFn) {
-    return Infer({method: 'enumerate'}, function() {
-        var world = sample(worldDist);
-        return qudFn(world);
-    });
-}
-
 var trueWorldScore = function(worldPrior, answer, qud, trueWorld) {
-    var consistentWorldQudValues = qudPartition(interpretAnswer(worldPrior, answer), qud);
+    var consistentWorldQudValues = marginalize(interpretAnswer(worldPrior, answer), qud);
     return consistentWorldQudValues.score(qud(trueWorld));
 }
 
 var informationGain = function(questionPrior, worldPrior, answerPrior, question,
                                qudCandidates, qudFn, trueWorld, answerer, rationality) {
-    var prior = qudPartition(worldPrior, qudFn);
+    var prior = marginalize(worldPrior, qudFn);
     var posterior = Infer({method: 'enumerate'}, function() {
         // Add answerPrior as parameter
         var answer = sample(answerer(questionPrior, answerPrior, worldPrior, qudCandidates, question, trueWorld, rationality));
