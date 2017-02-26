@@ -5,6 +5,8 @@ var parse = function(utterance) {
         return function(w) { return w.x === 0 };
     if (utterance === "=1")
         return function(w) { return w.x === 1 };
+    if (utterance === "!=1")
+        return function(w) { return w.x !== 1 };
     if (utterance === ">0?")
         return function(w) { return w.x > 0 };
     if (utterance === "=1?")
@@ -113,3 +115,18 @@ var testExplicitAnswerer = function() {
 }
 
 // testExplicitAnswerer();
+
+var testExplicitQuestioner = function() {
+    var questions = [">0?", "=1?"];
+    var answers = [">0", "=0", "=1", "!=1"]
+    var worlds = [{ x: 0 }, { x: 1 }, { x: 2 }];
+    var explicitQuestioner = questioner(explicitAnswerer);
+    var qudCandidates = [function (w) { return w.x > 0 }, function (w) { return w.x === 1 }, idF, constF]
+    display(explicitQuestioner(
+        Categorical({vs: questions, ps: repeat(questions.length, constF(1))}), 
+        Categorical({vs: answers, ps: repeat(answers.length, constF(1))}),
+        Categorical({vs: worlds, ps: repeat(worlds.length, constF(1))}),
+        qudCandidates[3], qudCandidates, 1))
+}
+
+testExplicitQuestioner();
