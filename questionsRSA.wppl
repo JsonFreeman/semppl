@@ -1,7 +1,7 @@
 var parse = function(utterance) {
     if (utterance === ">0")
         return function(w) { return w.x > 0 };
-    if (utterance === "=0")
+    if (utterance === "=0" || utterance === "=0?")
         return function(w) { return w.x === 0 };
     if (utterance === "=1")
         return function(w) { return w.x === 1 };
@@ -11,6 +11,8 @@ var parse = function(utterance) {
         return function(w) { return w.x > 0 };
     if (utterance === "=1?")
         return function(w) { return w.x === 1 };
+    if (utterance === "=2?" || utterance === "=2")
+        return function(w) { return w.x === 2 };
 };
 
 var KL = function(p, q){
@@ -42,7 +44,6 @@ var informationGain = function(questionPrior, worldPrior, answerPrior, question,
                                qudCandidates, qudFn, trueWorld, answerer, rationality) {
     var prior = marginalize(worldPrior, qudFn);
     var posterior = Infer({method: 'enumerate'}, function() {
-        // Add answerPrior as parameter
         var answer = sample(answerer(questionPrior, answerPrior, worldPrior, qudCandidates, question, trueWorld, rationality));
         var world = sample(interpretAnswer(worldPrior, answer));
         return qudFn(world);
@@ -80,7 +81,6 @@ var pragmaticAnswerer = function(questionPrior, answerPrior, worldPrior, qudCand
     return Infer({method: 'enumerate'}, function() {
         var answer = sample(answerPrior);
         var answerMeaning = parse(answer);
-        condition(answerMeaning(trueWorld));
         var qud = uniformDraw(qudCandidates);
         var explicitQuestioner = questioner(explicitAnswerer);
         var questionDist = explicitQuestioner(questionPrior, answerPrior, worldPrior, qud, qudCandidates, rationality);
@@ -96,12 +96,12 @@ var pragmaticQuestioner = questioner(pragmaticAnswerer);
 // Testing
 
 var testAnswerer = function(answerer) {
-    var questions = [">0?", "=1?"];
-    var answers = [">0", "=0", "=1", "!=1"]
+    var questions = ["=0?", "=1?", "=2?"];
+    var answers = ["=0", "=1", "=2"]
     var worlds = [{ x: 0 }, { x: 1 }, { x: 2 }];
     var trueWorld = worlds[2];
     var question = questions[1];
-    var qudCandidates = [function (w) { return w.x > 0 }, function (w) { return w.x === 1 }, idF, constF(0)]
+    var qudCandidates = [function (w) { return w.x > 0 }, function (w) { return w.x === 1 }, function (w) { return w.x === 2 }]
     display(answerer(
         Categorical({vs: questions, ps: repeat(questions.length, constF(1))}),
         Categorical({vs: answers, ps: repeat(answers.length, constF(1))}),
@@ -117,7 +117,7 @@ var testExplicitQuestioner = function() {
     var answers = [">0", "=0", "=1", "!=1"]
     var worlds = [{ x: 0 }, { x: 1 }, { x: 2 }];
     var explicitQuestioner = questioner(explicitAnswerer);
-    var qudCandidates = [function (w) { return w.x > 0 }, function (w) { return w.x === 1 }, idF, constF(0)]
+    var qudCandidates = [function (w) { return w.x > 0 }, function (w) { return w.x === 1 }, idF]
     display(explicitQuestioner(
         Categorical({vs: questions, ps: repeat(questions.length, constF(1))}), 
         Categorical({vs: answers, ps: repeat(answers.length, constF(1))}),
