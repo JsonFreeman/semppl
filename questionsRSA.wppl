@@ -16,14 +16,11 @@ var parse = function(utterance) {
 };
 
 var KL = function(p, q){
-    var values = p.support([]);
-    return sum(map(
-        function(value) {
-            var scoreP = p.score(value);
-            var scoreQ = q.score(value);
-            var probP = Math.exp(scoreP);
-            return probP === 0 ? 0 : probP * (scoreP - scoreQ);
-        }, values));
+    return expectation(p, function(value) {
+        var scoreP = p.score(value);
+        var scoreQ = q.score(value);
+        return scoreP === -Infinity ? 0 : scoreP - scoreQ;
+    });
 };
 
 var interpretAnswer = function(worldPrior, answer) {
