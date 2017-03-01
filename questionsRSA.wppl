@@ -73,9 +73,9 @@ var qudToQuestionPredicate = function(qud) {
     // A qud is a function the pragmatic answerer is reasoning about.
     // It is of type w => d
     // Turn this into a question predicate of type d => w => t
-    return function(v) {
+    return function(cellValue) {
         return function(w) {
-            return qud(w) === v ? 1 : 0;
+            return qud(w) === cellValue ? 1 : 0;
         }
     }
 };
