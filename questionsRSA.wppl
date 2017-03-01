@@ -106,12 +106,11 @@ var questioner = function(answerer) {
 }
 
 var pragmaticAnswerer = function(questionPrior, answerPrior, worldPrior, qudCandidates, question, trueWorld, rationality) {
+    var explicitQuestioner = questioner(explicitAnswerer);
     return Infer({method: 'enumerate'}, function() {
-        var answer = sample(answerPrior);
-        var answerMeaning = parse(answer);
         var qud = uniformDraw(qudCandidates);
-        var explicitQuestioner = questioner(explicitAnswerer);
         var questionDist = explicitQuestioner(questionPrior, answerPrior, worldPrior, qud, qudCandidates, rationality);
+        var answer = sample(answerPrior);
         factor((questionDist.score(question)
                 + answerInformativity(worldPrior, answer, qudToQuestionPredicate(qud), trueWorld)) * rationality);
         return answer;
