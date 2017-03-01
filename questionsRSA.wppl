@@ -24,24 +24,32 @@ var KL = function(p, q){
 };
 
 var interpretAnswer = function(worldPrior, answer) {
+    var answerMeaning = parse(answer);
     return Infer({method: 'enumerate'}, function() {
-        var answerMeaning = parse(answer);
         var world = sample(worldPrior);
         condition(answerMeaning(world)); // Soften?
         return world;
     });
 }
 
-var trueWorldScore = function(worldPrior, answer, qud, trueWorld) {
-    var consistentWorldQudValues = marginalize(interpretAnswer(worldPrior, answer), qud);
-    return consistentWorldQudValues.score(qud(trueWorld));
+var similarity = function(w1, w2, questionPredicate) {
+    // TODO: Specify this (questionPredicate is e => w => t)
+    return 0;
+}
+
+var answerInformativity = function(worldPrior, answer, questionPredicate, trueWorld) {
+    var consistentWorlds = interpretAnswer(worldPrior, answer);
+    return expectation(consistentWorlds, function(w) {
+        return similarity(w, trueWorld, questionPredicate);
+    })
 }
 
 var informationGain = function(questionPrior, worldPrior, answerPrior, question,
                                qudCandidates, qudFn, trueWorld, answerer, rationality) {
     var prior = marginalize(worldPrior, qudFn);
+    var answerDist = answerer(questionPrior, answerPrior, worldPrior, qudCandidates, question, trueWorld, rationality);
     var posterior = Infer({method: 'enumerate'}, function() {
-        var answer = sample(answerer(questionPrior, answerPrior, worldPrior, qudCandidates, question, trueWorld, rationality));
+        var answer = sample(answerDist);
         var world = sample(interpretAnswer(worldPrior, answer));
         return qudFn(world);
     });
@@ -50,12 +58,12 @@ var informationGain = function(questionPrior, worldPrior, answerPrior, question,
 }
 
 var explicitAnswerer = function(questionPrior, answerPrior, worldPrior, qudCandidates, question, trueWorld, rationality) {
+    var questionMeaning = parse(question);
     return Infer({method: 'enumerate'}, function() {
-        var qud = parse(question);
         var answer = sample(answerPrior);
         var answerMeaning = parse(answer);
         condition(answerMeaning(trueWorld));
-        factor(trueWorldScore(worldPrior, answer, qud, trueWorld) * rationality);
+        factor(answerInformativity(worldPrior, answer, questionMeaning, trueWorld) * rationality);
         return answer;
     })
 }
@@ -83,7 +91,7 @@ var pragmaticAnswerer = function(questionPrior, answerPrior, worldPrior, qudCand
         var questionDist = explicitQuestioner(questionPrior, answerPrior, worldPrior, qud, qudCandidates, rationality);
         factor(
             (questionDist.score(question) +
-            trueWorldScore(worldPrior, answer, qud, trueWorld)) * rationality);
+            answerInformativity(worldPrior, answer, qud, trueWorld)) * rationality);
         return answer;
     });
 }
