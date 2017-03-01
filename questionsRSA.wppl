@@ -1,18 +1,30 @@
 var parse = function(utterance) {
     if (utterance === ">0")
         return function(w) { return w.x > 0 };
-    if (utterance === "=0" || utterance === "=0?")
+    if (utterance === "=0")
         return function(w) { return w.x === 0 };
     if (utterance === "=1")
         return function(w) { return w.x === 1 };
+    if (utterance === "=2")
+        return function(w) { return w.x === 2 };
     if (utterance === "!=1")
         return function(w) { return w.x !== 1 };
     if (utterance === ">0?")
-        return function(w) { return w.x > 0 };
+        return function (t) { 
+            return function(w) { return (w.x > 0) === t ? 1 : 0; };
+        }
+    if (utterance === "=0?")
+        return function (t) { 
+            return function(w) { return (w.x === 0) === t ? 1 : 0; };
+        }
     if (utterance === "=1?")
-        return function(w) { return w.x === 1 };
-    if (utterance === "=2?" || utterance === "=2")
-        return function(w) { return w.x === 2 };
+        return function (t) { 
+            return function(w) { return (w.x === 1) === t ? 1 : 0; };
+        }
+    if (utterance === "=2?")
+        return function (t) { 
+            return function(w) { return (w.x === 2) === t ? 1 : 0; };
+        }
 };
 
 var KL = function(p, q){
@@ -33,15 +45,15 @@ var interpretAnswer = function(worldPrior, answer) {
 }
 
 var similarity = function(w1, w2, questionPredicate) {
-    // TODO: Specify this (questionPredicate is e => w => t)
-    return 0;
+    // TODO: Specify this (questionPredicate is d => w => t)
+    return 1 - Math.abs(questionPredicate(true)(w1) - questionPredicate(true)(w2));
 }
 
 var answerInformativity = function(worldPrior, answer, questionPredicate, trueWorld) {
     var consistentWorlds = interpretAnswer(worldPrior, answer);
-    return expectation(consistentWorlds, function(w) {
+    return Math.log(expectation(consistentWorlds, function(w) {
         return similarity(w, trueWorld, questionPredicate);
-    })
+    }))
 }
 
 var informationGain = function(questionPrior, worldPrior, answerPrior, question,
@@ -56,6 +68,17 @@ var informationGain = function(questionPrior, worldPrior, answerPrior, question,
 
     return KL(posterior, prior);
 }
+
+var qudToQuestionPredicate = function(qud) {
+    // A qud is a function the pragmatic answerer is reasoning about.
+    // It is of type w => d
+    // Turn this into a question predicate of type d => w => t
+    return function(v) {
+        return function(w) {
+            return qud(w) === v ? 1 : 0;
+        }
+    }
+};
 
 var explicitAnswerer = function(questionPrior, answerPrior, worldPrior, qudCandidates, question, trueWorld, rationality) {
     var questionMeaning = parse(question);
@@ -91,7 +114,7 @@ var pragmaticAnswerer = function(questionPrior, answerPrior, worldPrior, qudCand
         var questionDist = explicitQuestioner(questionPrior, answerPrior, worldPrior, qud, qudCandidates, rationality);
         factor(
             (questionDist.score(question) +
-            answerInformativity(worldPrior, answer, qud, trueWorld)) * rationality);
+            answerInformativity(worldPrior, answer, qudToQuestionPredicate(qud), trueWorld)) * rationality);
         return answer;
     });
 }
