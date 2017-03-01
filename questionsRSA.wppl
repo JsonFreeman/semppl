@@ -1,14 +1,14 @@
 var parse = function(utterance) {
     if (utterance === ">0")
-        return function(w) { return w.x > 0 };
+        return function(w) { return w.x > 0 ? 1 : 0; };
     if (utterance === "=0")
-        return function(w) { return w.x === 0 };
+        return function(w) { return w.x === 0 ? 1 : 0; };
     if (utterance === "=1")
-        return function(w) { return w.x === 1 };
+        return function(w) { return w.x === 1 ? 1 : 0; };
     if (utterance === "=2")
-        return function(w) { return w.x === 2 };
+        return function(w) { return w.x === 2 ? 1 : 0; };
     if (utterance === "!=1")
-        return function(w) { return w.x !== 1 };
+        return function(w) { return w.x !== 1 ? 1 : 0; };
     if (utterance === ">0?")
         return function (t) { 
             return function(w) { return (w.x > 0) === t ? 1 : 0; };
@@ -39,7 +39,7 @@ var interpretAnswer = function(worldPrior, answer) {
     var answerMeaning = parse(answer);
     return Infer({method: 'enumerate'}, function() {
         var world = sample(worldPrior);
-        condition(answerMeaning(world)); // Soften?
+        factor(Math.log(answerMeaning(world)));
         return world;
     });
 }
@@ -85,8 +85,8 @@ var explicitAnswerer = function(questionPrior, answerPrior, worldPrior, qudCandi
     return Infer({method: 'enumerate'}, function() {
         var answer = sample(answerPrior);
         var answerMeaning = parse(answer);
-        condition(answerMeaning(trueWorld));
-        factor(answerInformativity(worldPrior, answer, questionMeaning, trueWorld) * rationality);
+        factor((Math.log(answerMeaning(trueWorld)) 
+                + answerInformativity(worldPrior, answer, questionMeaning, trueWorld)) * rationality);
         return answer;
     })
 }
@@ -112,9 +112,8 @@ var pragmaticAnswerer = function(questionPrior, answerPrior, worldPrior, qudCand
         var qud = uniformDraw(qudCandidates);
         var explicitQuestioner = questioner(explicitAnswerer);
         var questionDist = explicitQuestioner(questionPrior, answerPrior, worldPrior, qud, qudCandidates, rationality);
-        factor(
-            (questionDist.score(question) +
-            answerInformativity(worldPrior, answer, qudToQuestionPredicate(qud), trueWorld)) * rationality);
+        factor((questionDist.score(question)
+                + answerInformativity(worldPrior, answer, qudToQuestionPredicate(qud), trueWorld)) * rationality);
         return answer;
     });
 }
