@@ -49,11 +49,18 @@ var similarity = function(w1, w2, questionPredicate) {
     return 1 - Math.abs(questionPredicate(true)(w1) - questionPredicate(true)(w2));
 }
 
-var answerInformativity = function(worldPrior, answer, questionPredicate, trueWorld) {
+var answerQualityForQuestion = function(worldPrior, answer, questionPredicate, trueWorld) {
+    // Using soft similarity semantics
     var consistentWorlds = interpretAnswer(worldPrior, answer);
     return Math.log(expectation(consistentWorlds, function(w) {
         return similarity(w, trueWorld, questionPredicate);
     }))
+}
+
+var answerQualityForQud = function(worldPrior, answer, qud, trueWorld) {
+    // Using hard partition semantics
+    var consistentWorlds = interpretAnswer(worldPrior, answer);
+    return marginalize(consistentWorlds, qud).score(qud(trueWorld));
 }
 
 var informationGain = function(questionPrior, worldPrior, answerPrior, question,
@@ -69,24 +76,13 @@ var informationGain = function(questionPrior, worldPrior, answerPrior, question,
     return KL(posterior, prior);
 }
 
-var qudToQuestionPredicate = function(qud) {
-    // A qud is a function the pragmatic answerer is reasoning about.
-    // It is of type w => d
-    // Turn this into a question predicate of type d => w => t
-    return function(cellValue) {
-        return function(w) {
-            return qud(w) === cellValue ? 1 : 0;
-        }
-    }
-};
-
 var explicitAnswerer = function(questionPrior, answerPrior, worldPrior, qudCandidates, question, trueWorld, rationality) {
     var questionMeaning = parse(question);
     return Infer({method: 'enumerate'}, function() {
         var answer = sample(answerPrior);
         var answerMeaning = parse(answer);
         factor((Math.log(answerMeaning(trueWorld)) 
-                + answerInformativity(worldPrior, answer, questionMeaning, trueWorld)) * rationality);
+                + answerQualityForQuestion(worldPrior, answer, questionMeaning, trueWorld)) * rationality);
         return answer;
     })
 }
@@ -112,7 +108,7 @@ var pragmaticAnswerer = function(questionPrior, answerPrior, worldPrior, qudCand
         var questionDist = explicitQuestioner(questionPrior, answerPrior, worldPrior, qud, qudCandidates, rationality);
         var answer = sample(answerPrior);
         factor((questionDist.score(question)
-                + answerInformativity(worldPrior, answer, qudToQuestionPredicate(qud), trueWorld)) * rationality);
+                + answerQualityForQud(worldPrior, answer, qud, trueWorld)) * rationality);
         return answer;
     });
 }
