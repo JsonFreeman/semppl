@@ -54,18 +54,6 @@ module.exports = {
         })
     },
 
-    whQuestionFromPredicate: params => context => pred => {
-        var elementProbabilities = _.object(context.domain, _.map(context.domain, pred));
-        return querySet => {
-            return _.reduce(context.domain, (memo, element) => {
-                var queryElementProbability = _.contains(querySet, element)
-                    ? elementProbabilities[element]
-                    : ad.scalar.sub(1, elementProbabilities[element]);
-                return ad.scalar.mul(memo, queryElementProbability);
-            }, 1);
-        }
-    },
-
     neuralScalarPredicate: function(scaleName) {
         return function(params, theta) {
             return function(context) {
