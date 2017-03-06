@@ -142,8 +142,8 @@ var testAnswerer = function(answerer) {
         qudCandidates, question, trueWorld, 1))
 }
 
-testAnswerer(explicitAnswerer);
-testAnswerer(pragmaticAnswerer);
+// testAnswerer(explicitAnswerer);
+// testAnswerer(pragmaticAnswerer);
 
 var testExplicitQuestioner = function() {
     var questions = [">0?", "=1?"];
@@ -159,3 +159,25 @@ var testExplicitQuestioner = function() {
 }
 
 // testExplicitQuestioner();
+
+var testSimilarityFunction = function() {
+    var length = 5;
+    var domain = _.range(0, length);
+    var dist1 = repeat(length, function() { uniform(0, 1) });
+    var dist2 = repeat(length, function() { uniform(0, 1) });
+    var index = function(dist) { 
+        return function (element) { dist[element] }
+    }
+    var sim = 1 - similarity(index(dist1), index(dist2), domain);
+
+    var makeJointDist = function(dist) {
+        return Infer({method: 'enumerate'}, function() {
+            return map(bernoulli, dist);
+        })
+    }
+    var kl = KL(makeJointDist(dist1), makeJointDist(dist2));
+
+    assert.strictEqual(sim.toFixed(10), kl.toFixed(10));
+}
+
+testSimilarityFunction();
