@@ -44,27 +44,27 @@ var interpretAnswer = function(worldPrior, answer) {
     });
 }
 
-var similarity = function(w, trueWorld, questionPredicate) {
-    // questionPredicate(w1) and questionPredicate(w2) are each distributions
+var similarity = function(trueWorldPredicate, otherWorldPredicate, domain) {
+    // trueWorldPredicate and otherWorldPredicate are each distributions
     // over subsets of the domain. Compute KL between them using factorization
     // for sequence of independent bernoulli trials.
-    assert.ok(w.domain.length === trueWorld.domain.length)
-    var truePredicate = questionPredicate(trueWorld);
-    var otherPredicate = questionPredicate(w);
     return 1 - sum(map(function(e) {
-        var p_e = truePredicate(e);
-        var q_e = otherPredicate(e);
+        var p_e = trueWorldPredicate(e);
+        var q_e = otherWorldPredicate(e);
         var positiveTerm = p_e === 0 ? 0 : p_e * Math.log(p_e / q_e);
         var negativeTerm = p_e === 1 ? 0 : (1 - p_e) * Math.log((1 - p_e) / (1 - q_e));
         return positiveTerm + negativeTerm;
-    }, trueWorld.domain));
+    }, domain));
 }
 
 var answerQualityForQuestion = function(worldPrior, answer, questionPredicate, trueWorld) {
     // Using soft similarity semantics
     var consistentWorlds = interpretAnswer(worldPrior, answer);
     return Math.log(expectation(consistentWorlds, function(w) {
-        return similarity(w, trueWorld, questionPredicate);
+        assert.ok(w.domain.length === trueWorld.domain.length)
+        var truePredicate = questionPredicate(trueWorld);
+        var otherPredicate = questionPredicate(w);
+        return similarity(truePredicate, otherPredicate, trueWorld.domain);
     }))
 }
 
