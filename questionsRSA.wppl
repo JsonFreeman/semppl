@@ -10,20 +10,20 @@ var parse = function(utterance) {
     if (utterance === "!=1")
         return function(w) { return w.x !== 1 ? 1 : 0; };
     if (utterance === ">0?")
-        return function (t) { 
-            return function(w) { return (w.x > 0) === t ? 1 : 0; };
+        return function (w) { 
+            return function(t) { return (w.x > 0) === t ? 1 : 0; };
         }
     if (utterance === "=0?")
-        return function (t) { 
-            return function(w) { return (w.x === 0) === t ? 1 : 0; };
+        return function (w) { 
+            return function(t) { return (w.x === 0) === t ? 1 : 0; };
         }
     if (utterance === "=1?")
-        return function (t) { 
-            return function(w) { return (w.x === 1) === t ? 1 : 0; };
+        return function (w) { 
+            return function(t) { return (w.x === 1) === t ? 1 : 0; };
         }
     if (utterance === "=2?")
-        return function (t) { 
-            return function(w) { return (w.x === 2) === t ? 1 : 0; };
+        return function (w) { 
+            return function(t) { return (w.x === 2) === t ? 1 : 0; };
         }
 };
 
@@ -44,9 +44,20 @@ var interpretAnswer = function(worldPrior, answer) {
     });
 }
 
-var similarity = function(w1, w2, questionPredicate) {
-    // TODO: Specify this (questionPredicate is d => w => t)
-    return 1 - Math.abs(questionPredicate(true)(w1) - questionPredicate(true)(w2));
+var similarity = function(w, trueWorld, questionPredicate) {
+    // questionPredicate(w1) and questionPredicate(w2) are each distributions
+    // over subsets of the domain. Compute KL between them using factorization
+    // for sequence of independent bernoulli trials.
+    assert.ok(w.domain.length === trueWorld.domain.length)
+    var truePredicate = questionPredicate(trueWorld);
+    var otherPredicate = questionPredicate(w);
+    return 1 - sum(map(function(e) {
+        var p_e = truePredicate(e);
+        var q_e = otherPredicate(e);
+        var positiveTerm = p_e === 0 ? 0 : p_e * Math.log(p_e / q_e);
+        var negativeTerm = p_e === 1 ? 0 : (1 - p_e) * Math.log((1 - p_e) / (1 - q_e));
+        return positiveTerm + negativeTerm;
+    }, trueWorld.domain));
 }
 
 var answerQualityForQuestion = function(worldPrior, answer, questionPredicate, trueWorld) {
@@ -81,8 +92,8 @@ var explicitAnswerer = function(questionPrior, answerPrior, worldPrior, qudCandi
     return Infer({method: 'enumerate'}, function() {
         var answer = sample(answerPrior);
         var answerMeaning = parse(answer);
-        factor((Math.log(answerMeaning(trueWorld)) 
-                + answerQualityForQuestion(worldPrior, answer, questionMeaning, trueWorld)) * rationality);
+        factor(Math.log(answerMeaning(trueWorld)) * rationality);
+        factor(answerQualityForQuestion(worldPrior, answer, questionMeaning, trueWorld) * rationality);
         return answer;
     })
 }
@@ -120,7 +131,7 @@ var pragmaticQuestioner = questioner(pragmaticAnswerer);
 var testAnswerer = function(answerer) {
     var questions = ["=0?", "=1?", "=2?"];
     var answers = ["=0", "=1", "=2"]
-    var worlds = [{ x: 0 }, { x: 1 }, { x: 2 }];
+    var worlds = map(function(w) { extend(w, { domain: [true, false] }) }, [{ x: 0 }, { x: 1 }, { x: 2 }]);
     var trueWorld = worlds[2];
     var question = questions[1];
     var qudCandidates = [function (w) { return w.x > 0 }, function (w) { return w.x === 1 }, function (w) { return w.x === 2 }]
