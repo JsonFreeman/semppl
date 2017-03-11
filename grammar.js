@@ -313,5 +313,5 @@ exports.fixedGrammar = indexify([
     makeFixedDimensionScalarAntonymRule("light", "heavy", "weight", "$ADJ"),
 	makeBooleanPredicate("doctor", "$N"),
 	makeBooleanPredicate("teacher", "$N"),
-	makeBooleanPredicate("singer", "$N"),
+	makeBooleanPredicate("fisherman", "$N"),
 ]);

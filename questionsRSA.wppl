@@ -187,7 +187,7 @@ var testSimilarityFunction = function() {
 // testSimilarityFunction();
 
 var testIntegratedAnswerer = function(answerer, parser) {
-    var questions = ["Who is a doctor", "Who is a teacher", "Who is a rockstar"];
+    var questions = ["Who is a doctor", "Who is a teacher", "Who is a fisherman"];
     var answers = ["=0", "=1", "=2"]
     var worlds = map(function(w) { extend(w, { domain: [true, false] }) }, [{ x: 0 }, { x: 1 }, { x: 2 }]);
     var trueWorld = worlds[2];
