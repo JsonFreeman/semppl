@@ -58,6 +58,14 @@ function makeFixedDimensionScalarAntonymRule(name, scaleName, dimension, pos) {
     };
 }
 
+function makeBooleanPredicate(name, pos) {
+    return {
+        LHS: pos,
+        RHS: name,
+        sem: semFuncs.predicate(name)
+    };
+}
+
 exports.ambiguousGrammar = flattenAndIndexify([
 	{
 		LHS: "$S",
@@ -293,6 +301,7 @@ exports.fixedGrammar = indexify([
     makeFixedScalarItemRule("heavy", "weight", "$ADJ"),
     makeFixedDimensionScalarAntonymRule("short", "tall", "height", "$ADJ"),
     makeFixedDimensionScalarAntonymRule("light", "heavy", "weight", "$ADJ"),
-	makeFixedScalarItemRule("man", "man", "$N"),
-	makeFixedScalarItemRule("building", "building", "$N"),
+	makeBooleanPredicate("doctor", "$N"),
+	makeBooleanPredicate("teacher", "$N"),
+	makeBooleanPredicate("singer", "$N"),
 ]);
