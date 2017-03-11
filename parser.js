@@ -20,8 +20,10 @@ function createParser(grammar, params, featureFn, scoreFn, beamSize) {
 		// Base case: bottom level
 		for (var i = 0; i < words.length; i++) {
 			chart[i] = [];
-			chart[i][i] = _.groupBy(_.map(_.filter(grammar,
-				rule => rule.RHS === words[i]), // filter
+			var rules = _.filter(grammar, rule => rule.RHS === words[i]);
+			assert(rules.length, "Word '" + words[i] + "' does not appear in grammar");
+
+			chart[i][i] = _.groupBy(_.map(rules,
 				rule => new Derivation(rule, /*leftChild*/ undefined, /*rightChild*/ undefined,
 					rule.sem(params, theta))), // map
 				derivation => derivation.rule.LHS); // groupBy
