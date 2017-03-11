@@ -246,6 +246,16 @@ exports.fixedGrammar = indexify([
 		RHS: "a",
 		sem: semFuncs.id
 	},
+	{
+		LHS: "$WH-NP",
+		RHS: "Who",
+		sem: semFuncs.id
+	},
+	{
+		LHS: "$WH",
+		RHS: "$WH-NP $VP",
+		sem: semFuncs.fwdApply
+	},
 
 	// Logic
 	{
