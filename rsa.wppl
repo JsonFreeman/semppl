@@ -50,7 +50,8 @@ var createParser = function (grammar, params) {
         var chart = parser.call(null, utterance, theta);
         var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
 
-        assert.ok(chart && rootCellDerivations && rootCellDerivations.length > 0, "Cannot parse utterance '" + utterance + "'")
+        assert.ok(chart && rootCellDerivations && rootCellDerivations.length > 0,
+            "Cannot parse utterance '" + utterance + "' with startSymbol " + startSymbol)
         // Gather the two relevant probabilities
         var derivationProbabilities = normalize(map(function (d) {
             return Math.exp(scoreFn(featureFn(d), params.parserWeights));

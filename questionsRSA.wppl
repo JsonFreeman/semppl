@@ -1,3 +1,5 @@
+var questionStartSymbol = "$WH";
+var answerStartSymbol = "$S";
 // Change the name to parse to test model in isolation
 var dummyParse = function(utterance) {
     if (utterance === ">0")
@@ -90,10 +92,10 @@ var informationGain = function(questionPrior, worldPrior, answerPrior, question,
 
 var explicitAnswerer = function(questionPrior, answerPrior, worldPrior, qudCandidates, 
                                 question, trueWorld, rationality, parser) {
-    var questionMeaning = parser(question);
+    var questionMeaning = parser(question, 0, questionStartSymbol);
     return Infer({method: 'enumerate'}, function() {
         var answer = sample(answerPrior);
-        var answerMeaning = parser(answer);
+        var answerMeaning = parser(answer, 0, answerStartSymbol);
         factor(Math.log(answerMeaning(trueWorld)) * rationality);
         factor(answerQualityForQuestion(worldPrior, answer, questionMeaning, trueWorld) * rationality);
         return answer;
