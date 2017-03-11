@@ -88,11 +88,12 @@ var informationGain = function(questionPrior, worldPrior, answerPrior, question,
     return KL(posterior, prior);
 }
 
-var explicitAnswerer = function(questionPrior, answerPrior, worldPrior, qudCandidates, question, trueWorld, rationality) {
-    var questionMeaning = parse(question);
+var explicitAnswerer = function(questionPrior, answerPrior, worldPrior, qudCandidates, 
+                                question, trueWorld, rationality, parser) {
+    var questionMeaning = parser(question);
     return Infer({method: 'enumerate'}, function() {
         var answer = sample(answerPrior);
-        var answerMeaning = parse(answer);
+        var answerMeaning = parser(answer);
         factor(Math.log(answerMeaning(trueWorld)) * rationality);
         factor(answerQualityForQuestion(worldPrior, answer, questionMeaning, trueWorld) * rationality);
         return answer;
@@ -182,3 +183,19 @@ var testSimilarityFunction = function() {
 }
 
 // testSimilarityFunction();
+
+var testIntegratedAnswerer = function(answerer, parser) {
+    var questions = ["=0?", "=1?", "=2?"];
+    var answers = ["=0", "=1", "=2"]
+    var worlds = map(function(w) { extend(w, { domain: [true, false] }) }, [{ x: 0 }, { x: 1 }, { x: 2 }]);
+    var trueWorld = worlds[2];
+    var question = questions[1];
+    var qudCandidates = [function (w) { return w.x > 0 }, function (w) { return w.x === 1 }, function (w) { return w.x === 2 }]
+    display(answerer(
+        Categorical({vs: questions, ps: repeat(questions.length, constF(1))}),
+        Categorical({vs: answers, ps: repeat(answers.length, constF(1))}),
+        Categorical({vs: worlds, ps: repeat(worlds.length, constF(1))}),
+        qudCandidates, question, trueWorld, 1, parser))
+}
+
+testIntegratedAnswerer(explicitAnswerer, createParser(semppl.fixedGrammar, {}))
