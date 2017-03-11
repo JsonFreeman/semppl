@@ -23,11 +23,25 @@ var normalize = function (array) {
     }, array);
 };
 
-var denotationProbability = function (world) {
+var getSemantics = function (world) {
     return function (derivation) {
         return derivation.semantics(world);
     };
 };
+
+var marginalizeDerivationsForAssertion = function(derivationProbabilities, semantics) {
+    return sum(map2(function (derivation, truth) {
+        return derivation * truth;
+    }, derivationProbabilities, semantics));
+}
+
+var marginalizeDerivationsForQuestion = function(derivationProbabilities, semantics) {
+    return function(element) {
+        return sum(map2(function (derivation, truthFn) {
+            return derivation * truthFn(element);
+        }, derivationProbabilities, semantics));
+    }
+}
 
 var createParser = function (grammar, params) {
     var parser = semppl.createParser(grammar, params, semppl.ruleFeatureFn);
@@ -42,17 +56,18 @@ var createParser = function (grammar, params) {
             return Math.exp(scoreFn(featureFn(d), params.parserWeights));
         }, rootCellDerivations));
 
+        var marginalizationFunction = startSymbol === "$S" ? marginalizeDerivationsForAssertion :
+                                      startSymbol === "$WH" ? marginalizeDerivationsForQuestion :
+                                      null;
+
         return cache(function (world) {
             // World dependent part starts here.
-            var truthProbabilities = map(denotationProbability(world), rootCellDerivations);
+            var semantics = map(getSemantics(world), rootCellDerivations);
 
             // We now have probabilities that the sentences are true given derivations P(t | d)
             // Also probabilities that derivations are correct P(d)
 
-            // Marginalize out derivation by summing over derivations, multiply the two probabilities
-            return sum(map2(function (derivation, truth) {
-                return derivation * truth;
-            }, derivationProbabilities, truthProbabilities));
+            return marginalizationFunction(derivationProbabilities, semantics);
         });
     });
 }
