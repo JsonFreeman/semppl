@@ -1,4 +1,5 @@
-var parse = function(utterance) {
+// Change the name to parse to test model in isolation
+var dummyParse = function(utterance) {
     if (utterance === ">0")
         return function(w) { return w.x > 0 ? 1 : 0; };
     if (utterance === "=0")
@@ -142,7 +143,7 @@ var testAnswerer = function(answerer) {
         qudCandidates, question, trueWorld, 1))
 }
 
-// testAnswerer(explicitAnswerer);
+testAnswerer(explicitAnswerer);
 // testAnswerer(pragmaticAnswerer);
 
 var testExplicitQuestioner = function() {
@@ -180,4 +181,4 @@ var testSimilarityFunction = function() {
     assert.strictEqual(sim.toFixed(10), kl.toFixed(10));
 }
 
-testSimilarityFunction();
+// testSimilarityFunction();
