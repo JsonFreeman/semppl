@@ -80,7 +80,8 @@ var answerQualityForQud = function(worldPrior, answer, qud, trueWorld, parser) {
 var informationGain = function(questionPrior, worldPrior, answerPrior, question,
                                qudCandidates, qudFn, trueWorld, answerer, rationality, parser) {
     var prior = marginalize(worldPrior, qudFn);
-    var answerDist = answerer(questionPrior, answerPrior, worldPrior, qudCandidates, question, trueWorld, rationality);
+    var answerDist = answerer(questionPrior, answerPrior, worldPrior, qudCandidates,
+                              question, trueWorld, rationality, parser);
     var posterior = Infer({method: 'enumerate'}, function() {
         var answer = sample(answerDist);
         var world = sample(interpretAnswer(worldPrior, answer, parser));
