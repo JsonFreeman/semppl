@@ -38,7 +38,8 @@ var marginalizeDerivationsForAssertion = function(derivationProbabilities, seman
 var marginalizeDerivationsForQuestion = function(derivationProbabilities, semantics) {
     return function(element) {
         return sum(map2(function (derivation, truthFn) {
-            return derivation * truthFn(element);
+            // truthFn was returned by the parser, so need to call it as a js function
+            return derivation * truthFn.call(null, element);
         }, derivationProbabilities, semantics));
     }
 }
