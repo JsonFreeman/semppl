@@ -201,7 +201,7 @@ var testIntegratedAnswerer = function(answerer, parser) {
                     { domain: ["john", "mary"], facts: { doctor: [], teacher: [], fisherman: ["john", "mary"]}},]
     var trueWorld = worlds[2];
     var question = questions[1];
-    var qudCandidates = [function (w) { return w.x > 0 }, function (w) { return w.x === 1 }, function (w) { return w.x === 2 }]
+    var qudCandidates = [function(w) { w.facts.teacher }]
     display(answerer(
         Categorical({vs: questions, ps: repeat(questions.length, constF(1))}),
         Categorical({vs: answers, ps: repeat(answers.length, constF(1))}),
