@@ -209,3 +209,4 @@ var testIntegratedAnswerer = function(answerer, parser) {
 }
 
 testIntegratedAnswerer(explicitAnswerer, createParser(semppl.fixedGrammar, {}))
+testIntegratedAnswerer(pragmaticAnswerer, createParser(semppl.fixedGrammar, {}))
