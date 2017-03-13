@@ -41,10 +41,8 @@ function lift(func, liftLeft, liftRight) {
     
 
 module.exports = {
-    entity: function(x) {
-        // Just a constant function for a rigid designator. Ignores theta and context.
-        return _.constant(_.constant(x));
-    },
+    // Lifted: type (e -> t) -> t
+    entity: name => params => context => pred => pred(name),
 
     predicate: function(name) {
         return _.constant(function(context) {

@@ -75,7 +75,7 @@ exports.ambiguousGrammar = flattenAndIndexify([
 	{
 		LHS: "$S",
 		RHS: "$NP $VP",
-		sem: semFuncs.backApply
+		sem: semFuncs.fwdApply
 	},
 	{
 		LHS: "$VP",
@@ -199,7 +199,7 @@ exports.fixedGrammar = indexify([
 	{
 		LHS: "$S",
 		RHS: "$NP $VP",
-		sem: semFuncs.backApply
+		sem: semFuncs.fwdApply
 	},
 	{
 		LHS: "$VP",
