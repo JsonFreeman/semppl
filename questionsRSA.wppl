@@ -192,7 +192,8 @@ var testSimilarityFunction = function() {
 
 var testIntegratedAnswerer = function(answerer, parser) {
     var questions = ["Who is a doctor", "Who is a teacher", "Who is a fisherman"];
-    var answers = ["John is a doctor", "John is a teacher", "John is a fisherman"]
+    var answers = ["John is a doctor", "John is a teacher", "John is a fisherman",
+                   "John and Mary is a doctor", "John and Mary is a teacher", "John and Mary is a fisherman"]
     var worlds = [  { domain: ["john", "mary"], facts: { doctor: ["john"], teacher: [], fisherman: []}},
                     { domain: ["john", "mary"], facts: { doctor: [], teacher: ["john"], fisherman: []}},
                     { domain: ["john", "mary"], facts: { doctor: [], teacher: [], fisherman: ["john"]}},

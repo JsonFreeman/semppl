@@ -228,6 +228,11 @@ exports.fixedGrammar = indexify([
 	},
 	{
 		LHS: "$NP",
+		RHS: "Mary",
+		sem: semFuncs.entity("mary")
+	},
+	{
+		LHS: "$NP",
 		RHS: "Oak",
 		sem: semFuncs.entity("oak")
 	},
