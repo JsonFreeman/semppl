@@ -279,6 +279,16 @@ exports.fixedGrammar = indexify([
 		sem: semFuncs.liftRight(semFuncs.fwdApply)
 	},
 	{
+		LHS: "$NP",
+		RHS: "$NP $ConjNP",
+		sem: semFuncs.liftBoth(semFuncs.backApply)
+	},
+	{
+		LHS: "$ConjNP",
+		RHS: "$CONJ $NP",
+		sem: semFuncs.liftRight(semFuncs.fwdApply)
+	},
+	{
 		LHS: "$CONJ",
 		RHS: "and",
 		sem: semFuncs.combinePropositions(ad.scalar.mul)
