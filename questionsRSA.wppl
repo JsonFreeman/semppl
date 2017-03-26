@@ -77,12 +77,16 @@ var answerQualityForQud = function(worldPrior, answer, qud, trueWorld, parser) {
     return marginalize(consistentWorlds, qud).score(qud(trueWorld));
 }
 
+var costFn = constF(1);
+
+var sampleUtterance = function(utterances) {
+    return categorical(map(costFn, utterances), utterances);
+}
+
 var createModel = function(questions, answers) {
-    var informationGain = function(questionPrior, worldPrior, answerPrior, question,
-                                qudCandidates, qudFn, trueWorld, answerer, rationality, parser) {
+    var informationGain = function(worldPrior, question, qudCandidates, qudFn, trueWorld, answerer, rationality, parser) {
         var prior = marginalize(worldPrior, qudFn);
-        var answerDist = answerer(questionPrior, answerPrior, worldPrior, qudCandidates,
-                                question, trueWorld, rationality, parser);
+        var answerDist = answerer(worldPrior, qudCandidates, question, trueWorld, rationality, parser);
         var posterior = Infer({method: 'enumerate'}, function() {
             var answer = sample(answerDist);
             var world = sample(interpretAnswer(worldPrior, answer, parser));
@@ -92,11 +96,10 @@ var createModel = function(questions, answers) {
         return KL(posterior, prior);
     }
 
-    var explicitAnswerer = function(questionPrior, answerPrior, worldPrior, qudCandidates, 
-                                    question, trueWorld, rationality, parser) {
+    var explicitAnswerer = function(worldPrior, qudCandidates, question, trueWorld, rationality, parser) {
         var questionMeaning = parser(question, 0, questionStartSymbol);
         return Infer({method: 'enumerate'}, function() {
-            var answer = sample(answerPrior);
+            var answer = sampleUtterance(answers);
             var answerMeaning = parser(answer, 0, answerStartSymbol);
             factor(Math.log(answerMeaning(trueWorld)) * rationality);
             factor(answerQualityForQuestion(worldPrior, answer, questionMeaning, trueWorld, parser)
@@ -106,12 +109,12 @@ var createModel = function(questions, answers) {
     }
 
     var questioner = function(answerer) {
-        return function(questionPrior, answerPrior, worldPrior, qudFn, qudCandidates, rationality, parser) {
+        return function(worldPrior, qudFn, qudCandidates, rationality, parser) {
             return Infer({method: 'enumerate'}, function() {
-                var question = sample(questionPrior);
+                var question = sampleUtterance(questions);
                 var expectedInformationGain = expectation(worldPrior, function(world) {
-                    return informationGain(questionPrior, worldPrior, answerPrior, question,
-                        qudCandidates, qudFn, world, answerer, rationality, parser);
+                    return informationGain(worldPrior, question, qudCandidates, qudFn, 
+                                           world, answerer, rationality, parser);
                 });
                 factor(expectedInformationGain * rationality);
                 return question;
@@ -119,13 +122,12 @@ var createModel = function(questions, answers) {
         }
     }
 
-    var pragmaticAnswerer = function(questionPrior, answerPrior, worldPrior, qudCandidates,
-                                    question, trueWorld, rationality, parser) {
+    var pragmaticAnswerer = function(worldPrior, qudCandidates, question, trueWorld, rationality, parser) {
         var explicitQuestioner = questioner(explicitAnswerer);
         return Infer({method: 'enumerate'}, function() {
             var qud = uniformDraw(qudCandidates);
-            var questionDist = explicitQuestioner(questionPrior, answerPrior, worldPrior, qud, qudCandidates, rationality, parser);
-            var answer = sample(answerPrior);
+            var questionDist = explicitQuestioner(worldPrior, qud, qudCandidates, rationality, parser);
+            var answer = sampleUtterance(answers);
             factor((questionDist.score(question)
                     + answerQualityForQud(worldPrior, answer, qud, trueWorld, parser))
                     * rationality);
