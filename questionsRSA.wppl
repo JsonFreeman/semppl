@@ -83,10 +83,10 @@ var sampleUtterance = function(utterances) {
     return categorical(map(costFn, utterances), utterances);
 }
 
-var createModel = function(questions, answers) {
-    var informationGain = function(worldPrior, question, qudCandidates, qudFn, trueWorld, answerer, rationality, parser) {
+var createModel = function(questions, answers, rationality, parser) {
+    var informationGain = function(worldPrior, question, qudCandidates, qudFn, trueWorld, answerer) {
         var prior = marginalize(worldPrior, qudFn);
-        var answerDist = answerer(worldPrior, qudCandidates, question, trueWorld, rationality, parser);
+        var answerDist = answerer(worldPrior, qudCandidates, question, trueWorld);
         var posterior = Infer({method: 'enumerate'}, function() {
             var answer = sample(answerDist);
             var world = sample(interpretAnswer(worldPrior, answer, parser));
@@ -96,7 +96,7 @@ var createModel = function(questions, answers) {
         return KL(posterior, prior);
     }
 
-    var explicitAnswerer = function(worldPrior, qudCandidates, question, trueWorld, rationality, parser) {
+    var explicitAnswerer = function(worldPrior, qudCandidates, question, trueWorld) {
         var questionMeaning = parser(question, 0, questionStartSymbol);
         return Infer({method: 'enumerate'}, function() {
             var answer = sampleUtterance(answers);
@@ -109,12 +109,11 @@ var createModel = function(questions, answers) {
     }
 
     var questioner = function(answerer) {
-        return function(worldPrior, qudFn, qudCandidates, rationality, parser) {
+        return function(worldPrior, qudFn, qudCandidates) {
             return Infer({method: 'enumerate'}, function() {
                 var question = sampleUtterance(questions);
                 var expectedInformationGain = expectation(worldPrior, function(world) {
-                    return informationGain(worldPrior, question, qudCandidates, qudFn, 
-                                           world, answerer, rationality, parser);
+                    return informationGain(worldPrior, question, qudCandidates, qudFn, world, answerer);
                 });
                 factor(expectedInformationGain * rationality);
                 return question;
@@ -122,11 +121,11 @@ var createModel = function(questions, answers) {
         }
     }
 
-    var pragmaticAnswerer = function(worldPrior, qudCandidates, question, trueWorld, rationality, parser) {
+    var pragmaticAnswerer = function(worldPrior, qudCandidates, question, trueWorld) {
         var explicitQuestioner = questioner(explicitAnswerer);
         return Infer({method: 'enumerate'}, function() {
             var qud = uniformDraw(qudCandidates);
-            var questionDist = explicitQuestioner(worldPrior, qud, qudCandidates, rationality, parser);
+            var questionDist = explicitQuestioner(worldPrior, qud, qudCandidates);
             var answer = sampleUtterance(answers);
             factor((questionDist.score(question)
                     + answerQualityForQud(worldPrior, answer, qud, trueWorld, parser))
