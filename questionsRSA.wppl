@@ -134,38 +134,22 @@ var createModel = function(questions, answers, rationality, parser) {
         });
     }
 
+    var explicitQuestioner = questioner(explicitAnswerer);
     var pragmaticQuestioner = questioner(pragmaticAnswerer);
+
+    return { Q1: explicitQuestioner, A1: explicitAnswerer, Q2: pragmaticQuestioner, A2: pragmaticAnswerer };
 }
 // Testing
-
-var testAnswerer = function(answerer) {
-    var questions = ["=0?", "=1?", "=2?"];
-    var answers = ["=0", "=1", "=2"]
-    var worlds = map(function(w) { extend(w, { domain: [true, false] }) }, [{ x: 0 }, { x: 1 }, { x: 2 }]);
-    var trueWorld = worlds[2];
-    var question = questions[1];
-    var qudCandidates = [function (w) { return w.x > 0 }, function (w) { return w.x === 1 }, function (w) { return w.x === 2 }]
-    display(answerer(
-        Categorical({vs: questions, ps: repeat(questions.length, constF(1))}),
-        Categorical({vs: answers, ps: repeat(answers.length, constF(1))}),
-        Categorical({vs: worlds, ps: repeat(worlds.length, constF(1))}),
-        qudCandidates, question, trueWorld, 1, /*parser*/ null)) // Use dummyParse
-}
-
-// testAnswerer(explicitAnswerer);
-// testAnswerer(pragmaticAnswerer);
 
 var testExplicitQuestioner = function() {
     var questions = [">0?", "=1?"];
     var answers = [">0", "=0", "=1", "!=1"]
     var worlds = [{ x: 0 }, { x: 1 }, { x: 2 }];
-    var explicitQuestioner = questioner(explicitAnswerer);
     var qudCandidates = [function (w) { return w.x > 0 }, function (w) { return w.x === 1 }, idF]
+    var explicitQuestioner = createModel(questions, answers, 1, null).Q1; // Use dummyParse
     display(explicitQuestioner(
-        Categorical({vs: questions, ps: repeat(questions.length, constF(1))}), 
-        Categorical({vs: answers, ps: repeat(answers.length, constF(1))}),
         Categorical({vs: worlds, ps: repeat(worlds.length, constF(1))}),
-        qudCandidates[3], qudCandidates, 1, /*parser*/ null)) // Use dummyParse
+        qudCandidates[2], qudCandidates))
 }
 
 // testExplicitQuestioner();
@@ -191,26 +175,28 @@ var testSimilarityFunction = function() {
 }
 
 // testSimilarityFunction();
-
-var testIntegratedAnswerer = function(answerer, parser) {
-    var questions = ["Who is a doctor", "Who is a teacher", "Who is a fisherman"];
+var testIntegratedAnswerers = function() {
+    var questions = ["Who is a doctor", "Who is a teacher", "Who is a fisherman"]
     var answers = ["John is a doctor", "John is a teacher", "John is a fisherman",
-                   "John and Mary is a doctor", "John and Mary is a teacher", "John and Mary is a fisherman"]
-    var worlds = [  { domain: ["john", "mary"], facts: { doctor: ["john"], teacher: [], fisherman: []}},
-                    { domain: ["john", "mary"], facts: { doctor: [], teacher: ["john"], fisherman: []}},
-                    { domain: ["john", "mary"], facts: { doctor: [], teacher: [], fisherman: ["john"]}},
-                    { domain: ["john", "mary"], facts: { doctor: ["john", "mary"], teacher: [], fisherman: []}},
-                    { domain: ["john", "mary"], facts: { doctor: [], teacher: ["john", "mary"], fisherman: []}},
-                    { domain: ["john", "mary"], facts: { doctor: [], teacher: [], fisherman: ["john", "mary"]}},]
-    var trueWorld = worlds[2];
-    var question = questions[1];
-    var qudCandidates = [function(w) { w.facts.teacher }]
-    display(answerer(
-        Categorical({vs: questions, ps: repeat(questions.length, constF(1))}),
-        Categorical({vs: answers, ps: repeat(answers.length, constF(1))}),
-        Categorical({vs: worlds, ps: repeat(worlds.length, constF(1))}),
-        qudCandidates, question, trueWorld, 1, parser))
+                      "John and Mary is a doctor", "John and Mary is a teacher", "John and Mary is a fisherman"]
+    var testIntegratedAnswerer = function(answerer) {
+        var worlds = [  { domain: ["john", "mary"], facts: { doctor: ["john"], teacher: [], fisherman: []}},
+                        { domain: ["john", "mary"], facts: { doctor: [], teacher: ["john"], fisherman: []}},
+                        { domain: ["john", "mary"], facts: { doctor: [], teacher: [], fisherman: ["john"]}},
+                        { domain: ["john", "mary"], facts: { doctor: ["john", "mary"], teacher: [], fisherman: []}},
+                        { domain: ["john", "mary"], facts: { doctor: [], teacher: ["john", "mary"], fisherman: []}},
+                        { domain: ["john", "mary"], facts: { doctor: [], teacher: [], fisherman: ["john", "mary"]}},]
+        var trueWorld = worlds[2];
+        var question = questions[1];
+        var qudCandidates = [function(w) { w.facts.teacher }]
+        display(answerer(
+            Categorical({vs: worlds, ps: repeat(worlds.length, constF(1))}),
+            qudCandidates, question, trueWorld))
+    }
+
+    var model = createModel(questions, answers, 1, createParser(semppl.fixedGrammar, {}))
+    testIntegratedAnswerer(model.A1)
+    testIntegratedAnswerer(model.A2)
 }
 
-testIntegratedAnswerer(explicitAnswerer, createParser(semppl.fixedGrammar, {}))
-testIntegratedAnswerer(pragmaticAnswerer, createParser(semppl.fixedGrammar, {}))
+testIntegratedAnswerers();
