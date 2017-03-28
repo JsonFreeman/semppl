@@ -83,10 +83,10 @@ var sampleUtterance = function(utterances) {
     return categorical(map(costFn, utterances), utterances);
 }
 
-var createModel = function(questions, answers, rationality, parser) {
-    var informationGain = function(worldPrior, question, qudCandidates, qudFn, trueWorld, answerer) {
+var createModel = function(questions, answers, worldPrior, qudCandidates, rationality, parser) {
+    var informationGain = function(question, qudFn, trueWorld, answerer) {
         var prior = marginalize(worldPrior, qudFn);
-        var answerDist = answerer(worldPrior, qudCandidates, question, trueWorld);
+        var answerDist = answerer(question, trueWorld);
         var posterior = Infer({method: 'enumerate'}, function() {
             var answer = sample(answerDist);
             var world = sample(interpretAnswer(worldPrior, answer, parser));
@@ -96,7 +96,7 @@ var createModel = function(questions, answers, rationality, parser) {
         return KL(posterior, prior);
     }
 
-    var explicitAnswerer = function(worldPrior, qudCandidates, question, trueWorld) {
+    var explicitAnswerer = function(question, trueWorld) {
         var questionMeaning = parser(question, 0, questionStartSymbol);
         return Infer({method: 'enumerate'}, function() {
             var answer = sampleUtterance(answers);
@@ -109,11 +109,11 @@ var createModel = function(questions, answers, rationality, parser) {
     }
 
     var questioner = function(answerer) {
-        return function(worldPrior, qudFn, qudCandidates) {
+        return function(qudFn) {
             return Infer({method: 'enumerate'}, function() {
                 var question = sampleUtterance(questions);
                 var expectedInformationGain = expectation(worldPrior, function(world) {
-                    return informationGain(worldPrior, question, qudCandidates, qudFn, world, answerer);
+                    return informationGain(question, qudFn, world, answerer);
                 });
                 factor(expectedInformationGain * rationality);
                 return question;
@@ -121,11 +121,11 @@ var createModel = function(questions, answers, rationality, parser) {
         }
     }
 
-    var pragmaticAnswerer = function(worldPrior, qudCandidates, question, trueWorld) {
+    var pragmaticAnswerer = function(question, trueWorld) {
         var explicitQuestioner = questioner(explicitAnswerer);
         return Infer({method: 'enumerate'}, function() {
             var qud = uniformDraw(qudCandidates);
-            var questionDist = explicitQuestioner(worldPrior, qud, qudCandidates);
+            var questionDist = explicitQuestioner(qud);
             var answer = sampleUtterance(answers);
             factor((questionDist.score(question)
                     + answerQualityForQud(worldPrior, answer, qud, trueWorld, parser))
@@ -179,22 +179,21 @@ var testIntegratedAnswerers = function() {
     var questions = ["Who is a doctor", "Who is a teacher", "Who is a fisherman"]
     var answers = ["John is a doctor", "John is a teacher", "John is a fisherman",
                       "John and Mary is a doctor", "John and Mary is a teacher", "John and Mary is a fisherman"]
+    var worlds = [  { domain: ["john", "mary"], facts: { doctor: ["john"], teacher: [], fisherman: []}},
+                    { domain: ["john", "mary"], facts: { doctor: [], teacher: ["john"], fisherman: []}},
+                    { domain: ["john", "mary"], facts: { doctor: [], teacher: [], fisherman: ["john"]}},
+                    { domain: ["john", "mary"], facts: { doctor: ["john", "mary"], teacher: [], fisherman: []}},
+                    { domain: ["john", "mary"], facts: { doctor: [], teacher: ["john", "mary"], fisherman: []}},
+                    { domain: ["john", "mary"], facts: { doctor: [], teacher: [], fisherman: ["john", "mary"]}},]
+    var qudCandidates = [function(w) { w.facts.teacher }]
     var testIntegratedAnswerer = function(answerer) {
-        var worlds = [  { domain: ["john", "mary"], facts: { doctor: ["john"], teacher: [], fisherman: []}},
-                        { domain: ["john", "mary"], facts: { doctor: [], teacher: ["john"], fisherman: []}},
-                        { domain: ["john", "mary"], facts: { doctor: [], teacher: [], fisherman: ["john"]}},
-                        { domain: ["john", "mary"], facts: { doctor: ["john", "mary"], teacher: [], fisherman: []}},
-                        { domain: ["john", "mary"], facts: { doctor: [], teacher: ["john", "mary"], fisherman: []}},
-                        { domain: ["john", "mary"], facts: { doctor: [], teacher: [], fisherman: ["john", "mary"]}},]
         var trueWorld = worlds[2];
         var question = questions[1];
-        var qudCandidates = [function(w) { w.facts.teacher }]
-        display(answerer(
-            Categorical({vs: worlds, ps: repeat(worlds.length, constF(1))}),
-            qudCandidates, question, trueWorld))
+        display(answerer(question, trueWorld))
     }
 
-    var model = createModel(questions, answers, 1, createParser(semppl.fixedGrammar, {}))
+    var model = createModel(questions, answers, Categorical({vs: worlds, ps: repeat(worlds.length, constF(1))}),
+                            qudCandidates, 1, createParser(semppl.fixedGrammar, {}))
     testIntegratedAnswerer(model.A1)
     testIntegratedAnswerer(model.A2)
 }
