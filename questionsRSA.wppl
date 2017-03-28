@@ -84,60 +84,62 @@ var sampleUtterance = function(utterances) {
 }
 
 var createModel = function(questions, answers, worldPrior, qudCandidates, rationality, parser) {
-    var informationGain = function(question, qudFn, trueWorld, answerer) {
-        var prior = marginalize(worldPrior, qudFn);
-        var answerDist = answerer(question, trueWorld);
-        var posterior = Infer({method: 'enumerate'}, function() {
-            var answer = sample(answerDist);
-            var world = sample(interpretAnswer(worldPrior, answer, parser));
-            return qudFn(world);
-        });
+    return function() {
+        var informationGain = function(question, qudFn, trueWorld, answerer) {
+            var prior = marginalize(worldPrior, qudFn);
+            var answerDist = answerer(question, trueWorld);
+            var posterior = Infer({method: 'enumerate'}, function() {
+                var answer = sample(answerDist);
+                var world = sample(interpretAnswer(worldPrior, answer, parser));
+                return qudFn(world);
+            });
 
-        return KL(posterior, prior);
-    }
+            return KL(posterior, prior);
+        }
 
-    var explicitAnswerer = function(question, trueWorld) {
-        var questionMeaning = parser(question, 0, questionStartSymbol);
-        return Infer({method: 'enumerate'}, function() {
-            var answer = sampleUtterance(answers);
-            var answerMeaning = parser(answer, 0, answerStartSymbol);
-            factor(Math.log(answerMeaning(trueWorld)) * rationality);
-            factor(answerQualityForQuestion(worldPrior, answer, questionMeaning, trueWorld, parser)
-                * rationality);
-            return answer;
-        })
-    }
-
-    var questioner = function(answerer) {
-        return function(qudFn) {
+        var explicitAnswerer = function(question, trueWorld) {
+            var questionMeaning = parser(question, 0, questionStartSymbol);
             return Infer({method: 'enumerate'}, function() {
-                var question = sampleUtterance(questions);
-                var expectedInformationGain = expectation(worldPrior, function(world) {
-                    return informationGain(question, qudFn, world, answerer);
+                var answer = sampleUtterance(answers);
+                var answerMeaning = parser(answer, 0, answerStartSymbol);
+                factor(Math.log(answerMeaning(trueWorld)) * rationality);
+                factor(answerQualityForQuestion(worldPrior, answer, questionMeaning, trueWorld, parser)
+                    * rationality);
+                return answer;
+            })
+        }
+
+        var questioner = function(answerer) {
+            return function(qudFn) {
+                return Infer({method: 'enumerate'}, function() {
+                    var question = sampleUtterance(questions);
+                    var expectedInformationGain = expectation(worldPrior, function(world) {
+                        return informationGain(question, qudFn, world, answerer);
+                    });
+                    factor(expectedInformationGain * rationality);
+                    return question;
                 });
-                factor(expectedInformationGain * rationality);
-                return question;
+            }
+        }
+
+        var pragmaticAnswerer = function(question, trueWorld) {
+            var explicitQuestioner = questioner(explicitAnswerer);
+            return Infer({method: 'enumerate'}, function() {
+                var qud = uniformDraw(qudCandidates);
+                var questionDist = explicitQuestioner(qud);
+                var answer = sampleUtterance(answers);
+                factor((questionDist.score(question)
+                        + answerQualityForQud(worldPrior, answer, qud, trueWorld, parser))
+                        * rationality);
+                return answer;
             });
         }
-    }
 
-    var pragmaticAnswerer = function(question, trueWorld) {
         var explicitQuestioner = questioner(explicitAnswerer);
-        return Infer({method: 'enumerate'}, function() {
-            var qud = uniformDraw(qudCandidates);
-            var questionDist = explicitQuestioner(qud);
-            var answer = sampleUtterance(answers);
-            factor((questionDist.score(question)
-                    + answerQualityForQud(worldPrior, answer, qud, trueWorld, parser))
-                    * rationality);
-            return answer;
-        });
+        var pragmaticQuestioner = questioner(pragmaticAnswerer);
+
+        return { Q1: explicitQuestioner, A1: explicitAnswerer, Q2: pragmaticQuestioner, A2: pragmaticAnswerer };
     }
-
-    var explicitQuestioner = questioner(explicitAnswerer);
-    var pragmaticQuestioner = questioner(pragmaticAnswerer);
-
-    return { Q1: explicitQuestioner, A1: explicitAnswerer, Q2: pragmaticQuestioner, A2: pragmaticAnswerer };
 }
 // Testing
 
