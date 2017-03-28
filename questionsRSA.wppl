@@ -83,8 +83,11 @@ var sampleUtterance = function(utterances) {
     return categorical(map(costFn, utterances), utterances);
 }
 
-var createModel = function(questions, answers, worldPrior, qudCandidates, rationality, parser) {
-    return function() {
+var createModel = function(questions, answers, worldPrior, qudCandidates, rationality, grammar, predicates) {
+    // Allow runner to pass a pre-created parser in case it needs to test the function in isolation
+    return function(parser) {
+        var parser = parser || createParser(grammar, makeModelParams(grammar, predicates, /*hiddenSize*/ 10));
+
         var informationGain = function(question, qudFn, trueWorld, answerer) {
             var prior = marginalize(worldPrior, qudFn);
             var answerDist = answerer(question, trueWorld);
@@ -195,7 +198,7 @@ var testIntegratedAnswerers = function() {
     }
 
     var model = createModel(questions, answers, Categorical({vs: worlds, ps: repeat(worlds.length, constF(1))}),
-                            qudCandidates, 1, createParser(semppl.fixedGrammar, {}))()
+                            qudCandidates, 1, null, null)(createParser(semppl.fixedGrammar, []))
     testIntegratedAnswerer(model.A1)
     testIntegratedAnswerer(model.A2)
 }
