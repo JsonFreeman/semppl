@@ -150,16 +150,20 @@ var worldsFn = function (h, w) {
     };
 };
 
+var makeModelParams = function(grammar, predicates, hiddenSize) {
+    return {
+        parserWeights: createParserWeights(grammar),
+        networkParams: _.object(scalarPredicates, map(function (predicate) {
+            createNetworkParams(hiddenSize, predicates.length, predicate)
+        }, predicates))
+    };
+}
+
 var createModel = function (grammar, dataTriples) {
     return function () {
         var scalarPredicates = ['tall', 'heavy', 'man', 'building'];
 
-        var params = {
-            parserWeights: createParserWeights(grammar),
-            networkParams: _.object(scalarPredicates, map(function (predicate) {
-                createNetworkParams(10, scalarPredicates.length, predicate)
-            }, scalarPredicates))
-        };
+        var params = makeModelParams(grammar, scalarPredicates, /*hiddenSize*/ 10);
 
         var listener = listenerFn(grammar, params);
 
