@@ -199,9 +199,9 @@ var generateTrainingData = function(listOfLists, fn, numSamples) {
     return recursiveMap(listOfLists, fn, numSamples, []);
 }
 
-var train = function (dataPairs, iterations, formerTrainingResults) {
+var train = function (dataTuples, iterations, formerTrainingResults) {
     var trainingModel =
-        createModel(semppl.ambiguousGrammar, dataPairs);
+        createModel(semppl.ambiguousGrammar, dataTuples);
     return Optimize(trainingModel, {
         steps: iterations,
         estimator: { ELBO: { samples: 1 } },
