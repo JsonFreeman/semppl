@@ -195,7 +195,7 @@ var testIntegratedAnswerers = function() {
     }
 
     var model = createModel(questions, answers, Categorical({vs: worlds, ps: repeat(worlds.length, constF(1))}),
-                            qudCandidates, 1, createParser(semppl.fixedGrammar, {}))
+                            qudCandidates, 1, createParser(semppl.fixedGrammar, {}))()
     testIntegratedAnswerer(model.A1)
     testIntegratedAnswerer(model.A2)
 }
