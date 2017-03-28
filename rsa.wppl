@@ -181,15 +181,22 @@ var createModel = function (grammar, dataTriples) {
     };
 };
 
-var sampleGroundDistributions = function (utterances, contexts, numSamplesEach) {
-    var listener = listenerFn(semppl.fixedGrammar, {});
-    return _.flatten(map(function (u) {
-        return _.flatten(map(function (c) {
-            return repeat(numSamplesEach, function () {
-                return [sample(listener(u, c.thetaCandidates, c.worlds, c.utterances)), u, c];
-            });
-        }, contexts), /*shallow*/ true);
-    }, utterances), /*shallow*/ true);
+var generateTrainingData = function(listOfLists, fn, numSamples) {
+    var recursiveMap = function(listOfLists, fn, numSamples, args /* internal*/) {
+        if (listOfLists.length === 0) {
+            var resultDist = apply(fn, args);
+            return repeat(numSamples, function() {
+                return snoc(args, sample(resultDist));
+            })
+        }
+
+        var restEntries = rest(listOfLists);
+        return _.flatten(map(function(e) { 
+            recursiveMap(restEntries, fn, numSamples, snoc(args, e))
+        }, first(listOfLists)), /*shallow*/ true)
+    };
+    
+    return recursiveMap(listOfLists, fn, numSamples, []);
 }
 
 var train = function (dataPairs, iterations, formerTrainingResults) {

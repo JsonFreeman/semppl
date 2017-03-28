@@ -203,4 +203,24 @@ var testIntegratedAnswerers = function() {
     testIntegratedAnswerer(model.A2)
 }
 
-testIntegratedAnswerers();
+// testIntegratedAnswerers();
+
+var testGenerateData = function() {
+    var questions = ["Who is a doctor", "Who is a teacher", "Who is a fisherman"]
+    var answers = ["John is a doctor", "John is a teacher", "John is a fisherman",
+                      "John and Mary is a doctor", "John and Mary is a teacher", "John and Mary is a fisherman"]
+    var worlds = [  { domain: ["john", "mary"], facts: { doctor: ["john"], teacher: [], fisherman: []}},
+                    { domain: ["john", "mary"], facts: { doctor: [], teacher: ["john"], fisherman: []}},
+                    { domain: ["john", "mary"], facts: { doctor: [], teacher: [], fisherman: ["john"]}},
+                    { domain: ["john", "mary"], facts: { doctor: ["john", "mary"], teacher: [], fisherman: []}},
+                    { domain: ["john", "mary"], facts: { doctor: [], teacher: ["john", "mary"], fisherman: []}},
+                    { domain: ["john", "mary"], facts: { doctor: [], teacher: [], fisherman: ["john", "mary"]}},]
+    var qudCandidates = [function(w) { w.facts.teacher }];
+    var model = createModel(questions, answers, Categorical({ vs: worlds, ps: ones([worlds.length]).toFlatArray() }),
+        qudCandidates, 1, null, null)(createParser(semppl.fixedGrammar, []));
+    generateTrainingData([questions, answers, worlds, qudCandidates], function(q, a, w, qud) {
+        return apply(model.A1, [q, w]);
+    }, 5);
+}
+
+testGenerateData();
