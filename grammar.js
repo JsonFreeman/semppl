@@ -66,6 +66,14 @@ function makeBooleanPredicate(name, pos) {
     };
 }
 
+function makeNeuralBooleanPredicate(name, pos) {
+    return {
+        LHS: pos,
+        RHS: name,
+        sem: semFuncs.neuralBooleanPredicate(name)
+    };
+}
+
 exports.ambiguousGrammar = flattenAndIndexify([
 	{
 		LHS: "$S",
@@ -190,7 +198,7 @@ exports.ambiguousGrammar = flattenAndIndexify([
 ]);
 
 // Don't flatten. We don't want to have rules with multiple semantics
-exports.fixedGrammar = indexify([
+var baseGrammarUnindexed = [
 	{
 		LHS: "$S",
 		RHS: "null",
@@ -322,6 +330,9 @@ exports.fixedGrammar = indexify([
 		RHS: "not",
 		sem: semFuncs.negatePredicate
 	},
+];
+
+exports.fixedGrammar = indexify(baseGrammarUnindexed.concat([
     makeFixedScalarItemRule("tall", "height", "$ADJ"),
     makeFixedScalarItemRule("heavy", "weight", "$ADJ"),
     makeFixedDimensionScalarAntonymRule("short", "tall", "height", "$ADJ"),
@@ -329,4 +340,14 @@ exports.fixedGrammar = indexify([
 	makeBooleanPredicate("doctor", "$N"),
 	makeBooleanPredicate("teacher", "$N"),
 	makeBooleanPredicate("fisherman", "$N"),
-]);
+]));
+
+exports.neuralPredicateGrammar = indexify(baseGrammarUnindexed.concat([
+	makeNeuralScalarItemRule("tall", "$ADJ"),
+    makeNeuralScalarItemRule("heavy", "$ADJ"),
+    makeNeuralScalarAntonymRule("short", "tall", "$ADJ"),
+    makeNeuralScalarAntonymRule("light", "heavy", "$ADJ"),
+	makeNeuralBooleanPredicate("doctor", "$N"),
+	makeNeuralBooleanPredicate("teacher", "$N"),
+	makeNeuralBooleanPredicate("fisherman", "$N"),
+]))

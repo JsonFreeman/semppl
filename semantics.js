@@ -20,7 +20,7 @@ function entityVector(ent, context) {
     return makeVector(array);
 }
 
-function scalarDegree(ent, context, params) {
+function applyPredicateNetwork(ent, context, params) {
     return network(entityVector(ent, context), params.W, params.b);
 }
 
@@ -52,11 +52,22 @@ module.exports = {
         })
     },
 
+    neuralBooleanPredicate: function(predicateName) {
+        return function(params) {
+            return function(context) {
+                return function(ent) {
+                    var measurement = applyPredicateNetwork(ent, context, params.networkParams[predicateName]);
+                    return ad.scalar.sigmoid(measurement);
+                }
+            }
+        }
+    },
+
     neuralScalarPredicate: function(scaleName) {
         return function(params, theta) {
             return function(context) {
                 return function(ent) {
-                    var measurement = scalarDegree(ent, context, params.networkParams[scaleName]);
+                    var measurement = applyPredicateNetwork(ent, context, params.networkParams[scaleName]);
                     return ad.scalar.sigmoid(ad.scalar.sub(measurement, theta[scaleName] || 0));
                 }
             }
