@@ -75,7 +75,7 @@ var createParser = function (grammar, params) {
 }
 
 var createParserWeights = function (grammar) {
-    return _.object(map(function (entry) {
+    return _.fromPairs(map(function (entry) {
         var name = semppl.makeRuleKey(entry);
         return [
             name, // key
@@ -153,7 +153,7 @@ var worldsFn = function (h, w) {
 var makeModelParams = function(grammar, predicates, hiddenSize) {
     return {
         parserWeights: createParserWeights(grammar),
-        networkParams: _.object(scalarPredicates, map(function (predicate) {
+        networkParams: _.zipObject(predicates, map(function (predicate) {
             createNetworkParams(hiddenSize, predicates.length, predicate)
         }, predicates))
     };
