@@ -198,12 +198,15 @@ var testIntegratedAnswerers = function() {
     }
 
     var model = createModel(questions, answers, Categorical({vs: worlds, ps: repeat(worlds.length, constF(1))}),
-                            qudCandidates, 1, null, null)(createParser(semppl.fixedGrammar, []))
+                            qudCandidates, 1, null, null)(createParser(semppl.neuralPredicateGrammar, 
+                            sample(SampleGuide(function() { 
+                                makeModelParams(semppl.neuralPredicateGrammar, ['doctor', 'teacher', 'fisherman'], 5) 
+                            }))));
     testIntegratedAnswerer(model.A1)
     testIntegratedAnswerer(model.A2)
 }
 
-// testIntegratedAnswerers();
+testIntegratedAnswerers();
 
 var testGenerateData = function() {
     var questions = ["Who is a doctor", "Who is a teacher", "Who is a fisherman"]
@@ -223,4 +226,4 @@ var testGenerateData = function() {
     }, 5);
 }
 
-testGenerateData();
+// testGenerateData();
