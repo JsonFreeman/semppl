@@ -16,7 +16,11 @@ function makeVector(arr) {
 }
 
 function entityVector(ent, context) {
-    var array = _.values(context.facts).map(prop => +prop[ent]);
+    var array = _.values(context.facts).map(prop => {
+        // prop could either be an array that may contain ent
+        // or an object that contains ent as a key
+        return _.isArray(prop) ? +_.contains(prop, ent) : +prop[ent];
+    });
     return makeVector(array);
 }
 
