@@ -83,11 +83,16 @@ var sampleUtterance = function(utterances) {
     return categorical(map(costFn, utterances), utterances);
 }
 
-var createVariationalModel = function(questions, answers, worldPrior, qudCandidates, rationality, grammar, predicates) {
+var createVariationalModelThunk = function(questions, answers, worldPrior, qudCandidates, 
+                                      rationality, grammar, predicates, observationFn) {
     // Allow runner to pass a pre-created parser in case it needs to test the function in isolation
     return function() {
         var parser = createParser(grammar, makeModelParams(grammar, predicates, /*hiddenSize*/ 10));
-        return createModel(questions, answers, worldPrior, qudCandidates, rationality, parser);
+        var model = createModel(questions, answers, worldPrior, qudCandidates, rationality, parser);
+        if (observationFn) {
+            observationFn(model);
+        }
+        return model;
     }
 }
 
@@ -202,14 +207,14 @@ var testIntegratedAnswerers = function() {
     }
 
     var model = sample(SampleGuide(
-        createVariationalModel(questions, answers, 
+        createVariationalModelThunk(questions, answers, 
             Categorical({vs: worlds, ps: repeat(worlds.length, constF(1))}), qudCandidates, 1, 
             semppl.neuralPredicateGrammar, ['doctor', 'teacher', 'fisherman'])));
     testIntegratedAnswerer(model.A1)
     testIntegratedAnswerer(model.A2)
 }
 
-testIntegratedAnswerers();
+// testIntegratedAnswerers();
 
 var testGenerateData = function() {
     var questions = ["Who is a doctor", "Who is a teacher", "Who is a fisherman"]
@@ -229,4 +234,30 @@ var testGenerateData = function() {
     }, 5);
 }
 
-testGenerateData();
+// testGenerateData();
+
+var testOptimize = function() {
+    var questions = ["Who is a doctor", "Who is a teacher", "Who is a fisherman"]
+    var answers = ["John is a doctor", "John is a teacher", "John is a fisherman",
+                      "John and Mary is a doctor", "John and Mary is a teacher", "John and Mary is a fisherman"]
+    var worlds = [  { domain: ["john", "mary"], facts: { doctor: ["john"], teacher: [], fisherman: []}},
+                    { domain: ["john", "mary"], facts: { doctor: [], teacher: ["john"], fisherman: []}},
+                    { domain: ["john", "mary"], facts: { doctor: [], teacher: [], fisherman: ["john"]}},
+                    { domain: ["john", "mary"], facts: { doctor: ["john", "mary"], teacher: [], fisherman: []}},
+                    { domain: ["john", "mary"], facts: { doctor: [], teacher: ["john", "mary"], fisherman: []}},
+                    { domain: ["john", "mary"], facts: { doctor: [], teacher: [], fisherman: ["john", "mary"]}},]
+    var qudCandidates = [function(w) { w.facts.teacher }];
+    var data = repeat(100, function() {
+        return [questions[0], answers[0], worlds[0]];
+    })
+    var modelThunk = createVariationalModelThunk(questions, answers, Categorical({ vs: worlds, ps: ones([worlds.length]).toFlatArray() }),
+        qudCandidates, 1, semppl.neuralPredicateGrammar, ['doctor', 'teacher', 'fisherman'], function(model) {
+            mapData({ data: data, batchSize: 10 }, function(d) {
+                observe(apply(model.A1, [d[0], d[2]]), d[1]);
+            })
+        });
+    var model = sample(OptimizeThenSample(modelThunk, { optimizer: 'adam', steps: 10, estimator: 'ELBO' }));
+    apply(model.A1, [questions[0], worlds[0]]);
+}
+
+testOptimize();
