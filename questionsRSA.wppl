@@ -83,17 +83,16 @@ var sampleUtterance = function(utterances) {
     return categorical(map(costFn, utterances), utterances);
 }
 
-var createVariationalModelThunk = function(questions, answers, worldPrior, qudCandidates, 
-                                      rationality, grammar, predicates, observationFn) {
-    // Allow runner to pass a pre-created parser in case it needs to test the function in isolation
-    return function() {
+var createVariationalModel = function(questions, answers, worldPrior, qudCandidates, 
+                                      rationality, grammar, predicates, observationFn, opts) {
+    return sample(OptimizeThenSample(function() {
         var parser = createParser(grammar, makeModelParams(grammar, predicates, /*hiddenSize*/ 10));
         var model = createModel(questions, answers, worldPrior, qudCandidates, rationality, parser);
         if (observationFn) {
             observationFn(model);
         }
         return model;
-    }
+    }, opts));
 }
 
 var createModel = function(questions, answers, worldPrior, qudCandidates, rationality, parser) {
@@ -207,7 +206,7 @@ var testIntegratedAnswerers = function() {
     }
 
     var model = sample(SampleGuide(
-        createVariationalModelThunk(questions, answers, 
+        createVariationalModel(questions, answers, 
             Categorical({vs: worlds, ps: repeat(worlds.length, constF(1))}), qudCandidates, 1, 
             semppl.neuralPredicateGrammar, ['doctor', 'teacher', 'fisherman'])));
     testIntegratedAnswerer(model.A1)
@@ -250,13 +249,13 @@ var testOptimize = function() {
     var data = repeat(100, function() {
         return [questions[0], answers[0], worlds[0]];
     })
-    var modelThunk = createVariationalModelThunk(questions, answers, Categorical({ vs: worlds, ps: ones([worlds.length]).toFlatArray() }),
+    var model = createVariationalModel(questions, answers, Categorical({ vs: worlds, ps: ones([worlds.length]).toFlatArray() }),
         qudCandidates, 1, semppl.neuralPredicateGrammar, ['doctor', 'teacher', 'fisherman'], function(model) {
             mapData({ data: data, batchSize: 10 }, function(d) {
                 observe(apply(model.A1, [d[0], d[2]]), d[1]);
             })
-        });
-    var model = sample(OptimizeThenSample(modelThunk, { optimizer: 'adam', steps: 10, estimator: 'ELBO' }));
+        }, 
+        { optimizer: 'adam', steps: 10, estimator: 'ELBO' });
     apply(model.A1, [questions[0], worlds[0]]);
 }
 
