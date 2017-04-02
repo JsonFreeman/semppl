@@ -1,14 +1,3 @@
-/// <reference path="webppl.d.ts" />
-/// <reference types="underscore" />
-// webppl rsa.wppl --require .
-var cartesianProductMap = function (fn, arr1, arr2) {
-    return _.flatten(map(function (e1) {
-        return map(function (e2) {
-            return fn(e1, e2);
-        }, arr2);
-    }, arr1));
-}
-
 var featureFn = function (d) { return semppl.ruleFeatureFn(d); };
 var scoreFn = function (features, params) {
     return sum(_.values(mapObject(function (k, v) {
@@ -90,45 +79,6 @@ var getGrammarValues = function(params) {
     }, params)
 }
 
-var smoothingConstant = 1e-300;
-var literalListenerFn = function (grammar, params) {
-    var parse = createParser(grammar, params);
-    return cache(function (utterance, theta, worlds) {
-        Infer({ method: 'enumerate' }, function () {
-            var truthFn = parse(utterance, theta, "$S");
-            var world = uniformDraw(worlds);
-            var smoothedTruthValue = truthFn(world) + smoothingConstant;
-            factor(Math.log(smoothedTruthValue));
-            return world;
-        })
-    })
-}
-
-var speakerFn = function (grammar, params) {
-    var literalListener = literalListenerFn(grammar, params);
-    return cache(function (world, theta, worlds, utterances) {
-        Infer({ method: 'enumerate' }, function () {
-            var utterance = uniformDraw(utterances);
-            var L = literalListener(utterance, theta, worlds);
-            factor(L.score(world));
-            return utterance;
-        })
-    })
-}
-
-var listenerFn = function (grammar, params) {
-    var speaker = speakerFn(grammar, params);
-    return cache(function (utterance, thetaCandidates, worlds, utterances) {
-        Infer({ method: 'enumerate' }, function () {
-            var theta = uniformDraw(thetaCandidates);
-            var world = uniformDraw(worlds);
-            var S = speaker(world, theta, worlds, utterances);
-            factor(S.score(utterance));
-            return world;
-        })
-    })
-}
-
 var createNetworkParams = function (hiddenSize, inputSize, predicate) {
     var W0 = modelParam({ dims: [hiddenSize, inputSize], mu: 0, sigma: 0.1, name: predicate + "W0"})
     var W1 = modelParam({ dims: [1, hiddenSize], mu: 0, sigma: 0.1, name: predicate + "W1" })
@@ -138,18 +88,6 @@ var createNetworkParams = function (hiddenSize, inputSize, predicate) {
     return { W: [W0, W1], b: [b0, b1] };
 }
 
-var worldsFn = function (h, w) {
-    return {
-        facts: {
-            height: { john: h, gates: h },
-            weight: { john: w, gates: w },
-            man: { john: true, gates: false },
-            building: { john: false, gates: true },
-        },
-        domain: ["john", "gates"]
-    };
-};
-
 var makeModelParams = function(grammar, predicates, hiddenSize) {
     return {
         parserWeights: createParserWeights(grammar),
@@ -158,28 +96,6 @@ var makeModelParams = function(grammar, predicates, hiddenSize) {
         }, predicates))
     };
 }
-
-var createModel = function (grammar, dataTriples) {
-    return function () {
-        var scalarPredicates = ['tall', 'heavy', 'man', 'building'];
-
-        var params = makeModelParams(grammar, scalarPredicates, /*hiddenSize*/ 10);
-
-        var listener = listenerFn(grammar, params);
-
-        if (dataTriples) {
-            mapData({ data: dataTriples, batchSize: dataTriples.length / 5 }, function (example) {
-                var world = example[0];
-                var utterance = example[1];
-                var context = example[2];
-                var distribution = listener(utterance, context.thetaCandidates, context.worlds, context.utterances);
-                observe(distribution, world);
-            });
-        }
-
-        return listener;
-    };
-};
 
 var generateTrainingData = function(listOfLists, fn, numSamples) {
     var recursiveMap = function(listOfLists, fn, numSamples, args /* internal*/) {
@@ -197,29 +113,4 @@ var generateTrainingData = function(listOfLists, fn, numSamples) {
     };
     
     return recursiveMap(listOfLists, fn, numSamples, []);
-}
-
-var train = function (dataTuples, iterations, formerTrainingResults) {
-    var trainingModel =
-        createModel(semppl.ambiguousGrammar, dataTuples);
-    return Optimize(trainingModel, {
-        steps: iterations,
-        estimator: { ELBO: { samples: 1 } },
-        params: formerTrainingResults
-    });
-};
-
-var test = function (utterance, context, trainingResults) {
-    // Ensure the utterances are in the context
-    var newContext = _.create(context, {
-        utterances: _.uniq(context.utterances.concat([utterance]))
-    })
-    display("utterance: " + utterance)
-    // display("Ground truth")
-    // var groundTruthListener = listenerFn(semppl.fixedGrammar, {});
-    // display(groundTruthListener(utterance, newContext.thetaCandidates, newContext.worlds, newContext.utterances))
-    var testModel = createModel(semppl.ambiguousGrammar, null);
-    var listener = sample(SampleGuide(testModel, { params: trainingResults }));
-    // display("Result")
-    display(listener(utterance, newContext.thetaCandidates, newContext.worlds, newContext.utterances))
 }
