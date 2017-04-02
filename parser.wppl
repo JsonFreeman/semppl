@@ -73,12 +73,6 @@ var createParserWeights = function (grammar) {
     }, grammar));
 };
 
-var getGrammarValues = function(params) {
-    return mapObject(function(k, v) {
-        return v[0].data[0];
-    }, params)
-}
-
 var createNetworkParams = function (hiddenSize, inputSize, predicate) {
     var W0 = modelParam({ dims: [hiddenSize, inputSize], mu: 0, sigma: 0.1, name: predicate + "W0"})
     var W1 = modelParam({ dims: [1, hiddenSize], mu: 0, sigma: 0.1, name: predicate + "W1" })
