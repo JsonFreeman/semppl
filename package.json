@@ -21,6 +21,6 @@
     "underscore": "^1.8.3"
   },
   "webppl": {
-    "wppl": ["rsa.wppl"]
+    "wppl": ["parser.wppl", "rsa.wppl", "questionsRSA.wppl"]
   }
 }
