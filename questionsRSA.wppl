@@ -259,4 +259,4 @@ var testOptimize = function() {
     apply(model.A1, [questions[0], worlds[0]]);
 }
 
-testOptimize();
+// testOptimize();
