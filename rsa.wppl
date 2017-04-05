@@ -1,0 +1,38 @@
+var smoothingConstant = 1e-300;
+var literalListenerFn = function (grammar, params) {
+    var parse = createParser(grammar, params);
+    return cache(function (utterance, theta, worlds) {
+        Infer({ method: 'enumerate' }, function () {
+            var truthFn = parse(utterance, theta, "$S");
+            var world = uniformDraw(worlds);
+            var smoothedTruthValue = truthFn(world) + smoothingConstant;
+            factor(Math.log(smoothedTruthValue));
+            return world;
+        })
+    })
+}
+
+var speakerFn = function (grammar, params) {
+    var literalListener = literalListenerFn(grammar, params);
+    return cache(function (world, theta, worlds, utterances) {
+        Infer({ method: 'enumerate' }, function () {
+            var utterance = uniformDraw(utterances);
+            var L = literalListener(utterance, theta, worlds);
+            factor(L.score(world));
+            return utterance;
+        })
+    })
+}
+
+var listenerFn = function (grammar, params) {
+    var speaker = speakerFn(grammar, params);
+    return cache(function (utterance, thetaCandidates, worlds, utterances) {
+        Infer({ method: 'enumerate' }, function () {
+            var theta = uniformDraw(thetaCandidates);
+            var world = uniformDraw(worlds);
+            var S = speaker(world, theta, worlds, utterances);
+            factor(S.score(utterance));
+            return world;
+        })
+    })
+}
