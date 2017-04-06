@@ -121,11 +121,11 @@ var createModel = function(questions, answers, worldPrior, qudCandidates, ration
     }
 
     var questioner = function(answerer) {
-        return function(qudFn) {
+        return function(qudIndex) {
             return Infer({method: 'enumerate'}, function() {
                 var question = sampleUtterance(questions);
                 var expectedInformationGain = expectation(worldPrior, function(world) {
-                    return informationGain(question, qudFn, world, answerer);
+                    return informationGain(question, qudCandidates[qudIndex], world, answerer);
                 });
                 factor(expectedInformationGain * rationality);
                 return question;
