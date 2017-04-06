@@ -108,3 +108,15 @@ var generateTrainingData = function(listOfLists, fn, numSamples) {
     
     return recursiveMap(listOfLists, fn, numSamples, []);
 }
+
+var computeAndWriteResults = function(filename, queryAndModelPairs) {
+    var results = map(function(queryAndModel) {
+        return {
+            query: queryAndModel.query,
+            result: apply(queryAndModel.model, queryAndModel.query)
+        }
+    }, queryAndModelPairs);
+
+    json.write(filename, results);
+    return results;
+}
