@@ -18,9 +18,14 @@
   "homepage": "https://github.com/JsonFreeman/semppl#readme",
   "dependencies": {
     "adnn": "^1.1.6",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "webppl-json": "0.0.1"
   },
   "webppl": {
-    "wppl": ["parser.wppl", "rsa.wppl", "questionsRSA.wppl"]
+    "wppl": [
+      "parser.wppl",
+      "rsa.wppl",
+      "questionsRSA.wppl"
+    ]
   }
 }
