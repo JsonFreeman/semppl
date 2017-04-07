@@ -109,6 +109,12 @@ var generateTrainingData = function(listOfLists, fn, numSamples) {
     return recursiveMap(listOfLists, fn, numSamples, []);
 }
 
+var generateAndWriteTrainingData = function(filename, listOfLists, fn, numSamples) {
+    var data = generateTrainingData(listOfLists, fn, numSamples);
+    json.write('qaData/' + filename + '-data.json', data);
+    return data;
+}
+
 var computeAndWriteResults = function(filename, queryAndModelPairs) {
     var results = map(function(queryAndModel) {
         return {
@@ -117,6 +123,6 @@ var computeAndWriteResults = function(filename, queryAndModelPairs) {
         }
     }, queryAndModelPairs);
 
-    json.write(filename, results);
+    json.write('qaExperimentsOutput/' + filename + '-results.json', results);
     return results;
 }

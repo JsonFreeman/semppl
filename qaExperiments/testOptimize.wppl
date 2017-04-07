@@ -1,3 +1,4 @@
+var testName = "testOptimize";
 var questions = ["Who is a doctor", "Who is a teacher", "Who is a fisherman"]
 var answers = ["John is a doctor", "John is a teacher", "John is a fisherman",
                     "John and Mary is a doctor", "John and Mary is a teacher", "John and Mary is a fisherman"]
@@ -13,10 +14,10 @@ var qudCandidatesRange = _.range(qudCandidates.length);
 var generateDataModel = createModel(questions, answers, Categorical({ vs: worlds, ps: ones([worlds.length]).toFlatArray() }),
                                     qudCandidates, 1, createParser(semppl.fixedGrammar, []))
 
-var data = generateTrainingData([questions, answers, worlds, qudCandidatesRange], function(q, a, w, qudIndex) {
-    return apply(generateDataModel.A1, [q, w]);
-}, 5);
-json.write('testOptimize-data.json', data)
+var data = generateAndWriteTrainingData(testName, [questions, answers, worlds, qudCandidatesRange], 
+    function(q, a, w, qudIndex) {
+        return apply(generateDataModel.A1, [q, w]);
+    }, 5);
 
 var model = createVariationalModel(questions, answers, Categorical({ vs: worlds, ps: ones([worlds.length]).toFlatArray() }),
     qudCandidates, 1, semppl.neuralPredicateGrammar, ['doctor', 'teacher', 'fisherman'], function(model) {
@@ -30,7 +31,7 @@ var model = createVariationalModel(questions, answers, Categorical({ vs: worlds,
       checkGradients: false, 
       checkpointParams: true });
 
-computeAndWriteResults('testOptimize-results.json', [
+computeAndWriteResults(testName, [
     { model: model.A1, query: [questions[0], worlds[0], /*qudIndex*/ 0] },
     { model: model.Q1, query: [/*qudIndex*/ 0] }
 ]);
