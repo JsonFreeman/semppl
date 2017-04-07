@@ -56,18 +56,32 @@ var sampleUtterance = function(utterances) {
 
 var createVariationalModel = function(questions, answers, worldPrior, qudCandidates, 
                                       rationality, grammar, predicates, observationFn, opts, testName) {
-    var optsWithFilenames = _.assign({ checkpointParamsFilename: 'qaParams/' + testName + '-params.json',
-                                       logProgressFilename: 'qaTrainingLogs/' + testName + '-log.csv' }, 
-                                     opts);
-                                     
-    return sample(OptimizeThenSample(function() {
+    var paramsPath = 'qaParams/' + testName + '-params.json';
+    var modelFn = function() {
         var parser = createParser(grammar, makeModelParams(grammar, predicates, /*hiddenSize*/ 10));
         var model = createModel(questions, answers, worldPrior, qudCandidates, rationality, parser);
         if (observationFn) {
             observationFn(model);
         }
         return model;
-    }, optsWithFilenames));
+    }
+
+    if (webpplFs.node.existsSync(paramsPath)) {
+        // Restore previously learned params
+        var params = fs.read(paramsPath);
+        setParams(deserializeParams(params));
+    }
+    else {
+        // learn new params
+        var optsWithFilenames = _.assign({ 
+            model: modelFn,
+            checkpointParamsFilename: paramsPath,
+            logProgressFilename: 'qaTrainingLogs/' + testName + '-log.csv' 
+        }, opts);
+        Optimize(optsWithFilenames);
+    }
+                                     
+    return sample(SampleGuide(modelFn));
 }
 
 var createModel = function(questions, answers, worldPrior, qudCandidates, rationality, parser) {
