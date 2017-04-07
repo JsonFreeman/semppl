@@ -14,7 +14,7 @@ var qudCandidatesRange = _.range(qudCandidates.length);
 var generateDataModel = createModel(questions, answers, Categorical({ vs: worlds, ps: ones([worlds.length]).toFlatArray() }),
                                     qudCandidates, 1, createParser(semppl.fixedGrammar, []))
 
-var data = generateAndWriteTrainingData(testName, [questions, answers, worlds, qudCandidatesRange], 
+var data = readOrGenerateTrainingData(testName, [questions, answers, worlds, qudCandidatesRange], 
     function(q, a, w, qudIndex) {
         return apply(generateDataModel.A1, [q, w]);
     }, 5);

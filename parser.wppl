@@ -109,9 +109,14 @@ var generateTrainingData = function(listOfLists, fn, numSamples) {
     return recursiveMap(listOfLists, fn, numSamples, []);
 }
 
-var generateAndWriteTrainingData = function(filename, listOfLists, fn, numSamples) {
+var readOrGenerateTrainingData = function(filename, listOfLists, fn, numSamples) {
+    var relativePath = 'qaData/' + filename + '-data.json';
+    if (webpplFs.node.existsSync(relativePath)) {
+        return json.read(relativePath);
+    }
+
     var data = generateTrainingData(listOfLists, fn, numSamples);
-    json.write('qaData/' + filename + '-data.json', data);
+    json.write(relativePath, data);
     return data;
 }
 
