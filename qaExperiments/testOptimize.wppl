@@ -29,7 +29,9 @@ var model = createVariationalModel(questions, answers, Categorical({ vs: worlds,
       steps: 20, 
       estimator: 'ELBO', 
       checkGradients: false, 
-      checkpointParams: true });
+      checkpointParams: true,
+      logProgress: true
+    }, testName);
 
 computeAndWriteResults(testName, [
     { model: model.A1, query: [questions[0], worlds[0], /*qudIndex*/ 0] },
