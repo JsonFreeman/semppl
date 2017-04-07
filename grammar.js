@@ -58,19 +58,19 @@ function makeFixedDimensionScalarAntonymRule(name, scaleName, dimension, pos) {
     };
 }
 
-function makeBooleanPredicate(name, pos) {
+function makeBooleanPredicate(name, pos, predicateName) {
     return {
         LHS: pos,
         RHS: name,
-        sem: semFuncs.predicate(name)
+        sem: semFuncs.predicate(predicateName || name)
     };
 }
 
-function makeNeuralBooleanPredicate(name, pos) {
+function makeNeuralBooleanPredicate(name, pos, predicateName) {
     return {
         LHS: pos,
         RHS: name,
-        sem: semFuncs.neuralBooleanPredicate(name)
+        sem: semFuncs.neuralBooleanPredicate(predicateName || name)
     };
 }
 
@@ -255,6 +255,11 @@ var baseGrammarUnindexed = [
 		sem: semFuncs.id
 	},
 	{
+		LHS: "$COP",
+		RHS: "are",
+		sem: semFuncs.id
+	},
+	{
 		LHS: "$DET",
 		RHS: "a",
 		sem: semFuncs.id
@@ -340,6 +345,9 @@ exports.fixedGrammar = indexify(baseGrammarUnindexed.concat([
 	makeBooleanPredicate("doctor", "$N"),
 	makeBooleanPredicate("teacher", "$N"),
 	makeBooleanPredicate("fisherman", "$N"),
+	makeBooleanPredicate("doctors", "$N", "doctor"),
+	makeBooleanPredicate("teachers", "$N", "teacher"),
+	makeBooleanPredicate("fishermen", "$N", "fisherman"),
 ]));
 
 exports.neuralPredicateGrammar = indexify(baseGrammarUnindexed.concat([
@@ -350,4 +358,7 @@ exports.neuralPredicateGrammar = indexify(baseGrammarUnindexed.concat([
 	makeNeuralBooleanPredicate("doctor", "$N"),
 	makeNeuralBooleanPredicate("teacher", "$N"),
 	makeNeuralBooleanPredicate("fisherman", "$N"),
+	makeNeuralBooleanPredicate("doctors", "$N", "doctor"),
+	makeNeuralBooleanPredicate("teachers", "$N", "teacher"),
+	makeNeuralBooleanPredicate("fishermen", "$N", "fisherman"),
 ]))
