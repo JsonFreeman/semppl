@@ -13,7 +13,8 @@ var worlds = [  { domain: ["john", "mary"], facts: { doctor: ["john"], teacher: 
 var qudCandidates = [function(w) { w.facts.teacher }];
 var qudCandidatesRange = _.range(qudCandidates.length);
 
-var generateDataModel = createModel(questions, answers, Categorical({ vs: worlds, ps: ones([worlds.length]).toFlatArray() }),
+var generateDataModel = createModel(questions, answers, constF(1),
+                                    Categorical({ vs: worlds, ps: ones([worlds.length]).toFlatArray() }),
                                     qudCandidates, 1, createParser(semppl.fixedGrammar, []))
 
 var data = readOrGenerateTrainingData(experimentName, runId, [questions, answers, worlds, qudCandidatesRange], 
@@ -21,7 +22,8 @@ var data = readOrGenerateTrainingData(experimentName, runId, [questions, answers
         return apply(generateDataModel.A1, [q, w]);
     }, 5);
 
-var model = createVariationalModel(questions, answers, Categorical({ vs: worlds, ps: ones([worlds.length]).toFlatArray() }),
+var model = createVariationalModel(questions, answers, constF(1),
+    Categorical({ vs: worlds, ps: ones([worlds.length]).toFlatArray() }),
     qudCandidates, 1, semppl.neuralPredicateGrammar, ['doctor', 'teacher', 'fisherman'], function(model) {
         mapData({ data: data, batchSize: 10 }, function(d) {
             observe(apply(model.A1, [d[0], d[2]]), d[1]);

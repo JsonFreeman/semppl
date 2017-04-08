@@ -48,18 +48,16 @@ var answerQualityForQud = function(worldPrior, answer, qud, trueWorld, parser) {
     return marginalize(consistentWorlds, qud).score(qud(trueWorld));
 }
 
-var costFn = constF(1);
-
-var sampleUtterance = function(utterances) {
+var sampleUtterance = function(utterances, costFn) {
     return categorical(map(costFn, utterances), utterances);
 }
 
-var createVariationalModel = function(questions, answers, worldPrior, qudCandidates, 
+var createVariationalModel = function(questions, answers, costFn, worldPrior, qudCandidates, 
                                       rationality, grammar, predicates, observationFn, opts, experimentName, runId) {
     var runPath = makeRunPath(experimentName, runId);
     var modelFn = function() {
         var parser = createParser(grammar, makeModelParams(grammar, predicates, /*hiddenSize*/ 10));
-        var model = createModel(questions, answers, worldPrior, qudCandidates, rationality, parser);
+        var model = createModel(questions, answers, costFn, worldPrior, qudCandidates, rationality, parser);
         if (observationFn) {
             observationFn(model);
         }
@@ -84,7 +82,7 @@ var createVariationalModel = function(questions, answers, worldPrior, qudCandida
     return sample(SampleGuide(modelFn));
 }
 
-var createModel = function(questions, answers, worldPrior, qudCandidates, rationality, parser) {
+var createModel = function(questions, answers, costFn, worldPrior, qudCandidates, rationality, parser) {
     var informationGain = function(question, qudFn, trueWorld, answerer) {
         var prior = marginalize(worldPrior, qudFn);
         var answerDist = answerer(question, trueWorld);
@@ -100,7 +98,7 @@ var createModel = function(questions, answers, worldPrior, qudCandidates, ration
     var explicitAnswerer = function(question, trueWorld) {
         var questionMeaning = parser(question, 0, questionStartSymbol);
         return Infer({method: 'enumerate'}, function() {
-            var answer = sampleUtterance(answers);
+            var answer = sampleUtterance(answers, costFn);
             var answerMeaning = parser(answer, 0, answerStartSymbol);
             factor(Math.log(answerMeaning(trueWorld)) * rationality);
             factor(answerQualityForQuestion(worldPrior, answer, questionMeaning, trueWorld, parser)
@@ -112,7 +110,7 @@ var createModel = function(questions, answers, worldPrior, qudCandidates, ration
     var questioner = function(answerer) {
         return function(qudIndex) {
             return Infer({method: 'enumerate'}, function() {
-                var question = sampleUtterance(questions);
+                var question = sampleUtterance(questions, costFn);
                 var expectedInformationGain = expectation(worldPrior, function(world) {
                     return informationGain(question, qudCandidates[qudIndex], world, answerer);
                 });
@@ -127,7 +125,7 @@ var createModel = function(questions, answers, worldPrior, qudCandidates, ration
         return Infer({method: 'enumerate'}, function() {
             var qud = uniformDraw(qudCandidates);
             var questionDist = explicitQuestioner(qud);
-            var answer = sampleUtterance(answers);
+            var answer = sampleUtterance(answers, costFn);
             factor((questionDist.score(question)
                     + answerQualityForQud(worldPrior, answer, qud, trueWorld, parser))
                     * rationality);
