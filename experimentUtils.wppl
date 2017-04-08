@@ -1,14 +1,29 @@
 // Paths
 var fs = webpplFs.node;
 
+var makeRunDir = function(experimentName, runId) {
+    return "qaExperiments/" + experimentName + "/run" + runId;
+}
+
 var makeRunPath = function(experimentName, runId) {
-    var dir = "qaExperiments/" + experimentName + "/run" + runId;
+    var dir = makeRunDir(experimentName, runId);
     var basePath = dir + "/" + experimentName + "-" + runId;
     return { 
         dir: dir,
         dataPath: basePath + "-data.json",
         paramsPath: basePath + "-params.json",
         logPath: basePath + "-log.csv"
+    };
+}
+
+var makeQueryPath = function(experimentName, runId, queryId) {
+    var runDir = makeRunDir(experimentName, runId);
+    var queryDir = runDir + "/query" + queryId;
+    var basePath = queryDir + "/" + experimentName + "-" + runId + "-" + queryId;
+    return {
+        dir: queryDir,
+        queryPath: basePath + "-query.json",
+        resultPath: basePath + "-results.json"
     };
 }
 
@@ -46,14 +61,24 @@ var readOrGenerateTrainingData = function(experimentName, runId, listOfLists, fn
     return data;
 }
 
-var computeAndWriteResults = function(filename, queryAndModelPairs) {
-    var results = map(function(queryAndModel) {
+var computeAndWriteResults = function(experimentName, runId, queryAndModelPairs) {
+    var queriesAndResults = mapIndexed(function(queryId, queryAndModel) {
+        var queryPath = makeQueryPath(experimentName, runId, queryId);
+        var query = queryAndModel.query;
+        var result = apply(queryAndModel.model, queryAndModel.query);
+
+        // Write query and result before returning them
+        if (!fs.existsSync(queryPath.dir)) {
+            webpplFs.mkdirp(queryPath.dir);
+        }
+        json.write(queryPath.queryPath, query);
+        json.write(queryPath.resultPath, result);
+        
         return {
-            query: queryAndModel.query,
-            result: apply(queryAndModel.model, queryAndModel.query)
+            query: query,
+            result: result
         }
     }, queryAndModelPairs);
 
-    json.write('qaExperimentsOutput/' + filename + '-results.json', results);
-    return results;
+    return queriesAndResults;
 }

@@ -35,7 +35,7 @@ var model = createVariationalModel(questions, answers, Categorical({ vs: worlds,
       logProgress: true
     }, experimentName, runId);
 
-computeAndWriteResults(experimentName, [
+computeAndWriteResults(experimentName, runId, [
     { model: model.A1, query: [questions[0], worlds[0], /*qudIndex*/ 0] },
     { model: model.Q1, query: [/*qudIndex*/ 0] }
 ]);
