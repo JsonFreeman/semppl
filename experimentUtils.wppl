@@ -1,3 +1,16 @@
+// Paths
+var makeRunPath = function(experimentName, runId) {
+    var dir = "qaExperiments/" + experimentName + "/run" + runId;
+    var basePath = dir + "/" + experimentName + "-" + runId;
+    return { 
+        dir: dir,
+        dataPath: basePath + "-data.json",
+        paramsPath: basePath + "-params.json",
+        logPath: basePath + "-log.csv"
+    };
+}
+
+// Generating data and results
 var generateTrainingData = function(listOfLists, fn, numSamples) {
     var recursiveMap = function(listOfLists, fn, numSamples, args /* internal*/) {
         if (listOfLists.length === 0) {
@@ -16,14 +29,14 @@ var generateTrainingData = function(listOfLists, fn, numSamples) {
     return recursiveMap(listOfLists, fn, numSamples, []);
 }
 
-var readOrGenerateTrainingData = function(filename, listOfLists, fn, numSamples) {
-    var relativePath = 'qaData/' + filename + '-data.json';
-    if (webpplFs.node.existsSync(relativePath)) {
-        return json.read(relativePath);
+var readOrGenerateTrainingData = function(experimentName, runId, listOfLists, fn, numSamples) {
+    var runPath = makeRunPath(experimentName, runId);
+    if (webpplFs.node.existsSync(runPath.dataPath)) {
+        return json.read(runPath.dataPath);
     }
 
     var data = generateTrainingData(listOfLists, fn, numSamples);
-    json.write(relativePath, data);
+    json.write(runPath.dataPath, data);
     return data;
 }
 
