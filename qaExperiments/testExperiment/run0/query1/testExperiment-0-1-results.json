@@ -1,0 +1,12 @@
+{
+    "probs": [
+        0.3333333333331671,
+        0.3333333333327765,
+        0.3333333333340561
+    ],
+    "support": [
+        "Who is a fisherman",
+        "Who is a teacher",
+        "Who is a doctor"
+    ]
+}

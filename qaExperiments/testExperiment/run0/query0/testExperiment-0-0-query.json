@@ -1,0 +1,17 @@
+[
+    "Who is a doctor",
+    {
+        "domain": [
+            "john",
+            "mary"
+        ],
+        "facts": {
+            "doctor": [
+                "john"
+            ],
+            "teacher": [],
+            "fisherman": []
+        }
+    },
+    0
+]
