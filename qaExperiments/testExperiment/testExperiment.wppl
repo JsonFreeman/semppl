@@ -33,7 +33,7 @@ var model = createVariationalModel(questions, answers, Categorical({ vs: worlds,
       checkGradients: false, 
       checkpointParams: true,
       logProgress: true
-    }, testName);
+    }, testName, runId);
 
 computeAndWriteResults(testName, [
     { model: model.A1, query: [questions[0], worlds[0], /*qudIndex*/ 0] },
