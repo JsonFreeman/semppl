@@ -55,8 +55,8 @@ var sampleUtterance = function(utterances) {
 }
 
 var createVariationalModel = function(questions, answers, worldPrior, qudCandidates, 
-                                      rationality, grammar, predicates, observationFn, opts, testName, runId) {
-    var runPath = makeRunPath(testName, runId);
+                                      rationality, grammar, predicates, observationFn, opts, experimentName, runId) {
+    var runPath = makeRunPath(experimentName, runId);
     var modelFn = function() {
         var parser = createParser(grammar, makeModelParams(grammar, predicates, /*hiddenSize*/ 10));
         var model = createModel(questions, answers, worldPrior, qudCandidates, rationality, parser);
