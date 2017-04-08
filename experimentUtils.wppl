@@ -1,4 +1,6 @@
 // Paths
+var fs = webpplFs.node;
+
 var makeRunPath = function(experimentName, runId) {
     var dir = "qaExperiments/" + experimentName + "/run" + runId;
     var basePath = dir + "/" + experimentName + "-" + runId;
@@ -31,8 +33,12 @@ var generateTrainingData = function(listOfLists, fn, numSamples) {
 
 var readOrGenerateTrainingData = function(experimentName, runId, listOfLists, fn, numSamples) {
     var runPath = makeRunPath(experimentName, runId);
-    if (webpplFs.node.existsSync(runPath.dataPath)) {
+    if (fs.existsSync(runPath.dataPath)) {
         return json.read(runPath.dataPath);
+    }
+
+    if (!fs.existsSync(runPath.dir)) {
+        webpplFs.mkdirp(runPath.dir);
     }
 
     var data = generateTrainingData(listOfLists, fn, numSamples);

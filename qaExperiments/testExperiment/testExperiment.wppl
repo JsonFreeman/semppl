@@ -1,4 +1,6 @@
 var testName = "testExperiment";
+var runId = 0;
+
 var questions = ["Who is a doctor", "Who is a teacher", "Who is a fisherman"]
 var answers = ["John is a doctor", "John is a teacher", "John is a fisherman",
                     "John and Mary is a doctor", "John and Mary is a teacher", "John and Mary is a fisherman"]
@@ -14,7 +16,7 @@ var qudCandidatesRange = _.range(qudCandidates.length);
 var generateDataModel = createModel(questions, answers, Categorical({ vs: worlds, ps: ones([worlds.length]).toFlatArray() }),
                                     qudCandidates, 1, createParser(semppl.fixedGrammar, []))
 
-var data = readOrGenerateTrainingData(testName, 0, [questions, answers, worlds, qudCandidatesRange], 
+var data = readOrGenerateTrainingData(testName, runId, [questions, answers, worlds, qudCandidatesRange], 
     function(q, a, w, qudIndex) {
         return apply(generateDataModel.A1, [q, w]);
     }, 5);
