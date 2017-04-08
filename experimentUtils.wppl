@@ -27,6 +27,17 @@ var makeQueryPath = function(experimentName, runId, queryId) {
     };
 }
 
+var getExperimentNameAndRunId = function() {
+    var experimentPath = _.nth(process.argv, -2);
+    var experimentName = experimentPath.substring(experimentPath.lastIndexOf('/') + 1, experimentPath.lastIndexOf('.'));
+    var runId = _.parseInt(_.nth(process.argv, -1));
+
+    return {
+        name: experimentName,
+        runId: runId
+    }
+}
+
 // Generating data and results
 var generateTrainingData = function(listOfLists, fn, numSamples) {
     var recursiveMap = function(listOfLists, fn, numSamples, args /* internal*/) {

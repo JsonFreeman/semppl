@@ -1,5 +1,7 @@
-var experimentName = "testExperiment";
-var runId = 0;
+// webppl --require webppl-json --require webppl-fs --require . <this-file> (<runId> | new)
+var experimentInfo = getExperimentNameAndRunId();
+var experimentName = experimentInfo.name;
+var runId = experimentInfo.runId;
 
 var questions = ["Who is a doctor", "Who is a teacher", "Who is a fisherman"]
 var answers = ["John is a doctor", "John is a teacher", "John is a fisherman",
