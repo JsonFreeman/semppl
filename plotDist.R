@@ -17,4 +17,4 @@ dataFrame = setNames(dataFrame, c('utterance', 'probability'))
 ggplot(dataFrame, aes(y=probability, x=utterance)) +
   geom_bar(stat='identity', fill='blue') +
   coord_flip() +
-  ggtitle(query[1])
+  ggtitle(query[[1]][[1]])
