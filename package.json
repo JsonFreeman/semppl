@@ -24,6 +24,7 @@
   "webppl": {
     "wppl": [
       "parser.wppl",
+      "experimentUtils.wppl",
       "rsa.wppl",
       "questionsRSA.wppl"
     ]
