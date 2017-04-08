@@ -1,0 +1,56 @@
+[
+    {
+        "query": [
+            "Who is a doctor",
+            {
+                "domain": [
+                    "john",
+                    "mary"
+                ],
+                "facts": {
+                    "doctor": [
+                        "john"
+                    ],
+                    "teacher": [],
+                    "fisherman": []
+                }
+            },
+            0
+        ],
+        "result": {
+            "probs": [
+                0.11546002461932187,
+                0.09269547722695913,
+                0.13447010342747245,
+                0.220799612733998,
+                0.19838364246237172,
+                0.23819113952987703
+            ],
+            "support": [
+                "John and Mary is a fisherman",
+                "John and Mary is a teacher",
+                "John and Mary is a doctor",
+                "John is a fisherman",
+                "John is a teacher",
+                "John is a doctor"
+            ]
+        }
+    },
+    {
+        "query": [
+            0
+        ],
+        "result": {
+            "probs": [
+                0.3333333333331671,
+                0.3333333333327765,
+                0.3333333333340561
+            ],
+            "support": [
+                "Who is a fisherman",
+                "Who is a teacher",
+                "Who is a doctor"
+            ]
+        }
+    }
+]
