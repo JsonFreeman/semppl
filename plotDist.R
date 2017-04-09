@@ -4,17 +4,13 @@ library(ggplot2)
 library(jsonlite)
 library(data.table)
 
-# filename = 'testOptimize'
-json = fromJSON(readLines('qaExperimentsOutput/testOptimize-results.json'))
-index = 1
-query = json$query[index]
+resultJSON = fromJSON(readLines('qaExperiments/testExperiment/run0/query0/testExperiment-0-0-results.json'))
 dataFrame = data.frame(
-  utterance = json$result$support[index],
-  probability = json$result$probs[index]
+  utterance = resultJSON$support,
+  probability = resultJSON$probs
 )
-dataFrame = setNames(dataFrame, c('utterance', 'probability'))
 
 ggplot(dataFrame, aes(y=probability, x=utterance)) +
   geom_bar(stat='identity', fill='blue') +
   coord_flip() +
-  ggtitle(query[[1]][[1]])
+  ggtitle(query)
