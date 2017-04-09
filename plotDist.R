@@ -14,4 +14,4 @@ dataFrame = data.frame(
 ggplot(dataFrame, aes(y=probability, x=utterance)) +
   geom_bar(stat='identity', fill='blue') +
   coord_flip() +
-  ggtitle(query)
+  ggtitle(paste("question:", queryJSON[[1]], "\nworld:", "\nqud:"))
