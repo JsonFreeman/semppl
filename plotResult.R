@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 library(tidyr)
 library(ggplot2)
 library(jsonlite)
