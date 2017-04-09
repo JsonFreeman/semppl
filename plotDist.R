@@ -13,4 +13,6 @@ dataFrame = data.frame(
 ggplot(dataFrame, aes(y=probability, x=utterance)) +
   geom_bar(stat='identity', fill='blue') +
   coord_flip() +
-  ggtitle(paste("question:", queryJSON[[1]], "\nworld:", "\nqud:"))
+  ggtitle(paste("question:", queryJSON[[1]], "\nworld:", "\nqud:")) +
+  ggsave('testExperiment-0-0-plot.pdf', 
+         path='qaExperiments/testExperiment/run0/query0/')
