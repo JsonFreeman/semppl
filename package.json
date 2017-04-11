@@ -23,6 +23,7 @@
   "webppl": {
     "wppl": [
       "parser.wppl",
+      "networkSpecs.wppl",
       "experimentUtils.wppl",
       "rsa.wppl",
       "questionsRSA.wppl"
