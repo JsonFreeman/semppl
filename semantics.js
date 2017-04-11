@@ -1,29 +1,5 @@
 var _ = require("underscore");
-var Tensor = require("adnn/tensor");
-
-function network(input, W, b) {
-    var h = T.tanh(T.add(T.dot(W[0], input), b[0]));
-    var output = T.add(T.dot(W[1], h), b[1]);
-    return T.sumreduce(output)
-};
-
-function makeVector(arr) {
-    // Do I need to do ad.lift?
-    return new Tensor([arr.length, 1]).fromFlatArray(arr);
-}
-
-function entityVector(ent, context) {
-    var array = _.values(context.facts).map(prop => {
-        // prop could either be an array that may contain ent
-        // or an object that contains ent as a key
-        return _.isArray(prop) ? +_.contains(prop, ent) : +prop[ent];
-    });
-    return makeVector(array);
-}
-
-function applyPredicateNetwork(ent, context, params) {
-    return network(entityVector(ent, context), params.W, params.b);
-}
+var networks = require('./networks');
 
 function lift(func, liftLeft, liftRight) {
     if (!liftLeft && !liftRight) {
@@ -57,8 +33,8 @@ module.exports = {
         return function(params) {
             return function(context) {
                 return function(ent) {
-                    var measurement = applyPredicateNetwork(ent, context, params.networkParams[predicateName]);
-                    return ad.scalar.sigmoid(measurement);
+                    var vectorizedEntity = networks.entityVector(ent, context);
+                    return networks.twoLayerFFNetWithSigmoid(vectorizedEntity, params.networkParams[predicateName]);
                 }
             }
         }
@@ -68,7 +44,8 @@ module.exports = {
         return function(params, theta) {
             return function(context) {
                 return function(ent) {
-                    var measurement = applyPredicateNetwork(ent, context, params.networkParams[scaleName]);
+                    var vectorizedEntity = networks.entityVector(ent, context);
+                    var measurement = networks.twoLayerFFNet(vectorizedEntity, params.networkParams[scaleName]);
                     return ad.scalar.sigmoid(ad.scalar.sub(measurement, theta[scaleName] || 0));
                 }
             }
