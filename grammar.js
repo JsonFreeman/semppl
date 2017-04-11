@@ -350,11 +350,13 @@ exports.fixedGrammar = indexify(baseGrammarUnindexed.concat([
 	makeBooleanPredicate("fishermen", "$N", "fisherman"),
 ]));
 
-exports.neuralPredicateGrammar = indexify(baseGrammarUnindexed.concat([
-	makeNeuralBooleanPredicate(networks.twoLayerFFNetWithSigmoid, "doctor", "$N"),
-	makeNeuralBooleanPredicate(networks.twoLayerFFNetWithSigmoid, "teacher", "$N"),
-	makeNeuralBooleanPredicate(networks.twoLayerFFNetWithSigmoid, "fisherman", "$N"),
-	makeNeuralBooleanPredicate(networks.twoLayerFFNetWithSigmoid, "doctors", "$N", "doctor"),
-	makeNeuralBooleanPredicate(networks.twoLayerFFNetWithSigmoid, "teachers", "$N", "teacher"),
-	makeNeuralBooleanPredicate(networks.twoLayerFFNetWithSigmoid, "fishermen", "$N", "fisherman"),
-]))
+exports.makeNeuralPredicateGrammar = function(network) {
+	return indexify(baseGrammarUnindexed.concat([
+		makeNeuralBooleanPredicate(network, "doctor", "$N"),
+		makeNeuralBooleanPredicate(network, "teacher", "$N"),
+		makeNeuralBooleanPredicate(network, "fisherman", "$N"),
+		makeNeuralBooleanPredicate(network, "doctors", "$N", "doctor"),
+		makeNeuralBooleanPredicate(network, "teachers", "$N", "teacher"),
+		makeNeuralBooleanPredicate(network, "fishermen", "$N", "fisherman"),
+	]))
+}

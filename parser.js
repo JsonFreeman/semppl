@@ -1,5 +1,6 @@
 var semFuncs = require("./semantics");
 var grammarModule = require("./grammar")
+exports.networks = require('./networks');
 _.assign(exports, grammarModule);
 
 exports.createParser = createParser;
