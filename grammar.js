@@ -1,4 +1,3 @@
-var _ = require("underscore");
 var semFuncs = require("./semantics");
 
 function indexify(grammar) {
@@ -24,7 +23,7 @@ function flattenRules(grammar) {
 }
 
 // Must be in this order (flattenRules first). We don't want to screw up the indices by flattening
-var flattenAndIndexify = _.compose(indexify, flattenRules);
+var flattenAndIndexify = _.flowRight(indexify, flattenRules);
 
 function makeNeuralScalarItemRule(name, pos) {
     return {

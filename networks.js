@@ -1,4 +1,3 @@
-var _ = require("underscore");
 var Tensor = require("adnn/tensor");
 
 function makeVector(arr) {
@@ -27,7 +26,7 @@ module.exports = {
         var array = _.values(context.facts).map(prop => {
             // prop could either be an array that may contain ent
             // or an object that contains ent as a key
-            return _.isArray(prop) ? +_.contains(prop, ent) : +prop[ent];
+            return _.isArray(prop) ? +_.includes(prop, ent) : +prop[ent];
         });
         return makeVector(array);
     }

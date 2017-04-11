@@ -1,4 +1,3 @@
-var _ = require("underscore");
 var semFuncs = require("./semantics");
 var grammarModule = require("./grammar")
 _.assign(exports, grammarModule);

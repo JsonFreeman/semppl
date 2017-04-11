@@ -1,4 +1,3 @@
-var _ = require("underscore");
 var networks = require('./networks');
 
 function lift(func, liftLeft, liftRight) {
@@ -24,7 +23,7 @@ module.exports = {
     predicate: function(name) {
         return _.constant(function(context) {
             return function(ent) {
-                return _.contains(context.facts[name], ent) ? 1 : 0;
+                return _.includes(context.facts[name], ent) ? 1 : 0;
             }
         })
     },
@@ -95,7 +94,7 @@ module.exports = {
         return _.constant(function(context) {
             return function(e1) {
                 return function(e2) {
-                    return _.contains(context.facts[name][e1], e2) ? 1 : 0;
+                    return _.includes(context.facts[name][e1], e2) ? 1 : 0;
                 }
             }
         })
@@ -113,7 +112,7 @@ module.exports = {
 
     id: _.constant(_.constant(_.identity)),
 
-    constTrue: _.compose(_.constant, _.constant, _.constant)(1),
+    constTrue: _.flowRight(_.constant, _.constant, _.constant)(1),
 
     intersectPredicates: function(pred1, pred2) {
         return function(context) {
