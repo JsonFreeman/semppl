@@ -30,7 +30,7 @@ function makeNeuralScalarItemRule(networks, name, pos) {
     return {
 		LHS: pos,
 		RHS: name,
-		sem: semFuncs.neuralScalarPredicate(name, networks[name].spec.runner)
+		sem: semFuncs.neuralScalarPredicate(name, networks[name].runner)
 	};
 }
 
@@ -46,7 +46,7 @@ function makeNeuralScalarAntonymRule(networks, name, scaleName, pos) {
     return {
         LHS: pos,
         RHS: name,
-        sem: semFuncs.neuralScalarAntonym(scaleName, networks[name].spec.runner)
+        sem: semFuncs.neuralScalarAntonym(scaleName, networks[name].runner)
     };
 }
 
@@ -71,7 +71,7 @@ function makeNeuralBooleanPredicate(networks, name, pos, predicateName) {
     return {
         LHS: pos,
         RHS: name,
-        sem: semFuncs.neuralBooleanPredicate(predicateName, networks[predicateName].spec.runner)
+        sem: semFuncs.neuralBooleanPredicate(predicateName, networks[predicateName].runner)
     };
 }
 

@@ -77,7 +77,7 @@ var makeModelParams = function(grammar, networks) {
     return {
         parserWeights: createParserWeights(grammar),
         networkParams: mapObject(function(k, v) {
-            apply(v.spec.paramConstructor, v.constructionParameters)(k)
+            apply(v.paramConstructor, [k]);
         }, networks)
     };
 }
