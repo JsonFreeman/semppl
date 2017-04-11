@@ -27,7 +27,7 @@ var data = readOrGenerateTrainingData(experimentName, runId, [questions, answers
 var grammar = semppl.makeNeuralPredicateGrammar(semppl.networks.twoLayerFFNetWithSigmoid);
 var model = createVariationalModel(questions, answers, constF(1),
     Categorical({ vs: worlds, ps: ones([worlds.length]).toFlatArray() }),
-    qudCandidates, 1, grammar, ['doctor', 'teacher', 'fisherman'], function(model) {
+    qudCandidates, 1, grammar, ['doctor', 'teacher', 'fisherman'], paramConstructors.twoLayerFFNet, function(model) {
         mapData({ data: data, batchSize: 10 }, function(d) {
             observe(apply(model.A1, [d[0], d[2]]), d[1]);
         })

@@ -53,10 +53,10 @@ var sampleUtterance = function(utterances, costFn) {
 }
 
 var createVariationalModel = function(questions, answers, costFn, worldPrior, qudCandidates, 
-                                      rationality, grammar, predicates, observationFn, opts, experimentName, runId) {
+                                      rationality, grammar, predicates, networkParamConstructor, observationFn, opts, experimentName, runId) {
     var runPath = makeRunPath(experimentName, runId);
     var modelFn = function() {
-        var parser = createParser(grammar, makeModelParams(grammar, predicates, /*hiddenSize*/ 10));
+        var parser = createParser(grammar, makeModelParams(grammar, predicates, networkParamConstructor, /*hiddenSize*/ 10));
         var model = createModel(questions, answers, costFn, worldPrior, qudCandidates, rationality, parser);
         if (observationFn) {
             observationFn(model);
