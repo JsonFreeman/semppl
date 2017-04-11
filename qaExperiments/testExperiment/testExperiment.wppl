@@ -24,10 +24,11 @@ var data = readOrGenerateTrainingData(experimentName, runId, [questions, answers
         return apply(generateDataModel.A1, [q, w]);
     }, 5);
 
-var grammar = semppl.makeNeuralPredicateGrammar(semppl.networks.twoLayerFFNetWithSigmoid);
+var predicateNetworkSpec = networkSpecs.twoLayerFFNetWithSigmoid;
+var grammar = semppl.makeNeuralPredicateGrammar(predicateNetworkSpec.runner);
 var model = createVariationalModel(questions, answers, constF(1),
     Categorical({ vs: worlds, ps: ones([worlds.length]).toFlatArray() }),
-    qudCandidates, 1, grammar, ['doctor', 'teacher', 'fisherman'], paramConstructors.twoLayerFFNet, function(model) {
+    qudCandidates, 1, grammar, ['doctor', 'teacher', 'fisherman'], predicateNetworkSpec.paramConstructor, function(model) {
         mapData({ data: data, batchSize: 10 }, function(d) {
             observe(apply(model.A1, [d[0], d[2]]), d[1]);
         })
