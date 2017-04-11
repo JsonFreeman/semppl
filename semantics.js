@@ -28,23 +28,23 @@ module.exports = {
         })
     },
 
-    neuralBooleanPredicate: function(predicateName) {
+    neuralBooleanPredicate: function(predicateName, network) {
         return function(params) {
             return function(context) {
                 return function(ent) {
                     var vectorizedEntity = networks.entityVector(ent, context);
-                    return networks.twoLayerFFNetWithSigmoid(vectorizedEntity, params.networkParams[predicateName]);
+                    return network(vectorizedEntity, params.networkParams[predicateName]);
                 }
             }
         }
     },
 
-    neuralScalarPredicate: function(scaleName) {
+    neuralScalarPredicate: function(scaleName, network) {
         return function(params, theta) {
             return function(context) {
                 return function(ent) {
                     var vectorizedEntity = networks.entityVector(ent, context);
-                    var measurement = networks.twoLayerFFNet(vectorizedEntity, params.networkParams[scaleName]);
+                    var measurement = network(vectorizedEntity, params.networkParams[scaleName]);
                     return ad.scalar.sigmoid(ad.scalar.sub(measurement, theta[scaleName] || 0));
                 }
             }
@@ -66,12 +66,12 @@ module.exports = {
         }
     },
 
-    neuralScalarAntonym: function(scaleName) {
+    neuralScalarAntonym: function(scaleName, network) {
         return function(params, theta) {
             return function(context) {
                 return function(ent) {
                     var positiveResult = 
-                        module.exports.neuralScalarPredicate(scaleName)(params, theta)(context)(ent);
+                        module.exports.neuralScalarPredicate(scaleName, network)(params, theta)(context)(ent);
                     return ad.scalar.sub(1, positiveResult);                
                 }
             }

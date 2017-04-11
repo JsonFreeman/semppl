@@ -1,4 +1,5 @@
 var semFuncs = require("./semantics");
+var networks = require('./networks');
 
 function indexify(grammar) {
 	_.each(grammar, (rule, i) => {
@@ -25,11 +26,11 @@ function flattenRules(grammar) {
 // Must be in this order (flattenRules first). We don't want to screw up the indices by flattening
 var flattenAndIndexify = _.flowRight(indexify, flattenRules);
 
-function makeNeuralScalarItemRule(name, pos) {
+function makeNeuralScalarItemRule(network, name, pos) {
     return {
 		LHS: pos,
 		RHS: name,
-		sem: semFuncs.neuralScalarPredicate(name)
+		sem: semFuncs.neuralScalarPredicate(name, network)
 	};
 }
 
@@ -41,11 +42,11 @@ function makeFixedScalarItemRule(name, dimension, pos) {
 	};
 }
 
-function makeNeuralScalarAntonymRule(name, scaleName, pos) {
+function makeNeuralScalarAntonymRule(network, name, scaleName, pos) {
     return {
         LHS: pos,
         RHS: name,
-        sem: semFuncs.neuralScalarAntonym(scaleName)
+        sem: semFuncs.neuralScalarAntonym(scaleName, network)
     };
 }
 
@@ -65,11 +66,11 @@ function makeBooleanPredicate(name, pos, predicateName) {
     };
 }
 
-function makeNeuralBooleanPredicate(name, pos, predicateName) {
+function makeNeuralBooleanPredicate(network, name, pos, predicateName) {
     return {
         LHS: pos,
         RHS: name,
-        sem: semFuncs.neuralBooleanPredicate(predicateName || name)
+        sem: semFuncs.neuralBooleanPredicate(predicateName || name, network)
     };
 }
 
@@ -188,12 +189,12 @@ exports.ambiguousGrammar = flattenAndIndexify([
 			semFuncs.id
 			]
 	},
-    makeNeuralScalarItemRule("tall", "$PRED"),
-    makeNeuralScalarItemRule("heavy", "$PRED"),
-    makeNeuralScalarAntonymRule("short", "tall", "$PRED"),
-    makeNeuralScalarAntonymRule("light", "heavy", "$PRED"),
-	makeNeuralScalarItemRule("man", "$PRED"),
-	makeNeuralScalarItemRule("building", "$PRED"),
+    makeNeuralScalarItemRule(networks.twoLayerFFNet, "tall", "$PRED"),
+    makeNeuralScalarItemRule(networks.twoLayerFFNet, "heavy", "$PRED"),
+    makeNeuralScalarAntonymRule(networks.twoLayerFFNet, "short", "tall", "$PRED"),
+    makeNeuralScalarAntonymRule(networks.twoLayerFFNet, "light", "heavy", "$PRED"),
+	makeNeuralScalarItemRule(networks.twoLayerFFNet, "man", "$PRED"),
+	makeNeuralScalarItemRule(networks.twoLayerFFNet, "building", "$PRED"),
 ]);
 
 // Don't flatten. We don't want to have rules with multiple semantics
@@ -350,14 +351,14 @@ exports.fixedGrammar = indexify(baseGrammarUnindexed.concat([
 ]));
 
 exports.neuralPredicateGrammar = indexify(baseGrammarUnindexed.concat([
-	makeNeuralScalarItemRule("tall", "$ADJ"),
-    makeNeuralScalarItemRule("heavy", "$ADJ"),
-    makeNeuralScalarAntonymRule("short", "tall", "$ADJ"),
-    makeNeuralScalarAntonymRule("light", "heavy", "$ADJ"),
-	makeNeuralBooleanPredicate("doctor", "$N"),
-	makeNeuralBooleanPredicate("teacher", "$N"),
-	makeNeuralBooleanPredicate("fisherman", "$N"),
-	makeNeuralBooleanPredicate("doctors", "$N", "doctor"),
-	makeNeuralBooleanPredicate("teachers", "$N", "teacher"),
-	makeNeuralBooleanPredicate("fishermen", "$N", "fisherman"),
+	makeNeuralScalarItemRule(networks.twoLayerFFNet, "tall", "$ADJ"),
+    makeNeuralScalarItemRule(networks.twoLayerFFNet, "heavy", "$ADJ"),
+    makeNeuralScalarAntonymRule(networks.twoLayerFFNet, "short", "tall", "$ADJ"),
+    makeNeuralScalarAntonymRule(networks.twoLayerFFNet, "light", "heavy", "$ADJ"),
+	makeNeuralBooleanPredicate(networks.twoLayerFFNetWithSigmoid, "doctor", "$N"),
+	makeNeuralBooleanPredicate(networks.twoLayerFFNetWithSigmoid, "teacher", "$N"),
+	makeNeuralBooleanPredicate(networks.twoLayerFFNetWithSigmoid, "fisherman", "$N"),
+	makeNeuralBooleanPredicate(networks.twoLayerFFNetWithSigmoid, "doctors", "$N", "doctor"),
+	makeNeuralBooleanPredicate(networks.twoLayerFFNetWithSigmoid, "teachers", "$N", "teacher"),
+	makeNeuralBooleanPredicate(networks.twoLayerFFNetWithSigmoid, "fishermen", "$N", "fisherman"),
 ]))
