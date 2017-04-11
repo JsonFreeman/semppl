@@ -351,10 +351,6 @@ exports.fixedGrammar = indexify(baseGrammarUnindexed.concat([
 ]));
 
 exports.neuralPredicateGrammar = indexify(baseGrammarUnindexed.concat([
-	makeNeuralScalarItemRule(networks.twoLayerFFNet, "tall", "$ADJ"),
-    makeNeuralScalarItemRule(networks.twoLayerFFNet, "heavy", "$ADJ"),
-    makeNeuralScalarAntonymRule(networks.twoLayerFFNet, "short", "tall", "$ADJ"),
-    makeNeuralScalarAntonymRule(networks.twoLayerFFNet, "light", "heavy", "$ADJ"),
 	makeNeuralBooleanPredicate(networks.twoLayerFFNetWithSigmoid, "doctor", "$N"),
 	makeNeuralBooleanPredicate(networks.twoLayerFFNetWithSigmoid, "teacher", "$N"),
 	makeNeuralBooleanPredicate(networks.twoLayerFFNetWithSigmoid, "fisherman", "$N"),
