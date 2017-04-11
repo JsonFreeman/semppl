@@ -73,11 +73,11 @@ var createParserWeights = function (grammar) {
     }, grammar));
 };
 
-var makeModelParams = function(grammar, predicates, networkParamConstructor, hiddenSize) {
+var makeModelParams = function(grammar, predicates, networkParamConstructor) {
     return {
         parserWeights: createParserWeights(grammar),
         networkParams: _.zipObject(predicates, map(function (predicate) {
-            networkParamConstructor(hiddenSize, predicates.length, predicate)
+            networkParamConstructor(predicate)
         }, predicates))
     };
 }
