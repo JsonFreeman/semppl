@@ -77,16 +77,18 @@ var makeModelParams = function(grammar, predicates, hiddenSize) {
     return {
         parserWeights: createParserWeights(grammar),
         networkParams: _.zipObject(predicates, map(function (predicate) {
-            twoLayerFFNet(hiddenSize, predicates.length, predicate)
+            apply(paramConstructors.twoLayerFFNet, [hiddenSize, predicates.length, predicate])
         }, predicates))
     };
 }
 
-var twoLayerFFNet = function(hiddenSize, inputSize, predicate) {
-    var W0 = modelParam({ dims: [hiddenSize, inputSize], mu: 0, sigma: 0.1, name: predicate + "W0"})
-    var W1 = modelParam({ dims: [1, hiddenSize], mu: 0, sigma: 0.1, name: predicate + "W1" })
-    var b0 = modelParam({ dims: [hiddenSize, 1], mu: 0, sigma: 0.1, name: predicate + "b0" })
-    var b1 = modelParam({ dims: [1, 1], mu: 0, sigma: 0.1, name: predicate + "b1" })
+var paramConstructors = {
+    twoLayerFFNet(hiddenSize, inputSize, predicate) {
+        var W0 = modelParam({ dims: [hiddenSize, inputSize], mu: 0, sigma: 0.1, name: predicate + "W0"})
+        var W1 = modelParam({ dims: [1, hiddenSize], mu: 0, sigma: 0.1, name: predicate + "W1" })
+        var b0 = modelParam({ dims: [hiddenSize, 1], mu: 0, sigma: 0.1, name: predicate + "b0" })
+        var b1 = modelParam({ dims: [1, 1], mu: 0, sigma: 0.1, name: predicate + "b1" })
 
-    return { W: [W0, W1], b: [b0, b1] };
+        return { W: [W0, W1], b: [b0, b1] };
+    }
 }
