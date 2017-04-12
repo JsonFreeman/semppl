@@ -33,7 +33,7 @@ module.exports = {
             return function(context) {
                 return function(ent) {
                     var vectorizedEntity = networks.entityVector(ent, context);
-                    return network(vectorizedEntity, params.networkParams[predicateName]);
+                    return network.runner(vectorizedEntity, network.params);
                 }
             }
         }
@@ -44,7 +44,7 @@ module.exports = {
             return function(context) {
                 return function(ent) {
                     var vectorizedEntity = networks.entityVector(ent, context);
-                    var measurement = network(vectorizedEntity, params.networkParams[scaleName]);
+                    var measurement = network.runner(vectorizedEntity, network.params);
                     return ad.scalar.sigmoid(ad.scalar.sub(measurement, theta[scaleName] || 0));
                 }
             }

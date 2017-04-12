@@ -33,8 +33,8 @@ var marginalizeDerivationsForQuestion = function(derivationProbabilities, semant
     }
 }
 
-var createParser = function (grammar, params) {
-    var parser = semppl.createParser(grammar, params, semppl.ruleFeatureFn);
+var createParser = function (grammar, parserParams) {
+    var parser = semppl.createParser(grammar, parserParams, semppl.ruleFeatureFn);
     return cache(function (utterance, theta, startSymbol) {
         // Need to use .call to call parser as a js function
         var chart = parser.call(null, utterance, theta);
@@ -44,7 +44,7 @@ var createParser = function (grammar, params) {
             "Cannot parse utterance '" + utterance + "' with startSymbol " + startSymbol)
         // Gather the two relevant probabilities
         var derivationProbabilities = normalize(map(function (d) {
-            return Math.exp(scoreFn(featureFn(d), params.parserWeights));
+            return Math.exp(scoreFn(featureFn(d), parserParams));
         }, rootCellDerivations));
 
         var marginalizationFunction = startSymbol === "$S" ? marginalizeDerivationsForAssertion :
@@ -72,12 +72,3 @@ var createParserWeights = function (grammar) {
         ];
     }, grammar));
 };
-
-var makeModelParams = function(grammar, networks) {
-    return {
-        parserWeights: createParserWeights(grammar),
-        networkParams: mapObject(function(k, v) {
-            apply(v.paramConstructor, [k]);
-        }, networks)
-    };
-}
