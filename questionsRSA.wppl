@@ -142,5 +142,36 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
     var explicitQuestioner = questioner(explicitAnswerer);
     var pragmaticQuestioner = questioner(pragmaticAnswerer);
 
-    return { Q1: explicitQuestioner, A1: explicitAnswerer, Q2: pragmaticQuestioner, A2: pragmaticAnswerer };
+    // Standard RSA
+    var literalListener = function(utterance) {
+        return interpretAnswer(worldPrior, utterance, parser);
+    }
+
+    var speaker = function(world) {
+        return Infer({ method: 'enumerate' }, function() {
+            var utterance = sampleUtterance(answers, costFn);
+            var L = literalListener(utterance);
+            factor(L.score(world));
+            return utterance;
+        })
+    }
+
+    var pragmaticListener = function(utterance) {
+        return Infer({ method: 'enumerate' }, function() {
+            var world = sample(worldPrior);
+            var S = speaker(world);
+            factor(S.score(utterance));
+            return world;
+        })
+    }
+
+    return { 
+        Q1: explicitQuestioner, 
+        A1: explicitAnswerer, 
+        Q2: pragmaticQuestioner, 
+        A2: pragmaticAnswerer,
+        L0: literalListener,
+        S1: speaker,
+        L1: pragmaticListener
+    };
 }
