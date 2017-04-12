@@ -151,7 +151,7 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
         return Infer({ method: 'enumerate' }, function() {
             var utterance = sampleUtterance(answers, costFn);
             var L = literalListener(utterance);
-            factor(L.score(world));
+            factor(L.score(world) * rationality);
             return utterance;
         })
     }
