@@ -1,8 +1,5 @@
-var Tensor = require("adnn/tensor");
-
 function makeVector(arr) {
-    // Do I need to do ad.lift?
-    return new Tensor([arr.length, 1]).fromFlatArray(arr);
+    return T.reshape(T.fromScalars(arr), [arr.length, 1]);
 };
 
 module.exports = {
