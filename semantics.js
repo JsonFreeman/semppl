@@ -102,7 +102,7 @@ module.exports = {
     },
 
     neuralUnaryFunction: network => context => p => {
-        return network.runner(ad.lift(p), network.params);
+        return network.runner(networks.makeVector([p]), network.params);
     },
 
     combinePropositions: f => _.constant(p1 => p2 => f(p1, p2)),
