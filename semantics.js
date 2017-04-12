@@ -96,6 +96,15 @@ module.exports = {
         }
     },
 
+    neuralBinaryFunction: network => context => p1 => p2 => {
+        var vectorizedInput = networks.makeVector([p1, p2]);
+        return network.runner(vectorizedInput, network.params);
+    },
+
+    neuralUnaryFunction: network => context => p => {
+        return network.runner(ad.lift(p), network.params);
+    },
+
     combinePropositions: f => _.constant(p1 => p2 => f(p1, p2)),
 
     negatePredicate: _.constant(pred => ent => ad.scalar.sub(1, pred(ent))),

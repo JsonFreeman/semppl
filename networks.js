@@ -29,5 +29,7 @@ module.exports = {
             return _.isArray(prop) ? +_.includes(prop, ent) : +prop[ent];
         });
         return makeVector(array);
-    }
+    },
+
+    makeVector
 }
