@@ -186,7 +186,7 @@ exports.ambiguousGrammar = flattenAndIndexify([
 		LHS: "$NEG",
 		RHS: "not",
 		sem: [
-			semFuncs.negatePredicate, 
+			semFuncs.negateProposition, 
 			semFuncs.id
 			]
 	},
@@ -311,12 +311,12 @@ var baseGrammarUnindexed = [
 	{
 		LHS: "$ADJ",
 		RHS: "$NEG $ADJ",
-		sem: semFuncs.fwdApply
+		sem: semFuncs.liftRight(semFuncs.fwdApply)
 	},
 	{
 		LHS: "$NP",
 		RHS: "$NEG $NP",
-		sem: semFuncs.fwdApply
+		sem: semFuncs.liftRight(semFuncs.fwdApply)
 	},
 ];
 
@@ -348,7 +348,7 @@ exports.fixedGrammar = indexify(baseGrammarUnindexed.concat([
 	{
 		LHS: "$NEG",
 		RHS: "not",
-		sem: semFuncs.negatePredicate
+		sem: semFuncs.negateProposition
 	},
 ]));
 
