@@ -10,7 +10,7 @@ var KL = function(p, q){
 };
 
 var interpretAnswer = function(worldPrior, answer, parser) {
-    var answerMeaning = parser(answer, 0, answerStartSymbol);
+    var answerMeaning = parser(answer, answerStartSymbol);
     return Infer({method: 'enumerate'}, function() {
         var world = sample(worldPrior);
         factor(Math.log(answerMeaning(world)));
@@ -102,10 +102,10 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
     }
 
     var explicitAnswerer = function(question, trueWorld) {
-        var questionMeaning = parser(question, 0, questionStartSymbol);
+        var questionMeaning = parser(question, questionStartSymbol);
         return Infer({method: 'enumerate'}, function() {
             var answer = sampleUtterance(answers, costFn);
-            var answerMeaning = parser(answer, 0, answerStartSymbol);
+            var answerMeaning = parser(answer, answerStartSymbol);
             factor(Math.log(answerMeaning(trueWorld)) * rationality);
             factor(answerQualityForQuestion(worldPrior, answer, questionMeaning, trueWorld, parser)
                 * rationality);
