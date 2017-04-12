@@ -28,7 +28,7 @@ module.exports = {
         }
     },
 
-    neuralBooleanPredicate: function(predicateName, network) {
+    neuralBooleanPredicate: function(network) {
         return function(context) {
             return function(ent) {
                 var vectorizedEntity = networks.entityVector(ent, context);

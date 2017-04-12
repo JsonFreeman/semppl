@@ -71,7 +71,7 @@ function makeNeuralBooleanPredicate(networks, name, pos, predicateName) {
     return {
         LHS: pos,
         RHS: name,
-        sem: semFuncs.neuralBooleanPredicate(predicateName, networks[predicateName])
+        sem: semFuncs.neuralBooleanPredicate(networks[predicateName])
     };
 }
 
