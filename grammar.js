@@ -309,20 +309,6 @@ var baseGrammarUnindexed = [
 		sem: semFuncs.liftRight(semFuncs.fwdApply)
 	},
 	{
-		LHS: "$CONJ",
-		RHS: "and",
-		sem: semFuncs.combinePropositions(ad.scalar.mul)
-	},
-	{
-		LHS: "$CONJ",
-		RHS: "or",
-		sem: semFuncs.combinePropositions((p1, p2) => {
-				// 1 - (1 - p1) * (1 - p2)
-				return ad.scalar.sub(1, 
-					ad.scalar.mul(ad.scalar.sub(1, p1), ad.scalar.sub(1, p2)))
-			})
-	},
-	{
 		LHS: "$ADJ",
 		RHS: "$NEG $ADJ",
 		sem: semFuncs.fwdApply
@@ -331,11 +317,6 @@ var baseGrammarUnindexed = [
 		LHS: "$NP",
 		RHS: "$NEG $NP",
 		sem: semFuncs.fwdApply
-	},
-	{
-		LHS: "$NEG",
-		RHS: "not",
-		sem: semFuncs.negatePredicate
 	},
 ];
 
@@ -350,6 +331,25 @@ exports.fixedGrammar = indexify(baseGrammarUnindexed.concat([
 	makeBooleanPredicate("doctors", "$N", "doctor"),
 	makeBooleanPredicate("teachers", "$N", "teacher"),
 	makeBooleanPredicate("fishermen", "$N", "fisherman"),
+	{
+		LHS: "$CONJ",
+		RHS: "and",
+		sem: semFuncs.combinePropositions(ad.scalar.mul)
+	},
+	{
+		LHS: "$CONJ",
+		RHS: "or",
+		sem: semFuncs.combinePropositions((p1, p2) => {
+				// 1 - (1 - p1) * (1 - p2)
+				return ad.scalar.sub(1, 
+					ad.scalar.mul(ad.scalar.sub(1, p1), ad.scalar.sub(1, p2)))
+			})
+	},
+	{
+		LHS: "$NEG",
+		RHS: "not",
+		sem: semFuncs.negatePredicate
+	},
 ]));
 
 exports.makeNeuralPredicateGrammar = function(networks) {
@@ -360,5 +360,20 @@ exports.makeNeuralPredicateGrammar = function(networks) {
 		makeNeuralBooleanPredicate(networks, "doctors", "$N", "doctor"),
 		makeNeuralBooleanPredicate(networks, "teachers", "$N", "teacher"),
 		makeNeuralBooleanPredicate(networks, "fishermen", "$N", "fisherman"),
+		{
+			LHS: "$CONJ",
+			RHS: "and",
+			sem: semFuncs.neuralBinaryFunction(networks.and)
+		},
+		{
+			LHS: "$CONJ",
+			RHS: "or",
+			sem: semFuncs.neuralBinaryFunction(networks.or)
+		},
+		{
+			LHS: "$NEG",
+			RHS: "not",
+			sem: semFuncs.neuralUnaryFunction(networks.not)
+		},
 	]))
 }

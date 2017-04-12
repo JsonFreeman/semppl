@@ -26,10 +26,14 @@ var data = readOrGenerateTrainingData(experimentName, runId, [questions, answers
 
 var predicates = ['doctor', 'teacher', 'fisherman'];
 var predicateNetworkSpec = networkSpecs.twoLayerFFNetWithSigmoid;
+var logicalConnectiveNetworkSpec = networkSpecs.twoLayerFFNetWithSigmoid;
 var networks = {
     doctor: predicateNetworkSpec(/*hiddenSize*/ 10, predicates.length),
     teacher: predicateNetworkSpec(/*hiddenSize*/ 10, predicates.length),
     fisherman: predicateNetworkSpec(/*hiddenSize*/ 10, predicates.length),
+    and: logicalConnectiveNetworkSpec(3, 2),
+    or: logicalConnectiveNetworkSpec(3, 2),
+    not: logicalConnectiveNetworkSpec(3, 1)
 }
 var grammarFn = semppl.makeNeuralPredicateGrammar;
 var model = createVariationalModel(questions, answers, constF(1),
