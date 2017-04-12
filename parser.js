@@ -7,7 +7,7 @@ exports.createParser = createParser;
 function createParser(grammar, params, featureFn, scoreFn, beamSize) {
 	assert(featureFn, "featureFn must be specified");
 	
-	return function(sentence, theta) {
+	return function(sentence) {
 		scoreFn = scoreFn || dotProductScoreFn;
 		beamSize = beamSize || 200;
 
@@ -25,7 +25,7 @@ function createParser(grammar, params, featureFn, scoreFn, beamSize) {
 
 			chart[i][i] = _.groupBy(_.map(rules,
 				rule => new Derivation(rule, /*leftChild*/ undefined, /*rightChild*/ undefined,
-					rule.sem(params, theta))), // map
+					rule.sem)), // map
 				derivation => derivation.rule.LHS); // groupBy
 		}
 
@@ -47,8 +47,8 @@ function createParser(grammar, params, featureFn, scoreFn, beamSize) {
 				}
 
 				// Sort scores in descending order, and chop off to fit in the beam
-				newCellDerivations.sort((d1, d2) => d2.getScore(scoreFn, featureFn, params.parserWeights)
-												- d1.getScore(scoreFn, featureFn, params.parserWeights));
+				newCellDerivations.sort((d1, d2) => d2.getScore(scoreFn, featureFn, params)
+												- d1.getScore(scoreFn, featureFn, params));
 				if (newCellDerivations.length > beamSize) {
 					newCellDerivations.length = beamSize;
 				}
