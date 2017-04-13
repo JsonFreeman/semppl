@@ -320,17 +320,16 @@ var baseGrammarUnindexed = [
 	},
 ];
 
-exports.fixedGrammar = indexify(baseGrammarUnindexed.concat([
-    makeFixedScalarItemRule("tall", "height", "$ADJ"),
-    makeFixedScalarItemRule("heavy", "weight", "$ADJ"),
-    makeFixedDimensionScalarAntonymRule("short", "tall", "height", "$ADJ"),
-    makeFixedDimensionScalarAntonymRule("light", "heavy", "weight", "$ADJ"),
+var fixedPredicates = [
 	makeBooleanPredicate("doctor", "$N"),
 	makeBooleanPredicate("teacher", "$N"),
 	makeBooleanPredicate("fisherman", "$N"),
 	makeBooleanPredicate("doctors", "$N", "doctor"),
 	makeBooleanPredicate("teachers", "$N", "teacher"),
 	makeBooleanPredicate("fishermen", "$N", "fisherman"),
+]
+
+var fixedConnectives = [
 	{
 		LHS: "$CONJ",
 		RHS: "and",
@@ -350,30 +349,42 @@ exports.fixedGrammar = indexify(baseGrammarUnindexed.concat([
 		RHS: "not",
 		sem: semFuncs.negateProposition
 	},
-]));
+]
+
+var neuralPredicates = networks => [
+	makeNeuralBooleanPredicate(networks, "doctor", "$N"),
+	makeNeuralBooleanPredicate(networks, "teacher", "$N"),
+	makeNeuralBooleanPredicate(networks, "fisherman", "$N"),
+	makeNeuralBooleanPredicate(networks, "doctors", "$N", "doctor"),
+	makeNeuralBooleanPredicate(networks, "teachers", "$N", "teacher"),
+	makeNeuralBooleanPredicate(networks, "fishermen", "$N", "fisherman"),
+]
+
+var neuralConnectives = networks => [
+	{
+		LHS: "$CONJ",
+		RHS: "and",
+		sem: semFuncs.neuralBinaryFunction(networks.and)
+	},
+	{
+		LHS: "$CONJ",
+		RHS: "or",
+		sem: semFuncs.neuralBinaryFunction(networks.or)
+	},
+	{
+		LHS: "$NEG",
+		RHS: "not",
+		sem: semFuncs.neuralUnaryFunction(networks.not)
+	},
+]
+
+exports.fixedGrammar = indexify(baseGrammarUnindexed.concat(fixedPredicates, fixedConnectives));
 
 exports.makeNeuralPredicateGrammar = function(networks) {
-	return indexify(baseGrammarUnindexed.concat([
-		makeNeuralBooleanPredicate(networks, "doctor", "$N"),
-		makeNeuralBooleanPredicate(networks, "teacher", "$N"),
-		makeNeuralBooleanPredicate(networks, "fisherman", "$N"),
-		makeNeuralBooleanPredicate(networks, "doctors", "$N", "doctor"),
-		makeNeuralBooleanPredicate(networks, "teachers", "$N", "teacher"),
-		makeNeuralBooleanPredicate(networks, "fishermen", "$N", "fisherman"),
-		{
-			LHS: "$CONJ",
-			RHS: "and",
-			sem: semFuncs.neuralBinaryFunction(networks.and)
-		},
-		{
-			LHS: "$CONJ",
-			RHS: "or",
-			sem: semFuncs.neuralBinaryFunction(networks.or)
-		},
-		{
-			LHS: "$NEG",
-			RHS: "not",
-			sem: semFuncs.neuralUnaryFunction(networks.not)
-		},
-	]))
+	return indexify(baseGrammarUnindexed.concat(neuralPredicates(networks), neuralConnectives(networks)))
+}
+
+// Mixed grammar where the predicates are fixed, but the connectives are neural nets
+exports.makeNeuralConnectiveGrammar = function(networks) {
+	return indexify(baseGrammarUnindexed.concat(fixedPredicates, neuralConnectives(networks)))
 }
