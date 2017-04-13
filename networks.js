@@ -3,7 +3,7 @@ function makeVector(arr) {
 };
 
 module.exports = {
-    twoLayerFFNet(input, params) {
+    twoLayerFFNet: params => input => {
         var W = params.W;
         var b = params.b;
         var h = T.tanh(T.add(T.dot(W[0], input), b[0]));
@@ -11,7 +11,7 @@ module.exports = {
         return T.sumreduce(output)
     },
 
-    twoLayerFFNetWithSigmoid(input, params) {
+    twoLayerFFNetWithSigmoid: params => input => {
         var W = params.W;
         var b = params.b;
         var h = T.tanh(T.add(T.dot(W[0], input), b[0]));

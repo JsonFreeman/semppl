@@ -60,10 +60,8 @@ var createVariationalModel = function(questions, answers, costFn, worldPrior, qu
     var runPath = makeRunPath(experimentName, runId);
     var modelFn = function() {
         var grammar = grammarFn.call(null, mapObject(function(k, v) {
-            return {
-                params: apply(v.paramConstructor, [k]),
-                runner: v.runner
-            }
+            var params = apply(v.paramConstructor, [k]);
+            return v.runner(params);
         }, networks));
         var parser = createParser(grammar, createParserWeights(grammar));
         var model = createModel(questions, answers, costFn, worldPrior, qudCandidates, rationality, parser);

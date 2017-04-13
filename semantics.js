@@ -32,7 +32,7 @@ module.exports = {
         return function(context) {
             return function(ent) {
                 var vectorizedEntity = networks.entityVector(ent, context);
-                return network.runner(vectorizedEntity, network.params);
+                return network(vectorizedEntity);
             }
         }
     },
@@ -41,7 +41,7 @@ module.exports = {
         return function(context, theta) {
             return function(ent) {
                 var vectorizedEntity = networks.entityVector(ent, context);
-                var measurement = network.runner(vectorizedEntity, network.params);
+                var measurement = network(vectorizedEntity);
                 return ad.scalar.sigmoid(ad.scalar.sub(measurement, theta[scaleName] || 0));
             }
         }
@@ -98,11 +98,11 @@ module.exports = {
 
     neuralBinaryFunction: network => context => p1 => p2 => {
         var vectorizedInput = networks.makeVector([p1, p2]);
-        return network.runner(vectorizedInput, network.params);
+        return network(vectorizedInput);
     },
 
     neuralUnaryFunction: network => context => p => {
-        return network.runner(networks.makeVector([p]), network.params);
+        return network(networks.makeVector([p]));
     },
 
     combinePropositions: f => _.constant(p1 => p2 => f(p1, p2)),
