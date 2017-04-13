@@ -1,12 +1,1 @@
-{
-    "probs": [
-        0.3333333333331671,
-        0.3333333333327765,
-        0.3333333333340561
-    ],
-    "support": [
-        "Who is a fisherman",
-        "Who is a teacher",
-        "Who is a doctor"
-    ]
-}
+{"trueResult":{"probs":[0.33125705919814363,0.33748588160371235,0.33125705919814363],"support":["Who is a fisherman","Who is a teacher","Who is a doctor"]},"learnedResult":{"probs":[0.33333333333332277,0.33333333333329457,0.33333333333338266],"support":["Who is a fisherman","Who is a teacher","Who is a doctor"]},"KLDivergence":0.00003871842080768262}

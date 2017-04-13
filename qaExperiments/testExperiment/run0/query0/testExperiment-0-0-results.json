@@ -1,18 +1,1 @@
-{
-    "probs": [
-        0.11546002461932187,
-        0.09269547722695913,
-        0.13447010342747245,
-        0.220799612733998,
-        0.19838364246237172,
-        0.23819113952987703
-    ],
-    "support": [
-        "John and Mary is a fisherman",
-        "John and Mary is a teacher",
-        "John and Mary is a doctor",
-        "John is a fisherman",
-        "John is a teacher",
-        "John is a doctor"
-    ]
-}
+{"trueResult":{"probs":[1],"support":["John is a doctor"]},"learnedResult":{"probs":[0.1609862795487034,0.16099521741436484,0.16097859392444783,0.17366391605136827,0.15603324572881,0.18734274733230563],"support":["John and Mary is a fisherman","John and Mary is a teacher","John and Mary is a doctor","John is a fisherman","John is a teacher","John is a doctor"]},"KLDivergence":1.6748154663556252}

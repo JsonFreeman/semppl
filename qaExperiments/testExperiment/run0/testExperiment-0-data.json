@@ -1,4 +1,5 @@
-[
+{ "samples": 5,
+     "data": [
     [
         "Who is a doctor",
         "John is a doctor",
@@ -10529,4 +10530,4 @@
         0,
         "John is a fisherman"
     ]
-]
+]}
