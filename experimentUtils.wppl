@@ -60,16 +60,16 @@ var generateTrainingData = function(listOfLists, fn, numSamples) {
 var readOrGenerateTrainingData = function(experimentName, runId, listOfLists, fn, numSamples) {
     var runPath = makeRunPath(experimentName, runId);
     if (fs.existsSync(runPath.dataPath)) {
-        return json.read(runPath.dataPath);
+        return json.read(runPath.dataPath).data;
     }
 
     if (!fs.existsSync(runPath.dir)) {
         webpplFs.mkdirp(runPath.dir);
     }
 
-    var data = generateTrainingData(listOfLists, fn, numSamples);
+    var data = { samples: numSamples, data: generateTrainingData(listOfLists, fn, numSamples) };
     json.write(runPath.dataPath, data);
-    return data;
+    return data.data;
 }
 
 var computeAndWriteResults = function(experimentName, runId, queryAndModelPairs) {
