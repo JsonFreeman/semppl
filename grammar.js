@@ -75,6 +75,8 @@ function makeNeuralBooleanPredicate(networks, name, pos, predicateName) {
     };
 }
 
+var blockCoordinatedNegatives = true;
+
 // Don't flatten. We don't want to have rules with multiple semantics
 var baseGrammarUnindexed = [
 	{
@@ -95,6 +97,16 @@ var baseGrammarUnindexed = [
 	{
 		LHS: "$VP",
 		RHS: "$COP $ADJ",
+		sem: semFuncs.fwdApply
+	},
+	{
+		LHS: "$VP",
+		RHS: "$COP $NegNP",
+		sem: semFuncs.fwdApply
+	},
+	{
+		LHS: "$VP",
+		RHS: "$COP $NegADJ",
 		sem: semFuncs.fwdApply
 	},
 	{
@@ -185,12 +197,12 @@ var baseGrammarUnindexed = [
 		sem: semFuncs.liftRight(semFuncs.fwdApply)
 	},
 	{
-		LHS: "$ADJ",
+		LHS: blockCoordinatedNegatives ? "$NegADJ" : "$ADJ",
 		RHS: "$NEG $ADJ",
 		sem: semFuncs.liftRight(semFuncs.fwdApply)
 	},
 	{
-		LHS: "$NP",
+		LHS: blockCoordinatedNegatives ? "$NegNP" : "$NP",
 		RHS: "$NEG $NP",
 		sem: semFuncs.liftRight(semFuncs.fwdApply)
 	},
