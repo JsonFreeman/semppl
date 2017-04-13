@@ -78,18 +78,21 @@ var computeAndWriteResults = function(experimentName, runId, groundTruthModel, l
         var query = queryAndAgent.query;
         var trueResult = apply(groundTruthModel[queryAndAgent.agent], queryAndAgent.query);
         var learnedResult = apply(learnedModel[queryAndAgent.agent], queryAndAgent.query);
+        var KLDivergence = KL(trueResult, learnedResult);
 
         // Write query and result before returning them
         if (!fs.existsSync(queryPath.dir)) {
             webpplFs.mkdirp(queryPath.dir);
         }
         json.write(queryPath.queryPath, query);
-        json.write(queryPath.resultPath, { trueResult, learnedResult });
+        json.write(queryPath.resultPath, { trueResult, learnedResult, KLDivergence });
+
         
         return {
             query,
             trueResult,
-            learnedResult
+            learnedResult,
+            KLDivergence
         }
     }, queryAndAgentPairs);
 
