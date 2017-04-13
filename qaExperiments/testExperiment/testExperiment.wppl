@@ -51,7 +51,7 @@ var model = createVariationalModel(questions, answers, constF(1),
       logProgress: true
     }, experimentName, runId);
 
-computeAndWriteResults(experimentName, runId, [
-    { model: model.A1, query: [questions[0], worlds[0], /*qudIndex*/ 0] },
-    { model: model.Q1, query: [/*qudIndex*/ 0] }
+computeAndWriteResults(experimentName, runId, generateDataModel, model, [
+    { agent: "A1", query: [questions[0], worlds[0], /*qudIndex*/ 0] },
+    { agent: "Q1", query: [/*qudIndex*/ 0] }
 ]);

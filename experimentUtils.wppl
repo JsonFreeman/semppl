@@ -72,24 +72,26 @@ var readOrGenerateTrainingData = function(experimentName, runId, listOfLists, fn
     return data.data;
 }
 
-var computeAndWriteResults = function(experimentName, runId, queryAndModelPairs) {
-    var queriesAndResults = mapIndexed(function(queryId, queryAndModel) {
+var computeAndWriteResults = function(experimentName, runId, groundTruthModel, learnedModel, queryAndAgentPairs) {
+    var queriesAndResults = mapIndexed(function(queryId, queryAndAgent) {
         var queryPath = makeQueryPath(experimentName, runId, queryId);
-        var query = queryAndModel.query;
-        var result = apply(queryAndModel.model, queryAndModel.query);
+        var query = queryAndAgent.query;
+        var trueResult = apply(groundTruthModel[queryAndAgent.agent], queryAndAgent.query);
+        var learnedResult = apply(learnedModel[queryAndAgent.agent], queryAndAgent.query);
 
         // Write query and result before returning them
         if (!fs.existsSync(queryPath.dir)) {
             webpplFs.mkdirp(queryPath.dir);
         }
         json.write(queryPath.queryPath, query);
-        json.write(queryPath.resultPath, result);
+        json.write(queryPath.resultPath, { trueResult, learnedResult });
         
         return {
-            query: query,
-            result: result
+            query,
+            trueResult,
+            learnedResult
         }
-    }, queryAndModelPairs);
+    }, queryAndAgentPairs);
 
     return queriesAndResults;
 }
