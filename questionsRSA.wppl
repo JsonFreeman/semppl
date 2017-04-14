@@ -56,19 +56,21 @@ var sampleUtterance = function(utterances, costFn, rationality) {
 }
 
 var createVariationalModel = function(questions, answers, costFn, worldPrior, qudCandidates, 
-                                      rationality, grammarFn, networks, observationFn, opts, experimentName, runId) {
+                                      rationality, grammarFn, parametrizedNetworks, observationFn, 
+                                      opts, experimentName, runId) {
     var runPath = makeRunPath(experimentName, runId);
     var modelFn = function() {
-        var grammar = grammarFn.call(null, mapObject(function(k, v) {
+        var specifiedNetworks = mapObject(function(k, v) {
             var params = apply(v.paramConstructor, [k]);
             return v.runner(params);
-        }, networks));
+        }, parametrizedNetworks)
+        var grammar = grammarFn.call(null, specifiedNetworks);
         var parser = createParser(grammar, createParserWeights(grammar));
         var model = createModel(questions, answers, costFn, worldPrior, qudCandidates, rationality, parser);
         if (observationFn) {
             observationFn(model);
         }
-        return model;
+        return _.assign({ networks: specifiedNetworks }, model);
     }
 
     if (fs.existsSync(runPath.paramsPath)) {
