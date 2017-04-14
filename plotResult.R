@@ -19,7 +19,7 @@ queryDir = paste('qaExperiments/', experimentName, '/run', runId,
                  '/query', queryId, '/', sep = '')
 baseFilename = paste(experimentName, '-', runId, '-', queryId, '-', sep = '')
 basePath = paste(queryDir, baseFilename, sep = '')
-queryPath = paste(basePath, 'query.json', sep = '')
+queryPath = paste(basePath, 'args.json', sep = '')
 resultPath = paste(basePath, 'results.json', sep = '')
 plotFilename = paste(baseFilename, 'plot.pdf', sep = '')
 
