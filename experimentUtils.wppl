@@ -16,23 +16,15 @@ var makeRunPath = function(experimentName, runId) {
     };
 }
 
-var makeQueryOrNetworkTestPath = function(experimentName, runId, queryOrNetworkTestId, testKind) {
+var makeQueryPath = function(experimentName, runId, queryId) {
     var runDir = makeRunDir(experimentName, runId);
-    var queryDir = runDir + "/" + testKind + queryOrNetworkTestId;
-    var basePath = queryDir + "/" + experimentName + "-" + runId + "-" + queryOrNetworkTestId;
+    var queryDir = runDir + "/query" + queryId;
+    var basePath = queryDir + "/" + experimentName + "-" + runId + "-" + queryId;
     return {
         dir: queryDir,
-        argsPath: basePath + "-args.json",
+        queryPath: basePath + "-query.json",
         resultPath: basePath + "-results.json"
     };
-}
-
-var makeQueryPath = function(experimentName, runId, queryId) {
-    return makeQueryOrNetworkTestPath(experimentName, runId, queryId, "query");
-}
-
-var makeNetworkTestPath = function(experimentName, runId, queryId) {
-    return makeQueryOrNetworkTestPath(experimentName, runId, queryId, "network");
 }
 
 var getExperimentNameAndRunId = function() {
@@ -92,7 +84,7 @@ var computeAndWriteResults = function(experimentName, runId, groundTruthModel, l
         if (!fs.existsSync(queryPath.dir)) {
             webpplFs.mkdirp(queryPath.dir);
         }
-        json.write(queryPath.argsPath, query);
+        json.write(queryPath.queryPath, query);
         json.write(queryPath.resultPath, { trueResult, learnedResult, KLDivergence });
 
         
@@ -105,22 +97,4 @@ var computeAndWriteResults = function(experimentName, runId, groundTruthModel, l
     }, queryAndAgentPairs);
 
     return queriesAndResults;
-}
-
-var testNetworks = function(experimentName, runId, networkAndArgsPairs) {
-    return mapIndexed(function(networkTestId, networkAndArgs) {
-        var networkTestPath = makeNetworkTestPath(experimentName, runId, networkTestId)
-        var network = networkAndArgs.network;
-        var args = networkAndArgs.args;
-        var result = network.call(null, args);
-
-        // Path and file stuff
-        if (!fs.existsSync(networkTestPath.dir)) {
-            webpplFs.mkdirp(networkTestPath.dir);
-        }
-        json.write(networkTestPath.argsPath, args);
-        json.write(networkTestPath.resultPath, result);
-
-        return { args, result };
-    }, networkAndArgsPairs);
 }
