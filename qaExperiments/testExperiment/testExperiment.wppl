@@ -1,4 +1,4 @@
-// webppl --require webppl-json --require webppl-fs --require . <this-file> (<runId> | new)
+// webppl --require webppl-json --require webppl-fs --require webppl-csv --require . <this-file> (<runId> | new)
 var experimentInfo = getExperimentNameAndRunId();
 var experimentName = experimentInfo.name;
 var runId = experimentInfo.runId;
@@ -55,3 +55,7 @@ computeAndWriteResults(experimentName, runId, generateDataModel, model, [
     { agent: "A1", query: [questions[0], worlds[0], /*qudIndex*/ 0] },
     { agent: "Q1", query: [/*qudIndex*/ 0] }
 ]);
+
+testNetworks(experimentName, runId, model.networks, {
+    not: { range: [0, 1, 0.2], arity: 1 },
+});

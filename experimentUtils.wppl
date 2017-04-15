@@ -27,6 +27,11 @@ var makeQueryPath = function(experimentName, runId, queryId) {
     };
 }
 
+var makeNetworkTestPath = function(experimentName, runId, networkName) {
+    var runDir = makeRunDir(experimentName, runId);
+    return runDir + "/nn-" + networkName + ".csv";
+}
+
 var getExperimentNameAndRunId = function() {
     var experimentPath = _.nth(process.argv, -2);
     var experimentName = experimentPath.substring(experimentPath.lastIndexOf('/') + 1, experimentPath.lastIndexOf('.'));
@@ -97,4 +102,19 @@ var computeAndWriteResults = function(experimentName, runId, groundTruthModel, l
     }, queryAndAgentPairs);
 
     return queriesAndResults;
+}
+
+var testNetworks = function(experimentName, runId, networks, tests) {
+    mapObject(function(networkName, test) {
+        var networkTestPath = makeNetworkTestPath(experimentName, runId, networkName);
+        var network = networks[networkName];
+        var range = _.range.apply(_, test.range);
+        var results = Enumerate(function() {
+            var args = repeat(test.arity, function() { uniformDraw(range); });
+            return snoc(args, network.call(null, Vector(args)));
+        }).support();
+
+        webpplCsv.writeCSV(results, networkTestPath);
+
+    }, tests);
 }
