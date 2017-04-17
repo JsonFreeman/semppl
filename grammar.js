@@ -212,9 +212,9 @@ var fixedPredicates = [
 	makeBooleanPredicate("doctor", "$N"),
 	makeBooleanPredicate("teacher", "$N"),
 	makeBooleanPredicate("fisherman", "$N"),
-	makeBooleanPredicate("doctors", "$N", "doctor"),
-	makeBooleanPredicate("teachers", "$N", "teacher"),
-	makeBooleanPredicate("fishermen", "$N", "fisherman"),
+	makeBooleanPredicate("doctors", "$NP", "doctor"),
+	makeBooleanPredicate("teachers", "$NP", "teacher"),
+	makeBooleanPredicate("fishermen", "$NP", "fisherman"),
 ]
 
 var fixedConnectives = [
@@ -243,9 +243,9 @@ var neuralPredicates = networks => [
 	makeNeuralBooleanPredicate(networks, "doctor", "$N"),
 	makeNeuralBooleanPredicate(networks, "teacher", "$N"),
 	makeNeuralBooleanPredicate(networks, "fisherman", "$N"),
-	makeNeuralBooleanPredicate(networks, "doctors", "$N", "doctor"),
-	makeNeuralBooleanPredicate(networks, "teachers", "$N", "teacher"),
-	makeNeuralBooleanPredicate(networks, "fishermen", "$N", "fisherman"),
+	makeNeuralBooleanPredicate(networks, "doctors", "$NP", "doctor"),
+	makeNeuralBooleanPredicate(networks, "teachers", "$NP", "teacher"),
+	makeNeuralBooleanPredicate(networks, "fishermen", "$NP", "fisherman"),
 ]
 
 var neuralConnectives = networks => [
