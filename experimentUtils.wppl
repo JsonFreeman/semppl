@@ -43,6 +43,10 @@ var getExperimentNameAndRunId = function() {
     }
 }
 
+var wordCount = function(utterance) {
+    return _.words(utterance).length;
+}
+
 // Generating data and results
 var generateTrainingData = function(listOfLists, fn, numSamples) {
     var recursiveMap = function(listOfLists, fn, numSamples, args /* internal*/) {
