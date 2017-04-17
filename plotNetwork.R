@@ -5,7 +5,7 @@ library(ggplot2)
 library(jsonlite)
 library(data.table)
 
-# args = c('rsaAndNeg1', '0', 'not')
+# args = c('rsaAndNeg1', '1', 'and')
 args = commandArgs(trailingOnly = TRUE)
 if (length(args) != 3) {
   stop("Must supply 3 arguments")
@@ -22,11 +22,20 @@ dataPath = paste(basePath, '.csv', sep = '')
 plotFilename = paste(baseFilename, '-plot.pdf', sep = '')
 
 # Read in JSON and make data frame
-networkQueries = read.csv(dataPath, header = FALSE) %>% setnames(c('input', 'output'))
+networkQueries = read.csv(dataPath, header = FALSE)
+networkPlot = NULL
+if (ncol(networkQueries) == 2) {
+  networkQueries = setnames(networkQueries, c('input', 'output'))
+  networkPlot = ggplot(networkQueries, aes(x=input, y=output)) + 
+    geom_smooth() + ylim(0, 1)
+} else if (ncol(networkQueries) == 3) {
+  networkQueries = setnames(networkQueries, c('input1', 'input2', 'output'))
+  networkPlot = ggplot(networkQueries, aes(x=input1, y=input2, fill=output)) + 
+    geom_tile()
+}
 
-ggplot(networkQueries, aes(x=input, y=output)) +
-  geom_smooth() +
-  ylim(0, 1) +
+networkPlot +
   ggtitle(networkName) +
-  ggsave(plotFilename, 
+  ggsave(plotFilename,
          path=runDir)
+
