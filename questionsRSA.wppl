@@ -104,7 +104,7 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
         return KL(posterior, prior);
     }
 
-    var explicitAnswerer = function(question, trueWorld) {
+    var explicitAnswerer = mem(function(question, trueWorld) {
         var questionMeaning = parser(question, questionStartSymbol);
         return Infer({method: 'enumerate'}, function() {
             var answer = sampleUtterance(answers, costFn, rationality);
@@ -114,10 +114,10 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
                 * rationality);
             return answer;
         })
-    }
+    })
 
     var questioner = function(answerer) {
-        return function(qudIndex) {
+        return mem(function(qudIndex) {
             return Infer({method: 'enumerate'}, function() {
                 var question = sampleUtterance(questions, costFn, rationality);
                 var expectedInformationGain = expectation(worldPrior, function(world) {
@@ -126,7 +126,7 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
                 factor(expectedInformationGain * rationality);
                 return question;
             });
-        }
+        })
     }
 
     var pragmaticAnswerer = function(question, trueWorld) {
