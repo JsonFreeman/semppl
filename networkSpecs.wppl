@@ -12,4 +12,17 @@ var networkSpecs = {
             runner: semppl.networks.twoLayerFFNetWithSigmoid
         }
     },
+    twoLayerFFNetWithSigmoidJustOnes(hiddenSize, inputSize) {
+        return {
+            paramConstructor(networkName) {
+                var W0 = ones([hiddenSize, inputSize])//, mu: 0, sigma: 0.1, name: networkName + "W0"})
+                var W1 = ones([1, hiddenSize])//, mu: 0, sigma: 0.1, name: networkName + "W1" })
+                var b0 = ones([hiddenSize, 1])//, mu: 0, sigma: 0.1, name: networkName + "b0" })
+                var b1 = ones([1, 1])//, mu: 0, sigma: 0.1, name: networkName + "b1" })
+
+                return { W: [W0, W1], b: [b0, b1] };
+            },
+            runner: semppl.networks.twoLayerFFNetWithSigmoid
+        }
+    },
 }
