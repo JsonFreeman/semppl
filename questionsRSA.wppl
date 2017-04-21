@@ -9,15 +9,6 @@ var KL = function(p, q){
     });
 };
 
-var interpretAnswer = function(worldPrior, answer, parser) {
-    var answerMeaning = parser(answer, answerStartSymbol);
-    return Infer({method: 'enumerate'}, function() {
-        var world = sample(worldPrior);
-        factor(Math.log(answerMeaning(world)));
-        return world;
-    });
-}
-
 var similarity = function(trueWorldPredicate, otherWorldPredicate, domain) {
     // trueWorldPredicate and otherWorldPredicate are each distributions
     // over subsets of the domain. Compute KL between them using factorization
@@ -29,30 +20,6 @@ var similarity = function(trueWorldPredicate, otherWorldPredicate, domain) {
         var negativeTerm = p_e === 1 ? 0 : (1 - p_e) * Math.log((1 - p_e) / (1 - q_e));
         return positiveTerm + negativeTerm;
     }, domain)));
-}
-
-var answerQualityForQuestion = function(worldPrior, answer, questionPredicate, trueWorld, parser) {
-    // Using soft similarity semantics
-    var consistentWorlds = interpretAnswer(worldPrior, answer, parser);
-    return Math.log(expectation(consistentWorlds, function(w) {
-        assert.ok(w.domain.length === trueWorld.domain.length)
-        var truePredicate = questionPredicate(trueWorld);
-        var otherPredicate = questionPredicate(w);
-        return similarity(truePredicate, otherPredicate, trueWorld.domain);
-    }))
-}
-
-var answerQualityForQud = function(worldPrior, answer, qud, trueWorld, parser) {
-    // Using hard partition semantics
-    var consistentWorlds = interpretAnswer(worldPrior, answer, parser);
-    return marginalize(consistentWorlds, qud).score(qud(trueWorld));
-}
-
-var sampleUtterance = function(utterances, costFn, rationality) {
-    var probabilities = map(function(u) {
-        return Math.exp(-rationality * costFn(u));
-    }, utterances);
-    return categorical(probabilities, utterances);
 }
 
 var createVariationalModel = function(questions, answers, costFn, worldPrior, qudCandidates, 
@@ -92,12 +59,45 @@ var createVariationalModel = function(questions, answers, costFn, worldPrior, qu
 }
 
 var createModel = function(questions, answers, costFn, worldPrior, qudCandidates, rationality, parser) {
+    var interpretAnswer = function(answer) {
+        var answerMeaning = parser(answer, answerStartSymbol);
+        return Infer({method: 'enumerate'}, function() {
+            var world = sample(worldPrior);
+            factor(Math.log(answerMeaning(world)));
+            return world;
+        });
+    }
+
+    var answerQualityForQuestion = function(answer, questionPredicate, trueWorld) {
+        // Using soft similarity semantics
+        var consistentWorlds = interpretAnswer(answer);
+        return Math.log(expectation(consistentWorlds, function(w) {
+            assert.ok(w.domain.length === trueWorld.domain.length)
+            var truePredicate = questionPredicate(trueWorld);
+            var otherPredicate = questionPredicate(w);
+            return similarity(truePredicate, otherPredicate, trueWorld.domain);
+        }))
+    }
+
+    var answerQualityForQud = function(answer, qud, trueWorld) {
+        // Using hard partition semantics
+        var consistentWorlds = interpretAnswer(answer);
+        return marginalize(consistentWorlds, qud).score(qud(trueWorld));
+    }
+
+    var sampleUtterance = function(utterances) {
+        var probabilities = map(function(u) {
+            return Math.exp(-rationality * costFn(u));
+        }, utterances);
+        return categorical(probabilities, utterances);
+    }
+
     var informationGain = function(question, qudFn, trueWorld, answerer) {
         var prior = marginalize(worldPrior, qudFn);
         var answerDist = answerer(question, trueWorld);
         var posterior = Infer({method: 'enumerate'}, function() {
             var answer = sample(answerDist);
-            var world = sample(interpretAnswer(worldPrior, answer, parser));
+            var world = sample(interpretAnswer(answer));
             return qudFn(world);
         });
 
@@ -107,10 +107,10 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
     var explicitAnswerer = mem(function(question, trueWorld) {
         var questionMeaning = parser(question, questionStartSymbol);
         return Infer({method: 'enumerate'}, function() {
-            var answer = sampleUtterance(answers, costFn, rationality);
+            var answer = sampleUtterance(answers);
             var answerMeaning = parser(answer, answerStartSymbol);
             factor(Math.log(answerMeaning(trueWorld)) * rationality);
-            factor(answerQualityForQuestion(worldPrior, answer, questionMeaning, trueWorld, parser)
+            factor(answerQualityForQuestion(answer, questionMeaning, trueWorld)
                 * rationality);
             return answer;
         })
@@ -119,7 +119,7 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
     var questioner = function(answerer) {
         return mem(function(qudIndex) {
             return Infer({method: 'enumerate'}, function() {
-                var question = sampleUtterance(questions, costFn, rationality);
+                var question = sampleUtterance(questions);
                 var expectedInformationGain = expectation(worldPrior, function(world) {
                     return informationGain(question, qudCandidates[qudIndex], world, answerer);
                 });
@@ -134,9 +134,9 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
         return Infer({method: 'enumerate'}, function() {
             var qudIndex = uniformDraw(_.keys(qudCandidates));
             var questionDist = explicitQuestioner(qudIndex);
-            var answer = sampleUtterance(answers, costFn, rationality);
+            var answer = sampleUtterance(answers);
             factor((questionDist.score(question)
-                    + answerQualityForQud(worldPrior, answer, qudCandidates[qudIndex], trueWorld, parser))
+                    + answerQualityForQud(answer, qudCandidates[qudIndex], trueWorld))
                     * rationality);
             return answer;
         });
@@ -147,12 +147,12 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
 
     // Standard RSA
     var literalListener = function(utterance) {
-        return interpretAnswer(worldPrior, utterance, parser);
+        return interpretAnswer(utterance);
     }
 
     var speaker = function(world) {
         return Infer({ method: 'enumerate' }, function() {
-            var utterance = sampleUtterance(answers, costFn, rationality);
+            var utterance = sampleUtterance(answers);
             var L = literalListener(utterance);
             factor(L.score(world) * rationality);
             return utterance;
