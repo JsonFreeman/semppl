@@ -72,7 +72,8 @@ var createParserWeights = function (grammar) {
         var name = semppl.makeRuleKey(entry);
         return [
             name, // key
-            modelParam({ mu: 0, name: name }) // value
+            // Temporary hack, re-enable modelParam when we figure out where NaN's coming from
+            0 // modelParam({ mu: 0, name: name }) // value
         ];
     }, grammar));
 };
