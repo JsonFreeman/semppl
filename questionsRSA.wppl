@@ -59,14 +59,14 @@ var createVariationalModel = function(questions, answers, costFn, worldPrior, qu
 }
 
 var createModel = function(questions, answers, costFn, worldPrior, qudCandidates, rationality, parser) {
-    var interpretAnswer = function(answer) {
+    var interpretAnswer = mem(function(answer) {
         var answerMeaning = parser(answer, answerStartSymbol);
         return Infer({method: 'enumerate'}, function() {
             var world = sample(worldPrior);
             factor(Math.log(answerMeaning(world)));
             return world;
         });
-    }
+    })
 
     var answerQualityForQuestion = function(answer, questionPredicate, trueWorld) {
         // Using soft similarity semantics
@@ -129,8 +129,9 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
         })
     }
 
-    var pragmaticAnswerer = function(question, trueWorld) {
-        var explicitQuestioner = questioner(explicitAnswerer);
+    var explicitQuestioner = questioner(explicitAnswerer);
+
+    var pragmaticAnswerer = mem(function(question, trueWorld) {
         return Infer({method: 'enumerate'}, function() {
             var qudIndex = uniformDraw(_.keys(qudCandidates));
             var questionDist = explicitQuestioner(qudIndex);
@@ -140,9 +141,8 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
                     * rationality);
             return answer;
         });
-    }
+    })
 
-    var explicitQuestioner = questioner(explicitAnswerer);
     var pragmaticQuestioner = questioner(pragmaticAnswerer);
 
     // Standard RSA
