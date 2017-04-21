@@ -132,11 +132,11 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
     var pragmaticAnswerer = function(question, trueWorld) {
         var explicitQuestioner = questioner(explicitAnswerer);
         return Infer({method: 'enumerate'}, function() {
-            var qud = uniformDraw(qudCandidates);
-            var questionDist = explicitQuestioner(qud);
+            var qudIndex = uniformDraw(_.keys(qudCandidates));
+            var questionDist = explicitQuestioner(qudIndex);
             var answer = sampleUtterance(answers, costFn, rationality);
             factor((questionDist.score(question)
-                    + answerQualityForQud(worldPrior, answer, qud, trueWorld, parser))
+                    + answerQualityForQud(worldPrior, answer, qudCandidates[qudIndex], trueWorld, parser))
                     * rationality);
             return answer;
         });
