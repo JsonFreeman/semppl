@@ -21,7 +21,7 @@ var generateDataModel = createModel(questions, answers, constF(1),
 
 var data = readOrGenerateTrainingData(experimentName, runId, [questions, answers, worlds, qudCandidatesRange], 
     function(q, a, w, qudIndex) {
-        return apply(generateDataModel.A1, [q, w]);
+        return apply(generateDataModel.A2, [q, w]);
     }, 5);
 
 var predicates = ['doctor', 'teacher', 'fisherman'];
@@ -40,7 +40,7 @@ var model = createVariationalModel(questions, answers, constF(1),
     Categorical({ vs: worlds, ps: ones([worlds.length]).toFlatArray() }),
     qudCandidates, 1, grammarFn, networks, function(model) {
         mapData({ data: data, batchSize: 10 }, function(d) {
-            observe(apply(model.A1, [d[0], d[2]]), d[1]);
+            observe(apply(model.A2, [d[0], d[2]]), d[1]);
         })
     }, 
     { optimizer: 'adam', 
