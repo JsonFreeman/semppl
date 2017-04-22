@@ -52,7 +52,7 @@ var generateDataModel = createModel(questions, answers, costFn, worldsDist,
 var data = readOrGenerateTrainingData(experimentName, runId, [qudNames], 
     function(q) {
         display(arguments)
-        return apply(generateDataModel.Q2, [q]);
+        return apply(generateDataModel.Q1, [q]);
     }, 1);
 
 var logicalConnectiveNetworkSpec = networkSpecs.twoLayerFFNetWithSigmoid;
