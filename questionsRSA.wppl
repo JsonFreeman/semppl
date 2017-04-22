@@ -117,7 +117,9 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
     })
 
     var questioner = function(answerer) {
-        return mem(function(qudIndex) {
+        return (function(qudIndex) {
+            if (answerer === explicitAnswerer) {
+                display("Q1: " + qudIndex)}
             return Infer({method: 'enumerate'}, function() {
                 var question = sampleUtterance(questions);
                 var expectedInformationGain = expectation(worldPrior, function(world) {
@@ -131,16 +133,19 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
 
     var explicitQuestioner = questioner(explicitAnswerer);
 
-    var pragmaticAnswerer = mem(function(question, trueWorld) {
-        return Infer({method: 'enumerate'}, function() {
-            var qudIndex = uniformDraw(_.keys(qudCandidates));
-            var questionDist = explicitQuestioner(qudIndex);
-            var answer = sampleUtterance(answers);
-            factor((questionDist.score(question)
-                    + answerQualityForQud(answer, qudCandidates[qudIndex], trueWorld))
-                    * rationality);
-            return answer;
-        });
+    var pragmaticAnswerer = (function(question, trueWorld) {
+        var t = timeit(function(){
+            Infer({method: 'enumerate'}, function() {
+                var qudIndex = uniformDraw(_.keys(qudCandidates));
+                var questionDist = explicitQuestioner(qudIndex);
+                var answer = sampleUtterance(answers);
+                factor((questionDist.score(question)
+                        + answerQualityForQud(answer, qudCandidates[qudIndex], trueWorld))
+                        * rationality);
+                return answer;
+        });})
+        display("A2: " + question + ", " + t.runtimeInMilliseconds);
+        return t.value;
     })
 
     var pragmaticQuestioner = questioner(pragmaticAnswerer);
