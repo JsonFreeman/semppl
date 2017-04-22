@@ -80,11 +80,12 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
         }))
     })
 
-    var answerQualityForQud = function(answer, qud, trueWorld) {
+    var answerQualityForQud = mem(function(answer, qudIndex, trueWorld) {
         // Using hard partition semantics
         var consistentWorlds = interpretAnswer(answer);
+        var qud = qudCandidates[qudIndex];
         return marginalize(consistentWorlds, qud).score(qud(trueWorld));
-    }
+    })
 
     var sampleUtterance = function(utterances) {
         var probabilities = map(function(u) {
@@ -137,7 +138,7 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
             var questionDist = explicitQuestioner(qudIndex);
             var answer = sampleUtterance(answers);
             factor((questionDist.score(question)
-                    + answerQualityForQud(answer, qudCandidates[qudIndex], trueWorld))
+                    + answerQualityForQud(answer, qudIndex, trueWorld))
                     * rationality);
             return answer;
         });
