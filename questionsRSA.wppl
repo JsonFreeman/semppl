@@ -65,6 +65,21 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
         });
     })
 
+    var informationGainFn = function(answerer) {
+        return mem(function(question, qudIndex, trueWorld) {
+            var qudFn = qudCandidates[qudIndex];
+            var prior = marginalize(worldPrior, qudFn);
+            var answerDist = answerer(question, trueWorld);
+            var posterior = Infer({method: 'enumerate'}, function() {
+                var answer = sample(answersDist);
+                var world = sample(interpretAnswer(answer));
+                return qudFn(world);
+            });
+
+            return KL(posterior, prior);
+        })
+    }
+    
     var similarity = mem(function(question, trueWorld, otherWorld, domain) {
         // trueWorldPredicate and otherWorldPredicate are each distributions
         // over subsets of the domain. Compute KL between them using factorization
@@ -97,18 +112,6 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
         return marginalize(consistentWorlds, qud).score(qud(trueWorld));
     })
 
-    var informationGain = function(question, qudFn, trueWorld, answerer) {
-        var prior = marginalize(worldPrior, qudFn);
-        var answerDist = answerer(question, trueWorld);
-        var posterior = Infer({method: 'enumerate'}, function() {
-            var answer = sample(answersDist);
-            var world = sample(interpretAnswer(answer));
-            return qudFn(world);
-        });
-
-        return KL(posterior, prior);
-    }
-
     var explicitAnswerer = mem(function(question, trueWorld) {
         return Infer({method: 'enumerate'}, function() {
             var answer = sample(answersDist);
@@ -121,11 +124,12 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
     })
 
     var questioner = function(answerer) {
+        var informationGain = informationGainFn(answerer);
         return mem(function(qudIndex) {
             return Infer({method: 'enumerate'}, function() {
                 var question = sample(questionsDist)
                 var expectedInformationGain = expectation(worldPrior, function(world) {
-                    return informationGain(question, qudCandidates[qudIndex], world, answerer);
+                    return informationGain(question, qudIndex, world);
                 });
                 factor(expectedInformationGain * rationality);
                 return question;
