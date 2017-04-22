@@ -56,7 +56,7 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
     var questionsDist = utteranceDist(questions, costFn, rationality);
     var answersDist = utteranceDist(answers, costFn, rationality);
 
-    var interpretAnswer = mem(function(answer) {
+    var interpretAnswer = cache(function(answer) {
         var answerMeaning = parser(answer, answerStartSymbol);
         return Infer({method: 'enumerate'}, function() {
             var world = sample(worldPrior);
@@ -66,7 +66,7 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
     })
 
     var informationGainFn = function(answerer) {
-        return mem(function(question, qudIndex, trueWorld) {
+        return cache(function(question, qudIndex, trueWorld) {
             var qudFn = qudCandidates[qudIndex];
             var prior = marginalize(worldPrior, qudFn);
             var answerDist = answerer(question, trueWorld);
@@ -80,7 +80,7 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
         })
     }
     
-    var similarity = mem(function(question, trueWorld, otherWorld, domain) {
+    var similarity = cache(function(question, trueWorld, otherWorld, domain) {
         // trueWorldPredicate and otherWorldPredicate are each distributions
         // over subsets of the domain. Compute KL between them using factorization
         // for sequence of independent bernoulli trials.
@@ -96,7 +96,7 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
         }, domain)));
     })
 
-    var answerQualityForQuestion = mem(function(answer, question, trueWorld) {
+    var answerQualityForQuestion = cache(function(answer, question, trueWorld) {
         // Using soft similarity semantics
         var consistentWorlds = interpretAnswer(answer);
         return Math.log(expectation(consistentWorlds, function(w) {
@@ -105,14 +105,14 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
         }))
     })
 
-    var answerQualityForQud = mem(function(answer, qudIndex, trueWorld) {
+    var answerQualityForQud = cache(function(answer, qudIndex, trueWorld) {
         // Using hard partition semantics
         var consistentWorlds = interpretAnswer(answer);
         var qud = qudCandidates[qudIndex];
         return marginalize(consistentWorlds, qud).score(qud(trueWorld));
     })
 
-    var explicitAnswerer = mem(function(question, trueWorld) {
+    var explicitAnswerer = cache(function(question, trueWorld) {
         return Infer({method: 'enumerate'}, function() {
             var answer = sample(answersDist);
             var answerMeaning = parser(answer, answerStartSymbol);
@@ -125,7 +125,7 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
 
     var questioner = function(answerer) {
         var informationGain = informationGainFn(answerer);
-        return mem(function(qudIndex) {
+        return cache(function(qudIndex) {
             return Infer({method: 'enumerate'}, function() {
                 var question = sample(questionsDist)
                 var expectedInformationGain = expectation(worldPrior, function(world) {
@@ -139,7 +139,7 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
 
     var explicitQuestioner = questioner(explicitAnswerer);
 
-    var pragmaticAnswerer = mem(function(question, trueWorld) {
+    var pragmaticAnswerer = cache(function(question, trueWorld) {
         return Infer({method: 'enumerate'}, function() {
             var qudIndex = uniformDraw(_.keys(qudCandidates));
             var questionDist = explicitQuestioner(qudIndex);
