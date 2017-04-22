@@ -35,7 +35,7 @@ var marginalizeDerivationsForQuestion = function(derivationProbabilities, semant
 
 var createParser = function (grammar, parserParams) {
     var parser = semppl.createParser(grammar, parserParams, semppl.ruleFeatureFn);
-    return mem(function (utterance, startSymbol) {
+    return cache(function (utterance, startSymbol) {
         // Need to use .call to call parser as a js function
         var chart = parser.call(null, utterance);
         var rootCellDerivations = semppl.getRootCellDerivations(chart, startSymbol);
@@ -55,7 +55,7 @@ var createParser = function (grammar, parserParams) {
                                       startSymbol === "$WH" ? marginalizeDerivationsForQuestion :
                                       null;
 
-        return mem(function (world) {
+        return cache(function (world) {
             // World dependent part starts here.
             var semantics = map(getSemantics(world), rootCellDerivations);
 
