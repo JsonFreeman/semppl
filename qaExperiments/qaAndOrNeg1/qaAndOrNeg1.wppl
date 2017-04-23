@@ -1,4 +1,4 @@
-// webppl --require webppl-json --require webppl-fs --require webppl-csv --require . <this-file> (<runId> | new)
+// webppl --require webppl-json --require webppl-fs --require webppl-csv --require webppl-timeit --require . <this-file> (<runId> | new)
 /**
  * This test Q2 of the QA model with questions and answers that contain conjunction, disjunction and negation. There are 
  * two entities (John and Mary) and two predicates (doctor and teacher). The QUDs correspond to John, Mary, doctor and 
@@ -52,7 +52,7 @@ var generateDataModel = createModel(questions, answers, costFn, worldsDist,
 var data = readOrGenerateTrainingData(experimentName, runId, [qudNames], 
     function(q) {
         display(arguments)
-        return apply(generateDataModel.Q1, [q]);
+        return apply(generateDataModel.Q2, [q]);
     }, 1);
 
 var logicalConnectiveNetworkSpec = networkSpecs.twoLayerFFNetWithSigmoidJustOnes;
