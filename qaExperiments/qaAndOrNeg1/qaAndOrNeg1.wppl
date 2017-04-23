@@ -52,7 +52,7 @@ var generateDataModel = createModel(questions, answers, costFn, worldsDist,
 var data = readOrGenerateTrainingData(experimentName, runId, [qudNames], 
     function(q) {
         return apply(generateDataModel.Q2, [q]);
-    }, 1);
+    }, 16);
 
 var logicalConnectiveNetworkSpec = networkSpecs.twoLayerFFNetWithSigmoid;
 var networks = {
@@ -64,7 +64,7 @@ var networks = {
 var grammarFn = semppl.makeNeuralConnectiveGrammar;
 var model = createVariationalModel(questions, answers, costFn, worldsDist, quds, 1, grammarFn, networks, 
     function(model) {
-        mapData({ data: data, batchSize: 1 }, function(d) {
+        mapData({ data: data, batchSize: 8 }, function(d) {
             observe(apply(model.Q2, [d[0]]), d[1]);
         })
     }, 
