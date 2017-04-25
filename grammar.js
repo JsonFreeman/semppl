@@ -131,6 +131,16 @@ var baseGrammarUnindexed = [
 	},
 	{
 		LHS: "$NP",
+		RHS: "Bill",
+		sem: semFuncs.entity("bill")
+	},
+	{
+		LHS: "$NP",
+		RHS: "Leslie",
+		sem: semFuncs.entity("leslie")
+	},
+	{
+		LHS: "$NP",
 		RHS: "Oak",
 		sem: semFuncs.entity("oak")
 	},
