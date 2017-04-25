@@ -82,7 +82,7 @@ var baseGrammarUnindexed = [
 	{
 		LHS: "$S",
 		RHS: "null",
-		sem: _.constant(_.constant(1)) // Always return true
+		sem: _.constant(1) // Always return true
 	},
 	{
 		LHS: "$S",
