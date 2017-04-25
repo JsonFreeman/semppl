@@ -66,13 +66,20 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
     })
 
     var informationGainFn = function(answerer) {
+        var interpretAnswerPragmatic = cache(function(question, answer) {
+            return Infer({ method: 'enumerate' }, function() {
+                var world = sample(worldPrior);
+                observe(answerer(question, world), answer);
+                return world;
+            })
+        })
+
         return cache(function(question, qudIndex, trueWorld) {
             var qudFn = qudCandidates[qudIndex];
             var prior = marginalize(worldPrior, qudFn);
-            var answerDist = answerer(question, trueWorld);
             var posterior = Infer({method: 'enumerate'}, function() {
-                var answer = sample(answersDist);
-                var world = sample(interpretAnswer(answer));
+                var answer = sample(answerer(question, trueWorld));
+                var world = sample(interpretAnswerPragmatic(question, answer))
                 return qudFn(world);
             });
 
