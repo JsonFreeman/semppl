@@ -82,3 +82,21 @@ testNetworks(experimentName, runId, model.networks, {
     and: { range: [0, 1.01, 0.01], arity: 2 },
     or: { range: [0, 1.01, 0.01], arity: 2 }
 });
+
+var domain = ["john", "mary"];
+var john = ["john"]
+var mary = ["mary"]
+var none = []
+
+computeAndWriteResults(experimentName, runId, generateDataModel, generateDataModel, [
+    { agent: "A1", query: ["Who is a doctor", { domain, facts: { doctor: domain, teacher: none } } ] },
+    { agent: "A1", query: ["Who is a doctor", { domain, facts: { doctor: domain, teacher: domain } } ] },
+    { agent: "A1", query: ["Who is a doctor and a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
+    { agent: "A1", query: ["Who is a doctor or a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
+    { agent: "A1", query: ["Who is not a doctor and a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
+    { agent: "A1", query: ["Who is not a doctor or a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
+    { agent: "Q1", query: ['doctor'] },
+    { agent: "Q1", query: ['teacher'] },
+    { agent: "Q1", query: ['john'] },
+    { agent: "Q1", query: ['mary'] },
+])
