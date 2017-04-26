@@ -1,1 +1,1 @@
-["Who is a doctor or a teacher",{"domain":["john","mary"],"facts":{"doctor":["john","mary"],"teacher":["john"]}}]
+["Who is a doctor or a teacher",{"doctor":["john","mary"],"teacher":["john"]}]
