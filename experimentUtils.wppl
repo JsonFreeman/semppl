@@ -84,7 +84,8 @@ var readOrGenerateTrainingData = function(experimentName, runId, listOfLists, fn
 var computeAndWriteResults = function(experimentName, runId, groundTruthModel, learnedModel, queryAndAgentPairs) {
     var queriesAndResults = mapIndexed(function(queryId, queryAndAgent) {
         var queryPath = makeQueryPath(experimentName, runId, queryId);
-        var query = queryAndAgent.query;
+        // Hack to extract the facts from each world (since the domain is the same)
+        var query = map(function(q) { q.facts || q }, queryAndAgent.query);
         var trueResult = apply(groundTruthModel[queryAndAgent.agent], queryAndAgent.query);
         var learnedResult = apply(learnedModel[queryAndAgent.agent], queryAndAgent.query);
         var KLDivergence = KL(trueResult, learnedResult);
