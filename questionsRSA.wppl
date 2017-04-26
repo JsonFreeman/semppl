@@ -17,8 +17,9 @@ var utteranceDist = function(utterances, costFn, rationality) {
 }
 
 var createVariationalModel = function(questions, answers, costFn, worldPrior, qudCandidates, 
-                                      rationality, grammarFn, parametrizedNetworks, observationFn, 
-                                      opts, experimentName, runId) {
+                                      questionerRationality, answererRationality, grammarFn, 
+                                      parametrizedNetworks, observationFn, opts, experimentName, runId) {
+    assert.ok(_.isNumber(answererRationality), "Pass in answererRationality")
     var runPath = makeRunPath(experimentName, runId);
     var modelFn = function() {
         var specifiedNetworks = mapObject(function(k, v) {
@@ -27,7 +28,8 @@ var createVariationalModel = function(questions, answers, costFn, worldPrior, qu
         }, parametrizedNetworks)
         var grammar = grammarFn.call(null, specifiedNetworks);
         var parser = createParser(grammar, createParserWeights(grammar));
-        var model = createModel(questions, answers, costFn, worldPrior, qudCandidates, rationality, parser);
+        var model = createModel(questions, answers, costFn, worldPrior, qudCandidates, 
+                                questionerRationality, answererRationality, parser);
         if (observationFn) {
             observationFn(model);
         }
@@ -52,9 +54,11 @@ var createVariationalModel = function(questions, answers, costFn, worldPrior, qu
     return sample(SampleGuide(modelFn));
 }
 
-var createModel = function(questions, answers, costFn, worldPrior, qudCandidates, rationality, parser) {
-    var questionsDist = utteranceDist(questions, costFn, rationality);
-    var answersDist = utteranceDist(answers, costFn, rationality);
+var createModel = function(questions, answers, costFn, worldPrior, qudCandidates,
+    questionerRationality, answererRationality, parser) {
+    assert.ok(_.isNumber(answererRationality), "Pass in answererRationality")
+    var questionsDist = utteranceDist(questions, costFn, questionerRationality);
+    var answersDist = utteranceDist(answers, costFn, answererRationality);
 
     var interpretAnswer = cache(function(answer) {
         var answerMeaning = parser(answer, answerStartSymbol);
@@ -121,9 +125,9 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
         return Infer({method: 'enumerate'}, function() {
             var answer = sample(answersDist);
             var answerMeaning = parser(answer, answerStartSymbol);
-            factor(Math.log(answerMeaning(trueWorld)) * rationality);
+            factor(Math.log(answerMeaning(trueWorld)) * answererRationality);
             factor(answerQualityForQuestion(answer, question, trueWorld)
-                * rationality);
+                * answererRationality);
             return answer;
         })
     })
@@ -136,7 +140,7 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
                 var expectedInformationGain = expectation(worldPrior, function(world) {
                     return informationGain(question, qudIndex, world);
                 });
-                factor(expectedInformationGain * rationality);
+                factor(expectedInformationGain * questionerRationality);
                 return question;
             });
         })
@@ -151,7 +155,7 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
             var answer = sample(answersDist)
             factor((questionDist.score(question)
                     + answerQualityForQud(answer, qudIndex, trueWorld))
-                    * rationality);
+                    * answererRationality);
             return answer;
         });
     })
@@ -167,7 +171,7 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
         return Infer({ method: 'enumerate' }, function() {
             var utterance = sample(answersDist);
             var L = literalListener(utterance);
-            factor(L.score(world) * rationality);
+            factor(L.score(world) * answererRationality);
             return utterance;
         })
     }
