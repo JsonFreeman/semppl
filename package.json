@@ -16,10 +16,7 @@
     "url": "https://github.com/JsonFreeman/semppl/issues"
   },
   "homepage": "https://github.com/JsonFreeman/semppl#readme",
-  "dependencies": {
-    "adnn": "^1.1.6",
-    "webppl-json": "0.0.1"
-  },
+  "dependencies": {},
   "webppl": {
     "wppl": [
       "parser.wppl",
