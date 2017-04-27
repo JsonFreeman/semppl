@@ -1,9 +1,9 @@
 // webppl --require webppl-json --require webppl-fs --require webppl-csv --require webppl-timeit --require . <this-file> (<runId> | new)
 /**
- * This test Q2 of the QA model with questions and answers that contain conjunction, disjunction and negation. There are 
+ * This test Q1 of the QA model with questions and answers that contain conjunction, disjunction and negation. There are 
  * two entities (John and Mary) and two predicates (doctor and teacher). The QUDs correspond to John, Mary, doctor and 
  * teacher respectively. Predicate semantics are fixed. Semantics of conjunction, disjunction and negation are learned. 
- * This is the first QA experiment.
+ * This is the first QA experiment. This experiment is just like qaAndOrNeg1 except that it uses Q1 instead of Q2.
  */
 var experimentInfo = getExperimentNameAndRunId();
 var experimentName = experimentInfo.name;
@@ -47,11 +47,11 @@ var qudNames = _.keys(quds);
 
 var costFn = function(u) { .1 * wordCount(u) };
 var generateDataModel = createModel(questions, answers, costFn, worldsDist, 
-                                    quds, 1, createParser(semppl.fixedGrammar, {}))
+                                    quds, 1, 3, createParser(semppl.fixedGrammar, {}))
 
 var data = readOrGenerateTrainingData(experimentName, runId, [qudNames], 
     function(q) {
-        return apply(generateDataModel.Q2, [q]);
+        return apply(generateDataModel.Q1, [q]);
     }, 16);
 
 var logicalConnectiveNetworkSpec = networkSpecs.twoLayerFFNetWithSigmoid;
@@ -62,10 +62,10 @@ var networks = {
 }
 
 var grammarFn = semppl.makeNeuralConnectiveGrammar;
-var model = createVariationalModel(questions, answers, costFn, worldsDist, quds, 1, grammarFn, networks, 
+var model = createVariationalModel(questions, answers, costFn, worldsDist, quds, 1, 3, grammarFn, networks, 
     function(model) {
         mapData({ data: data, batchSize: 8 }, function(d) {
-            observe(apply(model.Q2, [d[0]]), d[1]);
+            observe(apply(model.Q1, [d[0]]), d[1]);
         })
     }, 
     { optimizer: 'adam', 
