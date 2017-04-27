@@ -125,7 +125,6 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
         return Infer({method: 'enumerate'}, function() {
             var answer = sample(answersDist);
             var answerMeaning = parser(answer, answerStartSymbol);
-            factor(Math.log(answerMeaning(trueWorld)) * answererRationality);
             factor(answerQualityForQuestion(answer, question, trueWorld)
                 * answererRationality);
             return answer;
