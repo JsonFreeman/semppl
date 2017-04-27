@@ -148,14 +148,19 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
 
     var explicitQuestioner = questioner(explicitAnswerer);
 
+    var inferGoal = cache(function(question) {
+        Infer({ method: 'enumerate' }, function() {
+            var qudName = uniformDraw(_.keys(qudCandidates));
+            observe(explicitQuestioner(qudName), question);
+            return qudName;
+        })
+    })
+
     var pragmaticAnswerer = cache(function(question, trueWorld) {
         return Infer({method: 'enumerate'}, function() {
-            var qudIndex = uniformDraw(_.keys(qudCandidates));
-            var questionDist = explicitQuestioner(qudIndex);
             var answer = sample(answersDist)
-            factor((questionDist.score(question)
-                    + answerQualityForQud(answer, qudIndex, trueWorld))
-                    * answererRationality);
+            var qudName = sample(inferGoal(question));
+            factor(answerQualityForQud(answer, qudName, trueWorld) * answererRationality);
             return answer;
         });
     })
