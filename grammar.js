@@ -170,6 +170,11 @@ var baseGrammarUnindexed = [
 		sem: semFuncs.id
 	},
 	{
+		LHS: "$WH-NP",
+		RHS: "What",
+		sem: semFuncs.id
+	},
+	{
 		LHS: "$WH",
 		RHS: "$WH-NP $VP",
 		sem: semFuncs.fwdApply
