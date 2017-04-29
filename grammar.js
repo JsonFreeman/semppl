@@ -257,6 +257,11 @@ var fixedConnectives = [
 		RHS: "isn't",
 		sem: semFuncs.negateProposition
 	},
+	{
+		LHS: "$COP",
+		RHS: "aren't",
+		sem: semFuncs.negateProposition
+	},
 ]
 
 var neuralPredicates = networks => [
@@ -287,6 +292,11 @@ var neuralConnectives = networks => [
 	{
 		LHS: "$COP",
 		RHS: "isn't",
+		sem: semFuncs.neuralUnaryFunction(networks.not)
+	},
+	{
+		LHS: "$COP",
+		RHS: "aren't",
 		sem: semFuncs.neuralUnaryFunction(networks.not)
 	},
 ]
