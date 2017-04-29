@@ -89,5 +89,11 @@ computeAndWriteResults(experimentName, runId, generateDataModel, generateDataMod
     }}]},
     { agent: "A1", query: ["What is John", { domain: ["john", "mary"], facts: {
         doctor: ['john', 'mary'], teacher: ['john', 'mary']
+    }}]},
+    { agent: "A1", query: ["What isn't John", { domain: ["john", "mary"], facts: {
+        doctor: ['john', 'mary'], teacher: ['mary']
+    }}]},
+    { agent: "A1", query: ["What isn't John", { domain: ["john", "mary"], facts: {
+        doctor: ['john', 'mary'], teacher: ['john', 'mary']
     }}]}
 ])
