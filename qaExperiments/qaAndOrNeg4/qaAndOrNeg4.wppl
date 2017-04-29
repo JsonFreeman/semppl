@@ -82,3 +82,12 @@ testNetworks(experimentName, runId, model.networks, {
     and: { range: [0, 1.01, 0.01], arity: 2 },
     or: { range: [0, 1.01, 0.01], arity: 2 }
 });
+
+computeAndWriteResults(experimentName, runId, generateDataModel, generateDataModel, [
+    { agent: "A1", query: ["What is John", { domain: ["john", "mary"], facts: {
+        doctor: ['john', 'mary'], teacher: ['mary']
+    }}]},
+    { agent: "A1", query: ["What is John", { domain: ["john", "mary"], facts: {
+        doctor: ['john', 'mary'], teacher: ['john', 'mary']
+    }}]}
+])
