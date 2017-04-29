@@ -92,12 +92,12 @@ var baseGrammarUnindexed = [
 	{
 		LHS: "$VP",
 		RHS: "$COP $NP",
-		sem: semFuncs.fwdApply
+		sem: semFuncs.liftRight(semFuncs.fwdApply) // liftRight because the $COP could be negation (i.e. isn't)
 	},
 	{
 		LHS: "$VP",
 		RHS: "$COP $ADJ",
-		sem: semFuncs.fwdApply
+		sem: semFuncs.liftRight(semFuncs.fwdApply)
 	},
 	{
 		LHS: "$VP",
@@ -252,6 +252,11 @@ var fixedConnectives = [
 		RHS: "not",
 		sem: semFuncs.negateProposition
 	},
+	{
+		LHS: "$COP",
+		RHS: "isn't",
+		sem: semFuncs.negateProposition
+	},
 ]
 
 var neuralPredicates = networks => [
@@ -277,6 +282,11 @@ var neuralConnectives = networks => [
 	{
 		LHS: "$NEG",
 		RHS: "not",
+		sem: semFuncs.neuralUnaryFunction(networks.not)
+	},
+	{
+		LHS: "$COP",
+		RHS: "isn't",
 		sem: semFuncs.neuralUnaryFunction(networks.not)
 	},
 ]
