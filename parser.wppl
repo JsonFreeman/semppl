@@ -25,12 +25,9 @@ var marginalizeDerivationsForAssertion = function(derivationProbabilities, seman
 }
 
 var marginalizeDerivationsForQuestion = function(derivationProbabilities, semantics) {
-    return function(element) {
-        return sum(map2(function (derivation, truthFn) {
-            // truthFn was returned by the parser, so need to call it as a js function
-            return derivation * truthFn.call(null, element);
-        }, derivationProbabilities, semantics));
-    }
+    // Since semantics is a 2-D tensor here, use a dot product to multiply and sum
+    var result = T.dot(T.transpose(Vector(derivationProbabilities)), Matrix(semantics));
+    return T.toScalars(result);
 }
 
 var createParser = function (grammar, parserParams) {

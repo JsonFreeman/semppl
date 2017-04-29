@@ -167,12 +167,12 @@ var baseGrammarUnindexed = [
 	{
 		LHS: "$WH-NP",
 		RHS: "Who",
-		sem: semFuncs.id
+		sem: semFuncs.exhaustiveEntitySeekingInterrogative
 	},
 	{
 		LHS: "$WH-NP",
 		RHS: "What",
-		sem: semFuncs.id
+		sem: semFuncs.exhaustivePredicateSeekingInterrogative
 	},
 	{
 		LHS: "$WH",

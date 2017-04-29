@@ -90,19 +90,17 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
     }
     
     var similarity = cache(function(question, trueWorld, otherWorld, domain) {
-        // trueWorldPredicate and otherWorldPredicate are each distributions
+        // trueWorldTruthValues and otherWorldTruthValues are each distributions
         // over subsets of the domain. Compute KL between them using factorization
         // for sequence of independent bernoulli trials.
         var questionMeaning = parser(question, questionStartSymbol);
-        var trueWorldPredicate = questionMeaning(trueWorld);
-        var otherWorldPredicate = questionMeaning(otherWorld);
-        return Math.exp(-sum(map(function(e) {
-            var p_e = trueWorldPredicate(e);
-            var q_e = otherWorldPredicate(e);
-            var positiveTerm = p_e === 0 ? 0 : p_e * Math.log(p_e / q_e);
-            var negativeTerm = p_e === 1 ? 0 : (1 - p_e) * Math.log((1 - p_e) / (1 - q_e));
+        var trueWorldTruthValues = questionMeaning(trueWorld);
+        var otherWorldTruthValues = questionMeaning(otherWorld);
+        return Math.exp(-sum(map2(function(p, q) {
+            var positiveTerm = p === 0 ? 0 : p * Math.log(p / q);
+            var negativeTerm = p === 1 ? 0 : (1 - p) * Math.log((1 - p) / (1 - q));
             return positiveTerm + negativeTerm;
-        }, domain)));
+        }, trueWorldTruthValues, otherWorldTruthValues)));
     })
 
     var answerQualityForQuestion = cache(function(answer, question, trueWorld) {

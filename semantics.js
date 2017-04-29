@@ -17,6 +17,20 @@ function lift(func, liftLeft, liftRight) {
     
 
 module.exports = {
+    // Questions will return an array of truth values instead of a function that returns truth values
+    // This is because the consumer of the question may not know what type to pass
+    exhaustiveEntitySeekingInterrogative: context => pred => {
+        return context.domain.map(pred);
+    },
+
+    exhaustivePredicateSeekingInterrogative: context => liftedEntity => {
+        return _(context.facts)
+                .toPairs()
+                .sortBy(p => p[0]/*key*/)
+                .map(p => liftedEntity(e => +_.includes(p[1]/*value*/, e)))
+                .value();
+    },
+
     // Lifted: type (e -> t) -> t
     entity: name => context => pred => pred(name),
 
