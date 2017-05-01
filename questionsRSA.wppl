@@ -18,7 +18,7 @@ var utteranceDist = function(utterances, costFn, rationality) {
 
 var createVariationalModel = function(questions, answers, costFn, worldPrior, qudCandidates, 
                                       questionerRationality, answererRationality, grammarFn, 
-                                      parametrizedNetworks, observationFn, opts, experimentName, runId) {
+                                      parametrizedNetworks, observationFn, opts, experimentName, runId, relearnParams) {
     assert.ok(_.isNumber(answererRationality), "Pass in answererRationality")
     var runPath = makeRunPath(experimentName, runId);
     var modelFn = function() {
@@ -36,7 +36,7 @@ var createVariationalModel = function(questions, answers, costFn, worldPrior, qu
         return _.assign({ networks: specifiedNetworks }, model);
     }
 
-    if (fs.existsSync(runPath.paramsPath)) {
+    if (!relearnParams && fs.existsSync(runPath.paramsPath)) {
         // Restore previously learned params
         var params = webpplFs.read(runPath.paramsPath);
         setParams(deserializeParams(params));
