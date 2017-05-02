@@ -150,6 +150,16 @@ var baseGrammarUnindexed = [
 		sem: semFuncs.id
 	},
 	{
+		LHS: "$COP",
+		RHS: "Is",
+		sem: semFuncs.id
+	},
+	{
+		LHS: "$COP",
+		RHS: "Are",
+		sem: semFuncs.id
+	},
+	{
 		LHS: "$DET",
 		RHS: "a",
 		sem: semFuncs.id
@@ -165,8 +175,23 @@ var baseGrammarUnindexed = [
 		sem: semFuncs.exhaustivePredicateSeekingInterrogative
 	},
 	{
+		LHS: "$INV",
+		RHS: "$COP $NP",
+		sem: semFuncs.liftLeft(semFuncs.backApply) // Perform function composition (right o left)
+	},
+	{
 		LHS: "$WH",
 		RHS: "$WH-NP $VP",
+		sem: semFuncs.fwdApply
+	},
+	{
+		LHS: "$WH",
+		RHS: "$INV $NP",
+		sem: semFuncs.fwdApply
+	},
+	{
+		LHS: "$WH",
+		RHS: "$INV $NegNP",
 		sem: semFuncs.fwdApply
 	},
 
