@@ -9,7 +9,7 @@
 var experimentInfo = getExperimentNameAndRunId();
 var experimentName = experimentInfo.name;
 var runId = experimentInfo.runId;
-var relearnParams = true;
+var relearnParams = false;
 var numSamples = 16;
 var batchSize = 8;
 
