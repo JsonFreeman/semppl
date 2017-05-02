@@ -96,17 +96,7 @@ var baseGrammarUnindexed = [
 	},
 	{
 		LHS: "$VP",
-		RHS: "$COP $ADJ",
-		sem: semFuncs.liftRight(semFuncs.fwdApply)
-	},
-	{
-		LHS: "$VP",
 		RHS: "$COP $NegNP",
-		sem: semFuncs.fwdApply
-	},
-	{
-		LHS: "$VP",
-		RHS: "$COP $NegADJ",
 		sem: semFuncs.fwdApply
 	},
 	{
