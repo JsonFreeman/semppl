@@ -60,6 +60,11 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
     var questionsDist = utteranceDist(questions, costFn, questionerRationality);
     var answersDist = utteranceDist(answers, costFn, answererRationality);
 
+    var marginalizeCached = cache(function(dist, qudName) {
+        var qud = qudCandidates[qudName];
+        return marginalize(dist, qud);
+    })
+
     var interpretAnswer = cache(function(answer) {
         var answerMeaning = parser(answer, answerStartSymbol);
         return Infer({method: 'enumerate'}, function() {
@@ -78,12 +83,11 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
             })
         })
 
-        return cache(function(question, qudIndex, trueWorld) {
-            var qudFn = qudCandidates[qudIndex];
-            var prior = marginalize(worldPrior, qudFn);
+        return cache(function(question, qudName, trueWorld) {
+            var prior = marginalizeCached(worldPrior, qudName);
             var possibleAnswers = answerer(question, trueWorld);
             return expectation(possibleAnswers, function(answer) {
-                var posterior = marginalize(interpretAnswerPragmatic(question, answer), qudFn);
+                var posterior = marginalizeCached(interpretAnswerPragmatic(question, answer), qudName);
                 return KL(posterior, prior);
             });
         })
@@ -112,11 +116,11 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
         }))
     })
 
-    var answerQualityForQud = cache(function(answer, qudIndex, trueWorld) {
+    var answerQualityForQud = cache(function(answer, qudName, trueWorld) {
         // Using hard partition semantics
         var consistentWorlds = interpretAnswer(answer);
-        var qud = qudCandidates[qudIndex];
-        return marginalize(consistentWorlds, qud).score(qud(trueWorld));
+        var qud = qudCandidates[qudName];
+        return marginalizeCached(consistentWorlds, qudName).score(qud(trueWorld));
     })
 
     var explicitAnswerer = cache(function(question, trueWorld) {
