@@ -51,10 +51,10 @@ var questions = Enumerate(function() {
 }).support();
 
 var quds = {
-    // doctor(w) { w.facts.doctor },
-    // teacher(w) { w.facts.teacher },
-    // john(w) { _.keys(_.pickBy(w.facts, _.partial(_.includes, _, "john")))},
-    // mary(w) { _.keys(_.pickBy(w.facts, _.partial(_.includes, _, "mary")))},
+    doctor(w) { w.facts.doctor },
+    teacher(w) { w.facts.teacher },
+    john(w) { _.keys(_.pickBy(w.facts, _.partial(_.includes, _, "john")))},
+    mary(w) { _.keys(_.pickBy(w.facts, _.partial(_.includes, _, "mary")))},
     'intersection(doctor, teacher)': function(w) { _.intersection(w.facts.doctor, w.facts.teacher) },
     'union(doctor, teacher)': function(w) { _.sortBy(_.union(w.facts.doctor, w.facts.teacher))},
     'intersection(john, mary)': function(w) { _.keys(_.pickBy(w.facts, _.matches(w.domain))) },
