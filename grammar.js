@@ -187,12 +187,12 @@ var baseGrammarUnindexed = [
 	{
 		LHS: "$WH",
 		RHS: "$INV $NP",
-		sem: semFuncs.fwdApply
+		sem: _.flow(semFuncs.fwdApply, _.partial(_.flow, _, semFuncs.polarizeProposition))
 	},
 	{
 		LHS: "$WH",
 		RHS: "$INV $NegNP",
-		sem: semFuncs.fwdApply
+		sem: _.flow(semFuncs.fwdApply, _.partial(_.flow, _, semFuncs.polarizeProposition))
 	},
 
 	// Logic
