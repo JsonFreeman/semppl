@@ -43,7 +43,11 @@ var getExperimentNameAndRunId = function() {
     }
 }
 
-var wordCount = function(utterance) {
+var wordCount = function(utterance, includeFilters) {
+    if (includeFilters) {
+        return _.words(utterance, RegExp.call(null, includeFilters.join('|'), 'gi')).length;
+    }
+
     return _.words(utterance).length;
 }
 
