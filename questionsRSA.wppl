@@ -114,7 +114,7 @@ var createModel = function(questions, answers, costFn, worldPrior, qudCandidates
             assert.ok(w.domain.length === trueWorld.domain.length)
             return similarity(question, trueWorld, w, trueWorld.domain);
         }))
-    })
+    }, /*maxSize*/ 1.75e4)
 
     var answerQualityForQud = cache(function(answer, qudName, trueWorld) {
         // Using hard partition semantics
