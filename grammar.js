@@ -247,20 +247,23 @@ var fixedPredicates = [
 	makeBooleanPredicate("fishermen", "$NP", "fisherman"),
 ]
 
+var fixedAndSemantics = semFuncs.combinePropositions(ad.scalar.mul);
+var fixedOrSemantics = semFuncs.combinePropositions((p1, p2) => {
+	// 1 - (1 - p1) * (1 - p2)
+	return ad.scalar.sub(1, 
+		ad.scalar.mul(ad.scalar.sub(1, p1), ad.scalar.sub(1, p2)))
+});
+
 var fixedConnectives = [
 	{
 		LHS: "$CONJ",
 		RHS: "and",
-		sem: semFuncs.combinePropositions(ad.scalar.mul)
+		sem: fixedAndSemantics
 	},
 	{
 		LHS: "$CONJ",
 		RHS: "or",
-		sem: semFuncs.combinePropositions((p1, p2) => {
-				// 1 - (1 - p1) * (1 - p2)
-				return ad.scalar.sub(1, 
-					ad.scalar.mul(ad.scalar.sub(1, p1), ad.scalar.sub(1, p2)))
-			})
+		sem: fixedOrSemantics
 	},
 	{
 		LHS: "$NEG",
@@ -292,27 +295,27 @@ var neuralConnectives = networks => [
 	{
 		LHS: "$CONJ",
 		RHS: "and",
-		sem: semFuncs.neuralBinaryFunction(networks.and)
+		sem: networks.and ? semFuncs.neuralBinaryFunction(networks.and) : fixedAndSemantics
 	},
 	{
 		LHS: "$CONJ",
 		RHS: "or",
-		sem: semFuncs.neuralBinaryFunction(networks.or)
+		sem: networks.or ? semFuncs.neuralBinaryFunction(networks.or) : fixedOrSemantics
 	},
 	{
 		LHS: "$NEG",
 		RHS: "not",
-		sem: semFuncs.neuralUnaryFunction(networks.not)
+		sem: networks.not ? semFuncs.neuralUnaryFunction(networks.not) : semFuncs.negateProposition
 	},
 	{
 		LHS: "$COP",
 		RHS: "isn't",
-		sem: semFuncs.neuralUnaryFunction(networks.not)
+		sem: networks.not ? semFuncs.neuralUnaryFunction(networks.not) : semFuncs.negateProposition
 	},
 	{
 		LHS: "$COP",
 		RHS: "aren't",
-		sem: semFuncs.neuralUnaryFunction(networks.not)
+		sem: networks.not ? semFuncs.neuralUnaryFunction(networks.not) : semFuncs.negateProposition
 	},
 ]
 
