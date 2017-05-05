@@ -5,12 +5,13 @@ var makeRunDir = function(experimentName, runId) {
     return "qaExperiments/" + experimentName + "/run" + runId;
 }
 
-var makeRunPath = function(experimentName, runId) {
+var makeRunPath = function(experimentName, runId, dataLabel) {
     var dir = makeRunDir(experimentName, runId);
     var basePath = dir + "/" + experimentName + "-" + runId;
+    var basePathWithDataLabel = dataLabel ? basePath + '-' + dataLabel : basePath;
     return { 
         dir: dir,
-        dataPath: basePath + "-data.json",
+        dataPath: basePathWithDataLabel + "-data.json",
         paramsPath: basePath + "-params.json",
         logPath: basePath + "-log.csv"
     };
@@ -70,8 +71,8 @@ var generateTrainingData = function(listOfLists, fn, numSamples) {
     return recursiveMap(listOfLists, fn, numSamples, []);
 }
 
-var readOrGenerateTrainingData = function(experimentName, runId, listOfLists, fn, numSamples) {
-    var runPath = makeRunPath(experimentName, runId);
+var readOrGenerateTrainingData = function(experimentName, runId, listOfLists, fn, numSamples, dataLabel) {
+    var runPath = makeRunPath(experimentName, runId, dataLabel);
     if (fs.existsSync(runPath.dataPath)) {
         return json.read(runPath.dataPath).data;
     }
