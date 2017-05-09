@@ -34,7 +34,7 @@ assert.equal(worldsDist.support().length, 16);
 
 var wordsThatCount = ['john', 'mary', 'doctor', 'teacher', 'and', 'or', 'not']
 var costFn = cache(function(u) { .1 * wordCount(u, wordsThatCount) });
-var generateDataModel = createModel(undefined, utterances, costFn, worldsDist, 
+var generateDataModel = createModel([], utterances, costFn, worldsDist, 
                                     undefined, 3, 3, createParser(semppl.fixedGrammar, {}))
 
 var data = readOrGenerateTrainingData(experimentName, runId, [utterances], 
@@ -50,7 +50,7 @@ var networks = {
 }
 
 var grammarFn = semppl.makeNeuralConnectiveGrammar;
-var model = createVariationalModel(undefined, utterances, costFn, worldsDist, undefined, 3, 3, grammarFn, networks, 
+var model = createVariationalModel([], utterances, costFn, worldsDist, undefined, 3, 3, grammarFn, networks, 
     function(model) {
         mapData({ data: data, batchSize }, function(d) {
             observe(apply(model.L1, [d[0]]), d[1]);
