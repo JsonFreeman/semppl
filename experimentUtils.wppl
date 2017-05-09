@@ -53,8 +53,8 @@ var wordCount = function(utterance, includeFilters) {
 }
 
 // Generating data and results
-var generateTrainingData = function(listOfLists, fn, numSamples) {
-    var recursiveMap = function(listOfLists, fn, numSamples, args /* internal*/) {
+var generateTrainingData = function(listOfLists, fn, numSamples, subsampleList) {
+    var recursiveMap = function(listOfLists, fn, numSamples, subsampleList, args /* internal*/) {
         if (listOfLists.length === 0) {
             var resultDist = apply(fn, args);
             return repeat(numSamples, function() {
@@ -62,16 +62,26 @@ var generateTrainingData = function(listOfLists, fn, numSamples) {
             })
         }
 
-        var restEntries = rest(listOfLists);
+        var samplesFromCurrentList = first(subsampleList);
+        var currentList = first(listOfLists);
+        var currentListSample = 
+            !samplesFromCurrentList 
+            ? currentList 
+            : _.sampleSize(currentList, samplesFromCurrentList);
+
         return _.flatten(map(function(e) { 
-            recursiveMap(restEntries, fn, numSamples, snoc(args, e))
-        }, first(listOfLists)), /*shallow*/ true)
+            recursiveMap(rest(listOfLists), fn, numSamples, rest(subsampleList), snoc(args, e))
+        }, currentListSample), /*shallow*/ true)
     };
     
-    return recursiveMap(listOfLists, fn, numSamples, []);
+    if (subsampleList) {
+        assert.equal(listOfLists.length, subsampleList.length)
+    }
+    var subsampleListOrDefault = subsampleList || repeat(listOfLists.length, constF(0));
+    return recursiveMap(listOfLists, fn, numSamples, subsampleListOrDefault, []);
 }
 
-var readOrGenerateTrainingData = function(experimentName, runId, listOfLists, fn, numSamples, dataLabel) {
+var readOrGenerateTrainingData = function(experimentName, runId, listOfLists, fn, numSamples, dataLabel, subsampleList) {
     var runPath = makeRunPath(experimentName, runId, dataLabel);
     if (fs.existsSync(runPath.dataPath)) {
         return json.read(runPath.dataPath).data;
@@ -81,7 +91,7 @@ var readOrGenerateTrainingData = function(experimentName, runId, listOfLists, fn
         webpplFs.mkdirp(runPath.dir);
     }
 
-    var data = { samples: numSamples, data: generateTrainingData(listOfLists, fn, numSamples) };
+    var data = { samples: numSamples, data: generateTrainingData(listOfLists, fn, numSamples, subsampleList) };
     json.write(runPath.dataPath, data);
     return data.data;
 }
