@@ -1,0 +1,117 @@
+// webppl --require webppl-json --require webppl-fs --require webppl-csv --require webppl-timeit --require . <this-file> (<runId> | new)
+/**
+ * This test A2 of the QA model with questions and answers that contain conjunction, disjunction and negation. There are 
+ * two entities (John and Mary) and two predicates (doctor and teacher). Predicate semantics are fixed. Semantics of 
+ * conjunction, disjunction and negation are learned. This experiment is designed to gauge whether the answerer data
+ * is a better learning signal than the questioner data.
+ */
+var experimentInfo = getExperimentNameAndRunId();
+var experimentName = experimentInfo.name;
+var runId = experimentInfo.runId;
+var relearnParams = false;
+var numSamples = 16;
+var batchSize = 8;
+
+var answers = Enumerate(function() {
+    var subject = uniformDraw(["John is", "Mary is", "John and Mary are", "John or Mary is"]);
+    var neg = uniformDraw([" ", " not "]);
+    var predicate = subject.length === "John and Mary are".length ? 
+        uniformDraw(["doctors", "teachers", "doctors and teachers", "doctors or teachers"]) :
+        uniformDraw(["a doctor", "a teacher", "a doctor and a teacher", "a doctor or a teacher"]);
+
+    return subject + neg + predicate;
+}).support();
+assert.equal(answers.length, 32);
+
+var worldsDist = Enumerate(function() {
+    return {
+        domain: ["john", "mary"],
+        facts: {
+            doctor: flip() ? flip() ? ["john", "mary"] : ["john"] : flip() ? ["mary"] : [],
+            teacher: flip() ? flip() ? ["john", "mary"] : ["john"] : flip() ? ["mary"] : [],
+        }
+    }
+})
+assert.equal(worldsDist.support().length, 16);
+
+var questions = Enumerate(function() {
+    if (flip()) {
+        // Who
+        var cop = uniformDraw([" is ", " isn't "]);
+        var predicate = uniformDraw(["a doctor", "a teacher", "a doctor and a teacher", "a doctor or a teacher"]);
+        return "Who" + cop + predicate;
+    }
+    else {
+        // What
+        var neg = uniformDraw([" ", "n't "]);
+        var inverted = uniformDraw([['is', 'John'], ['is', 'Mary'], ['are', 'John and Mary'], ['is', 'John or Mary']]);
+        return "What " + inverted.join(neg);
+    }
+}).support();
+
+var quds = {
+    doctor(w) { w.facts.doctor },
+    teacher(w) { w.facts.teacher },
+    john(w) { _.keys(_.pickBy(w.facts, _.partial(_.includes, _, "john")))},
+    mary(w) { _.keys(_.pickBy(w.facts, _.partial(_.includes, _, "mary")))},
+    'intersection(doctor, teacher)': function(w) { _.intersection(w.facts.doctor, w.facts.teacher) },
+    'union(doctor, teacher)': function(w) { _.sortBy(_.union(w.facts.doctor, w.facts.teacher))},
+    'intersection(john, mary)': function(w) { _.keys(_.pickBy(w.facts, _.matches(w.domain))) },
+    'union(john, mary)': function(w) { _.keys(_.omitBy(w.facts, _.isEmpty)) }
+};
+var qudNames = _.keys(quds);
+
+var wordsThatCount = ['john', 'mary', 'doctor', 'teacher', 'and', 'or', 'not']
+var costFn = cache(function(u) { .1 * wordCount(u, wordsThatCount) });
+var generateDataModel = createModel(questions, answers, costFn, worldsDist, 
+                                    quds, 3, 3, createParser(semppl.fixedGrammar, {}))
+
+var data = readOrGenerateTrainingData(experimentName, runId, [questions, worldsDist.support()], 
+                                      generateDataModel.A2, numSamples);
+
+var logicalConnectiveNetworkSpec = networkSpecs.twoLayerFFNetWithSigmoid;
+var networks = {
+    and: logicalConnectiveNetworkSpec(3, 2),
+    or: logicalConnectiveNetworkSpec(3, 2),
+    not: logicalConnectiveNetworkSpec(3, 1)
+}
+
+var grammarFn = semppl.makeNeuralConnectiveGrammar;
+var model = createVariationalModel(questions, answers, costFn, worldsDist, quds, 3, 3, grammarFn, networks, 
+    function(model) {
+        mapData({ data: data, batchSize }, function(d) {
+            observe(apply(model.A2, [d[0], d[1]]), d[2]);
+        })
+    }, 
+    { optimizer: 'adam', 
+      steps: 1000, 
+      estimator: 'ELBO', 
+      checkGradients: false, 
+      checkpointParams: true,
+      logProgress: true,
+      showGradNorm: true, 
+    }, experimentName, runId, relearnParams);
+
+testNetworks(experimentName, runId, model.networks, {
+    not: { range: [0, 1.01, 0.01], arity: 1 },
+    and: { range: [0, 1.01, 0.01], arity: 2 },
+    or: { range: [0, 1.01, 0.01], arity: 2 }
+});
+
+var domain = ["john", "mary"];
+var john = ["john"]
+var mary = ["mary"]
+var none = []
+
+computeAndWriteResults(experimentName, runId, generateDataModel, model, [
+    { agent: "A2", query: ["Who is a doctor", { domain, facts: { doctor: domain, teacher: none } } ] },
+    { agent: "A2", query: ["Who is a doctor", { domain, facts: { doctor: domain, teacher: domain } } ] },
+    { agent: "A2", query: ["Who is a doctor and a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
+    { agent: "A2", query: ["Who is a doctor or a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
+    { agent: "A2", query: ["Who is not a doctor and a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
+    { agent: "A2", query: ["Who is not a doctor or a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
+    { agent: "A2", query: ["What is John", { domain, facts: { doctor: domain, teacher: mary }}]},
+    { agent: "A2", query: ["What is John", { domain, facts: { doctor: domain, teacher: domain }}]},
+    { agent: "A2", query: ["What isn't John", { domain, facts: { doctor: domain, teacher: domain }}]},
+    { agent: "A2", query: ["What isn't John", { domain, facts: { doctor: domain, teacher: domain }}]}
+])
