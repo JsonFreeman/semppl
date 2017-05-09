@@ -64,7 +64,7 @@ var quds = {
 var qudNames = _.keys(quds);
 
 var wordsThatCount = ['john', 'mary', 'doctor', 'teacher', 'and', 'or', 'not']
-var costFn = function(u) { .1 * wordCount(u, wordsThatCount) };
+var costFn = cache(function(u) { .1 * wordCount(u, wordsThatCount) })
 var generateDataModel = createModel(questions, answers, costFn, worldsDist, 
                                     quds, 3, 3, createParser(semppl.fixedGrammar, {}))
 
@@ -108,4 +108,16 @@ computeAndWriteResults(experimentName, runId, generateDataModel, model, [
     { agent: "Q1", query: ['union(doctor, teacher)']},
     { agent: "Q1", query: ['intersection(john, mary)']},
     { agent: "Q1", query: ['union(john, mary)']},
+    { agent: "A1", query: ["What is John", { domain: ["john", "mary"], facts: {
+        doctor: ['john', 'mary'], teacher: ['mary']
+    }}]},
+    { agent: "A1", query: ["What is John", { domain: ["john", "mary"], facts: {
+        doctor: ['john', 'mary'], teacher: ['john', 'mary']
+    }}]},
+    { agent: "A1", query: ["What isn't John", { domain: ["john", "mary"], facts: {
+        doctor: ['john', 'mary'], teacher: ['mary']
+    }}]},
+    { agent: "A1", query: ["What isn't John", { domain: ["john", "mary"], facts: {
+        doctor: ['john', 'mary'], teacher: ['john', 'mary']
+    }}]}
 ])
