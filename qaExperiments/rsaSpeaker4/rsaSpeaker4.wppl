@@ -1,0 +1,73 @@
+// webppl --require webppl-json --require webppl-fs --require webppl-csv --require . <this-file> (<runId> | new)
+/**
+ * This test exercises standard RSA (specifically L1) with utterances that contain conjunction, disjunction and 
+ * negation. There are two entities (John and Mary) and two predicates (doctor and teacher). Predicate semantics are 
+ * fixed. Semantics of conjunction, disjunction and negation are learned.
+ * This is like rsaSpeaker1, but with fewer samples.
+ */
+var experimentInfo = getExperimentNameAndRunId();
+var experimentName = experimentInfo.name;
+var runId = experimentInfo.runId;
+var numSamples = 2;
+var batchSize = 8;
+
+var utterances = Enumerate(function() {
+    var subject = uniformDraw(["John is", "Mary is", "John and Mary are", "John or Mary is"]);
+    var neg = uniformDraw([" ", " not "]);
+    var predicate = subject.length === "John and Mary are".length ? 
+        uniformDraw(["doctors", "teachers", "doctors and teachers", "doctors or teachers"]) :
+        uniformDraw(["a doctor", "a teacher", "a doctor and a teacher", "a doctor or a teacher"]);
+
+    return subject + neg + predicate;
+}).support();
+assert.equal(utterances.length, 32);
+
+var worldsDist = Enumerate(function() {
+    return {
+        domain: ["john", "mary"],
+        facts: {
+            doctor: flip() ? flip() ? ["john", "mary"] : ["john"] : flip() ? ["mary"] : [],
+            teacher: flip() ? flip() ? ["john", "mary"] : ["john"] : flip() ? ["mary"] : [],
+        }
+    }
+})
+assert.equal(worldsDist.support().length, 16);
+
+var wordsThatCount = ['john', 'mary', 'doctor', 'teacher', 'and', 'or', 'not']
+var costFn = cache(function(u) { .1 * wordCount(u, wordsThatCount) });
+var generateDataModel = createModel([], utterances, costFn, worldsDist, 
+                                    undefined, 3, 3, createParser(semppl.fixedGrammar, {}))
+
+var data = readOrGenerateTrainingData(experimentName, runId, [worldsDist.support()], 
+    function(w) {
+        return apply(generateDataModel.S1, [w]);
+    }, numSamples);
+
+var logicalConnectiveNetworkSpec = networkSpecs.twoLayerFFNetWithSigmoid;
+var networks = {
+    and: logicalConnectiveNetworkSpec(3, 2),
+    or: logicalConnectiveNetworkSpec(3, 2),
+    not: logicalConnectiveNetworkSpec(3, 1)
+}
+
+var grammarFn = semppl.makeNeuralConnectiveGrammar;
+var model = createVariationalModel([], utterances, costFn, worldsDist, undefined, 3, 3, grammarFn, networks, 
+    function(model) {
+        mapData({ data: data, batchSize }, function(d) {
+            observe(apply(model.S1, [d[0]]), d[1]);
+        })
+    }, 
+    { optimizer: 'adam', 
+      steps: 1000, 
+      estimator: 'ELBO', 
+      checkGradients: false, 
+      checkpointParams: true,
+      logProgress: true,
+      showGradNorm: true, 
+    }, experimentName, runId);
+
+testNetworks(experimentName, runId, model.networks, {
+    not: { range: [0, 1.01, 0.01], arity: 1 },
+    and: { range: [0, 1.01, 0.01], arity: 2 },
+    or: { range: [0, 1.01, 0.01], arity: 2 }
+});
