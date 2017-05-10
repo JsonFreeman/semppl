@@ -108,10 +108,10 @@ computeAndWriteResults(experimentName, runId, generateDataModel, model, [
     { agent: "A2", query: ["Who is a doctor", { domain, facts: { doctor: domain, teacher: domain } } ] },
     { agent: "A2", query: ["Who is a doctor and a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
     { agent: "A2", query: ["Who is a doctor or a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
-    { agent: "A2", query: ["Who is not a doctor and a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
-    { agent: "A2", query: ["Who is not a doctor or a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
     { agent: "A2", query: ["What is John", { domain, facts: { doctor: domain, teacher: mary }}]},
     { agent: "A2", query: ["What is John", { domain, facts: { doctor: domain, teacher: domain }}]},
     { agent: "A2", query: ["What isn't John", { domain, facts: { doctor: domain, teacher: domain }}]},
-    { agent: "A2", query: ["What isn't John", { domain, facts: { doctor: domain, teacher: domain }}]}
+    { agent: "A2", query: ["What isn't John", { domain, facts: { doctor: domain, teacher: domain }}]},
+    { agent: "A2", query: ["Who is not a doctor or a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
+    { agent: "A2", query: ["Who is not a doctor and a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
 ])
