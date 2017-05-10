@@ -1,0 +1,112 @@
+// webppl --require webppl-json --require webppl-fs --require webppl-csv --require webppl-timeit --require .
+/**
+ * This test Q1 of the QA model with polar questions, using Q1. We are still using quds that map one-to-one with
+ * particular questions. In contrast to polarQuestioner1, here we use a filter on the words that count for the cost.
+ * We only learn negation in this experiment. Conjunction and disjunction are fixed.
+ */
+var experimentInfo = getExperimentNameAndRunId();
+var experimentName = experimentInfo.name;
+var runId = experimentInfo.runId;
+var relearnParams = false;
+var numSamples = 4096;
+var batchSize = 8;
+
+var answers = Enumerate(function() {
+    var subject = uniformDraw(["John is", "Mary is", "John and Mary are", "John or Mary is"]);
+    var neg = uniformDraw([" ", " not "]);
+    var predicate = subject.length === "John and Mary are".length ? 
+        uniformDraw(["doctors", "teachers", "doctors and teachers", "doctors or teachers"]) :
+        uniformDraw(["a doctor", "a teacher", "a doctor and a teacher", "a doctor or a teacher"]);
+
+    return subject + neg + predicate;
+}).support();
+assert.equal(answers.length, 32);
+
+var worldsDist = Enumerate(function() {
+    return {
+        domain: ["john", "mary"],
+        facts: {
+            doctor: flip() ? flip() ? ["john", "mary"] : ["john"] : flip() ? ["mary"] : [],
+            teacher: flip() ? flip() ? ["john", "mary"] : ["john"] : flip() ? ["mary"] : [],
+        }
+    }
+})
+assert.equal(worldsDist.support().length, 16);
+
+var questions = Enumerate(function() {
+    var subject = uniformDraw(["Is John", "Is Mary", "Are John and Mary", "Is John or Mary"]);
+    var neg = uniformDraw([" ", " not "]);
+    var predicate = subject.length === "Are John and Mary".length ? 
+        uniformDraw(["doctors", "teachers", "doctors and teachers", "doctors or teachers"]) :
+        uniformDraw(["a doctor", "a teacher", "a doctor and a teacher", "a doctor or a teacher"]);
+
+    return subject + neg + predicate;
+}).support();
+
+var quds = {
+    'doctor(john)' (w) { _.includes(w.facts.doctor, 'john')},
+    'teacher(john)'(w) { _.includes(w.facts.teacher, 'john')},
+    'doctor(mary)' (w) { _.includes(w.facts.doctor, 'mary')},
+    'teacher(mary)'(w) { _.includes(w.facts.teacher, 'mary')},
+    'and(doctor(john),teacher(john))' (w) { _.includes(w.facts.doctor, 'john') && _.includes(w.facts.teacher, 'john')},
+    'and(doctor(mary),teacher(mary))' (w) { _.includes(w.facts.doctor, 'mary') && _.includes(w.facts.teacher, 'mary')},
+    'or(doctor(john),teacher(john))' (w) { _.includes(w.facts.doctor, 'john') || _.includes(w.facts.teacher, 'john')},
+    'or(doctor(mary),teacher(mary))' (w) { _.includes(w.facts.doctor, 'mary') || _.includes(w.facts.teacher, 'mary')},
+    'and(doctor(john),doctor(mary))' (w) { _.includes(w.facts.doctor, 'john') && _.includes(w.facts.doctor, 'mary')},
+    'and(teacher(john),teacher(mary))' (w) { _.includes(w.facts.teacher, 'john') && _.includes(w.facts.teacher, 'mary')},
+    'or(doctor(john),doctor(mary))' (w) { _.includes(w.facts.doctor, 'john') || _.includes(w.facts.doctor, 'mary')},
+    'or(teacher(john),teacher(mary))' (w) { _.includes(w.facts.teacher, 'john') || _.includes(w.facts.teacher, 'mary')},
+    'and(and(doctor(john),teacher(john)),and(doctor(mary),teacher(mary)))' (w) { 
+        _.includes(w.facts.doctor, 'john') && _.includes(w.facts.teacher, 'john') &&
+        _.includes(w.facts.doctor, 'mary') && _.includes(w.facts.teacher, 'mary')
+    },
+    'or(and(doctor(john),teacher(john)),and(doctor(mary),teacher(mary)))' (w) { 
+        _.includes(w.facts.doctor, 'john') && _.includes(w.facts.teacher, 'john') ||
+        _.includes(w.facts.doctor, 'mary') && _.includes(w.facts.teacher, 'mary')
+    },
+    'and(or(doctor(john),teacher(john)),or(doctor(mary),teacher(mary)))' (w) { 
+        (_.includes(w.facts.doctor, 'john') || _.includes(w.facts.teacher, 'john')) &&
+        (_.includes(w.facts.doctor, 'mary') || _.includes(w.facts.teacher, 'mary'))
+    },
+    'or(or(doctor(john),teacher(john)),or(doctor(mary),teacher(mary)))' (w) { 
+        _.includes(w.facts.doctor, 'john') || _.includes(w.facts.teacher, 'john') ||
+        _.includes(w.facts.doctor, 'mary') || _.includes(w.facts.teacher, 'mary')
+    },
+};
+var qudNames = _.keys(quds);
+
+var wordsThatCount = ['john', 'mary', 'doctor', 'teacher', 'and', 'or', 'not']
+var costFn = cache(function(u) { .1 * wordCount(u, wordsThatCount) });
+var generateDataModel = createModel(questions, answers, costFn, worldsDist, 
+                                    quds, 3, 3, createParser(semppl.fixedGrammar, {}))
+
+var data = readOrGenerateTrainingData(experimentName, runId, [qudNames], generateDataModel.Q1, numSamples);
+
+var logicalConnectiveNetworkSpec = networkSpecs.twoLayerFFNetWithSigmoid;
+var networks = {
+    not: logicalConnectiveNetworkSpec(3, 1)
+}
+
+var grammarFn = semppl.makeNeuralConnectiveGrammar;
+var model = createVariationalModel(questions, answers, costFn, worldsDist, quds, 3, 3, grammarFn, networks, 
+    function(model) {
+        mapData({ data, batchSize }, function(d) {
+            observe(apply(model.Q1, [d[0]]), d[1]);
+        })
+    }, 
+    { optimizer: 'adam', 
+      steps: 3000, 
+      estimator: 'ELBO', 
+      checkGradients: false, 
+      checkpointParams: true,
+      logProgress: true,
+      showGradNorm: true, 
+    }, experimentName, runId, relearnParams);
+
+testNetworks(experimentName, runId, model.networks, {
+    not: { range: [0, 1.01, 0.01], arity: 1 },
+});
+
+computeAndWriteResults(experimentName, runId, generateDataModel, model, map(function(q) {
+    return { agent: "Q1", query: [q] }
+}, qudNames))
