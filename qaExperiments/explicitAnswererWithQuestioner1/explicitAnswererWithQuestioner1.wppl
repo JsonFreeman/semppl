@@ -117,5 +117,13 @@ computeAndWriteResults(experimentName, runId, generateDataModel, model, [
     { agent: "A1", query: ["What is John", { domain, facts: { doctor: domain, teacher: mary }}]},
     { agent: "A1", query: ["What is John", { domain, facts: { doctor: domain, teacher: domain }}]},
     { agent: "A1", query: ["What isn't John", { domain, facts: { doctor: domain, teacher: domain }}]},
-    { agent: "A1", query: ["What isn't John", { domain, facts: { doctor: domain, teacher: domain }}]}
+    { agent: "A1", query: ["What isn't John", { domain, facts: { doctor: domain, teacher: domain }}]},
+    { agent: "Q1", query: ['doctor']},
+    { agent: "Q1", query: ['teacher']},
+    { agent: "Q1", query: ['john']},
+    { agent: "Q1", query: ['mary']},
+    { agent: "Q1", query: ['intersection(doctor, teacher)']},
+    { agent: "Q1", query: ['union(doctor, teacher)']},
+    { agent: "Q1", query: ['intersection(john, mary)']},
+    { agent: "Q1", query: ['union(john, mary)']},
 ])
