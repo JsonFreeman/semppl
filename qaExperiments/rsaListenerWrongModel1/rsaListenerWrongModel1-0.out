@@ -1,0 +1,1230 @@
+L2 norm of gradient: 11.976430412276892
+Iteration 0: -1330.0218688012983
+L2 norm of gradient: 14.12257058463854
+L2 norm of gradient: 5.927389474437507
+L2 norm of gradient: 9.923919661358932
+Iteration 3: -1374.2941445252336
+L2 norm of gradient: 13.706974463057144
+L2 norm of gradient: 9.259469040210764
+L2 norm of gradient: 6.923706059303342
+L2 norm of gradient: 10.161746047587293
+Iteration 7: -1375.8742904930214
+L2 norm of gradient: 8.083140552602346
+L2 norm of gradient: 8.086699998379048
+L2 norm of gradient: 14.638324448317201
+L2 norm of gradient: 15.436187704822872
+Iteration 11: -1331.5323694685756
+L2 norm of gradient: 12.875272193318562
+L2 norm of gradient: 14.226353503547822
+L2 norm of gradient: 7.043416318239489
+L2 norm of gradient: 7.10419286670434
+L2 norm of gradient: 7.545715993696648
+Iteration 16: -1418.9776848978338
+L2 norm of gradient: 10.225650567731087
+L2 norm of gradient: 8.053878667976257
+L2 norm of gradient: 12.160701025337671
+L2 norm of gradient: 16.722688268313195
+Iteration 20: -1375.7170404929002
+L2 norm of gradient: 26.340537922463
+L2 norm of gradient: 10.052960140532928
+L2 norm of gradient: 7.5002204224250315
+L2 norm of gradient: 6.509216368070643
+Iteration 24: -1419.0205410555625
+L2 norm of gradient: 13.779165147228419
+L2 norm of gradient: 23.87166574914145
+L2 norm of gradient: 6.464713546273661
+L2 norm of gradient: 14.757839950447861
+L2 norm of gradient: 8.08509380077812
+Iteration 29: -1375.0172847083177
+L2 norm of gradient: 12.166936208149234
+L2 norm of gradient: 15.53955341445164
+L2 norm of gradient: 7.0369067265466
+L2 norm of gradient: 12.796567456813737
+Iteration 33: -1418.2722959029948
+L2 norm of gradient: 12.8199937774416
+L2 norm of gradient: 10.856488422593754
+L2 norm of gradient: 15.83626963913874
+Iteration 36: -1417.5812750553187
+L2 norm of gradient: 9.734554721590378
+L2 norm of gradient: 16.272940101140037
+L2 norm of gradient: 6.884053829855883
+L2 norm of gradient: 8.229551631815735
+L2 norm of gradient: 10.150726341717876
+Iteration 41: -1374.219385779024
+L2 norm of gradient: 7.207647091905853
+L2 norm of gradient: 0.12035973213901535
+L2 norm of gradient: 19.446387563035504
+L2 norm of gradient: 13.439254655493547
+L2 norm of gradient: 13.402066838928096
+Iteration 46: -1284.3946086090816
+L2 norm of gradient: 4.481971083227249
+L2 norm of gradient: 22.02403570426154
+L2 norm of gradient: 11.082074881898638
+L2 norm of gradient: 10.189102818280267
+Iteration 50: -1374.5722285675572
+L2 norm of gradient: 13.66204250446223
+L2 norm of gradient: 15.927416875537764
+L2 norm of gradient: 20.943642384561503
+L2 norm of gradient: 13.813276250012054
+L2 norm of gradient: 19.65800740493145
+Iteration 55: -1416.530534190133
+L2 norm of gradient: 20.516233554996184
+L2 norm of gradient: 22.688101360697555
+L2 norm of gradient: 16.293756926456606
+L2 norm of gradient: 9.157151401505962
+L2 norm of gradient: 10.262051960501585
+Iteration 60: -1418.3943580390114
+L2 norm of gradient: 16.811467189162272
+L2 norm of gradient: 9.467023424429597
+L2 norm of gradient: 16.579032752175543
+L2 norm of gradient: 24.502754080749668
+L2 norm of gradient: 15.05789962218276
+Iteration 65: -1417.3347978149143
+L2 norm of gradient: 9.580538672974454
+L2 norm of gradient: 8.618713999849199
+L2 norm of gradient: 10.758007735102861
+L2 norm of gradient: 12.06888354830813
+Iteration 69: -1417.8758122797365
+L2 norm of gradient: 10.085095464652735
+L2 norm of gradient: 32.948904121289765
+L2 norm of gradient: 9.894713618247733
+L2 norm of gradient: 0.49556958048389854
+L2 norm of gradient: 13.737300212102346
+Iteration 74: -1372.2925432446145
+L2 norm of gradient: 10.681678256176754
+L2 norm of gradient: 8.79648751298097
+L2 norm of gradient: 17.466448628204272
+L2 norm of gradient: 19.634305658163385
+L2 norm of gradient: 13.717043147199174
+Iteration 79: -1375.588203848965
+L2 norm of gradient: 27.236504622151582
+L2 norm of gradient: 12.998143935122966
+L2 norm of gradient: 8.64353595904226
+L2 norm of gradient: 16.82192947926794
+L2 norm of gradient: 0.698036917192814
+Iteration 84: -1419.496404411826
+L2 norm of gradient: 29.97320845772462
+L2 norm of gradient: 12.895949086630203
+L2 norm of gradient: 16.49800383024743
+Iteration 87: -1371.8236803431303
+L2 norm of gradient: 9.14164335958276
+L2 norm of gradient: 5.953369785040795
+L2 norm of gradient: 16.172879278213266
+L2 norm of gradient: 11.36992650492452
+Iteration 91: -1417.8887295896354
+L2 norm of gradient: 16.329554236484665
+L2 norm of gradient: 13.069931107222654
+L2 norm of gradient: 6.793042492943219
+L2 norm of gradient: 6.042347190979156
+Iteration 95: -1418.4116359061773
+L2 norm of gradient: 13.339001985719923
+L2 norm of gradient: 8.413448144201102
+L2 norm of gradient: 29.05796646503821
+L2 norm of gradient: 12.836853578469388
+Iteration 99: -1328.1956827002402
+L2 norm of gradient: 12.360622820518682
+L2 norm of gradient: 20.965866386064704
+L2 norm of gradient: 13.901548844991554
+L2 norm of gradient: 19.584742153793115
+Iteration 103: -1371.6574971575028
+L2 norm of gradient: 21.989888620883853
+L2 norm of gradient: 12.36255527381137
+L2 norm of gradient: 18.91562608057377
+L2 norm of gradient: 14.38587347165641
+L2 norm of gradient: 6.362942178227591
+Iteration 108: -1373.9767908410286
+L2 norm of gradient: 20.957961804204768
+L2 norm of gradient: 9.496879932640693
+L2 norm of gradient: 6.674338752705608
+L2 norm of gradient: 15.027147931557067
+L2 norm of gradient: 9.452513297886561
+Iteration 113: -1418.0214717556883
+L2 norm of gradient: 15.07607984178752
+L2 norm of gradient: 21.53536594946759
+L2 norm of gradient: 17.87715320436968
+L2 norm of gradient: 19.06458453633498
+Iteration 117: -1416.5312133365262
+L2 norm of gradient: 0.9378882052079581
+L2 norm of gradient: 7.019110628047459
+L2 norm of gradient: 22.537935658350733
+L2 norm of gradient: 5.998329705595187
+Iteration 121: -1286.4725420533282
+L2 norm of gradient: 20.986195887436452
+L2 norm of gradient: 10.496784664002845
+L2 norm of gradient: 9.745244169248366
+L2 norm of gradient: 13.739872087869264
+L2 norm of gradient: 23.79299923831144
+Iteration 126: -1369.4591018259116
+L2 norm of gradient: 11.804291565803927
+L2 norm of gradient: 38.01715540579679
+L2 norm of gradient: 19.453114937050966
+L2 norm of gradient: 33.43894538755209
+L2 norm of gradient: 21.930860543258806
+Iteration 131: -1326.086456718668
+L2 norm of gradient: 23.68366080555592
+L2 norm of gradient: 18.672226599088685
+L2 norm of gradient: 0.3423521222945811
+L2 norm of gradient: 13.860073280834458
+Iteration 135: -1415.360606896751
+L2 norm of gradient: 12.2791322237542
+L2 norm of gradient: 13.66722033612312
+L2 norm of gradient: 13.711332648373414
+L2 norm of gradient: 19.656303661548236
+Iteration 139: -1414.538924625508
+L2 norm of gradient: 14.73225448326453
+L2 norm of gradient: 26.312284089270836
+L2 norm of gradient: 15.995655400646996
+L2 norm of gradient: 25.56083323966882
+Iteration 143: -1367.5565477000928
+L2 norm of gradient: 7.9967266598292
+L2 norm of gradient: 24.056392526632166
+L2 norm of gradient: 17.22040565118567
+L2 norm of gradient: 37.18422244915288
+Iteration 147: -1410.5350047613017
+L2 norm of gradient: 17.418749213203164
+L2 norm of gradient: 8.22649037018499
+L2 norm of gradient: 26.01573862922872
+L2 norm of gradient: 27.494208849468905
+L2 norm of gradient: 8.111322244690172
+Iteration 152: -1328.9024459096365
+L2 norm of gradient: 21.404255935828186
+L2 norm of gradient: 6.926847107822553
+L2 norm of gradient: 6.6324405601407035
+L2 norm of gradient: 12.634375249764686
+L2 norm of gradient: 14.126437892394385
+Iteration 157: -1416.0201349517579
+L2 norm of gradient: 16.31929090371802
+L2 norm of gradient: 25.548798977848502
+L2 norm of gradient: 16.593806004756505
+L2 norm of gradient: 26.29590023288804
+Iteration 161: -1368.0505421938146
+L2 norm of gradient: 9.610057300027623
+L2 norm of gradient: 44.45344192369071
+L2 norm of gradient: 15.626581071605766
+L2 norm of gradient: 30.61521069912791
+L2 norm of gradient: 31.985657328767143
+Iteration 166: -1407.7084004689543
+L2 norm of gradient: 15.528761328875088
+L2 norm of gradient: 27.64339872250222
+L2 norm of gradient: 29.700614615798198
+L2 norm of gradient: 19.108813162646733
+L2 norm of gradient: 3.130283435838718
+Iteration 171: -1330.2857360605326
+L2 norm of gradient: 11.446448181576788
+L2 norm of gradient: 28.94905254811901
+L2 norm of gradient: 23.948874306622116
+L2 norm of gradient: 44.087147795420314
+L2 norm of gradient: 23.87910645727965
+Iteration 176: -1415.9017138158335
+L2 norm of gradient: 15.845134283260407
+L2 norm of gradient: 29.60980919467512
+L2 norm of gradient: 6.54134709778749
+L2 norm of gradient: 7.967257664557841
+Iteration 180: -1419.2205563221087
+L2 norm of gradient: 22.768687124031075
+L2 norm of gradient: 30.297901189707158
+L2 norm of gradient: 19.09834317385377
+L2 norm of gradient: 31.68264354686521
+Iteration 184: -1276.5851734435523
+L2 norm of gradient: 11.717578865890294
+L2 norm of gradient: 34.798814937021945
+L2 norm of gradient: 31.842595474448476
+L2 norm of gradient: 23.71201322068042
+Iteration 188: -1365.2384972191069
+L2 norm of gradient: 18.243726508406418
+L2 norm of gradient: 18.833953268360876
+L2 norm of gradient: 10.61464793297822
+L2 norm of gradient: 20.031233505861852
+Iteration 192: -1366.9362100530534
+L2 norm of gradient: 19.087917580746264
+L2 norm of gradient: 6.160254422267491
+L2 norm of gradient: 33.04624980846087
+L2 norm of gradient: 15.45453127642494
+L2 norm of gradient: 48.308685287542524
+Iteration 197: -1311.5266723954342
+L2 norm of gradient: 21.959761616492827
+L2 norm of gradient: 52.042457093980026
+L2 norm of gradient: 20.96310396277969
+L2 norm of gradient: 34.47157780975313
+Iteration 201: -1404.8861721063076
+L2 norm of gradient: 49.00444412019675
+L2 norm of gradient: 33.37086319281522
+L2 norm of gradient: 22.733960295264897
+L2 norm of gradient: 25.831031573073926
+Iteration 205: -1407.6795755057394
+L2 norm of gradient: 12.438576727115011
+L2 norm of gradient: 41.872297962552864
+L2 norm of gradient: 16.499578933307827
+L2 norm of gradient: 32.42515390850099
+L2 norm of gradient: 50.48438556615914
+Iteration 210: -1397.404669206184
+L2 norm of gradient: 18.474319235106314
+L2 norm of gradient: 51.71304499704225
+L2 norm of gradient: 22.194186984471994
+L2 norm of gradient: 19.934075979986396
+Iteration 214: -1320.9532329610963
+L2 norm of gradient: 50.892517415467104
+L2 norm of gradient: 6.769768786711924
+L2 norm of gradient: 10.51676941009852
+L2 norm of gradient: 36.39583106581162
+L2 norm of gradient: 69.0160641526339
+Iteration 219: -1347.2781046623597
+L2 norm of gradient: 36.756508862991694
+L2 norm of gradient: 14.63999549743205
+L2 norm of gradient: 1.8539790439844945
+L2 norm of gradient: 23.55581536661011
+L2 norm of gradient: 22.433840938262758
+Iteration 224: -1411.1733392345764
+L2 norm of gradient: 3.602937671407674
+L2 norm of gradient: 0.3359813547358561
+L2 norm of gradient: 38.83548390138917
+L2 norm of gradient: 30.552067687418603
+L2 norm of gradient: 21.934077003975474
+Iteration 229: -1364.0338258007212
+L2 norm of gradient: 1.0150441464431543
+L2 norm of gradient: 38.16394433542665
+L2 norm of gradient: 43.148162686899305
+L2 norm of gradient: 16.501501686520115
+Iteration 233: -1369.5595774268877
+L2 norm of gradient: 15.94836411557057
+L2 norm of gradient: 21.68299311335348
+L2 norm of gradient: 13.206109831358841
+L2 norm of gradient: 26.911012513513334
+L2 norm of gradient: 3.9226139997631226
+Iteration 238: -1285.464616819208
+L2 norm of gradient: 18.391542138902103
+L2 norm of gradient: 30.739477243550333
+L2 norm of gradient: 29.640533894755503
+L2 norm of gradient: 15.534726195890153
+Iteration 242: -1373.1237361421524
+L2 norm of gradient: 29.019150022675067
+L2 norm of gradient: 23.053573651882054
+L2 norm of gradient: 66.11345772040283
+L2 norm of gradient: 18.85045931634845
+Iteration 246: -1410.835155525478
+L2 norm of gradient: 9.88783280946595
+L2 norm of gradient: 58.05768569927603
+L2 norm of gradient: 21.039960020470875
+L2 norm of gradient: 27.5411985702378
+L2 norm of gradient: 41.55196530921417
+Iteration 251: -1396.6566420179781
+L2 norm of gradient: 26.831025370755427
+L2 norm of gradient: 17.441528374608026
+L2 norm of gradient: 59.17278612684009
+L2 norm of gradient: 78.41326728731646
+L2 norm of gradient: 17.31516835243559
+Iteration 256: -1413.9154207942315
+L2 norm of gradient: 25.425362879245437
+L2 norm of gradient: 15.757321406043749
+L2 norm of gradient: 30.840153362599782
+L2 norm of gradient: 49.850547062083194
+L2 norm of gradient: 22.672778333025022
+Iteration 261: -1364.3879270019909
+L2 norm of gradient: 45.79730161702239
+L2 norm of gradient: 60.635168076311444
+L2 norm of gradient: 41.86064522649644
+L2 norm of gradient: 49.81237016408113
+Iteration 265: -1388.8949258034836
+L2 norm of gradient: 21.793695468286476
+L2 norm of gradient: 40.60115387843338
+L2 norm of gradient: 3.1815328535296636
+L2 norm of gradient: 81.08318778663174
+L2 norm of gradient: 33.808663884624686
+Iteration 270: -1310.0820094849414
+L2 norm of gradient: 36.04362144031414
+L2 norm of gradient: 27.94638562101515
+L2 norm of gradient: 70.81666052319495
+L2 norm of gradient: 32.80174341694435
+L2 norm of gradient: 43.92843057458606
+Iteration 275: -1395.8913977252698
+L2 norm of gradient: 19.347012527622667
+L2 norm of gradient: 29.005143957945105
+L2 norm of gradient: 30.60060706638218
+L2 norm of gradient: 23.854830519770363
+L2 norm of gradient: 18.523880625502887
+Iteration 280: -1367.0860424129469
+L2 norm of gradient: 9.786864060123605
+L2 norm of gradient: 42.189572936155216
+Iteration 282: -1396.3612810824557
+L2 norm of gradient: 33.55418084783638
+L2 norm of gradient: 29.535426584317715
+L2 norm of gradient: 42.29937976301898
+L2 norm of gradient: 28.28562616363966
+L2 norm of gradient: 54.07153332599739
+Iteration 287: -1386.9519099830163
+L2 norm of gradient: 69.74113819073199
+L2 norm of gradient: 35.43597877209059
+L2 norm of gradient: 7.486949303999414
+L2 norm of gradient: 26.519162522826836
+L2 norm of gradient: 25.01977029754503
+Iteration 292: -1318.5330106369638
+L2 norm of gradient: 29.619048325485412
+L2 norm of gradient: 27.34614721364273
+L2 norm of gradient: 32.818669409763466
+L2 norm of gradient: 34.91854941775606
+L2 norm of gradient: 19.819159958655657
+L2 norm of gradient: 36.78578513442774
+Iteration 298: -1401.1286657237108
+L2 norm of gradient: 55.07887769110796
+L2 norm of gradient: 52.5401455992234
+L2 norm of gradient: 17.55829469085924
+L2 norm of gradient: 40.42198355443929
+Iteration 302: -1350.8449101918732
+L2 norm of gradient: 37.76997787505364
+L2 norm of gradient: 57.314717265753956
+L2 norm of gradient: 34.57914642729271
+L2 norm of gradient: 51.442226505702834
+L2 norm of gradient: 27.756516856219047
+Iteration 307: -1398.670677625002
+L2 norm of gradient: 32.231912268093865
+L2 norm of gradient: 22.413481910640655
+L2 norm of gradient: 33.92407498057516
+L2 norm of gradient: 62.895439247151984
+L2 norm of gradient: 21.03229751515634
+Iteration 312: -1323.7026045552107
+L2 norm of gradient: 31.535736664251328
+L2 norm of gradient: 26.379145119943978
+L2 norm of gradient: 31.602914321425324
+L2 norm of gradient: 32.07454064048688
+L2 norm of gradient: 56.96259417967892
+Iteration 317: -1292.5510155242118
+L2 norm of gradient: 40.45315142642073
+L2 norm of gradient: 48.37151653022431
+L2 norm of gradient: 57.69261545939055
+L2 norm of gradient: 17.469008566480877
+Iteration 321: -1367.5554659556346
+L2 norm of gradient: 29.052362441405357
+L2 norm of gradient: 37.06407721012107
+L2 norm of gradient: 6.467426463756055
+L2 norm of gradient: 33.012341729324966
+Iteration 325: -1314.8813958248625
+L2 norm of gradient: 53.012611405605256
+L2 norm of gradient: 69.03911968043195
+L2 norm of gradient: 28.836645606921763
+L2 norm of gradient: 50.112422733462125
+Iteration 329: -1350.5324153995698
+L2 norm of gradient: 6.90276788874456
+L2 norm of gradient: 52.9453186989433
+L2 norm of gradient: 27.341004909430616
+L2 norm of gradient: 49.3851104044547
+Iteration 333: -1342.301644410259
+L2 norm of gradient: 28.856899887907993
+L2 norm of gradient: 23.216696910712034
+L2 norm of gradient: 27.315009934879626
+L2 norm of gradient: 30.341941837098144
+Iteration 337: -1366.0071625520195
+L2 norm of gradient: 22.698680403750412
+L2 norm of gradient: 65.91549654610091
+L2 norm of gradient: 47.72101022175379
+L2 norm of gradient: 77.18102987657409
+Iteration 341: -1359.652929494617
+L2 norm of gradient: 4.12840017304648
+L2 norm of gradient: 51.133525248225
+L2 norm of gradient: 12.243477737715402
+L2 norm of gradient: 55.11296237102269
+Iteration 345: -1381.524169516347
+L2 norm of gradient: 64.72669246446657
+L2 norm of gradient: 43.39351107677433
+L2 norm of gradient: 69.12854105164894
+L2 norm of gradient: 22.672437663204036
+L2 norm of gradient: 48.80721210791386
+Iteration 350: -1347.8923739632041
+L2 norm of gradient: 20.412383470192047
+L2 norm of gradient: 36.51678446842056
+L2 norm of gradient: 41.86467096294886
+L2 norm of gradient: 28.894212200695918
+Iteration 354: -1316.4820840030006
+L2 norm of gradient: 26.43704551784051
+L2 norm of gradient: 46.134277424392195
+L2 norm of gradient: 53.85223483269031
+L2 norm of gradient: 30.16521474124776
+L2 norm of gradient: 22.529556850381223
+Iteration 359: -1407.3660702310874
+L2 norm of gradient: 25.238288921643267
+L2 norm of gradient: 48.12836779528909
+L2 norm of gradient: 26.229478906581264
+L2 norm of gradient: 32.9280372709279
+Iteration 363: -1267.5210770100732
+L2 norm of gradient: 37.207927724191855
+L2 norm of gradient: 52.356930389489456
+L2 norm of gradient: 20.696509288645817
+L2 norm of gradient: 45.895186691468446
+Iteration 367: -1396.6565453576804
+L2 norm of gradient: 81.71880580973989
+L2 norm of gradient: 10.879556272922033
+L2 norm of gradient: 68.64668830879702
+L2 norm of gradient: 83.00987061503277
+L2 norm of gradient: 49.75040772764431
+Iteration 372: -1248.7317780982003
+L2 norm of gradient: 82.7054023318233
+L2 norm of gradient: 60.61115491239644
+L2 norm of gradient: 34.80934915827814
+L2 norm of gradient: 74.54347131069757
+L2 norm of gradient: 66.46334842832995
+Iteration 377: -1323.467427480313
+L2 norm of gradient: 11.311632220992795
+L2 norm of gradient: 13.765839561034822
+L2 norm of gradient: 72.7531901713081
+Iteration 380: -1361.562800480833
+L2 norm of gradient: 30.289397319786723
+L2 norm of gradient: 21.212857627507844
+L2 norm of gradient: 93.46761743124681
+L2 norm of gradient: 54.729720980518856
+L2 norm of gradient: 45.30770983122201
+Iteration 385: -1393.0700058233651
+L2 norm of gradient: 79.25537744708086
+L2 norm of gradient: 71.87486672694375
+L2 norm of gradient: 63.58221092693186
+L2 norm of gradient: 63.53022557159454
+L2 norm of gradient: 76.42131584943427
+Iteration 390: -1360.0478910518048
+L2 norm of gradient: 32.907888029192314
+L2 norm of gradient: 47.98921441219004
+L2 norm of gradient: 54.95834700733503
+L2 norm of gradient: 83.47746941326308
+Iteration 394: -1373.4661800658123
+L2 norm of gradient: 40.10684041830153
+L2 norm of gradient: 33.87689462267959
+L2 norm of gradient: 54.89197602448654
+L2 norm of gradient: 63.30417731463974
+L2 norm of gradient: 28.582484356063738
+Iteration 399: -1263.5581569744356
+L2 norm of gradient: 21.965851820615192
+L2 norm of gradient: 32.45800727483959
+L2 norm of gradient: 43.25068692557146
+L2 norm of gradient: 52.44894838714582
+L2 norm of gradient: 36.37225004471957
+Iteration 404: -1352.4815472384792
+L2 norm of gradient: 51.54762384301771
+L2 norm of gradient: 24.289354235609345
+L2 norm of gradient: 50.719101206590324
+L2 norm of gradient: 30.72249408398304
+Iteration 408: -1312.4072474472825
+L2 norm of gradient: 56.16867462662617
+L2 norm of gradient: 49.642978724834975
+L2 norm of gradient: 40.29878089398858
+L2 norm of gradient: 61.06595332894078
+Iteration 412: -1305.8316471085454
+L2 norm of gradient: 36.144767119874565
+L2 norm of gradient: 68.2411712096613
+L2 norm of gradient: 52.9913898471543
+L2 norm of gradient: 51.981564505562176
+L2 norm of gradient: 86.28496926841005
+Iteration 417: -1334.7517474500926
+L2 norm of gradient: 88.44790820097637
+L2 norm of gradient: 57.478431688811746
+L2 norm of gradient: 57.43031558832375
+L2 norm of gradient: 42.433556323675276
+L2 norm of gradient: 34.4754701012479
+Iteration 422: -1380.9805949911079
+L2 norm of gradient: 68.38775796415786
+L2 norm of gradient: 28.079176007054194
+L2 norm of gradient: 42.4137648960496
+L2 norm of gradient: 67.81993934894287
+L2 norm of gradient: 81.06411975970656
+Iteration 427: -1357.9095491938565
+L2 norm of gradient: 43.9788146922141
+L2 norm of gradient: 35.834561648129316
+L2 norm of gradient: 33.875206331872015
+L2 norm of gradient: 61.65925952753217
+L2 norm of gradient: 44.356310510896634
+Iteration 432: -1343.7421506670762
+L2 norm of gradient: 50.609404269236144
+L2 norm of gradient: 78.25093786800339
+L2 norm of gradient: 91.89917208857749
+L2 norm of gradient: 85.14600450897959
+L2 norm of gradient: 60.228315835110315
+Iteration 437: -1232.865725415582
+L2 norm of gradient: 67.43777422612992
+L2 norm of gradient: 29.791986686872317
+L2 norm of gradient: 51.01659144947213
+L2 norm of gradient: 33.96609552890584
+L2 norm of gradient: 68.35559884433606
+Iteration 442: -1246.8418456277818
+L2 norm of gradient: 34.837087053876324
+L2 norm of gradient: 88.85836918350586
+L2 norm of gradient: 62.133597129503514
+L2 norm of gradient: 83.34762769195828
+L2 norm of gradient: 49.61535094831713
+Iteration 447: -1384.6489640350856
+L2 norm of gradient: 58.33447667956143
+L2 norm of gradient: 24.7121505447956
+L2 norm of gradient: 14.281144473394875
+L2 norm of gradient: 54.003118219737345
+Iteration 451: -1380.9248362762162
+L2 norm of gradient: 92.46624107544463
+L2 norm of gradient: 40.501038479811626
+L2 norm of gradient: 56.121030511099605
+L2 norm of gradient: 65.69101019470365
+Iteration 455: -1343.751673862448
+L2 norm of gradient: 64.47923840523299
+L2 norm of gradient: 52.81942067928038
+L2 norm of gradient: 76.29565317924511
+L2 norm of gradient: 24.17521411115416
+Iteration 459: -1312.2755857688066
+L2 norm of gradient: 61.222308929610634
+L2 norm of gradient: 86.85945638867372
+L2 norm of gradient: 60.38523052085751
+L2 norm of gradient: 76.28034861985297
+Iteration 463: -1345.4637892857486
+L2 norm of gradient: 44.759166808872905
+L2 norm of gradient: 21.346865267825592
+L2 norm of gradient: 70.57120509086535
+L2 norm of gradient: 16.71679073048677
+L2 norm of gradient: 48.07384586000346
+Iteration 468: -1293.787237049567
+L2 norm of gradient: 92.8561875926328
+L2 norm of gradient: 78.81137616406821
+L2 norm of gradient: 64.70025703998644
+L2 norm of gradient: 31.642107624958868
+L2 norm of gradient: 28.429628830870907
+Iteration 473: -1300.4202735368742
+L2 norm of gradient: 45.279430463926275
+L2 norm of gradient: 45.888549875176516
+L2 norm of gradient: 28.638482888365704
+Iteration 476: -1363.7526758500217
+L2 norm of gradient: 48.02184042647391
+L2 norm of gradient: 48.645744030658896
+Iteration 478: -1381.224732252146
+L2 norm of gradient: 56.23666337038989
+L2 norm of gradient: 33.45890901170064
+L2 norm of gradient: 72.11992334765505
+L2 norm of gradient: 51.44257681084126
+L2 norm of gradient: 52.59533073886374
+Iteration 483: -1352.6538538007742
+L2 norm of gradient: 52.652262836977684
+L2 norm of gradient: 31.433139405677146
+L2 norm of gradient: 52.28100845817858
+L2 norm of gradient: 51.17484350991689
+L2 norm of gradient: 106.86492755527908
+Iteration 488: -1349.0131569487812
+L2 norm of gradient: 38.82928351761611
+L2 norm of gradient: 37.70477232897814
+L2 norm of gradient: 19.651919607399677
+L2 norm of gradient: 61.0649859402299
+L2 norm of gradient: 34.14113785643433
+Iteration 493: -1295.9276171793229
+L2 norm of gradient: 69.39792017360246
+L2 norm of gradient: 49.986717421083526
+L2 norm of gradient: 96.71652475515175
+L2 norm of gradient: 49.3865326477162
+Iteration 497: -1380.0510046416045
+L2 norm of gradient: 39.70412374713252
+L2 norm of gradient: 44.230297966663855
+L2 norm of gradient: 82.24565917092843
+L2 norm of gradient: 16.362283377532822
+Iteration 501: -1373.4486533096133
+L2 norm of gradient: 40.899708495779
+L2 norm of gradient: 68.43812618744347
+L2 norm of gradient: 54.42819299907057
+L2 norm of gradient: 37.93576213092914
+Iteration 505: -1386.1838967632607
+L2 norm of gradient: 53.75512268827905
+L2 norm of gradient: 61.75389146886136
+L2 norm of gradient: 42.01757494289425
+L2 norm of gradient: 61.7320953168898
+L2 norm of gradient: 86.47959686873413
+Iteration 510: -1251.959994664902
+L2 norm of gradient: 101.04641189520332
+L2 norm of gradient: 76.52368183794216
+L2 norm of gradient: 57.95131806958254
+L2 norm of gradient: 67.3075077521788
+Iteration 514: -1289.4068590197617
+L2 norm of gradient: 38.87887706399004
+L2 norm of gradient: 55.037327105985284
+L2 norm of gradient: 69.93513151258227
+L2 norm of gradient: 109.49818689768428
+Iteration 518: -1297.6843096305925
+L2 norm of gradient: 57.7370767115563
+L2 norm of gradient: 78.14934373682235
+L2 norm of gradient: 101.19705783081375
+L2 norm of gradient: 85.45628266145953
+L2 norm of gradient: 35.911681175441046
+Iteration 523: -1352.642693503563
+L2 norm of gradient: 116.99685421275008
+L2 norm of gradient: 131.47097979235448
+L2 norm of gradient: 53.030083946601245
+L2 norm of gradient: 66.6650979937748
+Iteration 527: -1295.6707692645214
+L2 norm of gradient: 76.30510914385584
+L2 norm of gradient: 124.03054724297884
+Iteration 529: -1346.2449902288026
+L2 norm of gradient: 72.71759504692797
+L2 norm of gradient: 60.949891344120346
+L2 norm of gradient: 71.7137147391143
+L2 norm of gradient: 59.00242054243979
+Iteration 533: -1337.1548867778577
+L2 norm of gradient: 83.09001501203215
+L2 norm of gradient: 55.80004404326367
+L2 norm of gradient: 49.168414433510485
+L2 norm of gradient: 98.00494031094894
+L2 norm of gradient: 75.81323710636485
+Iteration 538: -1310.1997823153827
+L2 norm of gradient: 74.50854957367714
+L2 norm of gradient: 48.45191897747007
+L2 norm of gradient: 57.81715949036431
+L2 norm of gradient: 46.8381742442896
+Iteration 542: -1367.5081869303433
+L2 norm of gradient: 55.662928391045334
+L2 norm of gradient: 103.67727066022857
+L2 norm of gradient: 118.83027881966514
+L2 norm of gradient: 79.98501530893128
+Iteration 546: -1351.142730171297
+L2 norm of gradient: 66.03382714311816
+L2 norm of gradient: 60.70932086802464
+L2 norm of gradient: 33.863449765368294
+L2 norm of gradient: 102.52143065443508
+L2 norm of gradient: 36.391040104368
+Iteration 551: -1289.1223910829606
+L2 norm of gradient: 112.25154155795497
+L2 norm of gradient: 110.38034713015018
+L2 norm of gradient: 123.54121307042904
+L2 norm of gradient: 78.10935550133685
+Iteration 555: -1235.1240882498987
+L2 norm of gradient: 52.588775187555164
+L2 norm of gradient: 69.72412212252155
+L2 norm of gradient: 92.77992289338299
+L2 norm of gradient: 58.14594183342472
+Iteration 559: -1384.6098605790862
+L2 norm of gradient: 37.70212873555358
+L2 norm of gradient: 86.71216495293913
+L2 norm of gradient: 58.050017229538696
+L2 norm of gradient: 3.1027489563490884
+Iteration 563: -1197.1425315689248
+L2 norm of gradient: 54.96319274947513
+L2 norm of gradient: 103.05116137004411
+L2 norm of gradient: 52.92621935244256
+L2 norm of gradient: 41.24080253029865
+L2 norm of gradient: 48.70412667362261
+Iteration 568: -1272.7637814729464
+L2 norm of gradient: 26.20407897615605
+L2 norm of gradient: 50.14172829263148
+L2 norm of gradient: 120.18630901517349
+L2 norm of gradient: 75.90234493111473
+Iteration 572: -1322.8045530624993
+L2 norm of gradient: 34.82765718877097
+L2 norm of gradient: 35.37362612547181
+L2 norm of gradient: 72.01952059561344
+L2 norm of gradient: 199.75319054523277
+L2 norm of gradient: 35.01284795015393
+Iteration 577: -1331.627875495859
+L2 norm of gradient: 82.65777823238025
+L2 norm of gradient: 36.91602710842179
+L2 norm of gradient: 55.3676040864712
+L2 norm of gradient: 50.30122642001046
+Iteration 581: -1187.6858215428706
+L2 norm of gradient: 31.20557535966521
+L2 norm of gradient: 39.22432228595996
+L2 norm of gradient: 91.83316524827308
+L2 norm of gradient: 46.274221728058436
+L2 norm of gradient: 76.55966526412269
+Iteration 586: -1227.1914608663128
+L2 norm of gradient: 56.72772121553025
+L2 norm of gradient: 56.06486201094206
+L2 norm of gradient: 72.80417293080922
+L2 norm of gradient: 150.34583878502363
+Iteration 590: -1254.5964577181517
+L2 norm of gradient: 79.352831222654
+L2 norm of gradient: 80.6353675518127
+L2 norm of gradient: 53.77897672268532
+L2 norm of gradient: 55.99210316763264
+L2 norm of gradient: 83.95246683957087
+Iteration 595: -1240.7760781625007
+L2 norm of gradient: 67.87544944689978
+L2 norm of gradient: 44.2422342274237
+L2 norm of gradient: 54.67164244758916
+L2 norm of gradient: 56.60222428466795
+Iteration 599: -1267.5059011390144
+L2 norm of gradient: 38.35620713994432
+L2 norm of gradient: 41.46289622939277
+L2 norm of gradient: 45.09337914026182
+L2 norm of gradient: 46.86431839838431
+Iteration 603: -1369.440304054534
+L2 norm of gradient: 84.25849291474405
+L2 norm of gradient: 39.02229521584052
+L2 norm of gradient: 82.40410244381873
+L2 norm of gradient: 39.02764644872267
+Iteration 607: -1325.9796283496328
+L2 norm of gradient: 59.04614967090896
+L2 norm of gradient: 44.57329769352462
+L2 norm of gradient: 75.50971876400256
+Iteration 610: -1216.0796782210512
+L2 norm of gradient: 79.80518978424986
+L2 norm of gradient: 116.96239056722874
+L2 norm of gradient: 95.47070645391076
+L2 norm of gradient: 70.51407131944822
+Iteration 614: -1278.0697316883993
+L2 norm of gradient: 95.24427080776954
+L2 norm of gradient: 34.75951332037397
+L2 norm of gradient: 50.14649355322874
+L2 norm of gradient: 73.8971056903416
+Iteration 618: -1309.9142183819724
+L2 norm of gradient: 56.671582882748105
+L2 norm of gradient: 88.87608123052605
+L2 norm of gradient: 127.64079683215154
+L2 norm of gradient: 51.89547901795417
+L2 norm of gradient: 74.68299657001128
+Iteration 623: -1225.5881660219925
+L2 norm of gradient: 80.11671919635681
+L2 norm of gradient: 80.73302303691234
+L2 norm of gradient: 120.42378648807482
+L2 norm of gradient: 77.12474061381734
+L2 norm of gradient: 97.6295153328018
+L2 norm of gradient: 32.91879229386036
+Iteration 629: -1192.1444692346581
+L2 norm of gradient: 42.013352052818355
+L2 norm of gradient: 44.72821767565816
+L2 norm of gradient: 54.989056860568844
+Iteration 632: -1393.736541150383
+L2 norm of gradient: 45.320628164796034
+L2 norm of gradient: 80.13813124476839
+Iteration 634: -1316.9364478204454
+L2 norm of gradient: 66.0748191146722
+L2 norm of gradient: 63.24386777487695
+L2 norm of gradient: 86.81952925496631
+L2 norm of gradient: 125.84503553765822
+L2 norm of gradient: 59.40745277607699
+Iteration 639: -1320.2316247272815
+L2 norm of gradient: 39.439745612888956
+L2 norm of gradient: 148.17861144606422
+L2 norm of gradient: 47.5398857375312
+L2 norm of gradient: 154.41292383169088
+L2 norm of gradient: 83.81542311033392
+Iteration 644: -1320.2511038567382
+L2 norm of gradient: 127.17925658686993
+L2 norm of gradient: 54.06593948257458
+L2 norm of gradient: 92.59622789619496
+L2 norm of gradient: 48.674997082488304
+L2 norm of gradient: 78.11519813154051
+Iteration 649: -1327.6886853131111
+L2 norm of gradient: 77.02463963145085
+L2 norm of gradient: 40.47142147769841
+L2 norm of gradient: 102.33397970387999
+L2 norm of gradient: 71.76919224115689
+L2 norm of gradient: 70.5075185514336
+Iteration 654: -1264.021865003545
+L2 norm of gradient: 90.82129870576175
+L2 norm of gradient: 74.60102277161877
+L2 norm of gradient: 35.397026918455175
+L2 norm of gradient: 109.55098976014627
+L2 norm of gradient: 75.1380163032039
+Iteration 659: -1303.8038294594623
+L2 norm of gradient: 48.90974317801783
+L2 norm of gradient: 53.135084812865784
+L2 norm of gradient: 123.46182851105641
+L2 norm of gradient: 33.80351430543323
+L2 norm of gradient: 66.97700425049254
+Iteration 664: -1163.0236321527009
+L2 norm of gradient: 83.07597131260512
+L2 norm of gradient: 47.734958733485406
+L2 norm of gradient: 129.1079827861412
+L2 norm of gradient: 114.99268602869158
+L2 norm of gradient: 20.7896790721926
+Iteration 669: -1345.7133672601556
+L2 norm of gradient: 118.19506852371413
+L2 norm of gradient: 52.265899842651265
+L2 norm of gradient: 73.8420980690638
+L2 norm of gradient: 88.42434625593968
+L2 norm of gradient: 85.645061700853
+Iteration 674: -1280.4132605509028
+L2 norm of gradient: 70.47393012229831
+L2 norm of gradient: 101.8187749873403
+L2 norm of gradient: 65.69175285900685
+L2 norm of gradient: 56.155950580970696
+Iteration 678: -1348.2687211195039
+L2 norm of gradient: 32.71038392287413
+L2 norm of gradient: 51.397122061901975
+L2 norm of gradient: 66.74817692331878
+L2 norm of gradient: 90.74555076142096
+L2 norm of gradient: 118.19004195136974
+Iteration 683: -1276.2921360222253
+L2 norm of gradient: 83.59884748590468
+L2 norm of gradient: 130.33776432275178
+Iteration 685: -1323.0725351257797
+L2 norm of gradient: 37.48261864928236
+L2 norm of gradient: 95.81012915723603
+L2 norm of gradient: 69.46424208744706
+L2 norm of gradient: 61.47407048483802
+L2 norm of gradient: 95.59637424647035
+Iteration 690: -1270.6727734878089
+L2 norm of gradient: 84.63643747549774
+L2 norm of gradient: 61.88652915031866
+L2 norm of gradient: 61.69959249746091
+L2 norm of gradient: 89.81473955753465
+L2 norm of gradient: 116.37457602880846
+Iteration 695: -1249.625034149016
+L2 norm of gradient: 74.39915661803057
+L2 norm of gradient: 251.11383569264163
+L2 norm of gradient: 129.54352217935536
+L2 norm of gradient: 67.2721024773886
+L2 norm of gradient: 106.57803903149725
+Iteration 700: -1201.3525124503553
+L2 norm of gradient: 67.7610555913781
+L2 norm of gradient: 90.02163785155399
+L2 norm of gradient: 150.53382832397062
+L2 norm of gradient: 72.87401463873505
+L2 norm of gradient: 58.962909029866026
+Iteration 705: -1215.8943988150938
+L2 norm of gradient: 112.30028423606258
+L2 norm of gradient: 57.334662545757006
+L2 norm of gradient: 79.24156173079886
+L2 norm of gradient: 41.83038074675413
+L2 norm of gradient: 72.35408145367171
+Iteration 710: -1309.634286672066
+L2 norm of gradient: 80.58103746567863
+L2 norm of gradient: 71.72800833595107
+L2 norm of gradient: 150.04731458718356
+L2 norm of gradient: 104.65680432508191
+L2 norm of gradient: 55.666106715110026
+Iteration 715: -1254.1726928980574
+L2 norm of gradient: 82.94182175373062
+L2 norm of gradient: 56.48759942857822
+L2 norm of gradient: 92.16876661478057
+L2 norm of gradient: 72.76015365656394
+Iteration 719: -1260.2528471254736
+L2 norm of gradient: 137.15592696433654
+L2 norm of gradient: 82.74082301967125
+L2 norm of gradient: 87.39671610596645
+L2 norm of gradient: 63.19510689453278
+Iteration 723: -1316.3600597291884
+L2 norm of gradient: 109.22714852750286
+L2 norm of gradient: 124.74679124230502
+L2 norm of gradient: 102.34854258036061
+L2 norm of gradient: 64.98021183584483
+Iteration 727: -1306.0893398684339
+L2 norm of gradient: 145.1770132079064
+L2 norm of gradient: 93.08228799689817
+L2 norm of gradient: 108.27178655337995
+L2 norm of gradient: 56.48552977068067
+Iteration 731: -1268.8346077523156
+L2 norm of gradient: 73.27383939813211
+L2 norm of gradient: 100.72814491089792
+L2 norm of gradient: 83.05491332004189
+L2 norm of gradient: 79.61222966535988
+Iteration 735: -1289.650332242524
+L2 norm of gradient: 53.96227380267651
+L2 norm of gradient: 92.03516236018852
+Iteration 737: -1290.8296310636897
+L2 norm of gradient: 95.01600957402209
+L2 norm of gradient: 38.10810733727371
+L2 norm of gradient: 95.64069778018934
+L2 norm of gradient: 97.58524512362666
+L2 norm of gradient: 88.01910405958482
+Iteration 742: -1279.0875259587892
+L2 norm of gradient: 110.90621823462543
+L2 norm of gradient: 153.44311212731154
+L2 norm of gradient: 82.44942206387199
+L2 norm of gradient: 67.05564989317088
+Iteration 746: -1195.288858124974
+L2 norm of gradient: 133.01028549396915
+L2 norm of gradient: 92.6452005982763
+L2 norm of gradient: 121.26438506269885
+L2 norm of gradient: 70.55121069103747
+Iteration 750: -1279.072073769775
+L2 norm of gradient: 81.56789896278
+L2 norm of gradient: 89.25292048897859
+L2 norm of gradient: 125.68576641777621
+L2 norm of gradient: 68.65359551253384
+L2 norm of gradient: 86.71340829765307
+Iteration 755: -1196.5108843122798
+L2 norm of gradient: 85.60139011652834
+L2 norm of gradient: 73.60891093433996
+L2 norm of gradient: 53.440454160608695
+L2 norm of gradient: 87.42291508305948
+Iteration 759: -1167.894970077996
+L2 norm of gradient: 57.620535900557066
+L2 norm of gradient: 110.00984476900024
+L2 norm of gradient: 121.04883913217473
+L2 norm of gradient: 170.69423978714056
+Iteration 763: -1133.2087043968252
+L2 norm of gradient: 60.814862118281425
+L2 norm of gradient: 162.22498802360093
+L2 norm of gradient: 64.61878737357397
+L2 norm of gradient: 89.76243930332399
+Iteration 767: -1208.7890629154135
+L2 norm of gradient: 52.96004998855528
+L2 norm of gradient: 65.29526461217894
+L2 norm of gradient: 90.78040105780266
+L2 norm of gradient: 78.44535852750215
+Iteration 771: -1175.4720037280222
+L2 norm of gradient: 87.77258761576557
+L2 norm of gradient: 82.53630015125202
+L2 norm of gradient: 85.45190297802621
+L2 norm of gradient: 81.33525078515973
+Iteration 775: -1154.799732959941
+L2 norm of gradient: 96.66250699940423
+L2 norm of gradient: 62.55340132486301
+L2 norm of gradient: 128.69133728315288
+L2 norm of gradient: 59.947978845346974
+Iteration 779: -1364.6607985068956
+L2 norm of gradient: 108.78416526152935
+L2 norm of gradient: 42.91847204201766
+L2 norm of gradient: 127.55019533565392
+L2 norm of gradient: 100.04614345215295
+L2 norm of gradient: 76.11179975497286
+Iteration 784: -1312.9490742819976
+L2 norm of gradient: 103.2782277725397
+L2 norm of gradient: 90.36390468063105
+Iteration 786: -1254.646238204305
+L2 norm of gradient: 119.63684778186627
+L2 norm of gradient: 73.68373319619424
+L2 norm of gradient: 47.74180180558638
+L2 norm of gradient: 99.64206526817577
+Iteration 790: -1196.7662860261412
+L2 norm of gradient: 121.60371527853788
+L2 norm of gradient: 125.76432303066174
+L2 norm of gradient: 63.1754926558423
+L2 norm of gradient: 62.42478803125578
+L2 norm of gradient: 72.91552697342809
+Iteration 795: -1304.1749599728714
+L2 norm of gradient: 54.59554230368719
+L2 norm of gradient: 70.88229658666144
+L2 norm of gradient: 107.46705001557277
+L2 norm of gradient: 128.03394157818994
+L2 norm of gradient: 153.51340474947375
+Iteration 800: -1137.3457155996643
+L2 norm of gradient: 134.7286087141238
+L2 norm of gradient: 148.64578631322112
+L2 norm of gradient: 61.98013221744752
+L2 norm of gradient: 125.88105812427152
+L2 norm of gradient: 124.40306197170953
+Iteration 805: -1180.6563106066542
+L2 norm of gradient: 111.7657589253629
+L2 norm of gradient: 76.22338197256396
+L2 norm of gradient: 87.93762204581668
+L2 norm of gradient: 89.31684822054768
+Iteration 809: -1242.3998557603447
+L2 norm of gradient: 83.26388749864832
+L2 norm of gradient: 73.34310932772418
+L2 norm of gradient: 134.9780599697987
+L2 norm of gradient: 107.92800673869803
+Iteration 813: -1197.3538990044942
+L2 norm of gradient: 70.46890429483497
+L2 norm of gradient: 88.44290902099452
+L2 norm of gradient: 103.73412502719317
+L2 norm of gradient: 123.30475177636743
+Iteration 817: -1184.6457043269952
+L2 norm of gradient: 188.98553589075942
+L2 norm of gradient: 93.72631161905502
+L2 norm of gradient: 100.08133722904152
+L2 norm of gradient: 60.82872095724273
+Iteration 821: -1228.2319954141421
+L2 norm of gradient: 58.81796198850218
+L2 norm of gradient: 79.18650074517176
+L2 norm of gradient: 97.9091026442156
+L2 norm of gradient: 84.96811161195753
+Iteration 825: -1188.6877147197165
+L2 norm of gradient: 134.54587538036546
+L2 norm of gradient: 95.88964952201898
+L2 norm of gradient: 139.01047283167742
+L2 norm of gradient: 80.92539489326771
+Iteration 829: -1192.6064420986802
+L2 norm of gradient: 119.58857012022136
+L2 norm of gradient: 49.797803952283175
+L2 norm of gradient: 109.85349629020321
+Iteration 832: -1156.1931594071837
+L2 norm of gradient: 96.76189066395911
+L2 norm of gradient: 112.16746368865138
+L2 norm of gradient: 94.4258770806518
+L2 norm of gradient: 140.9820538719587
+Iteration 836: -1214.8037632726157
+L2 norm of gradient: 93.33953001233236
+L2 norm of gradient: 62.918662412814754
+L2 norm of gradient: 75.65891948598347
+L2 norm of gradient: 92.17974951714778
+L2 norm of gradient: 118.07077466958157
+L2 norm of gradient: 119.63900857991247
+Iteration 842: -1126.4248809493333
+L2 norm of gradient: 111.18396418698934
+L2 norm of gradient: 174.147433913196
+L2 norm of gradient: 30.673914594658996
+L2 norm of gradient: 105.16372436222147
+L2 norm of gradient: 163.20297988364788
+Iteration 847: -1217.4072888309568
+L2 norm of gradient: 139.85308211055883
+L2 norm of gradient: 78.41707895321815
+L2 norm of gradient: 68.4271271646519
+L2 norm of gradient: 63.65964444067523
+L2 norm of gradient: 194.92643357296035
+Iteration 852: -1078.5372442793232
+L2 norm of gradient: 79.70590485496118
+L2 norm of gradient: 92.88128522993163
+L2 norm of gradient: 161.91663461661147
+L2 norm of gradient: 144.8353772186168
+L2 norm of gradient: 114.72584743533338
+Iteration 857: -1250.5507336728194
+L2 norm of gradient: 58.40736678300932
+L2 norm of gradient: 145.59711671087237
+L2 norm of gradient: 98.6515245099318
+L2 norm of gradient: 42.41316157847476
+Iteration 861: -1234.902615802292
+L2 norm of gradient: 93.74466234948953
+L2 norm of gradient: 82.08368714857754
+L2 norm of gradient: 99.93824298408043
+L2 norm of gradient: 44.640254741343405
+L2 norm of gradient: 189.92981456240977
+L2 norm of gradient: 129.90657721337615
+Iteration 867: -1226.8113372938162
+L2 norm of gradient: 118.00899760035577
+L2 norm of gradient: 77.61969308950903
+L2 norm of gradient: 109.73408811281439
+L2 norm of gradient: 187.84020728634295
+L2 norm of gradient: 33.50665510409879
+Iteration 872: -1303.8574768127792
+L2 norm of gradient: 60.7451546682443
+L2 norm of gradient: 72.58970348244013
+L2 norm of gradient: 147.8390042365509
+L2 norm of gradient: 92.41164210023734
+Iteration 876: -1197.2455893818337
+L2 norm of gradient: 105.09816713074677
+L2 norm of gradient: 92.20489016674374
+Iteration 878: -1216.010916208571
+L2 norm of gradient: 81.86587460504491
+L2 norm of gradient: 193.99032621429103
+L2 norm of gradient: 47.322578359222774
+L2 norm of gradient: 71.98804918034908
+L2 norm of gradient: 112.84717921957572
+Iteration 883: -1124.7594169359263
+L2 norm of gradient: 58.154709237055535
+L2 norm of gradient: 115.12986417075196
+L2 norm of gradient: 151.2052903315413
+L2 norm of gradient: 94.11320724981032
+L2 norm of gradient: 153.01691535040618
+Iteration 888: -1189.3161820909988
+L2 norm of gradient: 215.26877209914548
+L2 norm of gradient: 133.7092525793047
+L2 norm of gradient: 216.40669536934757
+L2 norm of gradient: 76.76029015029513
+L2 norm of gradient: 53.822056959166645
+Iteration 893: -1234.880433838873
+L2 norm of gradient: 51.09721819857641
+L2 norm of gradient: 91.84858013642867
+L2 norm of gradient: 43.25544770968463
+L2 norm of gradient: 86.388116116294
+L2 norm of gradient: 131.45788178949627
+Iteration 898: -1053.5331270925853
+L2 norm of gradient: 194.8666743791121
+L2 norm of gradient: 153.1201982996629
+L2 norm of gradient: 131.5472070031735
+L2 norm of gradient: 53.29280312745314
+Iteration 902: -1211.2211120756551
+L2 norm of gradient: 181.27545365264703
+L2 norm of gradient: 49.901786402803026
+L2 norm of gradient: 92.25074013252052
+L2 norm of gradient: 87.67437225465314
+L2 norm of gradient: 100.78515962488531
+Iteration 907: -1326.8661749123062
+L2 norm of gradient: 88.27015098387014
+L2 norm of gradient: 100.34247442973366
+L2 norm of gradient: 140.14557359221843
+L2 norm of gradient: 120.08176171135237
+L2 norm of gradient: 187.60213663653624
+Iteration 912: -1031.9330430172681
+L2 norm of gradient: 61.46993177057001
+L2 norm of gradient: 122.20459431592315
+L2 norm of gradient: 66.43800111112877
+L2 norm of gradient: 125.19632833857133
+Iteration 916: -1087.941777736369
+L2 norm of gradient: 133.93273053752387
+L2 norm of gradient: 62.060623221767656
+L2 norm of gradient: 60.40557922863199
+L2 norm of gradient: 90.93867594678694
+Iteration 920: -1281.5317779446061
+L2 norm of gradient: 91.89184562174435
+L2 norm of gradient: 148.5307100572288
+L2 norm of gradient: 44.427512177370005
+L2 norm of gradient: 152.56641428038003
+Iteration 924: -1255.263589895287
+L2 norm of gradient: 127.98944349481181
+L2 norm of gradient: 78.7913672502404
+L2 norm of gradient: 82.5844833138581
+Iteration 927: -1148.9795529962885
+L2 norm of gradient: 87.93594839331406
+L2 norm of gradient: 79.47857575004845
+L2 norm of gradient: 156.23289222810973
+L2 norm of gradient: 41.94998052578042
+L2 norm of gradient: 136.50071308750498
+Iteration 932: -1123.972191539856
+L2 norm of gradient: 132.97061085869848
+L2 norm of gradient: 88.32076870811323
+L2 norm of gradient: 82.70087012083266
+L2 norm of gradient: 80.03419674133164
+Iteration 936: -1193.7348395912738
+L2 norm of gradient: 115.00830486096409
+L2 norm of gradient: 85.77721502724867
+L2 norm of gradient: 90.20470987717678
+L2 norm of gradient: 43.55716294544425
+L2 norm of gradient: 58.86217985025092
+Iteration 941: -1219.522279548595
+L2 norm of gradient: 179.3835983227781
+L2 norm of gradient: 86.97765194347275
+L2 norm of gradient: 237.01499692929863
+L2 norm of gradient: 123.38908109780907
+L2 norm of gradient: 78.08466720869018
+Iteration 946: -1154.2028285553426
+L2 norm of gradient: 115.1660116771996
+L2 norm of gradient: 167.1373756443226
+L2 norm of gradient: 98.40281285823129
+L2 norm of gradient: 84.33970593648479
+Iteration 950: -1190.92859316917
+L2 norm of gradient: 105.44677902939594
+L2 norm of gradient: 169.91301664364576
+L2 norm of gradient: 62.98817215953069
+L2 norm of gradient: 103.35818366628652
+Iteration 954: -1078.6676634192654
+L2 norm of gradient: 50.04941834396344
+L2 norm of gradient: 65.62551374924571
+L2 norm of gradient: 73.21413230009672
+L2 norm of gradient: 66.63198306181968
+L2 norm of gradient: 132.78271399468736
+Iteration 959: -1164.9438092497257
+L2 norm of gradient: 127.5939106831658
+L2 norm of gradient: 90.03007292700228
+L2 norm of gradient: 166.35259808352933
+L2 norm of gradient: 129.79352529483845
+Iteration 963: -1164.1448173784763
+L2 norm of gradient: 76.24719354512422
+L2 norm of gradient: 99.3183760997981
+L2 norm of gradient: 71.80465708927535
+L2 norm of gradient: 73.04968059813773
+Iteration 967: -1149.154675717453
+L2 norm of gradient: 85.13824128630587
+L2 norm of gradient: 119.65818664212118
+L2 norm of gradient: 89.43774535067686
+L2 norm of gradient: 100.20445269349302
+Iteration 971: -1017.1128271599922
+L2 norm of gradient: 93.52204064207132
+L2 norm of gradient: 119.58969001572832
+L2 norm of gradient: 100.36208891366842
+L2 norm of gradient: 131.37720727266833
+L2 norm of gradient: 88.18485827924947
+Iteration 976: -1309.2412738598503
+L2 norm of gradient: 61.43377612791654
+L2 norm of gradient: 76.69537906912345
+Iteration 978: -1207.54316240763
+L2 norm of gradient: 118.08922803099341
+L2 norm of gradient: 102.87714447655326
+L2 norm of gradient: 66.35762677415254
+L2 norm of gradient: 58.87476572439043
+L2 norm of gradient: 126.17302819813868
+L2 norm of gradient: 141.56086752859983
+Iteration 984: -985.5666006683039
+L2 norm of gradient: 150.01316558643407
+L2 norm of gradient: 103.80150563001799
+L2 norm of gradient: 117.31123560478616
+L2 norm of gradient: 92.62581518284875
+L2 norm of gradient: 59.90551453423421
+Iteration 989: -1213.9814124177171
+L2 norm of gradient: 73.59391276839924
+L2 norm of gradient: 93.54819294866033
+L2 norm of gradient: 98.95290304383754
+L2 norm of gradient: 76.01375742590422
+L2 norm of gradient: 121.65150084627749
+Iteration 994: -1098.436190302134
+L2 norm of gradient: 131.04421631960597
+L2 norm of gradient: 120.7171779908646
+L2 norm of gradient: 100.23018108654912
+L2 norm of gradient: 137.2337133796038
+L2 norm of gradient: 108.47654549233751
+Iteration 999: -1099.1208232120155
+{ not: undefined, and: undefined, or: undefined }
