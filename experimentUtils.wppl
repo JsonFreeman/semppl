@@ -33,6 +33,11 @@ var makeNetworkTestPath = function(experimentName, runId, networkName) {
     return runDir + "/nn-" + networkName + ".csv";
 }
 
+var makeNetworkCorrectnessSummary = function(experimentName, runId, networkName) {
+    var runDir = makeRunDir(experimentName, runId);
+    return runDir + "/nn-" + networkName + "-correctness-summary.csv";
+}
+
 var getExperimentNameAndRunId = function() {
     var experimentPath = _.nth(process.argv, -2);
     var experimentName = experimentPath.substring(experimentPath.lastIndexOf('/') + 1, experimentPath.lastIndexOf('.'));
@@ -124,9 +129,16 @@ var computeAndWriteResults = function(experimentName, runId, groundTruthModel, l
     return queriesAndResults;
 }
 
+var groundTruthFns = {
+    and(args) { return args[0] * args[1] },
+    or(args) { return 1 - (1 - args[0]) * (1 - args[1]) },
+    not(args) { return 1 - args[0] }
+}
+
 var testNetworks = function(experimentName, runId, networks, tests) {
     mapObject(function(networkName, test) {
         var networkTestPath = makeNetworkTestPath(experimentName, runId, networkName);
+        var networkCorrectnessSummaryPath = makeNetworkCorrectnessSummary(experimentName, runId, networkName);
         var network = networks[networkName];
         var range = _.range.apply(_, test.range);
         var results = Enumerate(function() {
@@ -135,6 +147,15 @@ var testNetworks = function(experimentName, runId, networks, tests) {
         }).support();
 
         webpplCsv.writeCSV(results, networkTestPath);
+
+        // compute distance
+        var distance = Math.sqrt(sum(map(function(r) {
+            var learned = r[r.length - 1];
+            var real = apply(groundTruthFns[networkName], [r]);
+            Math.pow(learned - real, 2)
+        }, results)))
+
+        webpplFs.write(networkCorrectnessSummaryPath, distance);
 
     }, tests);
 }
