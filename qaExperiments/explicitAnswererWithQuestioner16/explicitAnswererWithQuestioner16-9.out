@@ -1,0 +1,1427 @@
+L2 norm of gradient: 173.86943961588764
+Iteration 0: -15064.735814412823
+L2 norm of gradient: 112.24612045549051
+Iteration 1: -15604.865012909751
+L2 norm of gradient: 142.54799255178847
+Iteration 2: -14528.22008631914
+L2 norm of gradient: 0.13714936413813636
+Iteration 3: -14648.759158963803
+L2 norm of gradient: 69.13078856505442
+Iteration 4: -14959.962009051116
+L2 norm of gradient: 98.40228302893104
+Iteration 5: -15202.183451638324
+L2 norm of gradient: 40.230558912289396
+Iteration 6: -13758.905112400884
+L2 norm of gradient: 37.2515271640758
+Iteration 7: -12226.58879825077
+L2 norm of gradient: 3.7909588766621822
+Iteration 8: -15074.693001055857
+L2 norm of gradient: 16.699557612912173
+Iteration 9: -14161.47170638037
+L2 norm of gradient: 0.21737064895754948
+Iteration 10: -14016.622967542848
+L2 norm of gradient: 12.451338143592707
+Iteration 11: -14440.71637317934
+L2 norm of gradient: 0.13484006848165472
+Iteration 12: -13858.894973977702
+L2 norm of gradient: 83.43923232913018
+Iteration 13: -15289.277726290049
+L2 norm of gradient: 0.8883355935452208
+Iteration 14: -12996.89102111687
+L2 norm of gradient: 173.83349551855056
+Iteration 15: -15440.838485562475
+L2 norm of gradient: 7.714564794904302
+Iteration 16: -14268.859067217913
+L2 norm of gradient: 6.289663048982767
+Iteration 17: -15226.317462439649
+L2 norm of gradient: 14.902943094670443
+Iteration 18: -14714.512232841225
+L2 norm of gradient: 101.57394402660805
+Iteration 19: -14020.949235983426
+L2 norm of gradient: 101.91299907879164
+Iteration 20: -13612.668772017816
+L2 norm of gradient: 156.97748462779032
+Iteration 21: -14932.604841063032
+L2 norm of gradient: 27.88936686809557
+Iteration 22: -15453.28711587796
+L2 norm of gradient: 74.45677165901863
+Iteration 23: -13246.265870281262
+L2 norm of gradient: 82.53796320864056
+Iteration 24: -14264.389655620093
+L2 norm of gradient: 3.8933526193433434
+Iteration 25: -14951.242162597133
+L2 norm of gradient: 87.62297638170219
+Iteration 26: -14668.100140835857
+L2 norm of gradient: 87.25049487876935
+Iteration 27: -14354.197759536328
+L2 norm of gradient: 7.434417385882277
+Iteration 28: -12829.99759484781
+L2 norm of gradient: 3.7936166934285502
+Iteration 29: -14177.22216950776
+L2 norm of gradient: 68.67384901163668
+Iteration 30: -14024.681678012712
+L2 norm of gradient: 116.93892687942777
+Iteration 31: -14455.522611953551
+L2 norm of gradient: 14.579475742349736
+Iteration 32: -13199.904786259402
+L2 norm of gradient: 6.692806221067019
+Iteration 33: -12519.672406877158
+L2 norm of gradient: 6.728919076705252
+Iteration 34: -13882.069900355767
+L2 norm of gradient: 14.524535473339778
+Iteration 35: -11975.363093171734
+L2 norm of gradient: 109.56956521406924
+Iteration 36: -13513.476524833357
+L2 norm of gradient: 123.97372562025463
+Iteration 37: -14851.081027470063
+L2 norm of gradient: 38.55086149338202
+Iteration 38: -13987.020452532219
+L2 norm of gradient: 168.6344023431773
+Iteration 39: -14859.626121789683
+L2 norm of gradient: 85.47775174393463
+Iteration 40: -14959.21205148683
+L2 norm of gradient: 0.20954478906054474
+Iteration 41: -14454.62575705722
+L2 norm of gradient: 36.60464763559439
+Iteration 42: -12887.66670950153
+L2 norm of gradient: 89.52473468958172
+Iteration 43: -14954.368031582097
+L2 norm of gradient: 85.24548397853006
+Iteration 44: -14001.6610391594
+L2 norm of gradient: 93.3604469341085
+Iteration 45: -12904.741271902341
+L2 norm of gradient: 88.2434876528091
+Iteration 46: -14915.860208852915
+L2 norm of gradient: 11.698048378539431
+Iteration 47: -14722.275205921615
+L2 norm of gradient: 99.3519562769423
+Iteration 48: -12052.440756062511
+L2 norm of gradient: 0.2863975483396848
+Iteration 49: -13258.065373201855
+L2 norm of gradient: 5.866834600940353
+Iteration 50: -13287.397698261077
+L2 norm of gradient: 166.32129066837638
+Iteration 51: -14041.299703801982
+L2 norm of gradient: 3.329511743010098
+Iteration 52: -14024.244634186383
+L2 norm of gradient: 42.424016986394754
+Iteration 53: -15460.015788728604
+L2 norm of gradient: 19.161988258672626
+Iteration 54: -13476.38546732883
+L2 norm of gradient: 95.62911367293312
+Iteration 55: -15120.326455904404
+L2 norm of gradient: 0.9526459246303409
+Iteration 56: -15252.58186688018
+L2 norm of gradient: 40.88500115799726
+Iteration 57: -14656.926342736464
+L2 norm of gradient: 13.226362192205858
+Iteration 58: -13799.370995857054
+L2 norm of gradient: 13.141596367348136
+Iteration 59: -15016.085358669283
+L2 norm of gradient: 67.69420392678173
+Iteration 60: -14477.47883419809
+L2 norm of gradient: 94.93067449297278
+Iteration 61: -15537.391746411566
+L2 norm of gradient: 10.44297905871354
+Iteration 62: -15441.376500742277
+L2 norm of gradient: 23.224697371919504
+Iteration 63: -13146.506620788481
+L2 norm of gradient: 102.45748783999306
+Iteration 64: -15025.98506529932
+L2 norm of gradient: 0.1874945278809595
+Iteration 65: -15417.372728836024
+L2 norm of gradient: 15.308744458416014
+Iteration 66: -13974.234403627925
+L2 norm of gradient: 3.6004214516023647
+Iteration 67: -15110.006788220024
+L2 norm of gradient: 135.43102180578927
+Iteration 68: -14946.823171735043
+L2 norm of gradient: 145.14178738945614
+Iteration 69: -13743.981049581198
+L2 norm of gradient: 9.287108494270534
+Iteration 70: -13386.370330235688
+L2 norm of gradient: 85.37335229044862
+Iteration 71: -16229.583678614814
+L2 norm of gradient: 13.708845175946674
+Iteration 72: -12620.973307218868
+L2 norm of gradient: 41.41494397768342
+Iteration 73: -14202.166647053557
+L2 norm of gradient: 93.76368195497898
+Iteration 74: -12902.485193098662
+L2 norm of gradient: 71.06114710307084
+Iteration 75: -14968.348987114616
+L2 norm of gradient: 0.6622596459559424
+Iteration 76: -14799.091053387616
+L2 norm of gradient: 3.6292269380526503
+Iteration 77: -14320.895625606412
+L2 norm of gradient: 75.57067877903154
+Iteration 78: -14440.410550213885
+L2 norm of gradient: 0.475701003143483
+Iteration 79: -15251.126333779888
+L2 norm of gradient: 3.2242008962118227
+Iteration 80: -14184.605816713069
+L2 norm of gradient: 6.495938969297586
+Iteration 81: -14521.563648123061
+L2 norm of gradient: 99.17154878049806
+Iteration 82: -14665.429606706835
+L2 norm of gradient: 50.19808016475516
+Iteration 83: -14480.259581331396
+L2 norm of gradient: 44.01011076981092
+Iteration 84: -14523.166499707615
+L2 norm of gradient: 3.670010065648959
+Iteration 85: -13894.01801172737
+L2 norm of gradient: 107.61077681874649
+Iteration 86: -13818.014604274416
+L2 norm of gradient: 0.061652008590563426
+Iteration 87: -15128.079751927638
+L2 norm of gradient: 95.18357185981506
+Iteration 88: -13974.702795634046
+L2 norm of gradient: 24.583311282257934
+Iteration 89: -13601.09662020998
+L2 norm of gradient: 3.721480584939852
+Iteration 90: -15138.834987837821
+L2 norm of gradient: 91.26636885103767
+Iteration 91: -14281.246883652639
+L2 norm of gradient: 135.3835734263454
+Iteration 92: -14975.040681319544
+L2 norm of gradient: 6.526254131329451
+Iteration 93: -12974.693937974283
+L2 norm of gradient: 3.6802812259701394
+Iteration 94: -13889.872504752595
+L2 norm of gradient: 213.59878942271976
+Iteration 95: -15584.520617287606
+L2 norm of gradient: 0.06942890823384941
+Iteration 96: -14667.679258536547
+L2 norm of gradient: 49.785189609834546
+Iteration 97: -14280.490551432595
+L2 norm of gradient: 3.590982098722115
+Iteration 98: -15264.9332957624
+L2 norm of gradient: 85.04951311414229
+Iteration 99: -14881.89069965994
+L2 norm of gradient: 195.8958482851266
+Iteration 100: -14789.187999605667
+L2 norm of gradient: 105.78485964314653
+Iteration 101: -13433.099299091846
+L2 norm of gradient: 3.619584523658156
+Iteration 102: -15271.128003122518
+L2 norm of gradient: 104.5557678929949
+Iteration 103: -15739.235486176098
+L2 norm of gradient: 145.03995844716127
+Iteration 104: -14948.050497259479
+L2 norm of gradient: 14.729404002805769
+Iteration 105: -15223.114048498217
+L2 norm of gradient: 14.464200610647708
+Iteration 106: -15646.556166808354
+L2 norm of gradient: 14.562568749161416
+Iteration 107: -15672.459259761497
+L2 norm of gradient: 16.118624726450246
+Iteration 108: -13954.713907445315
+L2 norm of gradient: 59.13742923173093
+Iteration 109: -15409.022738642758
+L2 norm of gradient: 14.242754816192944
+Iteration 110: -14562.35534090316
+L2 norm of gradient: 60.621212421757456
+Iteration 111: -12043.851753601339
+L2 norm of gradient: 0.3186824213305429
+Iteration 112: -13415.129405442858
+L2 norm of gradient: 122.737346841825
+Iteration 113: -15947.8357614649
+L2 norm of gradient: 77.974444992995
+Iteration 114: -14177.2348618994
+L2 norm of gradient: 0.327878345335056
+Iteration 115: -14209.309825352626
+L2 norm of gradient: 14.65900075924902
+Iteration 116: -15057.620817855699
+L2 norm of gradient: 135.2069649248891
+Iteration 117: -13356.80328978342
+L2 norm of gradient: 114.8914734081667
+Iteration 118: -13743.03446727153
+L2 norm of gradient: 82.19772996384147
+Iteration 119: -13630.387714673532
+L2 norm of gradient: 99.54541516012644
+Iteration 120: -15006.876024734695
+L2 norm of gradient: 128.7743348773529
+Iteration 121: -15670.564944577403
+L2 norm of gradient: 129.76616500388036
+Iteration 122: -15211.140805535018
+L2 norm of gradient: 97.47616312553747
+Iteration 123: -14659.591965968255
+L2 norm of gradient: 1.4709130253521423
+Iteration 124: -13258.38744751364
+L2 norm of gradient: 105.73345402562109
+Iteration 125: -14677.492698488291
+L2 norm of gradient: 15.288630761765047
+Iteration 126: -14415.631453935523
+L2 norm of gradient: 93.15750680943707
+Iteration 127: -14045.121261300985
+L2 norm of gradient: 97.71725960343905
+Iteration 128: -14756.575876968447
+L2 norm of gradient: 210.88759652755814
+Iteration 129: -14148.546548767481
+L2 norm of gradient: 109.03312084742885
+Iteration 130: -14233.693270284217
+L2 norm of gradient: 128.4498995492397
+Iteration 131: -12994.992997578578
+L2 norm of gradient: 88.52788532140328
+Iteration 132: -15310.43689884874
+L2 norm of gradient: 69.68925548958312
+Iteration 133: -13434.036223598989
+L2 norm of gradient: 87.7911281133514
+Iteration 134: -12804.772456729785
+L2 norm of gradient: 9.295371494597944
+Iteration 135: -11546.204529119423
+L2 norm of gradient: 3.7832799697577415
+Iteration 136: -13408.650549652753
+L2 norm of gradient: 131.85245441881065
+Iteration 137: -15449.288969931891
+L2 norm of gradient: 1.1587488407372935
+Iteration 138: -13883.200113246916
+L2 norm of gradient: 4.0316772583093385
+Iteration 139: -16038.956147482153
+L2 norm of gradient: 72.10662913417904
+Iteration 140: -15506.6051987994
+L2 norm of gradient: 4.103074968644099
+Iteration 141: -14029.93456555414
+L2 norm of gradient: 17.15433227457896
+Iteration 142: -14538.540224673226
+L2 norm of gradient: 68.70429895071132
+Iteration 143: -13971.948273478774
+L2 norm of gradient: 254.5587358574374
+Iteration 144: -15468.16672039521
+L2 norm of gradient: 79.91411144189463
+Iteration 145: -13407.051404686878
+L2 norm of gradient: 17.38891186371754
+Iteration 146: -14719.557498874376
+L2 norm of gradient: 120.12333802768173
+Iteration 147: -14054.384738432243
+L2 norm of gradient: 17.53728572079078
+Iteration 148: -15823.782084392617
+L2 norm of gradient: 113.42398792696969
+Iteration 149: -14502.977602568688
+L2 norm of gradient: 19.612701888333966
+Iteration 150: -15339.564521766733
+L2 norm of gradient: 0.45402272549819506
+Iteration 151: -14968.789304176113
+L2 norm of gradient: 67.17055229617252
+Iteration 152: -15108.061277728062
+L2 norm of gradient: 1.3445113096087453
+Iteration 153: -15112.723651433364
+L2 norm of gradient: 140.0389893636491
+Iteration 154: -13009.933432002552
+L2 norm of gradient: 135.50687687157938
+Iteration 155: -12828.926714965608
+L2 norm of gradient: 18.66092181031956
+Iteration 156: -13343.952661219519
+L2 norm of gradient: 63.101069617111136
+Iteration 157: -14056.286888698116
+L2 norm of gradient: 8.505150087044742
+Iteration 158: -14810.070820892928
+L2 norm of gradient: 7.839148606549104
+Iteration 159: -13742.29830230726
+L2 norm of gradient: 108.20706429037408
+Iteration 160: -14513.694733028533
+L2 norm of gradient: 85.14809350518543
+Iteration 161: -14637.625707475934
+L2 norm of gradient: 7.225750189714847
+Iteration 162: -15584.460624643834
+L2 norm of gradient: 0.22157177719434287
+Iteration 163: -14496.677172806812
+L2 norm of gradient: 65.95447591013071
+Iteration 164: -13124.02746783453
+L2 norm of gradient: 7.454101451043822
+Iteration 165: -15264.513633810217
+L2 norm of gradient: 333.07737101887705
+Iteration 166: -15253.280445228564
+L2 norm of gradient: 4.560719899997553
+Iteration 167: -15588.929132143734
+L2 norm of gradient: 39.39780414461075
+Iteration 168: -15278.198218374746
+L2 norm of gradient: 9.004366022377225
+Iteration 169: -15548.187255180907
+L2 norm of gradient: 84.73241284842393
+Iteration 170: -14231.540451289155
+L2 norm of gradient: 82.20524964981745
+Iteration 171: -15276.5947040678
+L2 norm of gradient: 180.41726110869345
+Iteration 172: -15251.217994021019
+L2 norm of gradient: 173.88278180474697
+Iteration 173: -15525.02376558911
+L2 norm of gradient: 85.41435718550464
+Iteration 174: -13635.31341635529
+L2 norm of gradient: 249.46039994758573
+Iteration 175: -14464.506278596818
+L2 norm of gradient: 110.0399075191745
+Iteration 176: -12527.812933479436
+L2 norm of gradient: 109.88303244638077
+Iteration 177: -14959.161653387127
+L2 norm of gradient: 9.031204806732461
+Iteration 178: -15897.030540176202
+L2 norm of gradient: 178.17904080141258
+Iteration 179: -14225.33388874447
+L2 norm of gradient: 5.890325157439504
+Iteration 180: -15123.639215598814
+L2 norm of gradient: 0.33973799540145616
+Iteration 181: -15230.595483667916
+L2 norm of gradient: 192.89479088765316
+Iteration 182: -15315.720051596174
+L2 norm of gradient: 198.81842589377624
+Iteration 183: -14468.843934036093
+L2 norm of gradient: 8.163988830428723
+Iteration 184: -15451.78399649891
+L2 norm of gradient: 0.40495361258244333
+Iteration 185: -14319.126609448344
+L2 norm of gradient: 104.04267913431333
+Iteration 186: -14189.014125031186
+L2 norm of gradient: 5.534969975236497
+Iteration 187: -14847.621821669396
+L2 norm of gradient: 181.54801389491968
+Iteration 188: -13637.543243624037
+L2 norm of gradient: 187.86968500699925
+Iteration 189: -15656.937874776311
+L2 norm of gradient: 100.3635837307399
+Iteration 190: -14259.233573894715
+L2 norm of gradient: 6.844913037167059
+Iteration 191: -15265.15823630616
+L2 norm of gradient: 176.5459206911985
+Iteration 192: -15411.23601020244
+L2 norm of gradient: 1.2055754162190047
+Iteration 193: -14928.15698382631
+L2 norm of gradient: 81.4829791861255
+Iteration 194: -13905.135022871196
+L2 norm of gradient: 98.71737173368653
+Iteration 195: -14522.342863650993
+L2 norm of gradient: 160.5808545911509
+Iteration 196: -14058.015372131718
+L2 norm of gradient: 112.40812641189412
+Iteration 197: -14642.752696614712
+L2 norm of gradient: 128.89629237605862
+Iteration 198: -14667.823461461347
+L2 norm of gradient: 183.30362817453786
+Iteration 199: -14767.31380925118
+L2 norm of gradient: 317.1827864514272
+Iteration 200: -14829.041503398214
+L2 norm of gradient: 3.831534265635199
+Iteration 201: -14498.017784934025
+L2 norm of gradient: 2.458871757088193
+Iteration 202: -15257.51028271392
+L2 norm of gradient: 304.9556261055733
+Iteration 203: -13674.911106478423
+L2 norm of gradient: 192.63429535360913
+Iteration 204: -13977.80375719862
+L2 norm of gradient: 118.86863212286465
+Iteration 205: -14186.934671905823
+L2 norm of gradient: 0.6854272302983515
+Iteration 206: -14018.863827676047
+L2 norm of gradient: 6.442864694760293
+Iteration 207: -15107.35043058428
+L2 norm of gradient: 211.0357386825576
+Iteration 208: -15128.882592136739
+L2 norm of gradient: 190.26898266888747
+Iteration 209: -14174.752635905286
+L2 norm of gradient: 121.92071269371822
+Iteration 210: -15852.121743195457
+L2 norm of gradient: 2.441831144303973
+Iteration 211: -14360.957234180765
+L2 norm of gradient: 124.40157802166
+Iteration 212: -14944.984798666323
+L2 norm of gradient: 130.25291625315785
+Iteration 213: -16063.947489125887
+L2 norm of gradient: 15.09204841631656
+Iteration 214: -13427.105399361346
+L2 norm of gradient: 137.43220275275712
+Iteration 215: -15785.59528356581
+L2 norm of gradient: 5.732475928481737
+Iteration 216: -15430.026869809022
+L2 norm of gradient: 112.70234995801908
+Iteration 217: -12826.325244430685
+L2 norm of gradient: 26.1612738294932
+Iteration 218: -14582.89166031871
+L2 norm of gradient: 213.39659897515168
+Iteration 219: -15121.872452939628
+L2 norm of gradient: 18.43028416649673
+Iteration 220: -13633.993159727193
+L2 norm of gradient: 186.43773060653695
+Iteration 221: -14635.415421026759
+L2 norm of gradient: 47.806864611868875
+Iteration 222: -15157.064705483848
+L2 norm of gradient: 8.330200036358935
+Iteration 223: -14603.647784859873
+L2 norm of gradient: 12.774639459150844
+Iteration 224: -13563.505358159076
+L2 norm of gradient: 0.8257634560752092
+Iteration 225: -14184.254053117242
+L2 norm of gradient: 20.199041591519062
+Iteration 226: -14377.621596307028
+L2 norm of gradient: 86.9022137448923
+Iteration 227: -15439.842951057712
+L2 norm of gradient: 23.92888789052697
+Iteration 228: -14740.319684935967
+L2 norm of gradient: 243.04056329189478
+Iteration 229: -14122.414102503099
+L2 norm of gradient: 145.55249394490755
+Iteration 230: -14193.718417935772
+L2 norm of gradient: 285.8102028480664
+Iteration 231: -14785.382077817572
+L2 norm of gradient: 7.941994571682274
+Iteration 232: -13564.505697912537
+L2 norm of gradient: 25.758384109680847
+Iteration 233: -15026.49883279344
+L2 norm of gradient: 139.42101998129087
+Iteration 234: -13073.316333904862
+L2 norm of gradient: 153.38916975882958
+Iteration 235: -14570.61962164077
+L2 norm of gradient: 128.52317264556737
+Iteration 236: -14859.312730173348
+L2 norm of gradient: 256.97531382082593
+Iteration 237: -14318.797287382418
+L2 norm of gradient: 8.382827815869788
+Iteration 238: -13573.601852137595
+L2 norm of gradient: 219.7455565930206
+Iteration 239: -15072.951512404485
+L2 norm of gradient: 7.315190068928245
+Iteration 240: -13291.397770004114
+L2 norm of gradient: 152.71174125966488
+Iteration 241: -15239.244638220407
+L2 norm of gradient: 264.1353357064041
+Iteration 242: -14034.630937320413
+L2 norm of gradient: 5.928967754301107
+Iteration 243: -13721.417654580437
+L2 norm of gradient: 154.26496793962926
+Iteration 244: -13525.71130708605
+L2 norm of gradient: 135.3636006310146
+Iteration 245: -13916.068137260154
+L2 norm of gradient: 228.52505137403412
+Iteration 246: -13232.014843377983
+L2 norm of gradient: 379.4454766006775
+Iteration 247: -14998.437573280884
+L2 norm of gradient: 290.0265986770867
+Iteration 248: -14750.029093237361
+L2 norm of gradient: 154.46389512496796
+Iteration 249: -13998.02075822698
+[ { query: [ 'Who is a doctor', [Object] ],
+    trueResult: 
+     Marginal:
+         "John and Mary are doctors" : 0.380020640450514
+         "John and Mary are doctors and teachers" : 0.20855974943514632
+         "John is a doctor" : 0.08655534418766547
+         "Mary is a doctor" : 0.08655534418766547
+         "John is a doctor and a teacher" : 0.04750258005631425
+         "Mary is a doctor and a teacher" : 0.04750258005631425
+         "John and Mary are doctors or teachers" : 0.018309772241219994
+         "John or Mary is a doctor and a teacher" : 0.01641723975145466
+         "John is a doctor or a teacher" : 0.014074838535204214
+         "Mary is a doctor or a teacher" : 0.014074838535204214
+         "John or Mary is a doctor" : 0.014074838535204214
+         "Mary is a teacher" : 0.010819418023458179
+         "John is a teacher" : 0.010819418023458179
+         "John is not a teacher" : 0.008015222008949992
+         "Mary is not a teacher" : 0.008015222008949992
+         "John and Mary are teachers" : 0.0059378225070392835
+         "John or Mary is a teacher" : 0.005937822507039272
+         "John and Mary are not teachers" : 0.0043988471043886965
+         "John or Mary is not a teacher" : 0.0043988471043886965
+         "John or Mary is a doctor or a teacher" : 0.003954910804103521
+         "John is not a doctor and a teacher" : 0.0013033621050040592
+         "Mary is not a doctor and a teacher" : 0.0013033621050040592
+         "John or Mary is not a doctor and a teacher" : 0.0012360388998589598
+         "John and Mary are not doctors and teachers" : 0.00021194082645043896,
+    learnedResult: 
+     Marginal:
+         "John is a doctor" : 0.2601222936069891
+         "Mary is a doctor" : 0.2601222936069891
+         "John is a teacher" : 0.03251528670087363
+         "Mary is a teacher" : 0.03251528670087363
+         "Mary is not a teacher" : 0.024087916838697113
+         "John is not a teacher" : 0.024087916838697068
+         "John is not a doctor" : 0.022736348108652032
+         "Mary is not a doctor" : 0.022736348108652032
+         "John and Mary are doctors" : 0.019815758812695317
+         "Mary is a doctor and a teacher" : 0.01908697220806791
+         "John is a doctor and a teacher" : 0.01908697220806791
+         "John or Mary is a doctor" : 0.017925976638524486
+         "John and Mary are teachers" : 0.017844767692372802
+         "John or Mary is a teacher" : 0.01784476769237277
+         "John is a doctor or a teacher" : 0.017776818988541766
+         "Mary is a doctor or a teacher" : 0.017776818988541766
+         "Mary is not a doctor or a teacher" : 0.013220768563044888
+         "John is not a doctor or a teacher" : 0.013220768563044865
+         "John or Mary is not a teacher" : 0.013219729050342239
+         "John and Mary are not teachers" : 0.013219729050342192
+         "John or Mary is not a doctor" : 0.013218635946902674
+         "Mary is not a doctor and a teacher" : 0.013204795487097758
+         "John is not a doctor and a teacher" : 0.013204795487097758
+         "John and Mary are not doctors" : 0.013193960172090765
+         "John and Mary are doctors and teachers" : 0.009814349129043038
+         "John or Mary is a doctor and a teacher" : 0.00979430327016177
+         "John or Mary is a doctor or a teacher" : 0.009793355022265526
+         "John and Mary are doctors or teachers" : 0.009791973867109751
+         "John and Mary are not doctors or teachers" : 0.007255160552755745
+         "John or Mary is not a doctor or a teacher" : 0.0072551419522823065
+         "John or Mary is not a doctor and a teacher" : 0.007255129248924265
+         "John and Mary are not doctors and teachers" : 0.007254860897885929,
+    KLDivergence: 1.589266532716975 },
+  { query: [ 'Who is a doctor', [Object] ],
+    trueResult: 
+     Marginal:
+         "John and Mary are doctors" : 0.380020640450514
+         "John and Mary are doctors and teachers" : 0.20855974943514632
+         "John is a doctor" : 0.08655534418766547
+         "Mary is a doctor" : 0.08655534418766547
+         "John is a doctor and a teacher" : 0.04750258005631425
+         "Mary is a doctor and a teacher" : 0.04750258005631425
+         "John and Mary are doctors or teachers" : 0.018309772241219994
+         "John or Mary is a doctor and a teacher" : 0.01641723975145466
+         "John is a doctor or a teacher" : 0.014074838535204214
+         "Mary is a doctor or a teacher" : 0.014074838535204214
+         "John or Mary is a doctor" : 0.014074838535204214
+         "Mary is a teacher" : 0.010819418023458179
+         "John is a teacher" : 0.010819418023458179
+         "John is not a teacher" : 0.008015222008949992
+         "Mary is not a teacher" : 0.008015222008949992
+         "John and Mary are teachers" : 0.0059378225070392835
+         "John or Mary is a teacher" : 0.005937822507039272
+         "John and Mary are not teachers" : 0.0043988471043886965
+         "John or Mary is not a teacher" : 0.0043988471043886965
+         "John or Mary is a doctor or a teacher" : 0.003954910804103521
+         "John is not a doctor and a teacher" : 0.0013033621050040592
+         "Mary is not a doctor and a teacher" : 0.0013033621050040592
+         "John or Mary is not a doctor and a teacher" : 0.0012360388998589598
+         "John and Mary are not doctors and teachers" : 0.00021194082645043896,
+    learnedResult: 
+     Marginal:
+         "John is a doctor" : 0.2601222936069891
+         "Mary is a doctor" : 0.2601222936069891
+         "John is a teacher" : 0.03251528670087363
+         "Mary is a teacher" : 0.03251528670087363
+         "Mary is not a teacher" : 0.024087916838697113
+         "John is not a teacher" : 0.024087916838697068
+         "John is not a doctor" : 0.022736348108652032
+         "Mary is not a doctor" : 0.022736348108652032
+         "John and Mary are doctors" : 0.019815758812695317
+         "Mary is a doctor and a teacher" : 0.01908697220806791
+         "John is a doctor and a teacher" : 0.01908697220806791
+         "John or Mary is a doctor" : 0.017925976638524486
+         "John and Mary are teachers" : 0.017844767692372802
+         "John or Mary is a teacher" : 0.01784476769237277
+         "John is a doctor or a teacher" : 0.017776818988541766
+         "Mary is a doctor or a teacher" : 0.017776818988541766
+         "Mary is not a doctor or a teacher" : 0.013220768563044888
+         "John is not a doctor or a teacher" : 0.013220768563044865
+         "John or Mary is not a teacher" : 0.013219729050342239
+         "John and Mary are not teachers" : 0.013219729050342192
+         "John or Mary is not a doctor" : 0.013218635946902674
+         "Mary is not a doctor and a teacher" : 0.013204795487097758
+         "John is not a doctor and a teacher" : 0.013204795487097758
+         "John and Mary are not doctors" : 0.013193960172090765
+         "John and Mary are doctors and teachers" : 0.009814349129043038
+         "John or Mary is a doctor and a teacher" : 0.00979430327016177
+         "John or Mary is a doctor or a teacher" : 0.009793355022265526
+         "John and Mary are doctors or teachers" : 0.009791973867109751
+         "John and Mary are not doctors or teachers" : 0.007255160552755745
+         "John or Mary is not a doctor or a teacher" : 0.0072551419522823065
+         "John or Mary is not a doctor and a teacher" : 0.007255129248924265
+         "John and Mary are not doctors and teachers" : 0.007254860897885929,
+    KLDivergence: 1.589266532716975 },
+  { query: [ 'Who is a doctor and a teacher', [Object] ],
+    trueResult: 
+     Marginal:
+         "John is a doctor and a teacher" : 0.5057429117707349
+         "John is a doctor" : 0.11519045846271186
+         "John is a teacher" : 0.11519045846271186
+         "John or Mary is a doctor and a teacher" : 0.051789172217255514
+         "Mary is not a teacher" : 0.02528450088232814
+         "Mary is not a doctor" : 0.02528450088232814
+         "John and Mary are teachers" : 0.018731218954471676
+         "John and Mary are doctors" : 0.018731218954471676
+         "John or Mary is a teacher" : 0.018731218954471645
+         "John is a doctor or a teacher" : 0.018731218954471645
+         "John or Mary is a doctor" : 0.018731218954471645
+         "Mary is not a doctor or a teacher" : 0.013876428297051366
+         "Mary is not a doctor and a teacher" : 0.013876428297051366
+         "John and Mary are doctors or teachers" : 0.007219910001734958
+         "Mary is a doctor or a teacher" : 0.00554999080132493
+         "John or Mary is a doctor or a teacher" : 0.005263314391264789
+         "Mary is a doctor" : 0.004266313276396742
+         "Mary is a teacher" : 0.004266313276396742
+         "John or Mary is not a doctor" : 0.004111534310237441
+         "John or Mary is not a teacher" : 0.004111534310237441
+         "John or Mary is not a doctor and a teacher" : 0.003899159202225257
+         "John or Mary is not a doctor or a teacher" : 0.0014209763856506024,
+    learnedResult: 
+     Marginal:
+         "John is a doctor" : 0.059965359584574676
+         "John is a teacher" : 0.05991761375541146
+         "Mary is a doctor" : 0.0598848612408596
+         "Mary is a teacher" : 0.059871733793479355
+         "Mary is not a teacher" : 0.044340460738312874
+         "Mary is not a doctor" : 0.044340275387603226
+         "John is not a teacher" : 0.044339813064490696
+         "John is not a doctor" : 0.044339139408435896
+         "John is a doctor and a teacher" : 0.0328502544386453
+         "John and Mary are doctors" : 0.03285002022835718
+         "John and Mary are teachers" : 0.032849333193857765
+         "Mary is a doctor and a teacher" : 0.03284892743734311
+         "John is a doctor or a teacher" : 0.032848429814883916
+         "Mary is a doctor or a teacher" : 0.03284841574801504
+         "John or Mary is a teacher" : 0.032848392862500166
+         "John or Mary is a doctor" : 0.03284837967396963
+         "John or Mary is not a doctor" : 0.02433470092984263
+         "John or Mary is not a teacher" : 0.02433470075457984
+         "Mary is not a doctor or a teacher" : 0.024334700438810607
+         "John is not a doctor or a teacher" : 0.02433470022388795
+         "Mary is not a doctor and a teacher" : 0.024334694160818536
+         "John and Mary are not teachers" : 0.02433468805683912
+         "John and Mary are not doctors" : 0.024334678776992157
+         "John is not a doctor and a teacher" : 0.024334677837442448
+         "John and Mary are doctors and teachers" : 0.018027612992965996
+         "John and Mary are doctors or teachers" : 0.01802758986166777
+         "John or Mary is a doctor or a teacher" : 0.01802758954148779
+         "John or Mary is a doctor and a teacher" : 0.018027589121630116
+         "John or Mary is not a doctor and a teacher" : 0.01335516681695179
+         "John or Mary is not a doctor or a teacher" : 0.01335516681128604
+         "John and Mary are not doctors or teachers" : 0.01335516680697603
+         "John and Mary are not doctors and teachers" : 0.013355166497081572,
+    KLDivergence: 1.423173688811777 },
+  { query: [ 'Who is a doctor or a teacher', [Object] ],
+    trueResult: 
+     Marginal:
+         "John and Mary are doctors" : 0.1056107851909732
+         "John and Mary are teachers" : 0.1056107851909732
+         "John is a doctor" : 0.08118368320238828
+         "John is a teacher" : 0.08118368320238828
+         "Mary is a teacher" : 0.08118368320238828
+         "Mary is a doctor" : 0.08118368320238828
+         "John and Mary are doctors or teachers" : 0.05796042780983282
+         "John and Mary are doctors and teachers" : 0.05796042780983277
+         "Mary is a doctor and a teacher" : 0.044554550002441795
+         "John is a doctor and a teacher" : 0.044554550002441795
+         "Mary is a doctor or a teacher" : 0.04455455000244175
+         "John is a doctor or a teacher" : 0.04455455000244175
+         "John or Mary is a teacher" : 0.03129208450102909
+         "John or Mary is a doctor" : 0.03129208450102909
+         "John or Mary is a doctor and a teacher" : 0.021122604886965272
+         "John or Mary is a doctor or a teacher" : 0.012519452406923889
+         "John is not a doctor and a teacher" : 0.009779799246246973
+         "Mary is not a doctor and a teacher" : 0.009779799246246973
+         "John is not a teacher" : 0.007517793967297686
+         "Mary is not a teacher" : 0.007517793967297686
+         "Mary is not a doctor" : 0.007517793967297686
+         "John is not a doctor" : 0.007517793967297686
+         "John or Mary is not a doctor and a teacher" : 0.00651387501985663
+         "John or Mary is not a doctor" : 0.00565960604528182
+         "John or Mary is not a teacher" : 0.00565960604528182
+         "John and Mary are not doctors and teachers" : 0.0037696035994540657
+         "John and Mary are not doctors" : 0.0012224749057808738
+         "John and Mary are not teachers" : 0.0012224749057808738,
+    learnedResult: 
+     Marginal:
+         "Mary is a doctor" : 0.05986839437008576
+         "John is a teacher" : 0.059868195360845915
+         "John is a doctor" : 0.05986690490859687
+         "Mary is a teacher" : 0.059864927932558584
+         "Mary is not a teacher" : 0.04435082625555026
+         "John is not a doctor" : 0.04435079833374885
+         "John is not a teacher" : 0.044350780108397186
+         "Mary is not a doctor" : 0.0443507772977681
+         "John and Mary are doctors" : 0.03285587798119052
+         "John or Mary is a doctor" : 0.03285587723252676
+         "John is a doctor or a teacher" : 0.03285587692705231
+         "John is a doctor and a teacher" : 0.03285587653552502
+         "Mary is a doctor and a teacher" : 0.03285587188441262
+         "John or Mary is a teacher" : 0.03285587102861757
+         "Mary is a doctor or a teacher" : 0.032855870888828215
+         "John and Mary are teachers" : 0.032855869439905566
+         "John and Mary are not teachers" : 0.024340231150755943
+         "Mary is not a doctor or a teacher" : 0.024340231137953295
+         "John or Mary is not a teacher" : 0.024340231127854432
+         "Mary is not a doctor and a teacher" : 0.024340231112626686
+         "John is not a doctor and a teacher" : 0.024340231055412123
+         "John is not a doctor or a teacher" : 0.024340231045697314
+         "John or Mary is not a doctor" : 0.024340231044662677
+         "John and Mary are not doctors" : 0.024340231033892365
+         "John or Mary is a doctor and a teacher" : 0.018031686667487595
+         "John and Mary are doctors and teachers" : 0.018031686665078452
+         "John or Mary is a doctor or a teacher" : 0.01803168666429623
+         "John and Mary are doctors or teachers" : 0.018031686660906772
+         "John and Mary are not doctors or teachers" : 0.013358202036989451
+         "John or Mary is not a doctor or a teacher" : 0.013358202036943228
+         "John and Mary are not doctors and teachers" : 0.013358202036932906
+         "John or Mary is not a doctor and a teacher" : 0.013358202036900363,
+    KLDivergence: 0.42641612548258356 },
+  { query: [ 'Who is not a doctor and a teacher', [Object] ],
+    trueResult: 
+     Marginal:
+         "John is a doctor and a teacher" : 0.5057429117707349
+         "John is a doctor" : 0.11519045846271186
+         "John is a teacher" : 0.11519045846271186
+         "John or Mary is a doctor and a teacher" : 0.051789172217255514
+         "Mary is not a teacher" : 0.02528450088232814
+         "Mary is not a doctor" : 0.02528450088232814
+         "John and Mary are teachers" : 0.018731218954471676
+         "John and Mary are doctors" : 0.018731218954471676
+         "John or Mary is a teacher" : 0.018731218954471645
+         "John is a doctor or a teacher" : 0.018731218954471645
+         "John or Mary is a doctor" : 0.018731218954471645
+         "Mary is not a doctor or a teacher" : 0.013876428297051366
+         "Mary is not a doctor and a teacher" : 0.013876428297051366
+         "John and Mary are doctors or teachers" : 0.007219910001734958
+         "Mary is a doctor or a teacher" : 0.00554999080132493
+         "John or Mary is a doctor or a teacher" : 0.005263314391264789
+         "Mary is a doctor" : 0.004266313276396742
+         "Mary is a teacher" : 0.004266313276396742
+         "John or Mary is not a doctor" : 0.004111534310237441
+         "John or Mary is not a teacher" : 0.004111534310237441
+         "John or Mary is not a doctor and a teacher" : 0.003899159202225257
+         "John or Mary is not a doctor or a teacher" : 0.0014209763856506024,
+    learnedResult: 
+     Marginal:
+         "John is a doctor" : 0.05986729138883524
+         "John is a teacher" : 0.05986727592933901
+         "Mary is a doctor" : 0.059867265314642225
+         "Mary is a teacher" : 0.059867261062448114
+         "Mary is not a teacher" : 0.04435075345711558
+         "Mary is not a doctor" : 0.0443507533970607
+         "John is not a teacher" : 0.0443507532471465
+         "John is not a doctor" : 0.04435075302880801
+         "John is a doctor and a teacher" : 0.03285584691901506
+         "John and Mary are doctors" : 0.032855846843077297
+         "John and Mary are teachers" : 0.03285584662042159
+         "Mary is a doctor and a teacher" : 0.03285584648885155
+         "John is a doctor or a teacher" : 0.03285584632884453
+         "Mary is a doctor or a teacher" : 0.03285584632428322
+         "John or Mary is a teacher" : 0.032855846316862405
+         "John or Mary is a doctor" : 0.03285584631258602
+         "John or Mary is not a doctor" : 0.024340209611700015
+         "John or Mary is not a teacher" : 0.024340209611643203
+         "Mary is not a doctor or a teacher" : 0.024340209611540906
+         "John is not a doctor or a teacher" : 0.024340209611471188
+         "Mary is not a doctor and a teacher" : 0.024340209609521653
+         "John and Mary are not teachers" : 0.024340209607544055
+         "John and Mary are not doctors" : 0.02434020960453657
+         "John is not a doctor and a teacher" : 0.024340209604230095
+         "John and Mary are doctors and teachers" : 0.018031670783039924
+         "John and Mary are doctors or teachers" : 0.018031670775563752
+         "John or Mary is a doctor or a teacher" : 0.01803167077546108
+         "John or Mary is a doctor and a teacher" : 0.018031670775324006
+         "John or Mary is not a doctor and a teacher" : 0.01335819025979877
+         "John or Mary is not a doctor or a teacher" : 0.013358190259796919
+         "John and Mary are not doctors or teachers" : 0.01335819025979553
+         "John and Mary are not doctors and teachers" : 0.01335819025969537,
+    KLDivergence: 1.4233177517040156 },
+  { query: [ 'Who is not a doctor or a teacher', [Object] ],
+    trueResult: 
+     Marginal:
+         "John and Mary are doctors" : 0.1056107851909732
+         "John and Mary are teachers" : 0.1056107851909732
+         "John is a doctor" : 0.08118368320238828
+         "John is a teacher" : 0.08118368320238828
+         "Mary is a teacher" : 0.08118368320238828
+         "Mary is a doctor" : 0.08118368320238828
+         "John and Mary are doctors or teachers" : 0.05796042780983282
+         "John and Mary are doctors and teachers" : 0.05796042780983277
+         "Mary is a doctor and a teacher" : 0.044554550002441795
+         "John is a doctor and a teacher" : 0.044554550002441795
+         "Mary is a doctor or a teacher" : 0.04455455000244175
+         "John is a doctor or a teacher" : 0.04455455000244175
+         "John or Mary is a teacher" : 0.03129208450102909
+         "John or Mary is a doctor" : 0.03129208450102909
+         "John or Mary is a doctor and a teacher" : 0.021122604886965272
+         "John or Mary is a doctor or a teacher" : 0.012519452406923889
+         "John is not a doctor and a teacher" : 0.009779799246246973
+         "Mary is not a doctor and a teacher" : 0.009779799246246973
+         "John is not a teacher" : 0.007517793967297686
+         "Mary is not a teacher" : 0.007517793967297686
+         "Mary is not a doctor" : 0.007517793967297686
+         "John is not a doctor" : 0.007517793967297686
+         "John or Mary is not a doctor and a teacher" : 0.00651387501985663
+         "John or Mary is not a doctor" : 0.00565960604528182
+         "John or Mary is not a teacher" : 0.00565960604528182
+         "John and Mary are not doctors and teachers" : 0.0037696035994540657
+         "John and Mary are not doctors" : 0.0012224749057808738
+         "John and Mary are not teachers" : 0.0012224749057808738,
+    learnedResult: 
+     Marginal:
+         "Mary is a doctor" : 0.05986726003140701
+         "John is a teacher" : 0.05986725996692323
+         "John is a doctor" : 0.059867259546618874
+         "Mary is a teacher" : 0.05986725890343331
+         "Mary is not a teacher" : 0.0443507568026703
+         "John is not a doctor" : 0.04435075679358642
+         "John is not a teacher" : 0.04435075678765031
+         "Mary is not a doctor" : 0.044350756786739644
+         "John and Mary are doctors" : 0.032855848733211374
+         "John or Mary is a doctor" : 0.03285584873297033
+         "John is a doctor or a teacher" : 0.03285584873287135
+         "John is a doctor and a teacher" : 0.03285584873274287
+         "Mary is a doctor and a teacher" : 0.032855848731229084
+         "John or Mary is a teacher" : 0.032855848730951286
+         "Mary is a doctor or a teacher" : 0.032855848730905995
+         "John and Mary are teachers" : 0.03285584873043701
+         "John and Mary are not teachers" : 0.024340211396904236
+         "Mary is not a doctor or a teacher" : 0.024340211396900163
+         "John or Mary is not a teacher" : 0.024340211396896846
+         "Mary is not a doctor and a teacher" : 0.024340211396891916
+         "John is not a doctor and a teacher" : 0.02434021139687328
+         "John is not a doctor or a teacher" : 0.024340211396870082
+         "John or Mary is not a doctor" : 0.024340211396869756
+         "John and Mary are not doctors" : 0.024340211396866308
+         "John or Mary is a doctor and a teacher" : 0.018031672098050466
+         "John and Mary are doctors and teachers" : 0.01803167209804968
+         "John or Mary is a doctor or a teacher" : 0.01803167209804944
+         "John and Mary are doctors or teachers" : 0.018031672098048318
+         "John and Mary are not doctors or teachers" : 0.013358191239595245
+         "John and Mary are not doctors and teachers" : 0.013358191239595245
+         "John or Mary is not a doctor and a teacher" : 0.013358191239595234
+         "John or Mary is not a doctor or a teacher" : 0.013358191239595234,
+    KLDivergence: 0.42641581889558555 },
+  { query: [ 'What is John', [Object] ],
+    trueResult: 
+     Marginal:
+         "John is a doctor" : 0.23702792248662735
+         "John is not a teacher" : 0.17559460378842734
+         "John and Mary are doctors" : 0.130083681939854
+         "John and Mary are not teachers" : 0.09636836179440914
+         "John or Mary is a doctor" : 0.03854331316736411
+         "John is a doctor or a teacher" : 0.03854331316736411
+         "Mary is a teacher" : 0.029628490310828412
+         "Mary is a doctor" : 0.029628490310828412
+         "John is not a doctor and a teacher" : 0.02855358867982489
+         "John or Mary is not a teacher" : 0.02855358867982489
+         "Mary is not a doctor" : 0.02194932547355341
+         "Mary is not a teacher" : 0.02194932547355341
+         "John and Mary are doctors or teachers" : 0.021153018759865538
+         "Mary is a doctor and a teacher" : 0.01626046024248175
+         "Mary is a doctor or a teacher" : 0.016260460242481723
+         "John and Mary are not doctors and teachers" : 0.0156705417197306
+         "Mary is not a doctor or a teacher" : 0.012046045224301137
+         "Mary is not a doctor and a teacher" : 0.012046045224301137
+         "John or Mary is a doctor or a teacher" : 0.010830345605051172
+         "John or Mary is not a doctor and a teacher" : 0.008023317360502066
+         "John or Mary is a teacher" : 0.004817914145920514
+         "John or Mary is not a doctor" : 0.0035691985849781176
+         "John or Mary is a doctor and a teacher" : 0.0016651064329923299
+         "John or Mary is not a doctor or a teacher" : 0.0012335411849350591,
+    learnedResult: 
+     Marginal:
+         "John is a doctor" : 0.35216513251894827
+         "Mary is a teacher" : 0.04402064156486852
+         "Mary is a doctor" : 0.04402064156486852
+         "John is not a teacher" : 0.034512223061171
+         "Mary is not a teacher" : 0.03261129335735355
+         "Mary is not a doctor" : 0.03261129335735355
+         "John is not a doctor" : 0.030781479486636516
+         "John and Mary are doctors" : 0.02584079205143189
+         "John is a doctor and a teacher" : 0.024878621607159795
+         "John or Mary is a teacher" : 0.024251266414107027
+         "Mary is a doctor and a teacher" : 0.024159040319124206
+         "Mary is a doctor or a teacher" : 0.02415904031912416
+         "John or Mary is a doctor" : 0.024067048341207445
+         "John is a doctor or a teacher" : 0.023866235372580938
+         "John and Mary are teachers" : 0.022551885877141385
+         "John and Mary are not teachers" : 0.017919660799133406
+         "John is not a doctor or a teacher" : 0.017901949586726643
+         "John or Mary is not a doctor" : 0.017898688440468342
+         "Mary is not a doctor or a teacher" : 0.017897457262591485
+         "Mary is not a doctor and a teacher" : 0.017897457262591454
+         "John or Mary is not a teacher" : 0.01789622614117434
+         "John is not a doctor and a teacher" : 0.017888689577653494
+         "John and Mary are not doctors" : 0.01787527207463954
+         "John and Mary are doctors and teachers" : 0.013266566635208263
+         "John or Mary is a doctor or a teacher" : 0.013258983667685053
+         "John or Mary is a doctor and a teacher" : 0.01325833109168452
+         "John and Mary are doctors or teachers" : 0.013254799413279813
+         "John and Mary are not doctors or teachers" : 0.009822386167767124
+         "John or Mary is not a doctor and a teacher" : 0.009822338604098854
+         "John or Mary is not a doctor or a teacher" : 0.009822329842170546
+         "John and Mary are not doctors and teachers" : 0.009822228220050109,
+    KLDivergence: 0.5580869852124222 },
+  { query: [ 'What is John', [Object] ],
+    trueResult: 
+     Marginal:
+         "John is a doctor and a teacher" : 0.37545849217947985
+         "John and Mary are doctors and teachers" : 0.20605598937841657
+         "John is a doctor" : 0.08551624717081296
+         "John is a teacher" : 0.08551624717081296
+         "John and Mary are teachers" : 0.046932311522435
+         "John and Mary are doctors" : 0.046932311522435
+         "John or Mary is a doctor and a teacher" : 0.03844776478197857
+         "John or Mary is a teacher" : 0.013905870080721474
+         "John is a doctor or a teacher" : 0.013905870080721474
+         "John or Mary is a doctor" : 0.013905870080721474
+         "Mary is a teacher" : 0.010689530896351615
+         "Mary is a doctor" : 0.010689530896351615
+         "Mary is not a doctor" : 0.007918999258557448
+         "Mary is not a teacher" : 0.007918999258557448
+         "John and Mary are doctors or teachers" : 0.007631703310311726
+         "Mary is a doctor and a teacher" : 0.005866538940304378
+         "Mary is a doctor or a teacher" : 0.0058665389403043675
+         "Mary is not a doctor or a teacher" : 0.004346038939316297
+         "Mary is not a doctor and a teacher" : 0.004346038939316297
+         "John or Mary is a doctor or a teacher" : 0.003907432094879606
+         "John or Mary is not a doctor" : 0.0012877152412789025
+         "John or Mary is not a teacher" : 0.0012877152412789025
+         "John or Mary is not a doctor and a teacher" : 0.0012212002512970355
+         "John or Mary is not a doctor or a teacher" : 0.00044504382335897773,
+    learnedResult: 
+     Marginal:
+         "John is a doctor" : 0.26012242997943796
+         "John is a teacher" : 0.26012242997943796
+         "Mary is a doctor" : 0.03251530374742974
+         "Mary is a teacher" : 0.03251530374742974
+         "Mary is not a teacher" : 0.02408792946709647
+         "Mary is not a doctor" : 0.02408792946709647
+         "John is not a doctor" : 0.022736360028474147
+         "John is not a teacher" : 0.022736360028474106
+         "John is a doctor and a teacher" : 0.01981576920136104
+         "John and Mary are teachers" : 0.019086982214657905
+         "John and Mary are doctors" : 0.019086982214657905
+         "John is a doctor or a teacher" : 0.017925986036447652
+         "Mary is a doctor and a teacher" : 0.01784477704772114
+         "Mary is a doctor or a teacher" : 0.017844777047721107
+         "John or Mary is a teacher" : 0.017776828308267118
+         "John or Mary is a doctor" : 0.017776828308267118
+         "John or Mary is not a teacher" : 0.013220645375302714
+         "John or Mary is not a doctor" : 0.013220645375302714
+         "Mary is not a doctor or a teacher" : 0.013219735980954746
+         "Mary is not a doctor and a teacher" : 0.013219735980954724
+         "John is not a doctor or a teacher" : 0.013218497069456528
+         "John and Mary are not teachers" : 0.01320334916560385
+         "John and Mary are not doctors" : 0.01320334916560385
+         "John is not a doctor and a teacher" : 0.013196348590783086
+         "John and Mary are doctors and teachers" : 0.009814270066991914
+         "John and Mary are doctors or teachers" : 0.009794514477598564
+         "John or Mary is a doctor or a teacher" : 0.009793360273026809
+         "John or Mary is a doctor and a teacher" : 0.00979226942923767
+         "John or Mary is not a doctor and a teacher" : 0.007255160415299625
+         "John or Mary is not a doctor or a teacher" : 0.007255145748863403
+         "John and Mary are not doctors or teachers" : 0.0072551302134125405
+         "John and Mary are not doctors and teachers" : 0.007254865847629155,
+    KLDivergence: 1.589148280711981 },
+  { query: [ 'What isn\'t John', [Object] ],
+    trueResult: 
+     Marginal:
+         "John is a doctor and a teacher" : 0.37545849217947985
+         "John and Mary are doctors and teachers" : 0.20605598937841657
+         "John is a doctor" : 0.08551624717081296
+         "John is a teacher" : 0.08551624717081296
+         "John and Mary are teachers" : 0.046932311522435
+         "John and Mary are doctors" : 0.046932311522435
+         "John or Mary is a doctor and a teacher" : 0.03844776478197857
+         "John or Mary is a teacher" : 0.013905870080721474
+         "John is a doctor or a teacher" : 0.013905870080721474
+         "John or Mary is a doctor" : 0.013905870080721474
+         "Mary is a teacher" : 0.010689530896351615
+         "Mary is a doctor" : 0.010689530896351615
+         "Mary is not a doctor" : 0.007918999258557448
+         "Mary is not a teacher" : 0.007918999258557448
+         "John and Mary are doctors or teachers" : 0.007631703310311726
+         "Mary is a doctor and a teacher" : 0.005866538940304378
+         "Mary is a doctor or a teacher" : 0.0058665389403043675
+         "Mary is not a doctor or a teacher" : 0.004346038939316297
+         "Mary is not a doctor and a teacher" : 0.004346038939316297
+         "John or Mary is a doctor or a teacher" : 0.003907432094879606
+         "John or Mary is not a doctor" : 0.0012877152412789025
+         "John or Mary is not a teacher" : 0.0012877152412789025
+         "John or Mary is not a doctor and a teacher" : 0.0012212002512970355
+         "John or Mary is not a doctor or a teacher" : 0.00044504382335897773,
+    learnedResult: 
+     Marginal:
+         "John is a doctor" : 0.05991885554905151
+         "John is a teacher" : 0.05991885554905151
+         "Mary is a doctor" : 0.05986018058842477
+         "Mary is a teacher" : 0.05986018058842477
+         "Mary is not a teacher" : 0.04434551247320314
+         "Mary is not a doctor" : 0.04434551247320314
+         "John is not a doctor" : 0.04434468406683693
+         "John is not a teacher" : 0.04434468406683689
+         "John is a doctor and a teacher" : 0.032853110302719285
+         "John and Mary are teachers" : 0.032852693915773744
+         "John and Mary are doctors" : 0.03285269391577373
+         "John is a doctor or a teacher" : 0.032852012481395215
+         "Mary is a doctor and a teacher" : 0.03285196364561728
+         "Mary is a doctor or a teacher" : 0.03285196364561725
+         "John or Mary is a doctor" : 0.03285192273508173
+         "John or Mary is a teacher" : 0.032851922735081675
+         "John or Mary is not a doctor" : 0.02433733380066641
+         "John or Mary is not a teacher" : 0.0243373338006664
+         "Mary is not a doctor and a teacher" : 0.024337333253846696
+         "Mary is not a doctor or a teacher" : 0.024337333253846676
+         "John is not a doctor or a teacher" : 0.02433733250770172
+         "John and Mary are not teachers" : 0.024337323396139185
+         "John and Mary are not doctors" : 0.024337323396139185
+         "John is not a doctor and a teacher" : 0.024337319148711414
+         "John and Mary are doctors and teachers" : 0.018029552473451112
+         "John and Mary are doctors or teachers" : 0.018029540575615316
+         "John or Mary is a doctor or a teacher" : 0.018029539880505256
+         "John or Mary is a doctor and a teacher" : 0.018029539223042724
+         "John or Mary is not a doctor and a teacher" : 0.013356611690541458
+         "John or Mary is not a doctor or a teacher" : 0.013356611681700813
+         "John and Mary are not doctors or teachers" : 0.013356611672344731
+         "John and Mary are not doctors and teachers" : 0.013356611512987839,
+    KLDivergence: 1.3803609459491049 },
+  { query: [ 'What isn\'t John', [Object] ],
+    trueResult: 
+     Marginal:
+         "John is a doctor and a teacher" : 0.37545849217947985
+         "John and Mary are doctors and teachers" : 0.20605598937841657
+         "John is a doctor" : 0.08551624717081296
+         "John is a teacher" : 0.08551624717081296
+         "John and Mary are teachers" : 0.046932311522435
+         "John and Mary are doctors" : 0.046932311522435
+         "John or Mary is a doctor and a teacher" : 0.03844776478197857
+         "John or Mary is a teacher" : 0.013905870080721474
+         "John is a doctor or a teacher" : 0.013905870080721474
+         "John or Mary is a doctor" : 0.013905870080721474
+         "Mary is a teacher" : 0.010689530896351615
+         "Mary is a doctor" : 0.010689530896351615
+         "Mary is not a doctor" : 0.007918999258557448
+         "Mary is not a teacher" : 0.007918999258557448
+         "John and Mary are doctors or teachers" : 0.007631703310311726
+         "Mary is a doctor and a teacher" : 0.005866538940304378
+         "Mary is a doctor or a teacher" : 0.0058665389403043675
+         "Mary is not a doctor or a teacher" : 0.004346038939316297
+         "Mary is not a doctor and a teacher" : 0.004346038939316297
+         "John or Mary is a doctor or a teacher" : 0.003907432094879606
+         "John or Mary is not a doctor" : 0.0012877152412789025
+         "John or Mary is not a teacher" : 0.0012877152412789025
+         "John or Mary is not a doctor and a teacher" : 0.0012212002512970355
+         "John or Mary is not a doctor or a teacher" : 0.00044504382335897773,
+    learnedResult: 
+     Marginal:
+         "John is a doctor" : 0.05991885554905151
+         "John is a teacher" : 0.05991885554905151
+         "Mary is a doctor" : 0.05986018058842477
+         "Mary is a teacher" : 0.05986018058842477
+         "Mary is not a teacher" : 0.04434551247320314
+         "Mary is not a doctor" : 0.04434551247320314
+         "John is not a doctor" : 0.04434468406683693
+         "John is not a teacher" : 0.04434468406683689
+         "John is a doctor and a teacher" : 0.032853110302719285
+         "John and Mary are teachers" : 0.032852693915773744
+         "John and Mary are doctors" : 0.03285269391577373
+         "John is a doctor or a teacher" : 0.032852012481395215
+         "Mary is a doctor and a teacher" : 0.03285196364561728
+         "Mary is a doctor or a teacher" : 0.03285196364561725
+         "John or Mary is a doctor" : 0.03285192273508173
+         "John or Mary is a teacher" : 0.032851922735081675
+         "John or Mary is not a doctor" : 0.02433733380066641
+         "John or Mary is not a teacher" : 0.0243373338006664
+         "Mary is not a doctor and a teacher" : 0.024337333253846696
+         "Mary is not a doctor or a teacher" : 0.024337333253846676
+         "John is not a doctor or a teacher" : 0.02433733250770172
+         "John and Mary are not teachers" : 0.024337323396139185
+         "John and Mary are not doctors" : 0.024337323396139185
+         "John is not a doctor and a teacher" : 0.024337319148711414
+         "John and Mary are doctors and teachers" : 0.018029552473451112
+         "John and Mary are doctors or teachers" : 0.018029540575615316
+         "John or Mary is a doctor or a teacher" : 0.018029539880505256
+         "John or Mary is a doctor and a teacher" : 0.018029539223042724
+         "John or Mary is not a doctor and a teacher" : 0.013356611690541458
+         "John or Mary is not a doctor or a teacher" : 0.013356611681700813
+         "John and Mary are not doctors or teachers" : 0.013356611672344731
+         "John and Mary are not doctors and teachers" : 0.013356611512987839,
+    KLDivergence: 1.3803609459491049 },
+  { query: [ 'doctor' ],
+    trueResult: 
+     Marginal:
+         "Who is a doctor" : 0.22921420581057594
+         "Who isn't a doctor" : 0.22921420581057594
+         "What isn't Mary" : 0.06440286750063225
+         "What isn't John" : 0.06440286750063225
+         "What is John" : 0.06440286750063225
+         "What is Mary" : 0.06440286750063225
+         "What are John and Mary" : 0.03505845891035563
+         "What aren't John and Mary" : 0.03505845891035563
+         "What is John or Mary" : 0.034152473105707175
+         "What isn't John or Mary" : 0.034152473105707175
+         "Who isn't a doctor and a teacher" : 0.02689844941838866
+         "Who is a doctor and a teacher" : 0.02689844941838866
+         "Who isn't a doctor or a teacher" : 0.026361758948273445
+         "Who is a doctor or a teacher" : 0.026361758948273445
+         "Who is a teacher" : 0.019508918805434698
+         "Who isn't a teacher" : 0.019508918805434698,
+    learnedResult: 
+     Marginal:
+         "Who is a doctor" : 0.14387069665852464
+         "What is Mary" : 0.10017778403905885
+         "What is John" : 0.1001761239536258
+         "Who isn't a doctor" : 0.06983397506147657
+         "What isn't Mary" : 0.06983396939498326
+         "What isn't John" : 0.0698339693938481
+         "Who isn't a teacher" : 0.06983396372735523
+         "Who is a teacher" : 0.06983396372735523
+         "Who is a doctor and a teacher" : 0.03832570327773682
+         "What are John and Mary" : 0.03832569943222638
+         "What is John or Mary" : 0.0383256918918328
+         "Who is a doctor or a teacher" : 0.03832569188941107
+         "Who isn't a doctor and a teacher" : 0.038325691888141944
+         "What aren't John and Mary" : 0.038325691888141535
+         "Who isn't a doctor or a teacher" : 0.03832569188814075
+         "What isn't John or Mary" : 0.03832569188814073,
+    KLDivergence: 0.20919582608030493 },
+  { query: [ 'teacher' ],
+    trueResult: 
+     Marginal:
+         "Who isn't a teacher" : 0.2292142058105759
+         "Who is a teacher" : 0.2292142058105759
+         "What is John" : 0.06440286750063225
+         "What isn't Mary" : 0.06440286750063225
+         "What isn't John" : 0.06440286750063225
+         "What is Mary" : 0.06440286750063225
+         "What aren't John and Mary" : 0.03505845891035563
+         "What are John and Mary" : 0.03505845891035563
+         "What is John or Mary" : 0.034152473105707175
+         "What isn't John or Mary" : 0.034152473105707175
+         "Who isn't a doctor and a teacher" : 0.02689844941838866
+         "Who is a doctor and a teacher" : 0.02689844941838866
+         "Who isn't a doctor or a teacher" : 0.026361758948273434
+         "Who is a doctor or a teacher" : 0.026361758948273434
+         "Who isn't a doctor" : 0.019508918805434698
+         "Who is a doctor" : 0.019508918805434698,
+    learnedResult: 
+     Marginal:
+         "Who is a teacher" : 0.14387081844138117
+         "What is Mary" : 0.10018455416469675
+         "What is John" : 0.10018300608451515
+         "Who isn't a teacher" : 0.06983250907386825
+         "What isn't Mary" : 0.06983250340635473
+         "What isn't John" : 0.06983250340523157
+         "Who isn't a doctor" : 0.06983249773771848
+         "Who is a doctor" : 0.06983249773771848
+         "What are John and Mary" : 0.03832489488424254
+         "Who is a doctor and a teacher" : 0.03832489103864854
+         "Who is a doctor or a teacher" : 0.03832488734208298
+         "What is John or Mary" : 0.03832488733966133
+         "What aren't John and Mary" : 0.03832488733597049
+         "Who isn't a doctor and a teacher" : 0.03832488733597009
+         "Who isn't a doctor or a teacher" : 0.03832488733596971
+         "What isn't John or Mary" : 0.03832488733596971,
+    KLDivergence: 0.2092003377286401 },
+  { query: [ 'john' ],
+    trueResult: 
+     Marginal:
+         "What is John" : 0.2335112339276272
+         "What isn't John" : 0.2335112339276272
+         "Who is a doctor" : 0.0632711173435373
+         "Who is a teacher" : 0.0632711173435373
+         "Who isn't a doctor" : 0.0632711173435373
+         "Who isn't a teacher" : 0.0632711173435373
+         "Who isn't a doctor and a teacher" : 0.034279269305067944
+         "Who is a doctor and a teacher" : 0.034279269305067944
+         "Who isn't a doctor or a teacher" : 0.03340485038853081
+         "Who is a doctor or a teacher" : 0.03340485038853081
+         "What are John and Mary" : 0.02673579184995846
+         "What aren't John and Mary" : 0.02673579184995846
+         "What is John or Mary" : 0.026220148700735305
+         "What isn't John or Mary" : 0.026220148700735305
+         "What is Mary" : 0.019306471141005675
+         "What isn't Mary" : 0.019306471141005675,
+    learnedResult: 
+     Marginal:
+         "What is John" : 0.14387071596864615
+         "Who is a teacher" : 0.10017780587215114
+         "Who is a doctor" : 0.10017612537181457
+         "What isn't John" : 0.06983397052908598
+         "Who isn't a teacher" : 0.06983396486259304
+         "Who isn't a doctor" : 0.06983396486145388
+         "What is Mary" : 0.06983395919496133
+         "What isn't Mary" : 0.06983395919496133
+         "What are John and Mary" : 0.03832570079030784
+         "Who is a doctor and a teacher" : 0.03832569694479916
+         "Who is a doctor or a teacher" : 0.03832568940440229
+         "What is John or Mary" : 0.038325689401980556
+         "What aren't John and Mary" : 0.03832568940071141
+         "Who isn't a doctor and a teacher" : 0.03832568940071102
+         "What isn't John or Mary" : 0.03832568940071024
+         "Who isn't a doctor or a teacher" : 0.03832568940071022,
+    KLDivergence: 0.2186941289498346 },
+  { query: [ 'mary' ],
+    trueResult: 
+     Marginal:
+         "What isn't Mary" : 0.2335112339276271
+         "What is Mary" : 0.2335112339276271
+         "Who is a doctor" : 0.06327111734353735
+         "Who isn't a doctor" : 0.06327111734353735
+         "Who isn't a teacher" : 0.0632711173435373
+         "Who is a teacher" : 0.0632711173435373
+         "Who isn't a doctor and a teacher" : 0.034279269305067944
+         "Who is a doctor and a teacher" : 0.034279269305067944
+         "Who is a doctor or a teacher" : 0.03340485038853081
+         "Who isn't a doctor or a teacher" : 0.03340485038853081
+         "What are John and Mary" : 0.02673579184995847
+         "What aren't John and Mary" : 0.02673579184995847
+         "What isn't John or Mary" : 0.026220148700735316
+         "What is John or Mary" : 0.026220148700735316
+         "What isn't John" : 0.01930647114100568
+         "What is John" : 0.01930647114100568,
+    learnedResult: 
+     Marginal:
+         "What is Mary" : 0.14387080056561935
+         "Who is a teacher" : 0.1001845522466473
+         "Who is a doctor" : 0.10018298374880304
+         "What isn't Mary" : 0.06983251356026776
+         "Who isn't a teacher" : 0.06983250789275794
+         "Who isn't a doctor" : 0.06983250789163076
+         "What is John" : 0.06983250222412134
+         "What isn't John" : 0.06983250222412134
+         "Who is a doctor and a teacher" : 0.038324897346426356
+         "What are John and Mary" : 0.038324893500839605
+         "What is John or Mary" : 0.03832488980427308
+         "Who is a doctor or a teacher" : 0.03832488980185141
+         "Who isn't a doctor and a teacher" : 0.03832488979816058
+         "What aren't John and Mary" : 0.03832488979816017
+         "Who isn't a doctor or a teacher" : 0.038324889798159796
+         "What isn't John or Mary" : 0.038324889798159796,
+    KLDivergence: 0.21869875618051265 },
+  { query: [ 'intersection(doctor, teacher)' ],
+    trueResult: 
+     Marginal:
+         "Who is a doctor and a teacher" : 0.16119021963607344
+         "Who isn't a doctor and a teacher" : 0.16119021963607344
+         "What is John" : 0.07171132446625784
+         "What isn't Mary" : 0.07171132446625784
+         "What isn't John" : 0.07171132446625784
+         "What is Mary" : 0.07171132446625784
+         "Who isn't a doctor" : 0.05561319640979196
+         "Who is a doctor" : 0.05561319640979196
+         "Who is a teacher" : 0.05561319640979191
+         "Who isn't a teacher" : 0.05561319640979191
+         "What are John and Mary" : 0.031954853337267324
+         "What aren't John and Mary" : 0.031954853337267324
+         "What is John or Mary" : 0.03164538509514016
+         "What isn't John or Mary" : 0.03164538509514016
+         "Who isn't a doctor or a teacher" : 0.02056050017941963
+         "Who is a doctor or a teacher" : 0.02056050017941963,
+    learnedResult: 
+     Marginal:
+         "Who is a doctor" : 0.09072010794856733
+         "Who is a teacher" : 0.090718192178443
+         "What is Mary" : 0.08553418042736226
+         "What is John" : 0.08552143630920905
+         "Who isn't a teacher" : 0.07717139862983347
+         "Who isn't a doctor" : 0.07717139862899912
+         "What isn't Mary" : 0.0771713983619058
+         "What isn't John" : 0.07717139835940996
+         "Who is a doctor and a teacher" : 0.04235256954780429
+         "What are John and Mary" : 0.04235256410273798
+         "What is John or Mary" : 0.04235255925307657
+         "Who is a doctor or a teacher" : 0.04235255925106164
+         "Who isn't a doctor and a teacher" : 0.04235255925039804
+         "What aren't John and Mary" : 0.04235255925039748
+         "Who isn't a doctor or a teacher" : 0.04235255925039695
+         "What isn't John or Mary" : 0.04235255925039695,
+    KLDivergence: 0.23805272917630604 },
+  { query: [ 'union(doctor, teacher)' ],
+    trueResult: 
+     Marginal:
+         "Who is a doctor or a teacher" : 0.15344851008414773
+         "Who isn't a doctor or a teacher" : 0.15344851008414773
+         "What is John" : 0.07423664944950453
+         "What isn't Mary" : 0.07423664944950453
+         "What isn't John" : 0.07423664944950453
+         "What is Mary" : 0.07423664944950453
+         "Who isn't a doctor" : 0.056660089154322336
+         "Who is a doctor" : 0.056660089154322336
+         "Who is a teacher" : 0.05666008915432231
+         "Who isn't a teacher" : 0.05666008915432231
+         "What are John and Mary" : 0.03232480643399373
+         "What aren't John and Mary" : 0.03232480643399373
+         "What is John or Mary" : 0.031746610153685004
+         "What isn't John or Mary" : 0.031746610153685004
+         "Who isn't a doctor and a teacher" : 0.020686596120519898
+         "Who is a doctor and a teacher" : 0.020686596120519898,
+    learnedResult: 
+     Marginal:
+         "What is Mary" : 0.10020110386455817
+         "What is John" : 0.10019757964707549
+         "Who is a teacher" : 0.09670025513958433
+         "Who is a doctor" : 0.09669709481753892
+         "Who isn't a teacher" : 0.07224890879645045
+         "Who isn't a doctor" : 0.0722489087956684
+         "What isn't Mary" : 0.0722489085461883
+         "What isn't John" : 0.07224890854385216
+         "Who is a doctor and a teacher" : 0.03965104942386024
+         "What are John and Mary" : 0.03965104424240368
+         "What is John or Mary" : 0.03965103969912261
+         "Who is a doctor or a teacher" : 0.03965103969724016
+         "Who isn't a doctor and a teacher" : 0.03965103969661491
+         "What aren't John and Mary" : 0.03965103969661438
+         "What isn't John or Mary" : 0.039651039696613904
+         "Who isn't a doctor or a teacher" : 0.03965103969661389,
+    KLDivergence: 0.23245260570952203 },
+  { query: [ 'intersection(john, mary)' ],
+    trueResult: 
+     Marginal:
+         "What aren't John and Mary" : 0.16243769311668096
+         "What are John and Mary" : 0.16243769311668096
+         "Who is a doctor" : 0.07056451151225795
+         "Who isn't a doctor" : 0.07056451151225795
+         "Who isn't a teacher" : 0.07056451151225793
+         "Who is a teacher" : 0.07056451151225793
+         "What isn't John" : 0.056019550372890525
+         "What is John" : 0.056019550372890525
+         "What isn't Mary" : 0.056019550372890525
+         "What is Mary" : 0.056019550372890525
+         "Who isn't a doctor and a teacher" : 0.03198790362966697
+         "Who is a doctor and a teacher" : 0.03198790362966697
+         "Who isn't a doctor or a teacher" : 0.03177092090827922
+         "Who is a doctor or a teacher" : 0.03177092090827922
+         "What is John or Mary" : 0.020635358575075795
+         "What isn't John or Mary" : 0.020635358575075795,
+    learnedResult: 
+     Marginal:
+         "What is John" : 0.09072011235347438
+         "What is Mary" : 0.09071818750874412
+         "Who is a teacher" : 0.08553419806349202
+         "Who is a doctor" : 0.08552142056160364
+         "What isn't Mary" : 0.07717139843631145
+         "What isn't John" : 0.07717139843548011
+         "Who isn't a teacher" : 0.07717139816838826
+         "Who isn't a doctor" : 0.07717139816588649
+         "What are John and Mary" : 0.04235256944159999
+         "Who is a doctor and a teacher" : 0.042352563996529556
+         "Who is a doctor or a teacher" : 0.04235255914687027
+         "What is John or Mary" : 0.04235255914485532
+         "What aren't John and Mary" : 0.042352559144191726
+         "Who isn't a doctor and a teacher" : 0.04235255914419116
+         "Who isn't a doctor or a teacher" : 0.04235255914419065
+         "What isn't John or Mary" : 0.04235255914419065,
+    KLDivergence: 0.24114909482524732 },
+  { query: [ 'union(john, mary)' ],
+    trueResult: 
+     Marginal:
+         "What isn't John or Mary" : 0.15479572872871056
+         "What is John or Mary" : 0.15479572872871056
+         "Who is a doctor" : 0.07314497016363104
+         "Who is a teacher" : 0.07314497016363104
+         "Who isn't a doctor" : 0.07314497016363104
+         "Who isn't a teacher" : 0.07314497016363104
+         "What is Mary" : 0.05698246399509907
+         "What isn't John" : 0.05698246399509907
+         "What isn't Mary" : 0.05698246399509907
+         "What is John" : 0.05698246399509907
+         "Who isn't a doctor and a teacher" : 0.03248027289420873
+         "Who is a doctor and a teacher" : 0.03248027289420873
+         "Who isn't a doctor or a teacher" : 0.031733907142317455
+         "Who is a doctor or a teacher" : 0.031733907142317455
+         "What are John and Mary" : 0.020735222917302933
+         "What aren't John and Mary" : 0.020735222917302933,
+    learnedResult: 
+     Marginal:
+         "Who is a teacher" : 0.10020111347801049
+         "Who is a doctor" : 0.10019756996081293
+         "What is Mary" : 0.09670024782308213
+         "What is John" : 0.09669710242732853
+         "What isn't Mary" : 0.07224890877017202
+         "What isn't John" : 0.07224890876939274
+         "Who isn't a teacher" : 0.07224890851991408
+         "Who isn't a doctor" : 0.07224890851757236
+         "What are John and Mary" : 0.03965104940944103
+         "Who is a doctor and a teacher" : 0.039651044227980534
+         "Who is a doctor or a teacher" : 0.039651039684701475
+         "What is John or Mary" : 0.03965103968281901
+         "What aren't John and Mary" : 0.03965103968219376
+         "Who isn't a doctor and a teacher" : 0.03965103968219323
+         "Who isn't a doctor or a teacher" : 0.03965103968219276
+         "What isn't John or Mary" : 0.03965103968219276,
+    KLDivergence: 0.2361204851489747 } ]
