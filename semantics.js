@@ -31,9 +31,7 @@ module.exports = {
                 .value();
     },
 
-    polarizeProposition: p => {
-        return [p, ad.scalar.sub(1, p)]
-    },
+    polarizeProposition: p => [p],
 
     // Lifted: type (e -> t) -> t
     entity: name => context => pred => pred(name),
