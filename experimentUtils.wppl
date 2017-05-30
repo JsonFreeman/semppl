@@ -36,7 +36,10 @@ var makeNetworkTestPath = function(experimentName, runId, networkName) {
 
 var makeKLStatPath = function(experimentName, runId) {
     var runDir = makeRunDir(experimentName, runId);
-    return runDir + "/expected-KL.csv";
+    return {
+        prior: runDir + "/expected-KL-prior.csv",
+        posterior: runDir + "/expected-KL.csv"
+    };
 }
 
 var makeNetworkCorrectnessSummary = function(experimentName, runId, networkName) {
@@ -107,6 +110,27 @@ var readOrGenerateTrainingData = function(experimentName, runId, listOfLists, fn
     return data.data;
 }
 
+var computeAveragePriorKL = function(experimentName, runId, groundTruthModel, learnedModel, queryAndAgentPairs) {
+     var KLDivs = mapIndexed(function(queryId, queryAndAgent) {
+        var queryPath = makeQueryPath(experimentName, runId, queryId);
+        // Hack to extract the facts from each world (since the domain is the same)
+        var query = map(function(q) { q.facts || q }, queryAndAgent.query);
+        var trueResult = apply(groundTruthModel[queryAndAgent.agent], queryAndAgent.query);
+        var learnedResult = apply(learnedModel[queryAndAgent.agent], queryAndAgent.query);
+        var KLDivergence = KL(trueResult, learnedResult);
+
+        if (!fs.existsSync(queryPath.dir)) {
+            webpplFs.mkdirp(queryPath.dir);
+        }
+        
+        return KLDivergence;
+    }, queryAndAgentPairs);
+
+    var expectedKL = listMean(KLDivs)
+    webpplFs.write(makeKLStatPath(experimentName, runId).prior, expectedKL);
+    return expectedKL;
+}
+
 var computeAndWriteResults = function(experimentName, runId, groundTruthModel, learnedModel, queryAndAgentPairs) {
     var queriesAndResults = mapIndexed(function(queryId, queryAndAgent) {
         var queryPath = makeQueryPath(experimentName, runId, queryId);
@@ -133,7 +157,7 @@ var computeAndWriteResults = function(experimentName, runId, groundTruthModel, l
     }, queryAndAgentPairs);
 
     var expectedKL = listMean(map(function(x) { x.KLDivergence }, queriesAndResults))
-    webpplFs.write(makeKLStatPath(experimentName, runId), expectedKL);
+    webpplFs.write(makeKLStatPath(experimentName, runId).posterior, expectedKL);
 
     return queriesAndResults;
 }

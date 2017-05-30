@@ -18,7 +18,8 @@ var utteranceDist = function(utterances, costFn, rationality) {
 
 var createVariationalModel = function(questions, answers, costFn, worldPrior, qudCandidates, 
                                       questionerRationality, answererRationality, grammarFn, 
-                                      parametrizedNetworks, observationFn, opts, experimentName, runId, relearnParams) {
+                                      parametrizedNetworks, observationFn, opts, experimentName, runId, relearnParams,
+                                      preTrainModel) {
     assert.ok(_.isNumber(answererRationality), "Pass in answererRationality")
     var runPath = makeRunPath(experimentName, runId);
     var modelFn = function() {
@@ -34,6 +35,10 @@ var createVariationalModel = function(questions, answers, costFn, worldPrior, qu
             observationFn(model);
         }
         return _.assign({ networks: specifiedNetworks }, model);
+    }
+
+    if (preTrainModel) {
+        preTrainModel(sample(SampleGuide(modelFn)));
     }
 
     if (!relearnParams && fs.existsSync(runPath.paramsPath)) {
