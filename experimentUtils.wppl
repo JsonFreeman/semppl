@@ -24,13 +24,19 @@ var makeQueryPath = function(experimentName, runId, queryId) {
     return {
         dir: queryDir,
         queryPath: basePath + "-query.json",
-        resultPath: basePath + "-results.json"
+        resultPath: basePath + "-results.json",
+        expectedKLPath: runDir + "/expected-KL.csv"
     };
 }
 
 var makeNetworkTestPath = function(experimentName, runId, networkName) {
     var runDir = makeRunDir(experimentName, runId);
     return runDir + "/nn-" + networkName + ".csv";
+}
+
+var makeKLStatPath = function(experimentName, runId) {
+    var runDir = makeRunDir(experimentName, runId);
+    return runDir + "/expected-KL.csv";
 }
 
 var makeNetworkCorrectnessSummary = function(experimentName, runId, networkName) {
@@ -125,6 +131,9 @@ var computeAndWriteResults = function(experimentName, runId, groundTruthModel, l
             KLDivergence
         }
     }, queryAndAgentPairs);
+
+    var expectedKL = listMean(map(function(x) { x.KLDivergence }, queriesAndResults))
+    webpplFs.write(makeKLStatPath(experimentName, runId), expectedKL);
 
     return queriesAndResults;
 }
