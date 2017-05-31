@@ -76,6 +76,23 @@ var networks = {
     not: logicalConnectiveNetworkSpec(3, 1)
 }
 
+var domain = ["john", "mary"];
+var john = ["john"]
+var mary = ["mary"]
+var none = []
+
+var queries = [
+    { agent: "A2", query: ["Who is a doctor", { domain, facts: { doctor: domain, teacher: none } } ] },
+    { agent: "A2", query: ["Who is a doctor", { domain, facts: { doctor: domain, teacher: domain } } ] },
+    { agent: "A2", query: ["Who is a doctor and a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
+    { agent: "A2", query: ["Who is a doctor or a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
+    { agent: "A2", query: ["What is John", { domain, facts: { doctor: domain, teacher: mary }}]},
+    { agent: "A2", query: ["What is John", { domain, facts: { doctor: domain, teacher: domain }}]},
+    { agent: "A2", query: ["What isn't John", { domain, facts: { doctor: domain, teacher: domain }}]},
+    { agent: "A2", query: ["What isn't John", { domain, facts: { doctor: domain, teacher: domain }}]},
+    { agent: "A2", query: ["Who is not a doctor or a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
+    { agent: "A2", query: ["Who is not a doctor and a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
+]
 var grammarFn = semppl.makeNeuralConnectiveGrammar;
 var model = createVariationalModel(questions, answers, costFn, worldsDist, quds, 3, 3, grammarFn, networks, 
     function(model) {
@@ -90,7 +107,9 @@ var model = createVariationalModel(questions, answers, costFn, worldsDist, quds,
       checkpointParams: true,
       logProgress: true,
       showGradNorm: true, 
-    }, experimentName, runId, relearnParams);
+    }, experimentName, runId, relearnParams, function(model) {
+        computeAveragePriorKL(experimentName, runId, generateDataModel, model, queries)
+    });
 
 testNetworks(experimentName, runId, model.networks, {
     not: { range: [0, 1.01, 0.01], arity: 1 },
@@ -98,20 +117,4 @@ testNetworks(experimentName, runId, model.networks, {
     or: { range: [0, 1.01, 0.01], arity: 2 }
 });
 
-var domain = ["john", "mary"];
-var john = ["john"]
-var mary = ["mary"]
-var none = []
-
-computeAndWriteResults(experimentName, runId, generateDataModel, model, [
-    { agent: "A2", query: ["Who is a doctor", { domain, facts: { doctor: domain, teacher: none } } ] },
-    { agent: "A2", query: ["Who is a doctor", { domain, facts: { doctor: domain, teacher: domain } } ] },
-    { agent: "A2", query: ["Who is a doctor and a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
-    { agent: "A2", query: ["Who is a doctor or a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
-    { agent: "A2", query: ["What is John", { domain, facts: { doctor: domain, teacher: mary }}]},
-    { agent: "A2", query: ["What is John", { domain, facts: { doctor: domain, teacher: domain }}]},
-    { agent: "A2", query: ["What isn't John", { domain, facts: { doctor: domain, teacher: domain }}]},
-    { agent: "A2", query: ["What isn't John", { domain, facts: { doctor: domain, teacher: domain }}]},
-    { agent: "A2", query: ["Who is not a doctor or a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
-    { agent: "A2", query: ["Who is not a doctor and a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
-])
+computeAndWriteResults(experimentName, runId, generateDataModel, model, queries)

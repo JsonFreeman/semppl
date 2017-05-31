@@ -77,37 +77,12 @@ var networks = {
     not: logicalConnectiveNetworkSpec(3, 1)
 }
 
-var grammarFn = semppl.makeNeuralConnectiveGrammar;
-var model = createVariationalModel(questions, answers, costFn, worldsDist, quds, 3, 3, grammarFn, networks, 
-    function(model) {
-        mapData({ data: answererData, batchSize }, function(d) {
-            observe(apply(model.A1, [d[0], d[1]]), d[2]);
-        })
-        mapData({ data: questionerData, batchSize }, function(d) {
-            observe(apply(model.Q1, [d[0]]), d[1]);
-        })
-    }, 
-    { optimizer: 'adam', 
-      steps: 1000, 
-      estimator: 'ELBO', 
-      checkGradients: false, 
-      checkpointParams: true,
-      logProgress: true,
-      showGradNorm: true, 
-    }, experimentName, runId, relearnParams);
-
-testNetworks(experimentName, runId, model.networks, {
-    not: { range: [0, 1.01, 0.01], arity: 1 },
-    and: { range: [0, 1.01, 0.01], arity: 2 },
-    or: { range: [0, 1.01, 0.01], arity: 2 }
-});
 
 var domain = ["john", "mary"];
 var john = ["john"]
 var mary = ["mary"]
 var none = []
-
-computeAndWriteResults(experimentName, runId, generateDataModel, model, [
+var queries = [
     { agent: "A1", query: ["Who is a doctor", { domain, facts: { doctor: domain, teacher: none } } ] },
     { agent: "A1", query: ["Who is a doctor", { domain, facts: { doctor: domain, teacher: domain } } ] },
     { agent: "A1", query: ["Who is a doctor and a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
@@ -126,4 +101,39 @@ computeAndWriteResults(experimentName, runId, generateDataModel, model, [
     { agent: "Q1", query: ['union(doctor, teacher)']},
     { agent: "Q1", query: ['intersection(john, mary)']},
     { agent: "Q1", query: ['union(john, mary)']},
-])
+]
+
+var queries = _.flatten(map(function(w) { 
+    map(function(q) {
+        return { agent: 'A1', query: [q, w] }
+    }, questions) 
+}, worldsDist.support()))
+
+var grammarFn = semppl.makeNeuralConnectiveGrammar;
+var model = createVariationalModel(questions, answers, costFn, worldsDist, quds, 3, 3, grammarFn, networks, 
+    function(model) {
+        mapData({ data: answererData, batchSize }, function(d) {
+            observe(apply(model.A1, [d[0], d[1]]), d[2]);
+        })
+        mapData({ data: questionerData, batchSize }, function(d) {
+            observe(apply(model.Q1, [d[0]]), d[1]);
+        })
+    }, 
+    { optimizer: 'adam', 
+      steps: 1000, 
+      estimator: 'ELBO', 
+      checkGradients: false, 
+      checkpointParams: true,
+      logProgress: true,
+      showGradNorm: true, 
+    }, experimentName, runId, relearnParams, function(model) {
+        computeAveragePriorKL(experimentName, runId, generateDataModel, model, queries)
+    });
+
+testNetworks(experimentName, runId, model.networks, {
+    not: { range: [0, 1.01, 0.01], arity: 1 },
+    and: { range: [0, 1.01, 0.01], arity: 2 },
+    or: { range: [0, 1.01, 0.01], arity: 2 }
+});
+
+computeAndWriteResults(experimentName, runId, generateDataModel, model, queries)

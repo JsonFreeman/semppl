@@ -77,6 +77,17 @@ var networks = {
     not: logicalConnectiveNetworkSpec(3, 1)
 }
 
+var domain = ["john", "mary"];
+var john = ["john"]
+var mary = ["mary"]
+var none = []
+
+var queries = _.flatten(map(function(w) { 
+    map(function(q) {
+        return { agent: 'A1', query: [q, w] }
+    }, questions) 
+}, worldsDist.support()))
+
 var grammarFn = semppl.makeNeuralConnectiveGrammar;
 var model = createVariationalModel(questions, answers, costFn, worldsDist, quds, 3, 3, grammarFn, networks, 
     function(model) {
@@ -91,7 +102,9 @@ var model = createVariationalModel(questions, answers, costFn, worldsDist, quds,
       checkpointParams: true,
       logProgress: true,
       showGradNorm: true, 
-    }, experimentName, runId, relearnParams);
+    }, experimentName, runId, relearnParams, function(model) {
+        computeAveragePriorKL(experimentName, runId, generateDataModel, model, queries)
+    });
 
 testNetworks(experimentName, runId, model.networks, {
     not: { range: [0, 1.01, 0.01], arity: 1 },
@@ -99,20 +112,4 @@ testNetworks(experimentName, runId, model.networks, {
     or: { range: [0, 1.01, 0.01], arity: 2 }
 });
 
-var domain = ["john", "mary"];
-var john = ["john"]
-var mary = ["mary"]
-var none = []
-
-computeAndWriteResults(experimentName, runId, generateDataModel, model, [
-    { agent: "A1", query: ["Who is a doctor", { domain, facts: { doctor: domain, teacher: none } } ] },
-    { agent: "A1", query: ["Who is a doctor", { domain, facts: { doctor: domain, teacher: domain } } ] },
-    { agent: "A1", query: ["Who is a doctor and a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
-    { agent: "A1", query: ["Who is a doctor or a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
-    { agent: "A1", query: ["Who is not a doctor and a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
-    { agent: "A1", query: ["Who is not a doctor or a teacher", { domain, facts: { doctor: domain, teacher: john } } ] },
-    { agent: "A1", query: ["What is John", { domain, facts: { doctor: domain, teacher: mary }}]},
-    { agent: "A1", query: ["What is John", { domain, facts: { doctor: domain, teacher: domain }}]},
-    { agent: "A1", query: ["What isn't John", { domain, facts: { doctor: domain, teacher: domain }}]},
-    { agent: "A1", query: ["What isn't John", { domain, facts: { doctor: domain, teacher: domain }}]}
-])
+computeAndWriteResults(experimentName, runId, generateDataModel, model, queries)

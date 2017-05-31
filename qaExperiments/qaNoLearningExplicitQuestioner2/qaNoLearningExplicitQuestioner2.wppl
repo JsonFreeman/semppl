@@ -76,6 +76,16 @@ var networks = {
     not: logicalConnectiveNetworkSpec(3, 1)
 }
 
+var queries = [
+    { agent: "Q1", query: ['doctor']},
+    { agent: "Q1", query: ['teacher']},
+    { agent: "Q1", query: ['john']},
+    { agent: "Q1", query: ['mary']},
+    { agent: "Q1", query: ['intersection(doctor, teacher)']},
+    { agent: "Q1", query: ['union(doctor, teacher)']},
+    { agent: "Q1", query: ['intersection(john, mary)']},
+    { agent: "Q1", query: ['union(john, mary)']},
+]
 var grammarFn = semppl.makeNeuralConnectiveGrammar;
 var model = createVariationalModel(questions, answers, costFn, worldsDist, quds, 3, 3, grammarFn, networks, 
     function(model) {
@@ -90,7 +100,9 @@ var model = createVariationalModel(questions, answers, costFn, worldsDist, quds,
       checkpointParams: true,
       logProgress: true,
       showGradNorm: true, 
-    }, experimentName, runId, relearnParams);
+    }, experimentName, runId, relearnParams, function(model) {
+        computeAveragePriorKL(experimentName, runId, generateDataModel, model, queries)
+    });
 
 testNetworks(experimentName, runId, model.networks, {
     not: { range: [0, 1.01, 0.01], arity: 1 },
@@ -98,13 +110,4 @@ testNetworks(experimentName, runId, model.networks, {
     or: { range: [0, 1.01, 0.01], arity: 2 }
 });
 
-computeAndWriteResults(experimentName, runId, generateDataModel, model, [
-    { agent: "Q1", query: ['doctor']},
-    { agent: "Q1", query: ['teacher']},
-    { agent: "Q1", query: ['john']},
-    { agent: "Q1", query: ['mary']},
-    { agent: "Q1", query: ['intersection(doctor, teacher)']},
-    { agent: "Q1", query: ['union(doctor, teacher)']},
-    { agent: "Q1", query: ['intersection(john, mary)']},
-    { agent: "Q1", query: ['union(john, mary)']},
-])
+computeAndWriteResults(experimentName, runId, generateDataModel, model, queries)

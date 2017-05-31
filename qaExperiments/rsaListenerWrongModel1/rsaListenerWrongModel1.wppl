@@ -50,6 +50,9 @@ var networks = {
     not: logicalConnectiveNetworkSpec(3, 1)
 }
 
+var queries = map(function(u) {
+    return { agent: 'L1', query: [u] }
+}, utterances);
 var grammarFn = semppl.makeNeuralConnectiveGrammar;
 var model = createVariationalModel([], utterances, costFn, worldsDist, undefined, 3, 3, grammarFn, networks, 
     function(model) {
@@ -64,10 +67,13 @@ var model = createVariationalModel([], utterances, costFn, worldsDist, undefined
       checkpointParams: true,
       logProgress: true,
       showGradNorm: true, 
-    }, experimentName, runId);
+    }, experimentName, runId, false, function(model) {
+        computeAveragePriorKL(experimentName, runId, generateDataModel, model, queries)
+    });
 
 testNetworks(experimentName, runId, model.networks, {
     not: { range: [0, 1.01, 0.01], arity: 1 },
     and: { range: [0, 1.01, 0.01], arity: 2 },
     or: { range: [0, 1.01, 0.01], arity: 2 }
 });
+computeAndWriteResults(experimentName, runId, generateDataModel, model, queries)
