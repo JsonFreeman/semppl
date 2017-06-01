@@ -6,8 +6,8 @@ library(ggplot2)
 library(jsonlite)
 # library(data.table)
 
-args = c('qaExperiments/explicitAnswerer', 'qaExperiments/rsaSpeaker', 'samples', 'and')
-# args = commandArgs(trailingOnly = TRUE)
+# args = c('qaExperiments/explicitAnswerer', 'qaExperiments/rsaSpeaker', 'samples', 'and')
+args = commandArgs(trailingOnly = TRUE)
 if (length(args) != 4) {
   stop("Must supply 4 arguments")
 }
