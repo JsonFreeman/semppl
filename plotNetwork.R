@@ -36,6 +36,7 @@ if (ncol(networkQueries) == 2) {
 
 networkPlot +
   ggtitle(networkName) +
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size = 20)) +
   ggsave(plotFilename,
          path=runDir)
 
