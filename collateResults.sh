@@ -74,17 +74,17 @@ for f in qaExperiments/$T4/run*/*-not-correctness-summary.csv; do
     printf "\n" >> qaExperiments/$CAT-$DIM-not.csv
 done
 
-for f in qaExperiments/$T4/run*/*-and-correctness-summary.csv; do
+for f in qaExperiments/$T5/run*/*-and-correctness-summary.csv; do
     printf 0, >> qaExperiments/$CAT-$DIM-and.csv
     cat $f >> qaExperiments/$CAT-$DIM-and.csv
     printf "\n" >> qaExperiments/$CAT-$DIM-and.csv
 done
-for f in qaExperiments/$T4/run*/*-or-correctness-summary.csv; do
+for f in qaExperiments/$T5/run*/*-or-correctness-summary.csv; do
     printf 0, >> qaExperiments/$CAT-$DIM-or.csv
     cat $f >> qaExperiments/$CAT-$DIM-or.csv
     printf "\n" >> qaExperiments/$CAT-$DIM-or.csv
 done
-for f in qaExperiments/$T4/run*/*-not-correctness-summary.csv; do
+for f in qaExperiments/$T5/run*/*-not-correctness-summary.csv; do
     printf 0, >> qaExperiments/$CAT-$DIM-not.csv
     cat $f >> qaExperiments/$CAT-$DIM-not.csv
     printf "\n" >> qaExperiments/$CAT-$DIM-not.csv
