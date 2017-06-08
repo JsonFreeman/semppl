@@ -131,6 +131,11 @@ var computeAveragePriorKL = function(experimentName, runId, groundTruthModel, le
     return expectedKL;
 }
 
+var serializeWorld = function(w) {
+    return "doctor(" + (w.facts.doctor.join(',') || "none") + "), " +
+        "teacher(" +  (w.facts.teacher.join(',') || "none") + ")";
+}
+
 var computeAndWriteResults = function(experimentName, runId, groundTruthModel, learnedModel, queryAndAgentPairs) {
     var queriesAndResults = mapIndexed(function(queryId, queryAndAgent) {
         var queryPath = makeQueryPath(experimentName, runId, queryId);
@@ -140,13 +145,22 @@ var computeAndWriteResults = function(experimentName, runId, groundTruthModel, l
         var learnedResult = apply(learnedModel[queryAndAgent.agent], queryAndAgent.query);
         var KLDivergence = KL(trueResult, learnedResult);
 
+
         // Write query and result before returning them
         if (!fs.existsSync(queryPath.dir)) {
             webpplFs.mkdirp(queryPath.dir);
         }
         json.write(queryPath.queryPath, query);
-        json.write(queryPath.resultPath, { trueResult, learnedResult, KLDivergence });
+        // Process the worlds in the result
+        if (queryAndAgent.agent === "L1" || queryAndAgent.agent === "L0") {
+            var trueResultNew = marginalize(trueResult, serializeWorld);
+            var learnedResultNew = marginalize(learnedResult, serializeWorld);
+            json.write(queryPath.resultPath, { trueResultNew, learnedResultNew, KLDivergence });
 
+        }
+        else {
+            json.write(queryPath.resultPath, { trueResult, learnedResult, KLDivergence });
+        }
         
         return {
             query,
