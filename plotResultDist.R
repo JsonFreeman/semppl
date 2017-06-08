@@ -46,6 +46,7 @@ for (queryDir in list.dirs(runDir, recursive = FALSE)) {
       coord_flip() +
       ggtitle(paste(queryJSON, collapse = '\n')) +
       facet_wrap(~id) +
+      theme(plot.title = element_text(hjust = 0.5), text = element_text(size = 13)) +
       ggsave(plotFilename, 
              path=queryDir)
   }
